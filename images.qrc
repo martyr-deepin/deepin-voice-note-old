@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/add_press.svg</file>
+        <file>image/add_normal.svg</file>
+        <file>image/add_hover.svg</file>
+        <file>image/folder_normal.png</file>
+    </qresource>
+</RCC>
