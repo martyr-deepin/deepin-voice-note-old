@@ -43,7 +43,7 @@ bool FolderOper::updateFolderName(FOLDER folderInfo)
 
 QList<FOLDER> FolderOper::getFolderList()
 {
-    QString queryStr = "select id, name, image_path, create_time from %s";
+    QString queryStr = "select id, name, image_path, create_time from %s order by create_time desc";
     queryStr.sprintf(queryStr.toLatin1().constData(), TABLE_FOLDER);
     QList<QList<QVariant>> result;
     QList<FOLDER> folderInfo;

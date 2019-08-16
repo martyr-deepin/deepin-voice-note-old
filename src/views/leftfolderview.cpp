@@ -47,5 +47,5 @@ void LeftFolderView::handleCurrentItemChanged(QListWidgetItem *current, QListWid
         //previous->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     }
     //current->setBackground(QBrush(QPixmap(":/image/add_press.svg")));
-    current->setForeground(QBrush(QPixmap(":/image/add_press.svg")));
+    //current->setForeground(QBrush(QPixmap(":/image/add_press.svg")));
 }

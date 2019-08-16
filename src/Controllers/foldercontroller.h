@@ -13,6 +13,7 @@ public:
     ~FolderController();
 
     QList<FOLDER> getFolderList();
+    bool addFolder(FOLDER folderInfo);
 };
 
 #endif // FOLDERCONTROLLER_H

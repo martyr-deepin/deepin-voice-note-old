@@ -17,3 +17,8 @@ QList<FOLDER> FolderController::getFolderList()
 {
     return FolderOper::getFolderList( );
 }
+
+bool FolderController::addFolder(FOLDER folderInfo)
+{
+    return FolderOper::addFolder(folderInfo);
+}

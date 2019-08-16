@@ -23,6 +23,7 @@ FolerWidgetItem::FolerWidgetItem(FOLDER folder)
 {
     this->folder = folder;
     initUI();
+    initConnection();
 }
 
 FolerWidgetItem::~FolerWidgetItem()
@@ -53,10 +54,21 @@ void FolerWidgetItem::initUI()
     nameLabel->setLineWidth(150);
     nameLabel->setObjectName("nameLabel");
     nameLabel->setText(folder.folderName);
+
+    lineEdit = new DLineEdit(this);
+    lineEdit->setGeometry(QRect(70, 10, 150, 21));
+    lineEdit->setObjectName("nameEdit");
+    lineEdit->setText(folder.folderName);
+    lineEdit->setVisible(false);
     createTimeLabel = new QLabel(this);
     createTimeLabel->setGeometry(QRect(70, 40, 150, 16));
     createTimeLabel->setObjectName("createTimeLabel");
     createTimeLabel->setText(getCreateTimeLabel(folder.createTime));
+}
+
+void FolerWidgetItem::initConnection()
+{
+    connect(lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
 }
 
 void FolerWidgetItem::setItemBackground(QString imgPath)
@@ -68,5 +80,26 @@ void FolerWidgetItem::setItemBackground(QString imgPath)
 void FolerWidgetItem::setNormalBackground()
 {
     setItemBackground(":/image/folder_normal.png");
+}
+
+void FolerWidgetItem::changeToEditMode()
+{
+    nameLabel->setVisible(false);
+    lineEdit->setVisible(true);
+}
+
+void FolerWidgetItem::checkNameValid()
+{
+    if ((lineEdit->text().length() > 0) && (lineEdit->text().length() < 64)) {
+        //todo:更新数据库
+        nameLabel->setText(lineEdit->text());
+        nameLabel->setVisible(true);
+        lineEdit->setVisible(false);
+    } else {
+        //警告用户输入不能为空
+        lineEdit->setAlert(true);
+        lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
+    }
+
 }
 

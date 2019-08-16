@@ -55,5 +55,29 @@ void LeftView::initController()
 }
 void LeftView::initConnection()
 {
+    connect(addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
 
+}
+
+void LeftView::updateFolderView()
+{
+    leftFolderView->clear();
+    QList<FOLDER> folderList = folderCtr->getFolderList();
+    for (int i = 0; i < folderList.size(); i++)
+    {
+        leftFolderView->addWidgetItem(folderList.at(i));
+    }
+}
+
+void LeftView::addFolder()
+{
+    //todo:獲取新文件夾的名字
+    FOLDER newFolder;
+    newFolder.imgPath = DEFAULT_FOLDER_IMG_PATH;
+    newFolder.folderName = "新記事";
+    newFolder.createTime = QDateTime::currentDateTime();
+    folderCtr->addFolder(newFolder);
+    updateFolderView();
+    FolerWidgetItem *item = (FolerWidgetItem*)(leftFolderView->itemWidget(leftFolderView->item(0)));
+    item->changeToEditMode();
 }
