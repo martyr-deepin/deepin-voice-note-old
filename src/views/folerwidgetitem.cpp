@@ -5,7 +5,7 @@ QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
 {
     if ((nullptr == imgPath) || (imgPath.length() <= 0))
     {
-
+        //todo:如果沒有圖片，要使用默認的圖片
     }
     QImage *img = new QImage();
     img->load(imgPath);
@@ -40,6 +40,7 @@ void FolerWidgetItem::initUI()
     imageLabel->setObjectName("imageLabel");
     imageLabel->size();
     QPixmap pixmap = getPixmap(imageLabel->size(), folder.imgPath);
+
 //    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
 //    if (convertFlag)
 //    {

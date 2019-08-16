@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql dtkcore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -40,16 +40,31 @@ SOURCES += \
     src/views/leftfolderview.cpp \
     src/views/rightview.cpp \
     src/views/leftview.cpp \
-    src/views/folerwidgetitem.cpp
+    src/views/folerwidgetitem.cpp \
+    src/database/databaseoper.cpp \
+    src/database/folderoper.cpp \
+    src/Controllers/foldercontroller.cpp
 
 HEADERS += \
+    src/app \
     src/app/voicenotebookapp.h \
     src/views/mainwindow.h \
     src/views/dfmsplitter.h \
     src/views/leftfolderview.h \
     src/views/rightview.h \
     src/views/leftview.h \
-    src/views/folerwidgetitem.h
+    src/views/folerwidgetitem.h \
+    src/database/databaseoper.h \
+    src/app/consts.h \
+    src/database/folderoper.h \
+    src/Controllers/foldercontroller.h
+
+INCLUDEPATH += \
+    src/app \
+    src/views \
+    src/database \
+    src/Controllers
+
 
 FORMS +=
 

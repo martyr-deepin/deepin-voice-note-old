@@ -4,13 +4,8 @@
 #include <QLabel>
 #include <QWidget>
 #include <QDateTime>
+#include "consts.h"
 
-typedef struct
-{
-    QString imgPath;
-    QString folderName;
-    QDateTime createTime;
-}FOLDER;
 
 
 class FolerWidgetItem : public QWidget
