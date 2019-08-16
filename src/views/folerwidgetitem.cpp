@@ -1,27 +1,13 @@
 #include "folerwidgetitem.h"
 
 #include <QString>
-QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
-{
-    if ((nullptr == imgPath) || (imgPath.length() <= 0))
-    {
-        //todo:如果沒有圖片，要使用默認的圖片
-    }
-    QImage *img = new QImage();
-    img->load(imgPath);
-    // 设定图像大小自适应label窗口的大小
-    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    return QPixmap::fromImage(*img);
-}
-QString FolerWidgetItem::getCreateTimeLabel(QDateTime createTime)
-{
-    return "一個月前";
-}
+
 
 //FolerWidgetItem::FolerWidgetItem()
-FolerWidgetItem::FolerWidgetItem(FOLDER folder)
+FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr)
 {
     this->folder = folder;
+    this->folderCtr = folderCtr;
     initUI();
     initConnection();
 }
@@ -50,18 +36,18 @@ void FolerWidgetItem::initUI()
 
     nameLabel = new QLabel(this);
 
-    nameLabel->setGeometry(QRect(70, 10, 150, 21));
+    nameLabel->setGeometry(QRect(70, 10, 110, 21));
     nameLabel->setLineWidth(150);
     nameLabel->setObjectName("nameLabel");
     nameLabel->setText(folder.folderName);
 
     lineEdit = new DLineEdit(this);
-    lineEdit->setGeometry(QRect(70, 10, 150, 21));
+    lineEdit->setGeometry(QRect(70, 10, 110, 21));
     lineEdit->setObjectName("nameEdit");
     lineEdit->setText(folder.folderName);
     lineEdit->setVisible(false);
     createTimeLabel = new QLabel(this);
-    createTimeLabel->setGeometry(QRect(70, 40, 150, 16));
+    createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     createTimeLabel->setObjectName("createTimeLabel");
     createTimeLabel->setText(getCreateTimeLabel(folder.createTime));
 }
@@ -69,6 +55,23 @@ void FolerWidgetItem::initUI()
 void FolerWidgetItem::initConnection()
 {
     connect(lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
+}
+
+QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
+{
+    if ((nullptr == imgPath) || (imgPath.length() <= 0))
+    {
+        //todo:如果沒有圖片，要使用默認的圖片
+    }
+    QImage *img = new QImage();
+    img->load(imgPath);
+    // 设定图像大小自适应label窗口的大小
+    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    return QPixmap::fromImage(*img);
+}
+QString FolerWidgetItem::getCreateTimeLabel(QDateTime createTime)
+{
+    return "一個月前";
 }
 
 void FolerWidgetItem::setItemBackground(QString imgPath)
@@ -92,9 +95,25 @@ void FolerWidgetItem::checkNameValid()
 {
     if ((lineEdit->text().length() > 0) && (lineEdit->text().length() < 64)) {
         //todo:更新数据库
-        nameLabel->setText(lineEdit->text());
-        nameLabel->setVisible(true);
-        lineEdit->setVisible(false);
+        folder.folderName = lineEdit->text();
+        if (folderCtr->checkFolderNameExist(folder))
+        {
+            lineEdit->setAlert(true);
+            lineEdit->showAlertMessage("目录名重复！");
+        }
+        else
+        {
+            if(!folderCtr->updateFolder(folder))
+            {
+                lineEdit->setAlert(true);
+                lineEdit->showAlertMessage("修改目录名失败");
+
+            }
+            nameLabel->setText(lineEdit->text());
+            nameLabel->setVisible(true);
+            lineEdit->setVisible(false);
+        }
+
     } else {
         //警告用户输入不能为空
         lineEdit->setAlert(true);

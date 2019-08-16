@@ -2,8 +2,9 @@
 
 #include <QFrame>
 
-LeftFolderView::LeftFolderView()
+LeftFolderView::LeftFolderView(FolderController *folderCtr)
 {
+    this->folderCtr = folderCtr;
     initUI();
     initConnection();
 }
@@ -36,7 +37,7 @@ void LeftFolderView::addWidgetItem(FOLDER folder) {
     QListWidgetItem *item=new QListWidgetItem(this);
     item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     item->setSizeHint(QSize(200,60));
-    FolerWidgetItem *folderItem = new FolerWidgetItem(folder);
+    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, folderCtr);
     this->setItemWidget(item, folderItem);
 }
 

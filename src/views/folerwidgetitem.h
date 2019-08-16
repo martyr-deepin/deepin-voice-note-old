@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QWidget>
 #include <QDateTime>
+#include <foldercontroller.h>
 #include "consts.h"
 #include <DLineEdit>
 
@@ -16,7 +17,7 @@ class FolerWidgetItem : public QWidget
     Q_OBJECT
 public:
     //FolerWidgetItem();
-    FolerWidgetItem(FOLDER folder);
+    FolerWidgetItem(FOLDER folder, FolderController *folderCtr);
     ~FolerWidgetItem();
     DLineEdit *lineEdit;
     QLabel *imageLabel;
@@ -30,7 +31,7 @@ public slots:
 private:
 
     FOLDER folder;
-
+    FolderController *folderCtr;
 
     void initUI();
     void initConnection();

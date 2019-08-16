@@ -14,6 +14,9 @@ public:
 
     QList<FOLDER> getFolderList();
     bool addFolder(FOLDER folderInfo);
+
+    bool checkFolderNameExist(FOLDER folderInfo);
+    bool updateFolder(FOLDER folderInfo);
 };
 
 #endif // FOLDERCONTROLLER_H

@@ -25,7 +25,7 @@ void LeftView::initUI()
 
 
 
-    leftFolderView = new LeftFolderView();
+    leftFolderView = new LeftFolderView(folderCtr);
     QList<FOLDER> folderList = folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
@@ -80,4 +80,5 @@ void LeftView::addFolder()
     updateFolderView();
     FolerWidgetItem *item = (FolerWidgetItem*)(leftFolderView->itemWidget(leftFolderView->item(0)));
     item->changeToEditMode();
+    leftFolderView->setCurrentRow(0);
 }
