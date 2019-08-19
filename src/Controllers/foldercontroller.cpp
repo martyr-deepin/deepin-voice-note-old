@@ -60,3 +60,8 @@ QString FolderController::getNextFolderName()
     return folderName;
 
 }
+
+bool FolderController::deleteFolder(int folderId)
+{
+    return FolderOper::deleteFolder(folderId);
+}

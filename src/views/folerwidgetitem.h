@@ -23,6 +23,7 @@ public:
     QLabel *m_imageLabel;
     QLabel *m_nameLabel;
     QLabel *m_createTimeLabel;
+    FOLDER m_folder;
 
     void changeToEditMode();
 
@@ -30,8 +31,9 @@ public slots:
     void checkNameValid();
 private:
 
-    FOLDER m_folder;
+
     FolderController *m_folderCtr;
+
 
     void initUI();
     void initConnection();
