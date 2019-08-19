@@ -17,6 +17,7 @@ public:
 
     bool checkFolderNameExist(FOLDER folderInfo);
     bool updateFolder(FOLDER folderInfo);
+    QString getNextFolderName();
 };
 
 #endif // FOLDERCONTROLLER_H

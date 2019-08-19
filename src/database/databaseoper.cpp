@@ -156,12 +156,12 @@ bool DatabaseOper::queryData(QString queryStr, int resultItemSize, QList<QList<Q
     {
         while(sqlQuery.next())
         {
-            QList<QVariant> *tmpList = new QList<QVariant>();
+            QList<QVariant> tmpList;
             for (int i = 0; i < resultItemSize; i++)
             {
-                tmpList->append(sqlQuery.value(i));
+                tmpList.append(sqlQuery.value(i));
             }
-            result.append(*tmpList);
+            result.append(tmpList);
         }
         return true;
     }

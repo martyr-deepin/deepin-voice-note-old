@@ -6,8 +6,9 @@
 
 #define TABLE_FOLDER "folder"
 
-static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB.db";
+static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
 static QString DEFAULT_FOLDER_IMG_PATH = ":/image/default_folder_img.png";
+static QString DEFAULT_FOLDER_NAME = "新记事";
 
 typedef struct
 {

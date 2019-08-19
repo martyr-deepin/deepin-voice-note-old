@@ -71,7 +71,20 @@ QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
 }
 QString FolerWidgetItem::getCreateTimeLabel(QDateTime createTime)
 {
-    return "一個月前";
+//    int destDayOfYear = createTime.date().dayOfYear();
+//    int currDayOfYear = QDateTime::currentDateTime().date().dayOfYear();
+//    int oneMonthAgo = currDayOfYear - 30;
+//    int destYear = createTime.date().year();
+//    int currYear = QDateTime::currentDateTime().date().year();
+//    int yearDiff = currYear - destYear;
+//    if (yearDiff > 0)
+//    {
+
+//    }
+//    else {
+
+//    }
+    return createTime.date().toString();
 }
 
 void FolerWidgetItem::setItemBackground(QString imgPath)
@@ -89,6 +102,7 @@ void FolerWidgetItem::changeToEditMode()
 {
     nameLabel->setVisible(false);
     lineEdit->setVisible(true);
+    lineEdit->selectAll();
 }
 
 void FolerWidgetItem::checkNameValid()
