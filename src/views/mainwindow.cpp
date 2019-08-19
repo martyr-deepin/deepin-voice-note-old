@@ -23,22 +23,22 @@ void MyMainWindow::initSplitter(){
     initLeftView();
     initRightView();
 
-    splitter = new DFMSplitter(Qt::Horizontal, this);
-    splitter->addWidget(leftView);
-    splitter->addWidget(rightView);
-    splitter->setChildrenCollapsible(false);
+    m_splitter = new DFMSplitter(Qt::Horizontal, this);
+    m_splitter->addWidget(m_leftView);
+    m_splitter->addWidget(m_rightView);
+    m_splitter->setChildrenCollapsible(false);
 }
 
 void MyMainWindow::initLeftView(){
-    leftView = new LeftView();
+    m_leftView = new LeftView();
 
 
 
 }
 
 void MyMainWindow::initRightView(){
-    rightView = new RightView();
-    rightView->setObjectName("rightView");
+    m_rightView = new RightView();
+    m_rightView->setObjectName("rightView");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }
 
@@ -46,14 +46,14 @@ void MyMainWindow::initCentralWidget()
 {
     initSplitter();
 
-    centralWidget = new QFrame(this);
-    centralWidget->setObjectName("CentralWidget");
+    m_centralWidget = new QFrame(this);
+    m_centralWidget->setObjectName("CentralWidget");
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(splitter);
+    mainLayout->addWidget(m_splitter);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
-    centralWidget->setLayout(mainLayout);
-    setCentralWidget(centralWidget);
+    m_centralWidget->setLayout(mainLayout);
+    setCentralWidget(m_centralWidget);
 }
 
 void MyMainWindow::initTitleBar(){

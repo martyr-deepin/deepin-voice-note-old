@@ -4,7 +4,7 @@
 
 LeftFolderView::LeftFolderView(FolderController *folderCtr)
 {
-    this->folderCtr = folderCtr;
+    this->m_folderCtr = folderCtr;
     initUI();
     initConnection();
 }
@@ -25,6 +25,12 @@ void LeftFolderView::initUI()
 
 //    addWidgetItem(folder1);
 //    addWidgetItem(folder2);
+//    m_contextMenu = new QMenu;
+//    m_addAction = new QAction("add Item",this);
+//    m_delAction = new QAction("del Item",this);
+//    m_contextMenu->addAction(m_addAction);
+//    m_contextMenu->addAction(m_delAction);
+
 
 }
 
@@ -37,7 +43,7 @@ void LeftFolderView::addWidgetItem(FOLDER folder) {
     QListWidgetItem *item=new QListWidgetItem(this);
     item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     item->setSizeHint(QSize(200,60));
-    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, folderCtr);
+    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr);
     this->setItemWidget(item, folderItem);
 }
 

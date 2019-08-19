@@ -21,11 +21,11 @@ public:
     MyMainWindow();
 
 private:
-     QFrame *centralWidget;
-     DFMSplitter *splitter;
-     QFrame *leftView;
+     QFrame *m_centralWidget;
+     DFMSplitter *m_splitter;
+     QFrame *m_leftView;
 
-     RightView *rightView;
+     RightView *m_rightView;
 
     void initUI();
 

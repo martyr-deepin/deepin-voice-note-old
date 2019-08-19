@@ -17,12 +17,12 @@ class FolerWidgetItem : public QWidget
     Q_OBJECT
 public:
     //FolerWidgetItem();
-    FolerWidgetItem(FOLDER folder, FolderController *folderCtr);
+    FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr);
     ~FolerWidgetItem();
-    DLineEdit *lineEdit;
-    QLabel *imageLabel;
-    QLabel *nameLabel;
-    QLabel *createTimeLabel;
+    DLineEdit *m_lineEdit;
+    QLabel *m_imageLabel;
+    QLabel *m_nameLabel;
+    QLabel *m_createTimeLabel;
 
     void changeToEditMode();
 
@@ -30,8 +30,8 @@ public slots:
     void checkNameValid();
 private:
 
-    FOLDER folder;
-    FolderController *folderCtr;
+    FOLDER m_folder;
+    FolderController *m_folderCtr;
 
     void initUI();
     void initConnection();

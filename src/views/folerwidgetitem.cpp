@@ -6,8 +6,8 @@
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr)
 {
-    this->folder = folder;
-    this->folderCtr = folderCtr;
+    this->m_folder = folder;
+    this->m_folderCtr = folderCtr;
     initUI();
     initConnection();
 }
@@ -22,39 +22,39 @@ void FolerWidgetItem::initUI()
     //this->resize(196, 60);
     //setNormalBackground();
     //this->setStyleSheet("background: red");
-    imageLabel = new QLabel(this);
-    imageLabel->setGeometry(QRect(10, 10, 50, 40));
-    imageLabel->setObjectName("imageLabel");
-    imageLabel->size();
-    QPixmap pixmap = getPixmap(imageLabel->size(), folder.imgPath);
+    m_imageLabel = new QLabel(this);
+    m_imageLabel->setGeometry(QRect(10, 10, 50, 40));
+    m_imageLabel->setObjectName("imageLabel");
+    m_imageLabel->size();
+    QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
 
 //    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
 //    if (convertFlag)
 //    {
-        imageLabel->setPixmap(getPixmap(imageLabel->size(), folder.imgPath));
+        m_imageLabel->setPixmap(getPixmap(m_imageLabel->size(), m_folder.imgPath));
 //    }
 
-    nameLabel = new QLabel(this);
+    m_nameLabel = new QLabel(this);
 
-    nameLabel->setGeometry(QRect(70, 10, 110, 21));
-    nameLabel->setLineWidth(150);
-    nameLabel->setObjectName("nameLabel");
-    nameLabel->setText(folder.folderName);
+    m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
+    m_nameLabel->setLineWidth(150);
+    m_nameLabel->setObjectName("nameLabel");
+    m_nameLabel->setText(m_folder.folderName);
 
-    lineEdit = new DLineEdit(this);
-    lineEdit->setGeometry(QRect(70, 10, 110, 21));
-    lineEdit->setObjectName("nameEdit");
-    lineEdit->setText(folder.folderName);
-    lineEdit->setVisible(false);
-    createTimeLabel = new QLabel(this);
-    createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
-    createTimeLabel->setObjectName("createTimeLabel");
-    createTimeLabel->setText(getCreateTimeLabel(folder.createTime));
+    m_lineEdit = new DLineEdit(this);
+    m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
+    m_lineEdit->setObjectName("nameEdit");
+    m_lineEdit->setText(m_folder.folderName);
+    m_lineEdit->setVisible(false);
+    m_createTimeLabel = new QLabel(this);
+    m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
+    m_createTimeLabel->setObjectName("createTimeLabel");
+    m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
 }
 
 void FolerWidgetItem::initConnection()
 {
-    connect(lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
+    connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
 }
 
 QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
@@ -100,38 +100,38 @@ void FolerWidgetItem::setNormalBackground()
 
 void FolerWidgetItem::changeToEditMode()
 {
-    nameLabel->setVisible(false);
-    lineEdit->setVisible(true);
-    lineEdit->selectAll();
+    m_nameLabel->setVisible(false);
+    m_lineEdit->setVisible(true);
+    m_lineEdit->selectAll();
 }
 
 void FolerWidgetItem::checkNameValid()
 {
-    if ((lineEdit->text().length() > 0) && (lineEdit->text().length() < 64)) {
+    if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
         //todo:更新数据库
-        folder.folderName = lineEdit->text();
-        if (folderCtr->checkFolderNameExist(folder))
+        m_folder.folderName = m_lineEdit->text();
+        if (m_folderCtr->checkFolderNameExist(m_folder))
         {
-            lineEdit->setAlert(true);
-            lineEdit->showAlertMessage("目录名重复！");
+            m_lineEdit->setAlert(true);
+            m_lineEdit->showAlertMessage("目录名重复！");
         }
         else
         {
-            if(!folderCtr->updateFolder(folder))
+            if(!m_folderCtr->updateFolder(m_folder))
             {
-                lineEdit->setAlert(true);
-                lineEdit->showAlertMessage("修改目录名失败");
+                m_lineEdit->setAlert(true);
+                m_lineEdit->showAlertMessage("修改目录名失败");
 
             }
-            nameLabel->setText(lineEdit->text());
-            nameLabel->setVisible(true);
-            lineEdit->setVisible(false);
+            m_nameLabel->setText(m_lineEdit->text());
+            m_nameLabel->setVisible(true);
+            m_lineEdit->setVisible(false);
         }
 
     } else {
         //警告用户输入不能为空
-        lineEdit->setAlert(true);
-        lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
+        m_lineEdit->setAlert(true);
+        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
     }
 
 }

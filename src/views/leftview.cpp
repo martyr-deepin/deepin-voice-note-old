@@ -12,7 +12,7 @@ LeftView::LeftView()
 
 LeftView::~LeftView()
 {
-    delete folderCtr;
+    delete m_folderCtr;
 }
 
 
@@ -20,52 +20,52 @@ LeftView::~LeftView()
 void LeftView::initUI()
 {
     //this->setStyleSheet("background: blue");
-    leftViewLayout = new QVBoxLayout;
-    leftViewLayout->setContentsMargins(0, 0, 0, 0);
+    m_leftViewLayout = new QVBoxLayout;
+    m_leftViewLayout->setContentsMargins(0, 0, 0, 0);
 
 
 
-    leftFolderView = new LeftFolderView(folderCtr);
-    QList<FOLDER> folderList = folderCtr->getFolderList();
+    m_leftFolderView = new LeftFolderView(m_folderCtr);
+    QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
-        leftFolderView->addWidgetItem(folderList.at(i));
+        m_leftFolderView->addWidgetItem(folderList.at(i));
     }
-    leftFolderView->setObjectName("LeftSideBar");
+    m_leftFolderView->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
-    leftViewLayout->addWidget(leftFolderView);
+    m_leftViewLayout->addWidget(m_leftFolderView);
 
-    addFolderBtn = new DImageButton();
-    addFolderBtn->setNormalPic(":/image/add_normal.svg");
-    addFolderBtn->setHoverPic(":/image/add_hover.svg");
-    addFolderBtn->setPressPic(":/image/add_press.svg");
+    m_addFolderBtn = new DImageButton();
+    m_addFolderBtn->setNormalPic(":/image/add_normal.svg");
+    m_addFolderBtn->setHoverPic(":/image/add_hover.svg");
+    m_addFolderBtn->setPressPic(":/image/add_press.svg");
 
-    leftViewLayout->addWidget(addFolderBtn);
-    QSizePolicy sp = leftFolderView->sizePolicy();
+    m_leftViewLayout->addWidget(m_addFolderBtn);
+    QSizePolicy sp = m_leftFolderView->sizePolicy();
     sp.setVerticalPolicy(QSizePolicy::Expanding);
-    leftFolderView->setSizePolicy(sp);
-    this->setLayout(leftViewLayout);
+    m_leftFolderView->setSizePolicy(sp);
+    this->setLayout(m_leftViewLayout);
     this->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 
 }
 
 void LeftView::initController()
 {
-     folderCtr = new FolderController();
+     m_folderCtr = new FolderController();
 }
 void LeftView::initConnection()
 {
-    connect(addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
+    connect(m_addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
 
 }
 
 void LeftView::updateFolderView()
 {
-    leftFolderView->clear();
-    QList<FOLDER> folderList = folderCtr->getFolderList();
+    m_leftFolderView->clear();
+    QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
-        leftFolderView->addWidgetItem(folderList.at(i));
+        m_leftFolderView->addWidgetItem(folderList.at(i));
     }
 }
 
@@ -74,11 +74,11 @@ void LeftView::addFolder()
     //todo:獲取新文件夾的名字
     FOLDER newFolder;
     newFolder.imgPath = DEFAULT_FOLDER_IMG_PATH;
-    newFolder.folderName = folderCtr->getNextFolderName();
+    newFolder.folderName = m_folderCtr->getNextFolderName();
     newFolder.createTime = QDateTime::currentDateTime();
-    folderCtr->addFolder(newFolder);
+    m_folderCtr->addFolder(newFolder);
     updateFolderView();
-    FolerWidgetItem *item = (FolerWidgetItem*)(leftFolderView->itemWidget(leftFolderView->item(0)));
+    FolerWidgetItem *item = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->item(0)));
     item->changeToEditMode();
-    leftFolderView->setCurrentRow(0);
+    m_leftFolderView->setCurrentRow(0);
 }

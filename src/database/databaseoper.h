@@ -23,12 +23,12 @@ public:
 
 
 private:
-    static DatabaseOper *instance;
-    QSqlDatabase sqlDatabase;
-    QSqlQuery sqlQuery;
-    bool initFlag = false;
+    static DatabaseOper *m_instance;
+    QSqlDatabase n_sqlDatabase;
+    QSqlQuery m_sqlQuery;
+    bool m_initFlag = false;
     const QStringList TABLE_NAME = {TABLE_FOLDER};
-    QMap<QString, QString> createSqlMap;
+    QMap<QString, QString> m_createSqlMap;
 
     void initDatabase();
     void checkTableExist();

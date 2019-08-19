@@ -11,12 +11,12 @@ class LeftFolderView : public QListWidget
 {
     Q_OBJECT
 public:
-    LeftFolderView(FolderController *folderCtr);
+    LeftFolderView(FolderController *m_folderCtr);
     void addWidgetItem(FOLDER folder);
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 private:
-    FolderController *folderCtr;
+    FolderController *m_folderCtr;
     void initUI();
     void initConnection();
 

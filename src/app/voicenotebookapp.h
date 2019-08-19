@@ -14,8 +14,8 @@ public:
     ~VoiceNotebookApp();
     //int exec();
 private:
-    MyMainWindow *mainWindow;
-    DApplication *app;
+    MyMainWindow *m_mainWindow;
+    DApplication *m_app;
     void initApp();
     void initMainWindow();
     void initController();

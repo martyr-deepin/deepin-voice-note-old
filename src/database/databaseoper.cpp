@@ -7,7 +7,7 @@
 #include "src/app/consts.h"
 
 
-DatabaseOper *DatabaseOper::instance = NULL;
+DatabaseOper *DatabaseOper::m_instance = NULL;
 DatabaseOper::DatabaseOper()
 {
     initDatabase();
@@ -20,28 +20,28 @@ DatabaseOper::~DatabaseOper()
 
 DatabaseOper *DatabaseOper::getInstance()
 {
-    if (NULL == instance)
+    if (NULL == m_instance)
     {
-        instance = new DatabaseOper();
+        m_instance = new DatabaseOper();
     }
-    return instance;
+    return m_instance;
 }
 
 void DatabaseOper::initDatabase()
 {
-    createSqlMap[TABLE_FOLDER] = "create table folder (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image_path TEXT, create_time DATE)";
+    m_createSqlMap[TABLE_FOLDER] = "create table folder (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image_path TEXT, create_time DATE)";
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     //设置数据库的名称
      db.setDatabaseName(DB_PATH);
     //打开数据库
      if (!db.open()){
         //return false;
-         initFlag = false;
+         m_initFlag = false;
      }
      else {
-         initFlag = true;
-         sqlDatabase = QSqlDatabase::database();
-         sqlQuery = QSqlQuery(db);
+         m_initFlag = true;
+         n_sqlDatabase = QSqlDatabase::database();
+         m_sqlQuery = QSqlQuery(db);
      }
      checkTableExist();
 
@@ -55,7 +55,7 @@ void DatabaseOper::checkTableExist()
     {
         if (!tableList.contains(TABLE_NAME.at(i)))
         {
-            createTable(createSqlMap.value(TABLE_NAME.at(i)));
+            createTable(m_createSqlMap.value(TABLE_NAME.at(i)));
         }
         else
         {
@@ -84,10 +84,10 @@ void DatabaseOper::checkTableExist()
 void DatabaseOper::createTable(QString createSql)
 {
     //QSqlQuery sqlQuery;
-    sqlQuery.prepare(createSql);
-    if(!sqlQuery.exec())
+    m_sqlQuery.prepare(createSql);
+    if(!m_sqlQuery.exec())
     {
-        qDebug()<<"create table error: " << sqlQuery.lastError().text();
+        qDebug()<<"create table error: " << m_sqlQuery.lastError().text();
     }
     else
     {
@@ -108,14 +108,14 @@ bool DatabaseOper::insertData(QString tableName, QStringList columnName, QList<Q
     }
     insertSql.sprintf(insertSql.toLatin1().constData(), tableName.toLatin1().constData(), columnName.join(",").toLatin1().constData(), value.toLatin1().constData());
 
-    sqlQuery.prepare(insertSql);
+    m_sqlQuery.prepare(insertSql);
     for (int i = 0; i < values.length(); i++) {
-        sqlQuery.addBindValue(values.at(i));
+        m_sqlQuery.addBindValue(values.at(i));
     }
 
-    if(!sqlQuery.exec())
+    if(!m_sqlQuery.exec())
     {
-        qDebug()<<"insertData error: " << sqlQuery.lastError().text();
+        qDebug()<<"insertData error: " << m_sqlQuery.lastError().text();
         return false;
     }
     else
@@ -126,16 +126,16 @@ bool DatabaseOper::insertData(QString tableName, QStringList columnName, QList<Q
 
 bool DatabaseOper::updateData(QString updateSql, QMap<QString, QVariant> valuesMap)
 {
-    sqlQuery.prepare(updateSql);
+    m_sqlQuery.prepare(updateSql);
 
     QMapIterator<QString, QVariant> i(valuesMap);
     while (i.hasNext()) {
         i.next();
-        sqlQuery.bindValue(i.key(), i.value());
+        m_sqlQuery.bindValue(i.key(), i.value());
     }
-    if(!sqlQuery.exec())
+    if(!m_sqlQuery.exec())
     {
-        qDebug()<<"updateData error: " << sqlQuery.lastError().text();
+        qDebug()<<"updateData error: " << m_sqlQuery.lastError().text();
         return false;
     }
     else
@@ -146,20 +146,20 @@ bool DatabaseOper::updateData(QString updateSql, QMap<QString, QVariant> valuesM
 
 bool DatabaseOper::queryData(QString queryStr, int resultItemSize, QList<QList<QVariant>> & result)
 {
-    sqlQuery.prepare(queryStr);
-    if(!sqlQuery.exec())
+    m_sqlQuery.prepare(queryStr);
+    if(!m_sqlQuery.exec())
     {
-        qDebug()<<"queryData error: " << sqlQuery.lastError().text();
+        qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
         return false;
     }
     else
     {
-        while(sqlQuery.next())
+        while(m_sqlQuery.next())
         {
             QList<QVariant> tmpList;
             for (int i = 0; i < resultItemSize; i++)
             {
-                tmpList.append(sqlQuery.value(i));
+                tmpList.append(m_sqlQuery.value(i));
             }
             result.append(tmpList);
         }
@@ -175,13 +175,13 @@ bool DatabaseOper::deleteDataById(QString tableName, QString id, int idValue)
 
 
     deleteSql.sprintf(deleteSql.toLatin1().constData(), tableName.toLatin1().constData(), id.toLatin1().constData());
-    sqlQuery.addBindValue(QVariant(idValue));
-    sqlQuery.prepare(deleteSql);
+    m_sqlQuery.addBindValue(QVariant(idValue));
+    m_sqlQuery.prepare(deleteSql);
 
 
-    if(!sqlQuery.exec())
+    if(!m_sqlQuery.exec())
     {
-        qDebug()<<"deleteDataById error: " << sqlQuery.lastError().text();
+        qDebug()<<"deleteDataById error: " << m_sqlQuery.lastError().text();
         return false;
     }
     else

@@ -20,12 +20,12 @@ public slots:
     void addFolder();
 
 private:
-    QLayout *leftViewLayout;
+    QLayout *m_leftViewLayout;
     //QListWidget *folderList;
-    LeftFolderView *leftFolderView;
-    DImageButton *addFolderBtn;
+    LeftFolderView *m_leftFolderView;
+    DImageButton *m_addFolderBtn;
 
-    FolderController *folderCtr;
+    FolderController *m_folderCtr;
 
     void initUI();
     void initController();
