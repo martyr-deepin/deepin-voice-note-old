@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "dfmsplitter.h"
-#include "leftfolderview.h"
+#include "leftfolderlist.h"
 #include "rightview.h"
 
 #include <DMainWindow>

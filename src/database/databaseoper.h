@@ -27,7 +27,7 @@ private:
     QSqlDatabase n_sqlDatabase;
     QSqlQuery m_sqlQuery;
     bool m_initFlag = false;
-    const QStringList TABLE_NAME = {TABLE_FOLDER};
+    const QStringList TABLE_NAME = {TABLE_FOLDER, TABLE_NOTE};
     QMap<QString, QString> m_createSqlMap;
 
     void initDatabase();

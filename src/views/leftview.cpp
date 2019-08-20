@@ -25,7 +25,7 @@ void LeftView::initUI()
 
 
 
-    m_leftFolderView = new LeftFolderView(m_folderCtr);
+    m_leftFolderView = new LeftFolderList(m_folderCtr);
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {

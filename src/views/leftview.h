@@ -1,6 +1,6 @@
 #ifndef LEFTVIEW_H
 #define LEFTVIEW_H
-#include "leftfolderview.h"
+#include "leftfolderlist.h"
 
 #include <DWidgetUtil>
 #include <QFrame>
@@ -22,7 +22,7 @@ public slots:
 private:
     QLayout *m_leftViewLayout;
     //QListWidget *folderList;
-    LeftFolderView *m_leftFolderView;
+    LeftFolderList *m_leftFolderView;
     DImageButton *m_addFolderBtn;
 
     FolderController *m_folderCtr;
