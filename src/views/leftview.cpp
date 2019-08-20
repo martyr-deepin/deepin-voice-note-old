@@ -31,6 +31,7 @@ void LeftView::initUI()
     {
         m_leftFolderView->addWidgetItem(folderList.at(i));
     }
+    m_leftFolderView->setCurrentRow(0);
     m_leftFolderView->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     m_leftViewLayout->addWidget(m_leftFolderView);
@@ -56,6 +57,7 @@ void LeftView::initController()
 void LeftView::initConnection()
 {
     connect(m_addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
+    connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
 
 }
 
@@ -81,4 +83,23 @@ void LeftView::addFolder()
     FolerWidgetItem *item = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->item(0)));
     item->changeToEditMode();
     m_leftFolderView->setCurrentRow(0);
+}
+
+int LeftView::getCurrSelectFolderId()
+{
+    if (m_leftFolderView->count() > 0) {
+        FolerWidgetItem *item = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->currentItem()));
+        return item->m_folder.id;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+void LeftView::handleSelFolderChg(QListWidgetItem *item)
+{
+    FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
+    int folderId = folderItem->m_folder.id;
+    emit selFolderIdChg(folderId);
 }

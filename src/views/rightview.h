@@ -8,13 +8,17 @@
 #include <QStackedWidget>
 #include <QWidget>
 #include <dimagebutton.h>
+#include <QObject>
 
 DWIDGET_USE_NAMESPACE
 
 class RightView : public QFrame
 {
+    Q_OBJECT
 public:
     RightView();
+public slots:
+    void handleSelFolderChg(int folderId);
 private:
     void initUI();
     void initNoteList();
@@ -26,7 +30,7 @@ private:
     RightNoteList *m_noteListWidget;
     DImageButton *m_addVoiceBtn;
     DImageButton *m_addTextBtn;
-    NoteController *noteController;
+    NoteController *m_noteController;
 };
 
 #endif // RIGHTVIEW_H

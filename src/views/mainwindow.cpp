@@ -7,6 +7,7 @@
 MyMainWindow::MyMainWindow()
 {
     initUI();
+    initConnection();
 }
 
 void MyMainWindow::initUI() {
@@ -15,8 +16,12 @@ void MyMainWindow::initUI() {
     initTitleBar();
     initCentralWidget();
 
+}
 
-
+void MyMainWindow::initConnection()
+{
+    QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
+    //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
 }
 
 void MyMainWindow::initSplitter(){
@@ -39,6 +44,7 @@ void MyMainWindow::initLeftView(){
 void MyMainWindow::initRightView(){
     m_rightView = new RightView();
     m_rightView->setObjectName("rightView");
+    m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }
 

@@ -7,7 +7,7 @@
 
 #include <DMainWindow>
 #include <QFrame>
-
+#include <QObject>
 #define DEFAULT_WINDOWS_WIDTH 960
 #define DEFAULT_WINDOWS_HEIGHT 540
 
@@ -16,7 +16,7 @@ DWIDGET_USE_NAMESPACE
 
 class MyMainWindow : public DMainWindow
 {
-    //Q_OBJECT
+    Q_OBJECT
 public:
     MyMainWindow();
 
@@ -28,6 +28,7 @@ private:
      RightView *m_rightView;
 
     void initUI();
+    void initConnection();
 
     void initTitleBar();
 

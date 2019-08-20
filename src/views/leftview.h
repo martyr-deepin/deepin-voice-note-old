@@ -6,6 +6,7 @@
 #include <QFrame>
 #include <foldercontroller.h>
 #include <dimagebutton.h>
+#include <QObject>
 #include "consts.h"
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 200
@@ -16,8 +17,13 @@ public:
     LeftView();
     ~LeftView();
 
+    int getCurrSelectFolderId();
+signals:
+    void selFolderIdChg(int folderId);
+
 public slots:
     void addFolder();
+    void handleSelFolderChg(QListWidgetItem *item);
 
 private:
     QLayout *m_leftViewLayout;

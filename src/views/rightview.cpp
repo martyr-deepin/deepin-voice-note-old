@@ -37,27 +37,30 @@ void RightView::initUI()
 
 void RightView::initNoteList()
 {
-    noteController = new NoteController();
+    m_noteController = new NoteController();
     m_noteListPage = new QWidget();
     m_noteListLayout = new QVBoxLayout();
     m_noteListLayout->setContentsMargins(0, 0, 0, 0);
 
 
 
-    m_noteListWidget = new RightNoteList(noteController);
+    m_noteListWidget = new RightNoteList(m_noteController);
     NOTE note1;
     note1.folderId = 1;
     note1.noteType = NOTE_TYPE::TEXT;
     note1.createTime = QDateTime::currentDateTime();
     note1.contentText = "这是一条测试用的case，sougo输入法这么难用吗";
     m_noteListWidget->addWidgetItem(note1);
+    //m_noteController->addNote(note1);
 
     NOTE note2;
     note2.folderId = 1;
     note2.noteType = NOTE_TYPE::TEXT;
     note2.createTime = QDateTime::currentDateTime();
-    note2.contentText = "这是一条测试用的case，sougo输入法这么难用吗";
+    note2.contentText = "这是一条测试用的case2，sougo输入法这么难用吗";
     m_noteListWidget->addWidgetItem(note2);
+    //m_noteController->addNote(note2);
+
     m_noteListLayout->addWidget(m_noteListWidget);
 //    QList<FOLDER> folderList = m_folderCtr->getFolderList();
 //    for (int i = 0; i < folderList.size(); i++)
@@ -86,4 +89,17 @@ void RightView::initNoteList()
     m_noteListWidget->setSizePolicy(sp);
     m_noteListPage->setLayout(m_noteListLayout);
     //m_noteListPage->setFixedWidth(pare);
+}
+
+void RightView::handleSelFolderChg(int folderId)
+{
+    m_noteListWidget->clear();
+    if (folderId > 0)
+    {
+        QList<NOTE> noteList = m_noteController->getNoteListByFolderId(folderId);
+        for (int i = 0; i < noteList.size(); i++)
+        {
+            m_noteListWidget->addWidgetItem(noteList.at(i));
+        }
+    }
 }
