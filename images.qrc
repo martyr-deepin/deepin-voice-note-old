@@ -5,5 +5,8 @@
         <file>image/add_hover.svg</file>
         <file>image/folder_normal.png</file>
         <file>image/default_folder_img.png</file>
+        <file>image/text_bg.png</file>
+        <file>image/add_text_btn.png</file>
+        <file>image/add_text_btn_press.png</file>
     </qresource>
 </RCC>

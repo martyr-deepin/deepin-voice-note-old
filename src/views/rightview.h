@@ -17,11 +17,16 @@ class RightView : public QFrame
     Q_OBJECT
 public:
     RightView();
+    ~RightView();
 public slots:
     void handleSelFolderChg(int folderId);
+    void addTextNote();
 private:
     void initUI();
+    void initConnection();
     void initNoteList();
+    void updateNoteList();
+    int m_currFolderId;
     QStackedWidget *m_stackedWidget;
     QWidget *m_noteListPage;
     QWidget *m_detailPage;

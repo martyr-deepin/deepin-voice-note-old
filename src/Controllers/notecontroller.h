@@ -10,6 +10,7 @@ public:
 
     QList<NOTE> getNoteListByFolderId(int folderId);
     bool addNote(NOTE noteInfo);
+    bool updateNote(NOTE noteInfo);
 };
 
 #endif // NOTECONTROLLER_H

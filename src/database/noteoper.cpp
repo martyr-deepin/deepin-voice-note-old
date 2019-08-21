@@ -46,3 +46,15 @@ bool NoteOper::addNote(NOTE noteInfo)
     return DatabaseOper::getInstance()->insertData(TABLE_NOTE, columnName, values);
 
 }
+
+bool NoteOper::updateNote(NOTE noteInfo)
+{
+    QString updateSql = "update %1 set content_text = :content, content_path = :contentPath where id = :id";
+    QString queryStrFinal = QString(updateSql).arg(TABLE_NOTE);
+    QMap<QString, QVariant> valuesMap;
+    valuesMap[":content"] = noteInfo.contentText;
+    valuesMap[":contentPath"] = noteInfo.contentPath;
+    valuesMap[":id"] = noteInfo.id;
+    return DatabaseOper::getInstance()->updateData(queryStrFinal, valuesMap);
+
+}

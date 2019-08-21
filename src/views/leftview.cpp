@@ -73,7 +73,6 @@ void LeftView::updateFolderView()
 
 void LeftView::addFolder()
 {
-    //todo:獲取新文件夾的名字
     FOLDER newFolder;
     newFolder.imgPath = DEFAULT_FOLDER_IMG_PATH;
     newFolder.folderName = m_folderCtr->getNextFolderName();

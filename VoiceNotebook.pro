@@ -37,33 +37,44 @@ SOURCES += \
     src/app/voicenotebookapp.cpp \
     src/views/mainwindow.cpp \
     src/views/dfmsplitter.cpp \
-    src/views/leftfolderview.cpp \
     src/views/rightview.cpp \
     src/views/leftview.cpp \
     src/views/folerwidgetitem.cpp \
     src/database/databaseoper.cpp \
     src/database/folderoper.cpp \
-    src/Controllers/foldercontroller.cpp
+    src/Controllers/foldercontroller.cpp \
+    src/views/leftfolderlist.cpp \
+    src/views/textnoteitem.cpp \
+    src/util/uiutil.cpp \
+    src/views/rightnotelist.cpp \
+    src/Controllers/notecontroller.cpp \
+    src/database/noteoper.cpp
 
 HEADERS += \
     src/app \
     src/app/voicenotebookapp.h \
     src/views/mainwindow.h \
     src/views/dfmsplitter.h \
-    src/views/leftfolderview.h \
     src/views/rightview.h \
     src/views/leftview.h \
     src/views/folerwidgetitem.h \
     src/database/databaseoper.h \
     src/app/consts.h \
     src/database/folderoper.h \
-    src/Controllers/foldercontroller.h
+    src/Controllers/foldercontroller.h \
+    src/views/leftfolderlist.h \
+    src/views/textnoteitem.h \
+    src/util/uiutil.h \
+    src/views/rightnotelist.h \
+    src/Controllers/notecontroller.h \
+    src/database/noteoper.h
 
 INCLUDEPATH += \
     src/app \
     src/views \
     src/database \
-    src/Controllers
+    src/Controllers \
+    src/util
 
 
 FORMS +=

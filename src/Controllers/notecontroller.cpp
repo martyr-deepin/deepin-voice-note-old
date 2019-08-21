@@ -22,3 +22,8 @@ bool NoteController::addNote(NOTE noteInfo)
     //todo:检查文件夹id是否存在
     return NoteOper::addNote(noteInfo);
 }
+
+bool NoteController::updateNote(NOTE noteInfo)
+{
+    return NoteOper::updateNote(noteInfo);
+}

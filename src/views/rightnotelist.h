@@ -16,6 +16,7 @@ public:
     void addWidgetItem(NOTE note);
 
 private:
+    NoteController *m_noteController;
     void initUI();
     void initConnection();
 };

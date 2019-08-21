@@ -35,7 +35,7 @@ void RightNoteList::addWidgetItem(NOTE note)
     item->setSizeHint(QSize(this->width(),100));
     if(note.noteType == NOTE_TYPE::TEXT)
     {
-        TextNoteItem *textItem = new TextNoteItem(note);
+        TextNoteItem *textItem = new TextNoteItem(note, m_noteController);
         this->setItemWidget(item, textItem);
     }
     else {

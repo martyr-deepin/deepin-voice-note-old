@@ -1,4 +1,5 @@
 #include "rightview.h"
+#include "textnoteitem.h"
 
 #include <QVBoxLayout>
 #include "consts.h"
@@ -6,7 +7,14 @@
 
 RightView::RightView()
 {
+    m_currFolderId = -1;
     initUI();
+    initConnection();
+}
+
+RightView::~RightView()
+{
+
 }
 
 void RightView::initUI()
@@ -32,6 +40,11 @@ void RightView::initUI()
     m_stackedWidget->addWidget(m_detailPage);
 
 
+}
+
+void RightView::initConnection()
+{
+    connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
 }
 
 
@@ -93,13 +106,38 @@ void RightView::initNoteList()
 
 void RightView::handleSelFolderChg(int folderId)
 {
+    m_currFolderId = folderId;
+    updateNoteList();
+
+}
+
+void RightView::addTextNote()
+{
+    NOTE note;
+    note.folderId = m_currFolderId;
+    note.noteType = NOTE_TYPE::TEXT;
+    note.createTime = QDateTime::currentDateTime();
+    note.contentText = "";
+    m_noteListWidget->addWidgetItem(note);
+
+
+    m_noteController->addNote(note);
+    updateNoteList();
+    TextNoteItem *item = (TextNoteItem*)(m_noteListWidget->itemWidget(m_noteListWidget->item(m_noteListWidget->count() - 1)));
+    item->changeToEditMode();
+//    m_leftFolderView->setCurrentRow(0);
+}
+
+void RightView::updateNoteList()
+{
     m_noteListWidget->clear();
-    if (folderId > 0)
+    if (m_currFolderId > 0)
     {
-        QList<NOTE> noteList = m_noteController->getNoteListByFolderId(folderId);
+        QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(noteList.at(i));
         }
+        m_noteListWidget->scrollToBottom();
     }
 }
