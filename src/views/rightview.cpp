@@ -58,28 +58,24 @@ void RightView::initNoteList()
 
 
     m_noteListWidget = new RightNoteList(m_noteController);
-    NOTE note1;
-    note1.folderId = 1;
-    note1.noteType = NOTE_TYPE::TEXT;
-    note1.createTime = QDateTime::currentDateTime();
-    note1.contentText = "这是一条测试用的case，sougo输入法这么难用吗";
-    m_noteListWidget->addWidgetItem(note1);
-    //m_noteController->addNote(note1);
+//    NOTE note1;
+//    note1.folderId = 1;
+//    note1.noteType = NOTE_TYPE::TEXT;
+//    note1.createTime = QDateTime::currentDateTime();
+//    note1.contentText = "这是一条测试用的case，sougo输入法这么难用吗";
+//    m_noteListWidget->addWidgetItem(note1);
+//    //m_noteController->addNote(note1);
 
-    NOTE note2;
-    note2.folderId = 1;
-    note2.noteType = NOTE_TYPE::TEXT;
-    note2.createTime = QDateTime::currentDateTime();
-    note2.contentText = "这是一条测试用的case2，sougo输入法这么难用吗";
-    m_noteListWidget->addWidgetItem(note2);
-    //m_noteController->addNote(note2);
+//    NOTE note2;
+//    note2.folderId = 1;
+//    note2.noteType = NOTE_TYPE::TEXT;
+//    note2.createTime = QDateTime::currentDateTime();
+//    note2.contentText = "这是一条测试用的case2，sougo输入法这么难用吗";
+//    m_noteListWidget->addWidgetItem(note2);
+//    //m_noteController->addNote(note2);
 
     m_noteListLayout->addWidget(m_noteListWidget);
-//    QList<FOLDER> folderList = m_folderCtr->getFolderList();
-//    for (int i = 0; i < folderList.size(); i++)
-//    {
-//        m_leftFolderView->addWidgetItem(folderList.at(i));
-//    }
+
     //m_noteListWidget->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     //m_noteListWidget->addWidget(m_leftFolderView);
@@ -98,7 +94,8 @@ void RightView::initNoteList()
     m_noteListLayout->addWidget(m_addVoiceBtn);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
-    sp.setVerticalPolicy(QSizePolicy::Expanding);
+    sp.setVerticalStretch(1);
+    //sp.setVerticalPolicy(QSizePolicy::Expanding);
     m_noteListWidget->setSizePolicy(sp);
     m_noteListPage->setLayout(m_noteListLayout);
     //m_noteListPage->setFixedWidth(pare);

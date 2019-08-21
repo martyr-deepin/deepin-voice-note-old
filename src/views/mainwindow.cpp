@@ -12,6 +12,7 @@ MyMainWindow::MyMainWindow()
 
 void MyMainWindow::initUI() {
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
+    setWindowRadius(20);
     setMinimumSize(650, 420);
     initTitleBar();
     initCentralWidget();
@@ -43,6 +44,13 @@ void MyMainWindow::initLeftView(){
 
 void MyMainWindow::initRightView(){
     m_rightView = new RightView();
+    QSizePolicy sp = m_rightView->sizePolicy();
+
+    //NOTE(zccrs): 保证窗口宽度改变时只会调整right view的宽度，侧边栏保持不变
+    //             QSplitter是使用QLayout的策略对widgets进行布局，所以此处
+    //             设置size policy可以生效
+    sp.setHorizontalStretch(1);
+    m_rightView->setSizePolicy(sp);
     m_rightView->setObjectName("rightView");
     m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);

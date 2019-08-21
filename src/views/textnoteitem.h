@@ -9,6 +9,8 @@
 #include <dimagebutton.h>
 #include <notecontroller.h>
 #include "consts.h"
+//#include "dtextedit.h"
+#include <QTextEdit>
 
 
 DWIDGET_USE_NAMESPACE
@@ -28,6 +30,7 @@ public:
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
+    QTextEdit *m_textEdit;
     void changeToEditMode();
 
 
