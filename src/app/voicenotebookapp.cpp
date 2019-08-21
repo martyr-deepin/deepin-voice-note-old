@@ -30,11 +30,12 @@ void VoiceNotebookApp::initApp()
     m_app->setAttribute(Qt::AA_UseHighDpiPixmaps);
     m_app->setTheme("light");
     m_app->setOrganizationName("deepin");
-    m_app->setApplicationName("dtk application");
-    m_app->setApplicationVersion("1.0");
+    m_app->setApplicationName("voice note");
+    m_app->setApplicationVersion(DApplication::buildVersion("20190821"));
+    //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
     m_app->setProductName("Dtk Application");
-    m_app->setApplicationDescription("This is a dtk template application.");
+    m_app->setApplicationDescription("This is a dtk voice notebook application.");
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
 

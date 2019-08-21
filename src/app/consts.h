@@ -7,8 +7,8 @@
 #define TABLE_FOLDER "folder"
 #define TABLE_NOTE "note"
 
-//static QString DB_PATH = "./voiceNoteDB1.db";
-static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
+static QString DB_PATH = "./voiceNoteDB.db";
+//static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
 static QString DEFAULT_FOLDER_IMG_PATH = ":/image/default_folder_img.png";
 static const char * DEFAULT_FOLDER_NAME = "新记事";
 static const char * FOLDER_MENU_RENAME = "重命名";
