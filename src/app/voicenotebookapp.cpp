@@ -34,7 +34,7 @@ void VoiceNotebookApp::initApp()
     m_app->setApplicationVersion(DApplication::buildVersion("20190821"));
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
-    m_app->setProductName("Dtk Application");
+    m_app->setProductName("Voice note Application");
     m_app->setApplicationDescription("This is a dtk voice notebook application.");
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
