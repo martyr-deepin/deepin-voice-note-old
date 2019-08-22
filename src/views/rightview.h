@@ -28,6 +28,7 @@ private:
     void updateNoteList();
     int m_currFolderId;
     QStackedWidget *m_stackedWidget;
+    QLayout *m_stackedWidgetLayout;
     QWidget *m_noteListPage;
     QWidget *m_detailPage;
     QPlainTextEdit *m_plainTextEdit;

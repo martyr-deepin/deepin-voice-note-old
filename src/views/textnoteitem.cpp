@@ -6,28 +6,49 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr)
 {
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
+
+//    this->setMinimumHeight(100);
+//    this->setMaximumHeight(200);
+
     initUI();
     initConnection();
+    this->setStyleSheet("background: blue");
+//    qDebug()<< "TextNoteItem: m_timeLabel " << m_timeLabel->height();
+//    qDebug()<< "TextNoteItem: m_bgWidget " << m_bgWidget->height();
+//    qDebug()<< "TextNoteItem: parent " << this->height();
 }
 
 TextNoteItem::~TextNoteItem()
 {
 
 }
-//TEXT_NOTE textNote;
-//QLabel *m_timeLabel;
-//QWidget *m_bgWidget;
-//QHBoxLayout *m_hBoxLayout;
-//QLabel *m_textLabel;
-//DImageButton *m_menuBtn;
+
 void TextNoteItem::initUI()
 {
-    m_timeLabel = new QLabel(this);
+    m_timeLabel = new QLabel();
+    QSizePolicy sp = m_timeLabel->sizePolicy();
+    sp.setVerticalPolicy(QSizePolicy::Fixed);
+    m_timeLabel->setSizePolicy(sp);
+    m_bgWidget = new QWidget();
+    QSizePolicy sp1 = m_bgWidget->sizePolicy();
+    sp.setVerticalPolicy(QSizePolicy::Fixed);
+    m_bgWidget->setSizePolicy(sp1);
+    m_itemLayout = new QVBoxLayout();
+    m_itemLayout->setContentsMargins(0, 0, 0, 0);
+
+    m_itemLayout->addWidget(m_timeLabel);
+    m_itemLayout->addWidget(m_bgWidget);
+    m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
+    this->setLayout(m_itemLayout);
+//    QSizePolicy sp = m_bgWidget->sizePolicy();
+//    sp.setHorizontalStretch(1);
+//    m_bgWidget->setSizePolicy(sp);
+
     m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
     m_timeLabel->setText(m_textNote.createTime.toString());
-    m_bgWidget = new QWidget(this);
-    m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
+
+    //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
     m_bgWidget->setStyleSheet("background: green");
     //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
@@ -75,11 +96,11 @@ void TextNoteItem::initUI()
 
     m_textEdit = new QTextEdit(m_bgWidget);
     m_textEdit->setText(m_textNote.contentText);
-    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(m_textEdit->sizePolicy().hasHeightForWidth());
-    m_textEdit->setSizePolicy(sizePolicy);
+//    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+//    sizePolicy.setHorizontalStretch(0);
+//    sizePolicy.setVerticalStretch(0);
+//    sizePolicy.setHeightForWidth(m_textEdit->sizePolicy().hasHeightForWidth());
+//    m_textEdit->setSizePolicy(sizePolicy);
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_hBoxLayout->addWidget(m_textEdit);
 
@@ -102,12 +123,17 @@ void TextNoteItem::initUI()
 
 
    m_hBoxLayout->addWidget(m_menuBtn);
+
+   textAreaChanged();
 }
 
 void TextNoteItem::initConnection()
 {
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &QTextEdit::textChanged, this, &TextNoteItem::updateNote);
+    connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
+    //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
+
 }
 
 void TextNoteItem::changeToEditMode()
@@ -143,5 +169,14 @@ void TextNoteItem::updateNote()
     {
         m_textNote.contentText = m_textEdit->toPlainText();
     }
+}
+
+void TextNoteItem::textAreaChanged()
+{
+//    QTextDocument *document = m_textEdit->document();
+//    int newHeight = document->size().height() + 20;
+//    m_textEdit->setFixedHeight(newHeight);
+//    m_bgWidget->setFixedHeight(newHeight);
+//    this->setFixedHeight(m_timeLabel->height() + newHeight);
 }
 

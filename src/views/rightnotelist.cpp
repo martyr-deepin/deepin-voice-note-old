@@ -1,5 +1,6 @@
 #include "rightnotelist.h"
 #include "textnoteitem.h"
+#include <QDebug>
 
 RightNoteList::RightNoteList(NoteController *noteController)
 {
@@ -31,12 +32,16 @@ void RightNoteList::initConnection()
 
 void RightNoteList::addWidgetItem(NOTE note)
 {
-    QListWidgetItem *item=new QListWidgetItem(this);
-    item->setSizeHint(QSize(this->width(),100));
+
+
     if(note.noteType == NOTE_TYPE::TEXT)
     {
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController);
+        QListWidgetItem *item=new QListWidgetItem(this);
+        qDebug() << "text item height: " << textItem->height();
+        item->setSizeHint(QSize(this->width(),100));
         this->setItemWidget(item, textItem);
+
     }
     else {
         //todo加载voice note

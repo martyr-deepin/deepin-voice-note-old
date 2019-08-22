@@ -20,8 +20,12 @@ RightView::~RightView()
 void RightView::initUI()
 {
     initNoteList();
-    //this->setStyleSheet("background: green");
-    m_stackedWidget = new QStackedWidget(this);
+    //this->setStyleSheet("background: blue");
+    m_stackedWidgetLayout = new QVBoxLayout();
+    this->setLayout(m_stackedWidgetLayout);
+    m_stackedWidget = new QStackedWidget();
+    m_stackedWidgetLayout->addWidget(m_stackedWidget);
+    //m_stackedWidget->setStyleSheet("background: blue");
     m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
     m_stackedWidget->setObjectName("stackedWidget");
 
@@ -52,12 +56,14 @@ void RightView::initNoteList()
 {
     m_noteController = new NoteController();
     m_noteListPage = new QWidget();
+    //m_noteListPage->setStyleSheet("background: blue");
     m_noteListLayout = new QVBoxLayout();
     m_noteListLayout->setContentsMargins(0, 0, 0, 0);
 
 
 
     m_noteListWidget = new RightNoteList(m_noteController);
+    //m_noteListWidget->setStyleSheet("background: blue");
 //    NOTE note1;
 //    note1.folderId = 1;
 //    note1.noteType = NOTE_TYPE::TEXT;
