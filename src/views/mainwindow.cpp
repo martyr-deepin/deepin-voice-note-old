@@ -21,49 +21,20 @@ void MyMainWindow::initUI() {
 
 void MyMainWindow::initConnection()
 {
-    QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
-    //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
+    //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
+    QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
 }
 
-void MyMainWindow::initSplitter(){
-    initLeftView();
-    initRightView();
 
-    m_splitter = new DFMSplitter(Qt::Horizontal, this);
-    m_splitter->addWidget(m_leftView);
-    m_splitter->addWidget(m_rightView);
-    m_splitter->setChildrenCollapsible(false);
-}
-
-void MyMainWindow::initLeftView(){
-    m_leftView = new LeftView();
-
-
-
-}
-
-void MyMainWindow::initRightView(){
-    m_rightView = new RightView();
-    QSizePolicy sp = m_rightView->sizePolicy();
-
-    //NOTE(zccrs): 保证窗口宽度改变时只会调整right view的宽度，侧边栏保持不变
-    //             QSplitter是使用QLayout的策略对widgets进行布局，所以此处
-    //             设置size policy可以生效
-    sp.setHorizontalStretch(1);
-    m_rightView->setSizePolicy(sp);
-    m_rightView->setObjectName("rightView");
-    m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
-    //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
-}
 
 void MyMainWindow::initCentralWidget()
 {
-    initSplitter();
+    initStackedWidget();
 
     m_centralWidget = new QFrame(this);
     m_centralWidget->setObjectName("CentralWidget");
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(m_splitter);
+    mainLayout->addWidget(m_stackedWidget);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     m_centralWidget->setLayout(mainLayout);
@@ -73,3 +44,42 @@ void MyMainWindow::initCentralWidget()
 void MyMainWindow::initTitleBar(){
 
 }
+
+void MyMainWindow::initStackedWidget()
+{
+//    m_stackedWidgetLayout = new QVBoxLayout();
+//    this->setLayout(m_stackedWidgetLayout);
+    m_stackedWidget = new QStackedWidget();
+    //m_stackedWidgetLayout->addWidget(m_stackedWidget);
+    //m_stackedWidget->setStyleSheet("background: blue");
+    //m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
+    m_stackedWidget->setObjectName("stackedWidget");
+
+    m_mainPage = new MainPage();
+    m_stackedWidget->addWidget(m_mainPage);
+    m_stackedWidget->setCurrentIndex(0);
+
+
+    m_detailPage = new QWidget();
+    m_detailPageLayout = new QVBoxLayout();
+    m_detailPage->setLayout(m_detailPageLayout);
+    m_textNoteEdit = new TextNoteEdit();
+    m_detailPageLayout->addWidget(m_textNoteEdit);
+    m_stackedWidget->addWidget(m_detailPage);
+
+//    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
+//    //    self.detailPage = QtWidgets.QWidget()
+//    //    self.detailPage.setObjectName("detailPage")
+//    //    self.plainTextEdit = QtWidgets.QPlainTextEdit(self.detailPage)
+//    //    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
+//    //    self.plainTextEdit.setObjectName("plainTextEdit")
+//    m_stackedWidget->addWidget(m_detailPage);
+}
+
+void MyMainWindow::showNoteDetail(NOTE note)
+{
+    m_textNoteEdit->setTextNote(note);
+    m_stackedWidget->setCurrentIndex(1);
+}
+
+

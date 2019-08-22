@@ -12,6 +12,7 @@
 //#include "dtextedit.h"
 #include <QTextEdit>
 #include <QObject>
+#include "textnoteedit.h"
 
 
 DWIDGET_USE_NAMESPACE
@@ -33,11 +34,14 @@ public:
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
-    QTextEdit *m_textEdit;
-    void changeToEditMode();
+    TextNoteEdit *m_textEdit;
+    void changeToEditMode();  
+signals:
+    void textEditClicked(NOTE m_textNote);
 
 public slots:
     void textAreaChanged();
+    void handleTextEditClicked();
 
 
 

@@ -37,9 +37,10 @@ void RightNoteList::addWidgetItem(NOTE note)
     if(note.noteType == NOTE_TYPE::TEXT)
     {
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController);
+        connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         qDebug() << "text item height: " << textItem->height();
-        item->setSizeHint(QSize(this->width(),100));
+        item->setSizeHint(QSize(this->width(),140));
         this->setItemWidget(item, textItem);
 
     }

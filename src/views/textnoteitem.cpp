@@ -12,7 +12,7 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr)
 
     initUI();
     initConnection();
-    this->setStyleSheet("background: blue");
+//    this->setStyleSheet("background: blue");
 //    qDebug()<< "TextNoteItem: m_timeLabel " << m_timeLabel->height();
 //    qDebug()<< "TextNoteItem: m_bgWidget " << m_bgWidget->height();
 //    qDebug()<< "TextNoteItem: parent " << this->height();
@@ -94,7 +94,7 @@ void TextNoteItem::initUI()
 //    m_hBoxLayout->addWidget(m_stackedWidget);
 //    m_stackedWidget->setCurrentIndex(1);
 
-    m_textEdit = new QTextEdit(m_bgWidget);
+    m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
     m_textEdit->setText(m_textNote.contentText);
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
@@ -130,7 +130,8 @@ void TextNoteItem::initUI()
 void TextNoteItem::initConnection()
 {
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
-    connect(m_textEdit, &QTextEdit::textChanged, this, &TextNoteItem::updateNote);
+    //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
+    connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
 
@@ -180,3 +181,8 @@ void TextNoteItem::textAreaChanged()
 //    this->setFixedHeight(m_timeLabel->height() + newHeight);
 }
 
+
+void TextNoteItem::handleTextEditClicked()
+{
+    emit textEditClicked(m_textNote);
+}

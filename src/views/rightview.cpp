@@ -49,6 +49,7 @@ void RightView::initUI()
 void RightView::initConnection()
 {
     connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
+    connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
 }
 
 

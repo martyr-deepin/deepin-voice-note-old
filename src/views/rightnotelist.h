@@ -4,6 +4,7 @@
 #include <QListWidget>
 #include <notecontroller.h>
 #include <consts.h>
+#include <QObject>
 
 
 
@@ -14,6 +15,9 @@ public:
     RightNoteList(NoteController *noteController);
     ~RightNoteList();
     void addWidgetItem(NOTE note);
+
+signals:
+    void textEditClicked(NOTE textNote);
 
 private:
     NoteController *m_noteController;

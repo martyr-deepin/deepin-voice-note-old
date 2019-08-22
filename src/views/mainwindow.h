@@ -1,13 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "dfmsplitter.h"
-#include "leftfolderlist.h"
-#include "rightview.h"
+#include "mainpage.h"
+#include "textnoteedit.h"
+
 
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
+#include <QVBoxLayout>
+#include <QStackedWidget>
 #define DEFAULT_WINDOWS_WIDTH 960
 #define DEFAULT_WINDOWS_HEIGHT 540
 
@@ -20,23 +22,32 @@ class MyMainWindow : public DMainWindow
 public:
     MyMainWindow();
 
+public slots:
+    void showNoteDetail(NOTE note);
+
 private:
      QFrame *m_centralWidget;
-     DFMSplitter *m_splitter;
-     QFrame *m_leftView;
+//     DFMSplitter *m_splitter;
+//     QFrame *m_leftView;
 
-     RightView *m_rightView;
+//     RightView *m_rightView;
+    MainPage * m_mainPage;
+    QStackedWidget * m_stackedWidget;
+    TextNoteEdit * m_textNoteEdit;
+    QWidget *m_detailPage;
+    QVBoxLayout *m_detailPageLayout;
 
     void initUI();
     void initConnection();
 
     void initTitleBar();
 
-    void initSplitter();
+    void initStackedWidget();
+//    void initSplitter();
 
-    void initLeftView();
+//    void initLeftView();
 
-    void initRightView();
+//    void initRightView();
 
     void initCentralWidget();
 };

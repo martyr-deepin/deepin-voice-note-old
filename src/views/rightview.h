@@ -18,6 +18,9 @@ class RightView : public QFrame
 public:
     RightView();
     ~RightView();
+signals:
+    void textEditClicked(NOTE textNote);
+
 public slots:
     void handleSelFolderChg(int folderId);
     void addTextNote();

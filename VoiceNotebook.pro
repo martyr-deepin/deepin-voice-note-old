@@ -48,7 +48,9 @@ SOURCES += \
     src/util/uiutil.cpp \
     src/views/rightnotelist.cpp \
     src/Controllers/notecontroller.cpp \
-    src/database/noteoper.cpp
+    src/database/noteoper.cpp \
+    src/views/textnoteedit.cpp \
+    src/views/mainpage.cpp
 
 HEADERS += \
     src/app \
@@ -67,7 +69,9 @@ HEADERS += \
     src/util/uiutil.h \
     src/views/rightnotelist.h \
     src/Controllers/notecontroller.h \
-    src/database/noteoper.h
+    src/database/noteoper.h \
+    src/views/textnoteedit.h \
+    src/views/mainpage.h
 
 INCLUDEPATH += \
     src/app \
