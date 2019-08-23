@@ -23,6 +23,9 @@ public:
     MainPage();
     ~MainPage();
 
+public:
+    void updateNoteList();
+
 signals:
     void textEditClicked(NOTE textNote);
 

@@ -1,6 +1,7 @@
 #include "folerwidgetitem.h"
 
 #include <QString>
+#include <uiutil.h>
 
 
 //FolerWidgetItem::FolerWidgetItem()
@@ -26,12 +27,12 @@ void FolerWidgetItem::initUI()
     m_imageLabel->setGeometry(QRect(10, 10, 50, 40));
     m_imageLabel->setObjectName("imageLabel");
     m_imageLabel->size();
-    QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
+    //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
 
 //    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
 //    if (convertFlag)
 //    {
-        m_imageLabel->setPixmap(getPixmap(m_imageLabel->size(), m_folder.imgPath));
+        m_imageLabel->setPixmap(UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath));
 //    }
 
     m_nameLabel = new QLabel(this);
@@ -57,18 +58,18 @@ void FolerWidgetItem::initConnection()
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
 }
 
-QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
-{
-    if ((nullptr == imgPath) || (imgPath.length() <= 0))
-    {
-        //todo:如果沒有圖片，要使用默認的圖片
-    }
-    QImage *img = new QImage();
-    img->load(imgPath);
-    // 设定图像大小自适应label窗口的大小
-    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    return QPixmap::fromImage(*img);
-}
+//QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
+//{
+//    if ((nullptr == imgPath) || (imgPath.length() <= 0))
+//    {
+//        //todo:如果沒有圖片，要使用默認的圖片
+//    }
+//    QImage *img = new QImage();
+//    img->load(imgPath);
+//    // 设定图像大小自适应label窗口的大小
+//    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+//    return QPixmap::fromImage(*img);
+//}
 QString FolerWidgetItem::getCreateTimeLabel(QDateTime createTime)
 {
 //    int destDayOfYear = createTime.date().dayOfYear();

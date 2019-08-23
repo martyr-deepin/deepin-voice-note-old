@@ -77,3 +77,8 @@ void MainPage::initRightView(){
 void MainPage::initTitleBar(){
 
 }
+
+void MainPage::updateNoteList()
+{
+    m_rightView->updateNoteList();
+}

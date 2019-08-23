@@ -8,5 +8,6 @@
         <file>image/text_bg.png</file>
         <file>image/add_text_btn.png</file>
         <file>image/add_text_btn_press.png</file>
+        <file>image/voice_note_logo.svg</file>
     </qresource>
 </RCC>

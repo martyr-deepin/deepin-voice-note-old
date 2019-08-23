@@ -37,7 +37,7 @@ private:
 
     void initUI();
     void initConnection();
-    QPixmap getPixmap(QSize size, QString imgPath);
+    //QPixmap getPixmap(QSize size, QString imgPath);
     QString getCreateTimeLabel(QDateTime createTime);
 
 

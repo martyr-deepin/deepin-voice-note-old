@@ -18,6 +18,8 @@ class RightView : public QFrame
 public:
     RightView();
     ~RightView();
+
+    void updateNoteList();
 signals:
     void textEditClicked(NOTE textNote);
 
@@ -28,7 +30,7 @@ private:
     void initUI();
     void initConnection();
     void initNoteList();
-    void updateNoteList();
+
     int m_currFolderId;
     QStackedWidget *m_stackedWidget;
     QLayout *m_stackedWidgetLayout;
