@@ -116,13 +116,32 @@ void TextNoteItem::initUI()
 //    m_plainTextEdit = new QPlainTextEdit(m_bgWidget);
 
    //m_hBoxLayout->addWidget(m_textLabel);
+//   m_menuBtn = new DImageButton(m_bgWidget);
    m_menuBtn = new DImageButton(m_bgWidget);
+   m_menuBtn->setFixedSize(QSize(40, 40));
    m_menuBtn->setNormalPic(":/image/add_normal.svg");
    m_menuBtn->setHoverPic(":/image/add_hover.svg");
    m_menuBtn->setPressPic(":/image/add_press.svg");
+   m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
+   m_arrowMenu->setHeight(200);
+   m_arrowMenu->setWidth(200);
+//   m_arrowMenu->move((m_menuBtn->x() + m_menuBtn->width() / 2), (m_menuBtn->y() + m_menuBtn->height() ));
+   qDebug() << "m_menuBtn->x():" << m_menuBtn->x() << ",m_menuBtn->width() / 2 :" << m_menuBtn->width() / 2 << ",m_menuBtn->y() :" << m_menuBtn->y() << ",m_menuBtn->height(): " << m_menuBtn->height();
+   //m_arrowMenu->move(100, 100);
+//   m_arrowMenu->show(0, 0);
+   //m_arrowMenu->setContent(m_menuBtn);
+   //m_arrowMenu->setVisible(true);
 
 
+   m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
    m_hBoxLayout->addWidget(m_menuBtn);
+
+   m_contextMenu = new QMenu;
+   m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS),this);
+   m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
+   m_contextMenu->addAction(m_saveAsAction);
+   m_contextMenu->addAction(m_delAction);
+   m_arrowMenu->setContent(m_contextMenu);
 
    textAreaChanged();
 }
@@ -133,6 +152,7 @@ void TextNoteItem::initConnection()
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
+    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
 
 }
@@ -185,4 +205,12 @@ void TextNoteItem::textAreaChanged()
 void TextNoteItem::handleTextEditClicked()
 {
     emit textEditClicked(m_textNote);
+}
+
+void TextNoteItem::handleMenuBtnClicked()
+{
+    QPoint p = m_menuBtn->mapToParent(m_menuBtn->pos());
+    qDebug() << "p.x" << m_menuBtn->x() << ",p.y:" << m_menuBtn->y();
+    qDebug() << "p.x1" << m_menuBtn->mapToGlobal(m_menuBtn->pos()).x() << ",p.y1:" << m_menuBtn->mapToGlobal(m_menuBtn->pos()).y();
+    m_arrowMenu->show(1377 + m_menuBtn->width() / 2, 424 +m_menuBtn->height());
 }

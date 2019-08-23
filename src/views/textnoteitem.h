@@ -13,6 +13,9 @@
 #include <QTextEdit>
 #include <QObject>
 #include "textnoteedit.h"
+#include <darrowrectangle.h>
+#include <QMenu>
+#include <QAction>
 
 
 DWIDGET_USE_NAMESPACE
@@ -35,6 +38,7 @@ public:
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
+    DArrowRectangle *m_arrowMenu;
     void changeToEditMode();  
 signals:
     void textEditClicked(NOTE m_textNote);
@@ -42,11 +46,15 @@ signals:
 public slots:
     void textAreaChanged();
     void handleTextEditClicked();
+    void handleMenuBtnClicked();
 
 
 
 private:
     NoteController *m_noteCtr;
+    QMenu *m_contextMenu;
+    QAction *m_saveAsAction;
+    QAction *m_delAction;
     void initUI();
     void initConnection();
     void updateNote();
