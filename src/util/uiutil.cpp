@@ -34,3 +34,14 @@ QPixmap UiUtil::getPixmap(QSize size, QString imgPath)
 //    return QPixmap::fromImage(*img);
 
 }
+
+DDialog* UiUtil::createDialog(const QString &title, const QString &content, QWidget *parent)
+{
+    DDialog *dialog = new DDialog(title, content, parent);
+    dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
+    dialog->setIcon(QIcon(":/image/voice_note_logo.svg"));
+    dialog->addButton(QString(QObject::tr("Cancel")), false, DDialog::ButtonNormal);
+    dialog->addButton(QString(QObject::tr("Delete")), false, DDialog::ButtonNormal);
+
+    return dialog;
+}

@@ -13,7 +13,7 @@
 #include <QTextEdit>
 #include <QObject>
 #include "textnoteedit.h"
-#include <darrowrectangle.h>
+//#include <darrowrectangle.h>
 #include <QMenu>
 #include <QAction>
 
@@ -38,10 +38,11 @@ public:
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
-    DArrowRectangle *m_arrowMenu;
+//    DArrowRectangle *m_arrowMenu;
     void changeToEditMode();  
 signals:
     void textEditClicked(NOTE m_textNote);
+    void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, TextNoteItem *textNoteItem, NOTE note);
 
 public slots:
     void textAreaChanged();
@@ -50,11 +51,12 @@ public slots:
 
 
 
+
 private:
     NoteController *m_noteCtr;
-    QMenu *m_contextMenu;
-    QAction *m_saveAsAction;
-    QAction *m_delAction;
+//    QMenu *m_contextMenu;
+//    QAction *m_saveAsAction;
+//    QAction *m_delAction;
     void initUI();
     void initConnection();
     void updateNote();

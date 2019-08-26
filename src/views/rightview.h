@@ -8,6 +8,7 @@
 #include <QStackedWidget>
 #include <QWidget>
 #include <dimagebutton.h>
+//#include <dimagebutton.h>
 #include <QObject>
 
 DWIDGET_USE_NAMESPACE

@@ -19,6 +19,7 @@ public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void handleDelItem(bool checked);
     void handleRenameItem(bool checked);
+
 protected:
     void mousePressEvent(QMouseEvent *event);
 private:

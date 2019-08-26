@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include "consts.h"
+#include "darrowrectangle.h"
 
 
 RightView::RightView()
@@ -19,6 +20,10 @@ RightView::~RightView()
 
 void RightView::initUI()
 {
+//    DArrowRectangle *m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWidget, this);
+//    m_arrowMenu->setHeight(80);
+//    m_arrowMenu->setWidth(80);
+//    m_arrowMenu->show(0, 0);
     initNoteList();
     //this->setStyleSheet("background: blue");
     m_stackedWidgetLayout = new QVBoxLayout();

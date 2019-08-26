@@ -27,3 +27,9 @@ bool NoteController::updateNote(NOTE noteInfo)
 {
     return NoteOper::updateNote(noteInfo);
 }
+
+
+bool NoteController::deleteNote(int noteId)
+{
+    return NoteOper::deleteNote(noteId);
+}

@@ -13,6 +13,7 @@ public:
     static QList<NOTE> getNoteListByFolderId(int folderId);
     static bool addNote(NOTE noteInfo);
     static bool updateNote(NOTE noteInfo);
+    static bool deleteNote(int id);
 };
 
 #endif // NOTEOPER_H

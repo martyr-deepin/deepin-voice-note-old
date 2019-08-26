@@ -97,3 +97,5 @@ void LeftFolderList::handleRenameItem(bool checked)
     FolerWidgetItem *item = (FolerWidgetItem*)this->itemWidget(this->currentItem());
     item->changeToEditMode();
 }
+
+

@@ -1,12 +1,18 @@
 #ifndef RIGHTNOTELIST_H
 #define RIGHTNOTELIST_H
 
+#include "textnoteitem.h"
+
 #include <QListWidget>
 #include <notecontroller.h>
 #include <consts.h>
 #include <QObject>
+#include <darrowrectangle.h>
+//#include <DInputDialog>
+#include <dinputdialog.h>
+//#include <DArrowRectangle>
 
-
+DWIDGET_USE_NAMESPACE
 
 class RightNoteList : public QListWidget
 {
@@ -19,8 +25,23 @@ public:
 signals:
     void textEditClicked(NOTE textNote);
 
+
+public slots:
+    void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, TextNoteItem *textNoteItem, NOTE note);
+    void handleDelItem(bool);
+    void handleSaveAsItem(bool);
+    void handleDelDialogClicked(int index, const QString &text);
+
+
 private:
+    QMenu *m_contextMenu;
+    QAction *m_saveAsAction;
+    QAction *m_delAction;
     NoteController *m_noteController;
+    DArrowRectangle *m_arrowMenu;
+    QListWidgetItem *m_currSelItem;
+    NOTE m_currSelNote;
+    DDialog *m_delConfirmDialog;
     void initUI();
     void initConnection();
 };

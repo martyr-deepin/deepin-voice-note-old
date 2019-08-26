@@ -58,3 +58,8 @@ bool NoteOper::updateNote(NOTE noteInfo)
     return DatabaseOper::getInstance()->updateData(queryStrFinal, valuesMap);
 
 }
+
+bool NoteOper::deleteNote(int id)
+{
+    return DatabaseOper::getInstance()->deleteDataById(TABLE_NOTE, "id", id);
+}

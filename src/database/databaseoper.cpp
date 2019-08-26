@@ -173,7 +173,7 @@ bool DatabaseOper::queryData(QString queryStr, int resultItemSize, QList<QList<Q
 bool DatabaseOper::deleteDataById(QString tableName, QString id, int idValue)
 {
     QString deleteSql = "delete from %1 where %2 = ?";
-    QString deleteSqlFinal = QString(deleteSql).arg(TABLE_FOLDER).arg(id);
+    QString deleteSqlFinal = QString(deleteSql).arg(tableName).arg(id);
     //QString deleteSql = "delete from %s where %s = ?";
 
 

@@ -5,6 +5,7 @@
 #include <DWidgetUtil>
 #include <QFrame>
 #include <foldercontroller.h>
+//#include <DImageButton>
 #include <dimagebutton.h>
 #include <QObject>
 #include "consts.h"
