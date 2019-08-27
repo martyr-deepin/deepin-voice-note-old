@@ -50,7 +50,8 @@ SOURCES += \
     src/Controllers/notecontroller.cpp \
     src/database/noteoper.cpp \
     src/views/textnoteedit.cpp \
-    src/views/mainpage.cpp
+    src/views/mainpage.cpp \
+    src/views/voicenoteitem.cpp
 
 HEADERS += \
     src/app \
@@ -71,7 +72,8 @@ HEADERS += \
     src/Controllers/notecontroller.h \
     src/database/noteoper.h \
     src/views/textnoteedit.h \
-    src/views/mainpage.h
+    src/views/mainpage.h \
+    src/views/voicenoteitem.h
 
 INCLUDEPATH += \
     src/app \

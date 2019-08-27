@@ -36,7 +36,8 @@ void MyMainWindow::initTitleFrame()
     m_logo = new QLabel();
     m_logo->setObjectName("LogoButton");
     m_logo->setFixedSize(QSize(24, 24));
-    m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/voice_note_logo.svg"));;
+    m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/voice_note_logo.svg"));
+
     m_returnBtn = new DImageButton();
     m_returnBtn->setFixedSize(QSize(24, 24));
     m_returnBtn->setNormalPic(":/image/add_normal.svg");
@@ -45,6 +46,7 @@ void MyMainWindow::initTitleFrame()
     m_returnBtn->setVisible(false);
     m_titleFrame = new QFrame;
     m_titleFrame->setObjectName("TitleBar");
+    //m_titleFrame->setStyleSheet("background: blue");
     QHBoxLayout *titleLayout = new QHBoxLayout;
     titleLayout->setMargin(0);
     titleLayout->setSpacing(0);
@@ -54,9 +56,14 @@ void MyMainWindow::initTitleFrame()
     titleLayout->addWidget(m_returnBtn);
     titleLayout->setSpacing(0);
     titleLayout->setContentsMargins(0, 0, 0, 0);
+
+
+    QSizePolicy spLogo= m_logo->sizePolicy();
+    spLogo.setHorizontalStretch(1);
+    m_logo->setSizePolicy(spLogo);
     m_titleFrame->setLayout(titleLayout);
     m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
-    this->titlebar()->setCustomWidget(m_titleFrame, Qt::AlignLeft);
+    this->titlebar()->setCustomWidget(m_titleFrame, false);
 
 }
 

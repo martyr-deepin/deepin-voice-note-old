@@ -8,8 +8,7 @@
 #include <consts.h>
 #include <QObject>
 #include <darrowrectangle.h>
-//#include <DInputDialog>
-#include <dinputdialog.h>
+#include <DDialog>
 //#include <DArrowRectangle>
 
 DWIDGET_USE_NAMESPACE

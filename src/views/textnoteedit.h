@@ -1,7 +1,7 @@
 #ifndef TEXTNOTEEDIT_H
 #define TEXTNOTEEDIT_H
-//#include <DTextEdit>
-#include <dtextedit.h>
+#include <DTextEdit>
+//#include <dtextedit.h>
 #include <notecontroller.h>
 #include <QObject>
 #include <QTextEdit>

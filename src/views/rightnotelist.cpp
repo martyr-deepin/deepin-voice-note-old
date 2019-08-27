@@ -1,5 +1,6 @@
 #include "rightnotelist.h"
 #include "textnoteitem.h"
+#include "voicenoteitem.h"
 #include <QDebug>
 #include <uiutil.h>
 
@@ -66,8 +67,11 @@ void RightNoteList::addWidgetItem(NOTE note)
         this->setItemWidget(item, textItem);
 
     }
-    else {
-        //todo加载voice note
+    else if(note.noteType == NOTE_TYPE::VOICE){
+        VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
+        QListWidgetItem *item=new QListWidgetItem(this);
+        item->setSizeHint(QSize(this->width(),140));
+        this->setItemWidget(item, voiceItem);
     }
 }
 

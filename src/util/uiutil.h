@@ -2,8 +2,8 @@
 #define UIUTIL_H
 
 #include <QWidget>
-//#include <DDialog>
-#include <ddialog.h>
+#include <DDialog>
+//#include <ddialog.h>
 
 
 DWIDGET_USE_NAMESPACE
