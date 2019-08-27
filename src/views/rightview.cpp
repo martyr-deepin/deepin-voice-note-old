@@ -99,9 +99,9 @@ void RightView::initNoteList()
 
     m_noteListLayout->addWidget(m_addTextBtn);
     m_addVoiceBtn = new DImageButton();
-    m_addVoiceBtn->setNormalPic(":/image/add_normal.svg");
-    m_addVoiceBtn->setHoverPic(":/image/add_hover.svg");
-    m_addVoiceBtn->setPressPic(":/image/add_press.svg");
+    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
+    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
+    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
 
     m_noteListLayout->addWidget(m_addVoiceBtn);
 

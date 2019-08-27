@@ -37,9 +37,9 @@ void LeftView::initUI()
     m_leftViewLayout->addWidget(m_leftFolderView);
 
     m_addFolderBtn = new DImageButton();
-    m_addFolderBtn->setNormalPic(":/image/add_normal.svg");
-    m_addFolderBtn->setHoverPic(":/image/add_hover.svg");
-    m_addFolderBtn->setPressPic(":/image/add_press.svg");
+    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add.svg");
+    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
+    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
 
     m_leftViewLayout->addWidget(m_addFolderBtn);
     QSizePolicy sp = m_leftFolderView->sizePolicy();

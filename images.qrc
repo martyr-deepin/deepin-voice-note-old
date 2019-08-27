@@ -9,5 +9,42 @@
         <file>image/add_text_btn.png</file>
         <file>image/add_text_btn_press.png</file>
         <file>image/voice_note_logo.svg</file>
+        <file>image/icon/disabled/play_disabled.svg</file>
+        <file>image/icon/disabled/circlebutton_add_disabled.svg</file>
+        <file>image/icon/disabled/more_disabled.svg</file>
+        <file>image/icon/focus/more_focus.svg</file>
+        <file>image/icon/focus/circlebutton_voice_focus.svg</file>
+        <file>image/icon/focus/pause_blue_focus.svg</file>
+        <file>image/icon/focus/pause_red_focus.svg</file>
+        <file>image/icon/focus/finish_focus.svg</file>
+        <file>image/icon/focus/play_focus.svg</file>
+        <file>image/icon/focus/record_focus.svg</file>
+        <file>image/icon/hover/more_hover.svg</file>
+        <file>image/icon/hover/circlebutton_voice_hover.svg</file>
+        <file>image/icon/hover/finish_hover.svg</file>
+        <file>image/icon/hover/record_hover.svg</file>
+        <file>image/icon/hover/circlebutton_add _hover.svg</file>
+        <file>image/icon/hover/pause_red_hover.svg</file>
+        <file>image/icon/hover/pause_blue_hover.svg</file>
+        <file>image/icon/hover/play_hover.svg</file>
+        <file>image/icon/normal/more_normal.svg</file>
+        <file>image/icon/normal/circlebutton_voice.svg</file>
+        <file>image/icon/normal/finish_normal.svg</file>
+        <file>image/icon/normal/cursor.svg</file>
+        <file>image/icon/normal/pause_blue_normal.svg</file>
+        <file>image/icon/normal/pause_red_normal.svg</file>
+        <file>image/icon/normal/record_normal.svg</file>
+        <file>image/icon/press/circlebutton_voice_press.svg</file>
+        <file>image/icon/press/circlebutton_add_press.svg</file>
+        <file>image/icon/press/finish_press.svg</file>
+        <file>image/icon/press/pause_red_press.svg</file>
+        <file>image/icon/press/play_press.svg</file>
+        <file>image/icon/press/more_press.svg</file>
+        <file>image/icon/press/record_press.svg</file>
+        <file>image/icon/press/pause_blue_press.svg</file>
+        <file>image/icon/scrollbar/scrollbar_active.svg</file>
+        <file>image/icon/scrollbar/scrollbar_hover.svg</file>
+        <file>image/icon/normal/circlebutton_add.svg</file>
+        <file>image/icon/focus/circlebutton_add_focus.svg</file>
     </qresource>
 </RCC>

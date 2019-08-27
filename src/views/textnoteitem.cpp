@@ -50,7 +50,8 @@ void TextNoteItem::initUI()
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    m_bgWidget->setStyleSheet("background: green");
+    m_bgWidget->setStyleSheet("background: #f5f5f5");
+
     //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
 //   self.horizontalLayoutWidget = QtWidgets.QWidget(self.widget)
 //   self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 691, 91))
@@ -119,9 +120,10 @@ void TextNoteItem::initUI()
 //   m_menuBtn = new DImageButton(m_bgWidget);
    m_menuBtn = new DImageButton(m_bgWidget);
    m_menuBtn->setFixedSize(QSize(40, 40));
-   m_menuBtn->setNormalPic(":/image/add_normal.svg");
-   m_menuBtn->setHoverPic(":/image/add_hover.svg");
-   m_menuBtn->setPressPic(":/image/add_press.svg");
+   m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
+   m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
+   m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
+
 //   m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
 //   m_arrowMenu->setHeight(200);
 //   m_arrowMenu->setWidth(200);
@@ -199,7 +201,7 @@ void TextNoteItem::textAreaChanged()
 
 void TextNoteItem::handleTextEditClicked()
 {
-    emit textEditClicked(m_textNote);
+    //emit textEditClicked(m_textNote);
 }
 
 void TextNoteItem::handleMenuBtnClicked()
