@@ -57,6 +57,7 @@ private:
 //    QMenu *m_contextMenu;
 //    QAction *m_saveAsAction;
 //    QAction *m_delAction;
+    bool m_isTextConverted;
     void initUI();
     void initConnection();
     void updateNote();

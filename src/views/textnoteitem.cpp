@@ -2,7 +2,7 @@
 #include "uiutil.h"
 #include <QDebug>
 
-TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr)
+TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr) : m_isTextConverted(false)
 {
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
@@ -96,7 +96,12 @@ void TextNoteItem::initUI()
 //    m_stackedWidget->setCurrentIndex(1);
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
-    m_textEdit->setText(m_textNote.contentText);
+    QFont labelFont;
+    labelFont.setFamily("PingFangSC-Regular");
+    labelFont.setPointSize(12);
+    m_textEdit->setFont(labelFont);
+    QString elidedText = UiUtil::getElidedText(labelFont, m_textNote.contentText, 614 * 5, m_isTextConverted);
+    m_textEdit->setText(elidedText);
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
 //    sizePolicy.setVerticalStretch(0);
@@ -201,7 +206,10 @@ void TextNoteItem::textAreaChanged()
 
 void TextNoteItem::handleTextEditClicked()
 {
-    //emit textEditClicked(m_textNote);
+    if (m_isTextConverted)
+    {
+        emit textEditClicked(m_textNote);
+    }
 }
 
 void TextNoteItem::handleMenuBtnClicked()
