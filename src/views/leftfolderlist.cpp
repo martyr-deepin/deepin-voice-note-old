@@ -35,7 +35,7 @@ void LeftFolderList::initUI()
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_renameAction);
     m_contextMenu->addAction(m_delAction);
-
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 }
 

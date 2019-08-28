@@ -25,13 +25,24 @@ VoiceNotebookApp::~VoiceNotebookApp()
 //    }
 }
 
+//initI18n();
+//    setOrganizationName("deepin");
+//    setApplicationName("deepin-image-viewer");
+//    setApplicationDisplayName(tr("Deepin Image Viewer"));
+
+////    setApplicationVersion(DApplication::buildVersion("1.3"));
+//    setApplicationVersion(DApplication::buildVersion("20190828"));
+//    installEventFilter(new GlobalEventFilter());
+
+
+//    initChildren();
 void VoiceNotebookApp::initApp()
 {
     m_app->setAttribute(Qt::AA_UseHighDpiPixmaps);
-    m_app->setTheme("light");
+    //m_app->setTheme("light");
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("voice note");
-    m_app->setApplicationVersion(DApplication::buildVersion("20190823"));
+    m_app->setApplicationVersion(DApplication::buildVersion("20190828"));
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
     m_app->setProductName("Voice note Application");
