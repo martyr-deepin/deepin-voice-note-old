@@ -1,5 +1,9 @@
 #include "uiutil.h"
 
+#include <QDateTime>
+#include <QDir>
+#include <QStandardPaths>
+
 UiUtil::UiUtil()
 {
 
@@ -61,3 +65,24 @@ QString UiUtil::getElidedText(QFont font, QString str, int MaxWidth, bool& isCon
     }
     return str;   //返回处理后的字符串
 }
+
+QString UiUtil::formatMillisecond(int millisecond)
+{
+    if (millisecond / 1000 < 3600) {
+        // At least need return 1 seconds.
+        return QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
+    } else {
+        return QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("hh:mm:ss");
+    }
+}
+
+QString UiUtil::getRecordingSaveDirectory()
+{
+    QDir musicDirectory = QDir(QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
+    QString subDirectory = tr("Recordings");
+    musicDirectory.mkdir(subDirectory);
+
+    return musicDirectory.filePath(subDirectory);
+}
+
+

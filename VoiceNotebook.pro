@@ -10,7 +10,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = VoiceNotebook
 TEMPLATE = app
-PKGCONFIG += dtkwidget
+PKGCONFIG += dtkwidget libavformat libavcodec libavutil
+QT += multimedia
 
 
 # The following define makes your compiler emit warnings if you use
@@ -51,7 +52,9 @@ SOURCES += \
     src/database/noteoper.cpp \
     src/views/textnoteedit.cpp \
     src/views/mainpage.cpp \
-    src/views/voicenoteitem.cpp
+    src/views/voicenoteitem.cpp \
+    src/views/recordPage.cpp \
+    src/views/recordingButton.cpp
 
 HEADERS += \
     src/app \
@@ -73,7 +76,9 @@ HEADERS += \
     src/database/noteoper.h \
     src/views/textnoteedit.h \
     src/views/mainpage.h \
-    src/views/voicenoteitem.h
+    src/views/voicenoteitem.h \
+    src/views/recordPage.h \
+    src/views/recordingButton.h
 
 INCLUDEPATH += \
     src/app \

@@ -52,10 +52,13 @@ void RightView::initUI()
 
 }
 
+
 void RightView::initConnection()
 {
     connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
+    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
+    connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
 }
 
 
@@ -83,12 +86,10 @@ void RightView::initNoteList()
     m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
 
     m_noteListLayout->addWidget(m_addTextBtn);
-    m_addVoiceBtn = new DImageButton();
-    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
-    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
-    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
 
-    m_noteListLayout->addWidget(m_addVoiceBtn);
+    initRecordStackedWidget();
+
+    m_noteListLayout->addWidget(m_recordStackedWidget);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
     sp.setVerticalStretch(1);
@@ -97,6 +98,23 @@ void RightView::initNoteList()
     m_noteListPage->setLayout(m_noteListLayout);
     //m_noteListPage->setFixedWidth(pare);
 }
+
+void RightView::initRecordStackedWidget()
+{
+    m_recordStackedWidget = new QStackedWidget();
+
+    m_addVoiceBtn = new DImageButton();
+    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
+    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
+    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
+
+    m_recordPage = new RecordPage();
+
+    m_recordStackedWidget->addWidget(m_addVoiceBtn);
+    m_recordStackedWidget->setCurrentIndex(0);
+    m_recordStackedWidget->addWidget(m_recordPage);
+}
+
 
 void RightView::handleSelFolderChg(int folderId)
 {
@@ -134,4 +152,15 @@ void RightView::updateNoteList()
         }
         m_noteListWidget->scrollToBottom();
     }
+}
+
+void RightView::handleStartRecord()
+{
+    m_recordStackedWidget->setCurrentIndex(1);
+    m_recordPage->startRecord();
+}
+
+void RightView::handleStopRecord(VOICE_INFO voiceInfo)
+{
+    m_recordStackedWidget->setCurrentIndex(0);
 }

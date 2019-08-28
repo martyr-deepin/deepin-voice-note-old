@@ -1,6 +1,7 @@
 #ifndef RIGHTVIEW_H
 #define RIGHTVIEW_H
 
+#include "recordPage.h"
 #include "rightnotelist.h"
 
 #include <QListWidget>
@@ -27,10 +28,13 @@ signals:
 public slots:
     void handleSelFolderChg(int folderId);
     void addTextNote();
+    void handleStartRecord();
+    void handleStopRecord(VOICE_INFO voiceInfo);
 private:
     void initUI();
     void initConnection();
     void initNoteList();
+    void initRecordStackedWidget();
 
     int m_currFolderId;
     QStackedWidget *m_stackedWidget;
@@ -43,6 +47,8 @@ private:
     DImageButton *m_addVoiceBtn;
     DImageButton *m_addTextBtn;
     NoteController *m_noteController;
+    RecordPage *m_recordPage;
+    QStackedWidget *m_recordStackedWidget;
 };
 
 #endif // RIGHTVIEW_H

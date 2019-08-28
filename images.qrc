@@ -46,5 +46,6 @@
         <file>image/icon/scrollbar/scrollbar_hover.svg</file>
         <file>image/icon/normal/circlebutton_add.svg</file>
         <file>image/icon/focus/circlebutton_add_focus.svg</file>
+        <file>image/icon/normal/play_normal.svg</file>
     </qresource>
 </RCC>
