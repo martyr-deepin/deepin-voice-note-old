@@ -45,3 +45,19 @@ DDialog* UiUtil::createDialog(const QString &title, const QString &content, QWid
 
     return dialog;
 }
+
+QString UiUtil::getElidedText(QFont font, QString str, int MaxWidth, bool& isConverted)
+{
+    QFontMetrics fontWidth(font);
+    int width = fontWidth.width(str);  //计算字符串宽度
+    if(width >= MaxWidth)  //当字符串宽度大于最大宽度时进行转换
+    {
+        isConverted = true;
+        str = fontWidth.elidedText(str, Qt::ElideRight, MaxWidth);  //右部显示省略号
+    }
+    else
+    {
+        isConverted = false;
+    }
+    return str;   //返回处理后的字符串
+}

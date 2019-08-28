@@ -10,6 +10,9 @@
 
 DWIDGET_USE_NAMESPACE
 
+//#define FOLDER_MAX_WIDTH 160
+#define FOLDER_MAX_WIDTH 100
+
 
 
 class FolerWidgetItem : public QWidget

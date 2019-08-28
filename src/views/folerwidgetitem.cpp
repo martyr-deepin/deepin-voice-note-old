@@ -40,11 +40,19 @@ void FolerWidgetItem::initUI()
     m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
-    m_nameLabel->setText(m_folder.folderName);
+
+    QFont labelFont;
+    labelFont.setFamily("SourceHanSansSC");
+    labelFont.setPointSize(14);
+    m_nameLabel->setFont(labelFont);
+    bool isConverted = false;
+    QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+    m_nameLabel->setText(folderNameElided);
 
     m_lineEdit = new DLineEdit(this);
     m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
+
     m_lineEdit->setText(m_folder.folderName);
     m_lineEdit->setVisible(false);
     m_createTimeLabel = new QLabel(this);

@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include "consts.h"
 #include "darrowrectangle.h"
+#include <QTableWidgetItem>
 
 
 RightView::RightView()
@@ -69,22 +70,6 @@ void RightView::initNoteList()
 
 
     m_noteListWidget = new RightNoteList(m_noteController);
-    //m_noteListWidget->setStyleSheet("background: blue");
-//    NOTE note1;
-//    note1.folderId = 1;
-//    note1.noteType = NOTE_TYPE::TEXT;
-//    note1.createTime = QDateTime::currentDateTime();
-//    note1.contentText = "这是一条测试用的case，sougo输入法这么难用吗";
-//    m_noteListWidget->addWidgetItem(note1);
-//    //m_noteController->addNote(note1);
-
-//    NOTE note2;
-//    note2.folderId = 1;
-//    note2.noteType = NOTE_TYPE::TEXT;
-//    note2.createTime = QDateTime::currentDateTime();
-//    note2.contentText = "这是一条测试用的case2，sougo输入法这么难用吗";
-//    m_noteListWidget->addWidgetItem(note2);
-//    //m_noteController->addNote(note2);
 
     m_noteListLayout->addWidget(m_noteListWidget);
 
