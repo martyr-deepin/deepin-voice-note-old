@@ -1,4 +1,5 @@
 #include "voicenoteitem.h"
+#include "uiutil.h"
 
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
@@ -54,12 +55,12 @@ void VoiceNoteItem::initUI()
     m_voiceShape->setSizePolicy(spShape);
     m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
-    m_menuBtn->setNormalPic(":/image/add_normal.svg");
-    m_menuBtn->setHoverPic(":/image/add_hover.svg");
-    m_menuBtn->setPressPic(":/image/add_press.svg");
+    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
+    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
+    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
     m_voiceTimeLabel = new QLabel();
     m_voiceTimeLabel->setFixedSize(46, 20);
-    m_voiceTimeLabel->setText(m_note.createTime.toString());
+    m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
     m_hBoxLayout->addWidget(m_ctrlBtn);
     m_hBoxLayout->addWidget(m_voiceShape);

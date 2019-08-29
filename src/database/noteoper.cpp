@@ -8,12 +8,12 @@ NoteOper::NoteOper()
 
 QList<NOTE> NoteOper::getNoteListByFolderId(int folderId)
 {
-    QString queryStr = "select id, note_type, content_text, content_path, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
+    QString queryStr = "select id, note_type, content_text, content_path, voice_time, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
     QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(folderId);
 
     QList<QList<QVariant>> result;
     QList<NOTE> noteInfo;
-    if (DatabaseOper::getInstance()->queryData(queryStrFinal, 6, result))
+    if (DatabaseOper::getInstance()->queryData(queryStrFinal, 7, result))
     {
         for (int i = 0; i < result.size(); i++)
         {
@@ -23,8 +23,9 @@ QList<NOTE> NoteOper::getNoteListByFolderId(int folderId)
             noteInfoTmp.noteType = NOTE_TYPE(tmp.at(1).toInt());
             noteInfoTmp.contentText = tmp.at(2).toString();
             noteInfoTmp.contentPath = tmp.at(3).toString();
-            noteInfoTmp.folderId = tmp.at(4).toInt();
-            noteInfoTmp.createTime = tmp.at(5).toDateTime();
+            noteInfoTmp.voiceTime = tmp.at(4).toInt();
+            noteInfoTmp.folderId = tmp.at(5).toInt();
+            noteInfoTmp.createTime = tmp.at(6).toDateTime();
             noteInfo.append(noteInfoTmp);
 
         }
@@ -36,11 +37,12 @@ QList<NOTE> NoteOper::getNoteListByFolderId(int folderId)
 
 bool NoteOper::addNote(NOTE noteInfo)
 {
-    QStringList columnName = {"note_type", "content_text", "content_path", "folder_id", "create_time"};
+    QStringList columnName = {"note_type", "content_text", "content_path", "voice_time", "folder_id", "create_time"};
     QList<QVariant> values;
     values.append(noteInfo.noteType);
     values.append(noteInfo.contentText);
     values.append(noteInfo.contentPath);
+    values.append(noteInfo.voiceTime);
     values.append(noteInfo.folderId);
     values.append(noteInfo.createTime);
     return DatabaseOper::getInstance()->insertData(TABLE_NOTE, columnName, values);

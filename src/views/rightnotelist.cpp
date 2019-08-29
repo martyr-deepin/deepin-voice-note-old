@@ -30,6 +30,7 @@ void RightNoteList::initUI()
     m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
 
     m_delConfirmDialog = UiUtil::createDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr);
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 //    m_delConfirmDialog->setOkButtonText(tr("删除"));
 //    m_delConfirmDialog->setCancelButtonText(tr("取消"));
 //    m_delConfirmDialog->setMessage(tr("您确定要删除这条记事项吗？"));

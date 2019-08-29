@@ -244,6 +244,7 @@ void RecordPage::startRecord()
 
     QDateTime currentTime = QDateTime::currentDateTime();
     lastUpdateTime = currentTime;
+    voiceInfo.voicePath = recordPath;
     m_audioRecorder->record();
 }
 
@@ -252,6 +253,7 @@ void RecordPage::stopRecord()
     m_audioRecorder->stop();
     m_tickerTimer->stop();
     m_recordTimeLabel->setText("00:00");
+    voiceInfo.voiceLength = m_recordingTime;
     emit finishRecord(voiceInfo);
 }
 

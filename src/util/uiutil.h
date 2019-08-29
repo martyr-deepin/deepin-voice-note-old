@@ -19,6 +19,7 @@ public:
     static DDialog *createDialog(const QString &title, const QString &content, QWidget *parent);
     static QString getElidedText(QFont font, QString str, int MaxWidth, bool& isConverted);
     static QString formatMillisecond(int millisecond);
+    static QString formatMillisecondToSecAndMil(int millisecond);
     static QString getRecordingSaveDirectory();
 
 };

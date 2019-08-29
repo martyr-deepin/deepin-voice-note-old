@@ -28,7 +28,8 @@
 #include <QAudioRecorder>
 #include <QVBoxLayout>
 
-#include "dimagebutton.h"
+//#include "dimagebutton.h"
+#include <DImageButton>
 //#include "expand_animation_button.h"
 #include "recordingButton.h"
 //#include "shrank_animation_button.h"

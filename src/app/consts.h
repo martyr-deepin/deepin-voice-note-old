@@ -31,6 +31,7 @@ typedef struct
     NOTE_TYPE noteType;
     QString contentText;
     QString contentPath;
+    int voiceTime;
     int folderId;
     QDateTime createTime;
 }NOTE;

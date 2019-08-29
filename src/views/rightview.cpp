@@ -3,7 +3,8 @@
 
 #include <QVBoxLayout>
 #include "consts.h"
-#include "darrowrectangle.h"
+#include <DArrowRectangle>
+//#include "darrowrectangle.h"
 #include <QTableWidgetItem>
 
 
@@ -159,8 +160,34 @@ void RightView::handleStartRecord()
     m_recordStackedWidget->setCurrentIndex(1);
     m_recordPage->startRecord();
 }
+//typedef struct
+//{
+//    int id;
+//    NOTE_TYPE noteType;
+//    QString contentText;
+//    QString contentPath;
+//    int voiceTime;
+//    int folderId;
+//    QDateTime createTime;
+//}NOTE;
 
+//typedef struct
+//{
+//    QString voicePath;
+//    int voiceLength;
+//}VOICE_INFO;
 void RightView::handleStopRecord(VOICE_INFO voiceInfo)
 {
+    NOTE voiceNote;
+    voiceNote.noteType = NOTE_TYPE::VOICE;
+    voiceNote.contentPath = voiceInfo.voicePath;
+    voiceNote.voiceTime = voiceInfo.voiceLength;
+    voiceNote.folderId = m_currFolderId;
+    voiceNote.createTime = QDateTime::currentDateTime();
+    if (!m_noteController->addNote(voiceNote))
+    {
+        qDebug() << "handleStopRecord： add voice note error！";
+    }
     m_recordStackedWidget->setCurrentIndex(0);
+    updateNoteList();
 }

@@ -31,7 +31,7 @@ void LeftView::initUI()
     {
         m_leftFolderView->addWidgetItem(folderList.at(i));
     }
-    m_leftFolderView->setCurrentRow(0);
+
     m_leftFolderView->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     m_leftViewLayout->addWidget(m_leftFolderView);
@@ -47,6 +47,9 @@ void LeftView::initUI()
     m_leftFolderView->setSizePolicy(sp);
     this->setLayout(m_leftViewLayout);
     this->setFixedWidth(LEFTVIEW_MAX_WIDTH);
+    m_leftFolderView->setCurrentRow(0);
+    handleSelFolderChg(m_leftFolderView->currentItem());
+
 
 }
 
@@ -69,6 +72,8 @@ void LeftView::updateFolderView()
     {
         m_leftFolderView->addWidgetItem(folderList.at(i));
     }
+    m_leftFolderView->setCurrentRow(0);
+    handleSelFolderChg(m_leftFolderView->currentItem());
 }
 
 void LeftView::addFolder()

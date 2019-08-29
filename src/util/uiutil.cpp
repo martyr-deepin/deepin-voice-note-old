@@ -85,4 +85,17 @@ QString UiUtil::getRecordingSaveDirectory()
     return musicDirectory.filePath(subDirectory);
 }
 
+QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
+{
+    QString time;
+    if (millisecond / 1000 < 3600) {
+        // At least need return 1 seconds.
+        time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
+    } else {
+        time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
+    }
+    time = time.replace(":", "\'").append("\'\'");
+    return time;
+}
+
 
