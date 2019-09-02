@@ -82,6 +82,32 @@ void LeftView::updateFolderView()
         m_leftFolderView->setCurrentRow(0);
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
+    else
+    {
+        clearNoteList();
+    }
+}
+
+void LeftView::searchFolder(QString searchKey)
+{
+    m_currSearchKey = searchKey;
+    m_leftFolderView->clear();
+    QList<FOLDER> folderList = m_folderCtr-> searchFolder(searchKey);
+    for (int i = 0; i < folderList.size(); i++)
+    {
+        m_leftFolderView->addWidgetItem(folderList.at(i));
+    }
+    if (m_leftFolderView->count() > 0)
+    {
+        m_leftFolderView->setCurrentRow(0);
+        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->currentItem()));
+        int folderId = folderItem->m_folder.id;
+        emit searchNote(folderId, searchKey);
+    }
+    else
+    {
+        clearNoteList();
+    }
 }
 
 void LeftView::addFolder()
@@ -113,5 +139,18 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
 {
     FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
     int folderId = folderItem->m_folder.id;
-    emit selFolderIdChg(folderId);
+    if (m_currSearchKey.isEmpty())
+    {
+        emit selFolderIdChg(folderId);
+    }
+    else
+    {
+        emit searchNote(folderId, m_currSearchKey);
+    }
+
+}
+
+void LeftView::clearNoteList()
+{
+    emit clearNoteListSignal();
 }

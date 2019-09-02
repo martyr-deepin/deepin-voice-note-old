@@ -11,6 +11,7 @@
 #include <QVBoxLayout>
 #include <QStackedWidget>
 #include <QPushButton>
+#include <DSearchEdit>
 #define DEFAULT_WINDOWS_WIDTH 960
 #define DEFAULT_WINDOWS_HEIGHT 540
 #define TITLE_FIXED_HEIGHT 40
@@ -27,6 +28,7 @@ public:
 public slots:
     void showNoteDetail(NOTE note);
     void showListPage();
+    void handleSearchKey();
 
 private:
      QFrame *m_centralWidget;
@@ -42,6 +44,7 @@ private:
     QLabel *m_logo;
     DImageButton *m_returnBtn;
     QFrame *m_titleFrame;
+    DSearchEdit *m_searchEdit;
 
     void initUI();
     void initConnection();

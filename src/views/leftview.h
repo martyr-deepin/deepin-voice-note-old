@@ -19,8 +19,11 @@ public:
     ~LeftView();
 
     int getCurrSelectFolderId();
+    void searchFolder(QString searchKey);
 signals:
     void selFolderIdChg(int folderId);
+    void searchNote(int folderId, QString searchKey);
+    void clearNoteListSignal();
 
 public slots:
     void addFolder();
@@ -33,11 +36,13 @@ private:
     DImageButton *m_addFolderBtn;
 
     FolderController *m_folderCtr;
+    QString m_currSearchKey;
 
     void initUI();
     void initController();
     void initConnection();
     void updateFolderView();
+    void clearNoteList();
 };
 
 #endif // LEFTVIEW_H

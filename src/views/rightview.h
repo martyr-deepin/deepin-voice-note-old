@@ -22,14 +22,17 @@ public:
     ~RightView();
 
     void updateNoteList();
+    void searchNoteList(QString searchKey);
 signals:
     void textEditClicked(NOTE textNote);
 
 public slots:
     void handleSelFolderChg(int folderId);
+    void handleSearchNote(int folderId, QString searchKey);
     void addTextNote();
     void handleStartRecord();
     void handleStopRecord(VOICE_INFO voiceInfo);
+    void handleClearNote();
 private:
     void initUI();
     void initConnection();

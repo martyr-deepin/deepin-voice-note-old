@@ -124,6 +124,12 @@ void RightView::handleSelFolderChg(int folderId)
 
 }
 
+void RightView::handleSearchNote(int folderId, QString searchKey)
+{
+    m_currFolderId = folderId;
+    searchNoteList(searchKey);
+}
+
 void RightView::addTextNote()
 {
     NOTE note;
@@ -147,6 +153,20 @@ void RightView::updateNoteList()
     if (m_currFolderId > 0)
     {
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
+        for (int i = 0; i < noteList.size(); i++)
+        {
+            m_noteListWidget->addWidgetItem(noteList.at(i));
+        }
+        m_noteListWidget->scrollToBottom();
+    }
+}
+
+void RightView::searchNoteList(QString searchKey)
+{
+    m_noteListWidget->clear();
+    if (m_currFolderId > 0)
+    {
+        QList<NOTE> noteList = m_noteController->searchNote(m_currFolderId, searchKey);
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(noteList.at(i));
@@ -190,4 +210,10 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
     }
     m_recordStackedWidget->setCurrentIndex(0);
     updateNoteList();
+}
+
+void RightView::handleClearNote()
+{
+    m_noteListWidget->clear();
+    m_currFolderId = -1;
 }

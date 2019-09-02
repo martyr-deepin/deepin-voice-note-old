@@ -66,6 +66,31 @@ QList<FOLDER> FolderOper::getFolderList()
 
 }
 
+QList<FOLDER> FolderOper::searchFolder(QString searchKey)
+{
+    QString queryStr = "select id, name, image_path, create_time from %1 where name like \'\%%2\%\' order by create_time desc";
+    QString queryStrFinal = QString(queryStr).arg(TABLE_FOLDER).arg(searchKey);
+    QList<QList<QVariant>> result;
+    QList<FOLDER> folderInfo;
+    if (DatabaseOper::getInstance()->queryData(queryStrFinal, 4, result))
+    {
+        for (int i = 0; i < result.size(); i++)
+        {
+            QList<QVariant> tmp = result.at(i);
+            FOLDER folderInfoTmp;
+            folderInfoTmp.id = tmp.at(0).toInt();
+            folderInfoTmp.folderName = tmp.at(1).toString();
+            folderInfoTmp.imgPath = tmp.at(2).toString();
+            folderInfoTmp.createTime = tmp.at(3).toDateTime();
+            folderInfo.append(folderInfoTmp);
+            //delete tmp;  todo:delete
+        }
+
+    }
+    return folderInfo;
+
+}
+
 QList<FOLDER> FolderOper::getFolderByName(QString folderName)
 {
     QString queryStr = "select id, name, image_path, create_time from %1 where name is \'%2\' order by create_time desc";

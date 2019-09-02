@@ -33,3 +33,8 @@ bool NoteController::deleteNote(int noteId)
 {
     return NoteOper::deleteNote(noteId);
 }
+
+QList<NOTE> NoteController::searchNote(int folderId, QString searchKey)
+{
+    return NoteOper::searchNote(folderId, searchKey);
+}

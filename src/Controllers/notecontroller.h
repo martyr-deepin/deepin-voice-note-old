@@ -9,6 +9,7 @@ public:
     ~NoteController();
 
     QList<NOTE> getNoteListByFolderId(int folderId);
+    QList<NOTE> searchNote(int folderId, QString searchKey);
     bool addNote(NOTE noteInfo);
     bool updateNote(NOTE noteInfo);
     bool deleteNote(int noteId);

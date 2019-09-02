@@ -25,6 +25,7 @@ public:
 
 public:
     void updateNoteList();
+    void searchFolder(QString searchKey);
 
 signals:
     void textEditClicked(NOTE textNote);

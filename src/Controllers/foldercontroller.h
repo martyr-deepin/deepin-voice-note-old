@@ -13,6 +13,7 @@ public:
     ~FolderController();
 
     QList<FOLDER> getFolderList();
+    QList<FOLDER> searchFolder(QString searchKey);
     bool addFolder(FOLDER folderInfo);
 
     bool checkFolderNameExist(FOLDER folderInfo);

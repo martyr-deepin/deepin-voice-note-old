@@ -18,6 +18,11 @@ QList<FOLDER> FolderController::getFolderList()
     return FolderOper::getFolderList( );
 }
 
+QList<FOLDER> FolderController::searchFolder(QString searchKey)
+{
+    return FolderOper::searchFolder(searchKey);
+}
+
 bool FolderController::addFolder(FOLDER folderInfo)
 {
     return FolderOper::addFolder(folderInfo);
