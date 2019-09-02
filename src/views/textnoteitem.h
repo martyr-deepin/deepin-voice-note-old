@@ -42,7 +42,7 @@ public:
     void changeToEditMode();  
 signals:
     void textEditClicked(NOTE m_textNote);
-    void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, TextNoteItem *textNoteItem, NOTE note);
+    void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
 
 public slots:
     void textAreaChanged();

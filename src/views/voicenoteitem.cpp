@@ -4,6 +4,7 @@
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
     initUI();
+    initConnection();
 }
 
 VoiceNoteItem::~VoiceNoteItem()
@@ -46,9 +47,9 @@ void VoiceNoteItem::initUI()
 
     m_ctrlBtn = new DImageButton(m_bgWidget);
     m_ctrlBtn->setFixedSize(QSize(40, 40));
-    m_ctrlBtn->setNormalPic(":/image/add_normal.svg");
-    m_ctrlBtn->setHoverPic(":/image/add_hover.svg");
-    m_ctrlBtn->setPressPic(":/image/add_press.svg");
+    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
+    m_ctrlBtn->setHoverPic(":/image/icon/hover/play_hover.svg");
+    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
     m_voiceShape = new QWidget();
     QSizePolicy spShape = m_voiceShape->sizePolicy();
     sp.setHorizontalStretch(1);
@@ -74,5 +75,15 @@ void VoiceNoteItem::initUI()
 
 void VoiceNoteItem::initConnection()
 {
+    connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
+}
 
+void VoiceNoteItem::handleMenuBtnClicked()
+{
+    QPoint pGlobal = m_menuBtn->mapToGlobal(QPoint(0,0));
+    QPoint arrowPoint(pGlobal.x() + m_menuBtn->width() / 2, pGlobal.y() +m_menuBtn->height());
+    QPoint pParent = m_menuBtn->mapTo(this, QPoint(0,0));
+    emit menuBtnClicked(arrowPoint, pParent, this, m_note);
+    //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
+    //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
 }

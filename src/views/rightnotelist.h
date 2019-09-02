@@ -26,7 +26,7 @@ signals:
 
 
 public slots:
-    void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, TextNoteItem *textNoteItem, NOTE note);
+    void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void handleDelItem(bool);
     void handleSaveAsItem(bool);
     void handleDelDialogClicked(int index, const QString &text);

@@ -18,7 +18,7 @@ RightNoteList::~RightNoteList()
 void RightNoteList::initUI()
 {
     m_contextMenu = new QMenu;
-    m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS),this);
+    m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_saveAsAction);
     m_contextMenu->addAction(m_delAction);
@@ -61,7 +61,7 @@ void RightNoteList::addWidgetItem(NOTE note)
     {
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController);
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
-        connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, TextNoteItem *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, TextNoteItem *, NOTE)));
+        connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         qDebug() << "text item height: " << textItem->height();
         item->setSizeHint(QSize(this->width(),140));
@@ -69,18 +69,26 @@ void RightNoteList::addWidgetItem(NOTE note)
 
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
-        VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
+        VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);        
+        connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         item->setSizeHint(QSize(this->width(),140));
         this->setItemWidget(item, voiceItem);
     }
 }
 
-void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, TextNoteItem *textNoteItem, NOTE note)
+void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
     QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
     m_currSelItem= this->itemAt(itemGlobalPoint);
     m_currSelNote = note;
+    if (note.noteType == NOTE_TYPE::TEXT)
+    {
+        m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+    }
+    else {
+        m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+    }
     m_arrowMenu->show(menuArrowPointGlobal.x(), menuArrowPointGlobal.y());
 
 //    this->removeItemWidget(widgetItem);

@@ -28,13 +28,14 @@ public:
     QWidget *m_voiceShape;
 
 signals:
-
+    void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
 public slots:
 
 private:
     NoteController *m_noteCtr;
     void initUI();
     void initConnection();
+    void handleMenuBtnClicked();
 };
 
 #endif // VOICENOTEITEM_H
