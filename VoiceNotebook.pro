@@ -54,7 +54,8 @@ SOURCES += \
     src/views/mainpage.cpp \
     src/views/voicenoteitem.cpp \
     src/views/recordPage.cpp \
-    src/views/recordingButton.cpp
+    src/views/recordingButton.cpp \
+    src/views/waveform.cpp
 
 HEADERS += \
     src/app \
@@ -78,7 +79,8 @@ HEADERS += \
     src/views/mainpage.h \
     src/views/voicenoteitem.h \
     src/views/recordPage.h \
-    src/views/recordingButton.h
+    src/views/recordingButton.h \
+    src/views/waveform.h
 
 INCLUDEPATH += \
     src/app \

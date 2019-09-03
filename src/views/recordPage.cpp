@@ -178,10 +178,10 @@ void RecordPage::initUI()
     );
 
 
-    m_voiceShape = new QWidget();
-    QSizePolicy spShape = m_voiceShape->sizePolicy();
+    m_waveform = new Waveform();
+    QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
-    m_voiceShape->setSizePolicy(spShape);
+    m_waveform->setSizePolicy(spShape);
 
 //    m_voiceTimeLabel = new QLabel();
 //    m_voiceTimeLabel->setFixedSize(46, 20);
@@ -193,7 +193,7 @@ void RecordPage::initUI()
     m_recordTimeLabel->setFont(recordTimeFont);
 
     m_hBoxLayout->addWidget(m_recordingButton);
-    m_hBoxLayout->addWidget(m_voiceShape);
+    m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addWidget(m_recordTimeLabel);
     m_hBoxLayout->addWidget(m_finishButton);
 }
@@ -239,6 +239,7 @@ void RecordPage::startRecord()
 {
     recordPath = generateRecordingFilepath();
     m_audioRecorder->setOutputLocation(recordPath);
+    m_waveform->clearWave();
     m_recordingTime = 0;
     m_tickerTimer->start(1000);
 
@@ -295,10 +296,10 @@ void RecordPage::renderLevel(const QAudioBuffer &buffer)
     m_recordingTime += lastUpdateTime.msecsTo(currentTime);
     lastUpdateTime = currentTime;
 
-//    QVector<qreal> levels = Waveform::getBufferLevels(buffer);
-//    for (int i = 0; i < levels.count(); ++i) {
-//        waveform->updateWave(levels.at(i));
-//    }
+    QVector<qreal> levels = Waveform::getBufferLevels(buffer);
+    for (int i = 0; i < levels.count(); ++i) {
+        m_waveform->updateWave(levels.at(i));
+    }
 }
 
 bool RecordPage::eventFilter(QObject *, QEvent *event)

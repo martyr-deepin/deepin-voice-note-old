@@ -32,6 +32,7 @@
 #include <DImageButton>
 //#include "expand_animation_button.h"
 #include "recordingButton.h"
+#include "waveform.h"
 //#include "shrank_animation_button.h"
 //#include "waveform.h"
 #include <QDateTime>
@@ -96,8 +97,9 @@ private:
 //    ShrankAnimationButton *shrankAnimationButton;
 //    Waveform *waveform;
     int m_recordingTime;
-    QWidget *m_voiceShape;
+    //QWidget *m_voiceShape;
     VOICE_INFO voiceInfo;
+    Waveform *m_waveform;
 
     void initUI();
     void initConnection();
