@@ -8,6 +8,7 @@
 #include "consts.h"
 #include "notecontroller.h"
 #include "playingbutton.h"
+#include "waveform.h"
 
 DWIDGET_USE_NAMESPACE
 class VoiceNoteItem : public QWidget
@@ -26,7 +27,8 @@ public:
     //DImageButton *m_ctrlBtn;
     DImageButton *m_menuBtn;
     QLabel *m_voiceTimeLabel;
-    QWidget *m_voiceShape;
+    //QWidget *m_voiceShape;
+    Waveform *m_waveform;
 
 signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);

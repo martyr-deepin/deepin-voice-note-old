@@ -39,7 +39,7 @@ void VoiceNoteItem::initUI()
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    m_bgWidget->setStyleSheet("background: green");
+    m_bgWidget->setStyleSheet("background: #f2f2f2");
 
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
@@ -48,15 +48,18 @@ void VoiceNoteItem::initUI()
 //    m_ctrlBtn = new DImageButton(m_bgWidget);
 //    m_ctrlBtn->setFixedSize(QSize(40, 40));
 //    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
-//    m_ctrlBtn->setHoverPic(":/image/icon/hover/play_hover.svg");
+//    m_ctrlBtn->setHoverPic(":/m_waveformimage/icon/hover/play_hover.svg");
 //    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
 
     m_playingButton = new PlayingButton();
     m_playingButton->setFixedSize(QSize(40, 40));
-    m_voiceShape = new QWidget();
-    QSizePolicy spShape = m_voiceShape->sizePolicy();
+    m_waveform = new Waveform();
+    m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
+    m_waveform->setFixedHeight(50);
+    //m_voiceShape = new QWidget();
+    QSizePolicy spShape = m_waveform->sizePolicy();
     sp.setHorizontalStretch(1);
-    m_voiceShape->setSizePolicy(spShape);
+    m_waveform->setSizePolicy(spShape);
     m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
     m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
@@ -67,7 +70,7 @@ void VoiceNoteItem::initUI()
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
     m_hBoxLayout->addWidget(m_playingButton);
-    m_hBoxLayout->addWidget(m_voiceShape);
+    m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addWidget(m_voiceTimeLabel);
     m_hBoxLayout->addWidget(m_menuBtn);
 

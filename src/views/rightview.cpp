@@ -203,6 +203,7 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
     voiceNote.noteType = NOTE_TYPE::VOICE;
     voiceNote.contentPath = voiceInfo.voicePath;
     voiceNote.voiceTime = voiceInfo.voiceLength;
+    voiceNote.voiceSampleData = voiceInfo.voiceSampleData;
     voiceNote.folderId = m_currFolderId;
     voiceNote.createTime = QDateTime::currentDateTime();
     if (!m_noteController->addNote(voiceNote))

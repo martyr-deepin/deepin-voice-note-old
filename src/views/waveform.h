@@ -48,6 +48,9 @@ public:
     static QVector<qreal> getBufferLevels(const T *buffer, int frames, int channels);
                                                                                     
     void clearWave();
+
+    void setWholeSampleList(QList<float> wholeList);
+    QList<float> getWholeSampleList();
                                                                                     
 public slots:
     void renderWave();
@@ -59,7 +62,10 @@ protected:
 private:
     QDateTime lastSampleTime;
     QList<float> sampleList;
+    QList<float> wholeSampleList;
     QTimer *renderTimer;
+
+
 };
 
 #endif

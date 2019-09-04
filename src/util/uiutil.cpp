@@ -98,4 +98,25 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
     return time;
 }
 
+QString UiUtil::convertFloatListToString(QList<float> list)
+{
+    QStringList strList;
+    for (int i = 0; i < list.size(); i++)
+    {
+        strList << QString::number(list.at(i));
+    }
+    return strList.join(';');
+}
+
+QList<float> UiUtil::convertStringToFloatList(QString str)
+{
+    QStringList strList = str.split(';');
+    QList<float> list;
+    for (int i = 0; i < strList.size(); i++)
+    {
+        list << strList.at(i).toFloat();
+    }
+    return list;
+}
+
 

@@ -33,6 +33,7 @@ typedef struct
     QString contentText;
     QString contentPath;
     int voiceTime;
+    QString voiceSampleData;
     int folderId;
     QDateTime createTime;
 }NOTE;
@@ -41,5 +42,6 @@ typedef struct
 {
     QString voicePath;
     int voiceLength;
+    QString voiceSampleData;
 }VOICE_INFO;
 #endif // CONSTS_H

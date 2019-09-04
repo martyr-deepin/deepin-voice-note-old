@@ -179,6 +179,7 @@ void RecordPage::initUI()
 
 
     m_waveform = new Waveform();
+    m_waveform->setFixedHeight(50);
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);
@@ -255,6 +256,7 @@ void RecordPage::stopRecord()
     m_tickerTimer->stop();
     m_recordTimeLabel->setText("00:00");
     voiceInfo.voiceLength = m_recordingTime;
+    voiceInfo.voiceSampleData = UiUtil::convertFloatListToString(m_waveform->getWholeSampleList());
     emit finishRecord(voiceInfo);
 }
 

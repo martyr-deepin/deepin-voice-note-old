@@ -21,6 +21,8 @@ public:
     static QString formatMillisecond(int millisecond);
     static QString formatMillisecondToSecAndMil(int millisecond);
     static QString getRecordingSaveDirectory();
+    static QString convertFloatListToString(QList<float> list);
+    static QList<float> convertStringToFloatList(QString str);
 
 };
 

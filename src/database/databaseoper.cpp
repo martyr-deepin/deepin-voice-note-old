@@ -31,7 +31,7 @@ DatabaseOper *DatabaseOper::getInstance()
 void DatabaseOper::initDatabase()
 {
     m_createSqlMap[TABLE_FOLDER] = "create table folder (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image_path TEXT, create_time DATE)";
-    m_createSqlMap[TABLE_NOTE] = "create table note (id INTEGER PRIMARY KEY AUTOINCREMENT, note_type INTEGER, content_text TEXT, content_path TEXT, voice_time INTEGER, folder_id INTEGER, create_time DATE)";
+    m_createSqlMap[TABLE_NOTE] = "create table note (id INTEGER PRIMARY KEY AUTOINCREMENT, note_type INTEGER, content_text TEXT, content_path TEXT, voice_time INTEGER, voice_sample_data TEXT, folder_id INTEGER, create_time DATE)";
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     //设置数据库的名称
      db.setDatabaseName(DB_PATH);
@@ -174,10 +174,6 @@ bool DatabaseOper::deleteDataById(QString tableName, QString id, int idValue)
 {
     QString deleteSql = "delete from %1 where %2 = ?";
     QString deleteSqlFinal = QString(deleteSql).arg(tableName).arg(id);
-    //QString deleteSql = "delete from %s where %s = ?";
-
-
-    //deleteSql.sprintf(deleteSql.toLatin1().constData(), tableName.toLatin1().constData());
 
     m_sqlQuery.prepare(deleteSqlFinal);
 

@@ -39,7 +39,7 @@ const int Waveform::WAVE_DURATION = 4;
 
 Waveform::Waveform(QWidget *parent) : QWidget(parent)
 {
-    setFixedSize(350, 50);
+    //setFixedSize(350, 50);
 
     lastSampleTime = QDateTime::currentDateTime();
 
@@ -76,13 +76,13 @@ void Waveform::paintEvent(QPaintEvent *)
         if (volume == 0) {
             QPainterPath path;
             path.addRect(QRectF(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - 1) / 2, WAVE_DURATION, 1));
-            painter.fillPath(path, QColor("#FFA0A0"));
+            painter.fillPath(path, QColor("#848484"));
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
             QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
-            gradient.setColorAt(0, QColor("#FFBD78"));
-            gradient.setColorAt(1, QColor("#FF005C"));
+            gradient.setColorAt(0, QColor("#848484"));
+            gradient.setColorAt(1, QColor("#848484"));
             painter.fillRect(sampleRect, gradient);
         }
     }
@@ -93,7 +93,7 @@ void Waveform::paintEvent(QPaintEvent *)
                             rect().y() + (rect().height() - 1) / 2,
                             rect().width() - (rect().x() + sampleList.size() * WAVE_DURATION),
                             1));
-        painter.fillPath(path, QColor("#FFA0A0"));
+        painter.fillPath(path, QColor("#848484"));
     }
 }
 
@@ -106,10 +106,59 @@ void Waveform::updateWave(float sample)
         if (sampleList.size() > rect().width() / WAVE_DURATION) {
             sampleList.pop_front();
         }
-        sampleList << sample;
-
+        sampleList << sample;       
         lastSampleTime = currentTime;
     }
+    wholeSampleList << sample;
+}
+
+void Waveform::setWholeSampleList(QList<float> wholeList)
+{
+    wholeSampleList.clear();
+    sampleList.clear();
+    wholeSampleList = wholeList;
+    int pointNum = rect().width() / WAVE_DURATION;
+    float sample = wholeList.size() * 1.0 / pointNum;
+    qDebug() << "whole list";
+    for (int t = 0; t < wholeList.size(); t++)
+    {
+        qDebug() << t << ":" << wholeList.at(t);
+    }
+    for (int i = 0; i < pointNum; i++)
+    {
+        if (i == 0)
+        {
+            sampleList << wholeList[i];
+        }
+
+        else
+        {
+            float pointPos = i * sample;
+            if (pointPos > wholeList.size() - 1)
+            {
+                sampleList << wholeList[wholeList.size() - 1];
+            }
+            else
+            {
+                int prePoint = static_cast<int>(pointPos);
+                int nextPoint = prePoint + 1;
+                float currPointValue = (pointPos - prePoint) * wholeList[nextPoint] + (nextPoint - pointPos) * wholeList[prePoint];
+                sampleList << currPointValue;
+            }
+        }
+    }
+
+    qDebug() << "sample list";
+    for (int t = 0; t < sampleList.size(); t++)
+    {
+        qDebug() << t << ":" << sampleList.at(t);
+    }
+
+}
+
+QList<float> Waveform::getWholeSampleList()
+{
+    return wholeSampleList;
 }
 
 void Waveform::renderWave()
