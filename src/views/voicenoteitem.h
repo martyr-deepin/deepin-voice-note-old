@@ -7,6 +7,7 @@
 #include <dimagebutton.h>
 #include "consts.h"
 #include "notecontroller.h"
+#include "playingbutton.h"
 
 DWIDGET_USE_NAMESPACE
 class VoiceNoteItem : public QWidget
@@ -22,17 +23,23 @@ public:
     QWidget *m_bgWidget;
     QLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
-    DImageButton *m_ctrlBtn;
+    //DImageButton *m_ctrlBtn;
     DImageButton *m_menuBtn;
     QLabel *m_voiceTimeLabel;
     QWidget *m_voiceShape;
 
 signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
+    void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath);
+    void pausePlayingSignal();
 public slots:
+    void handleStopPlay();
+    void handleResumePlaying();
+    //void handle
 
 private:
     NoteController *m_noteCtr;
+    PlayingButton *m_playingButton;
     void initUI();
     void initConnection();
     void handleMenuBtnClicked();

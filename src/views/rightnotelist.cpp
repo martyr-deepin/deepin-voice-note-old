@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <uiutil.h>
 
-RightNoteList::RightNoteList(NoteController *noteController)
+RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
 {
     initUI();
     initConnection();
@@ -31,10 +31,8 @@ void RightNoteList::initUI()
 
     m_delConfirmDialog = UiUtil::createDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr);
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-//    m_delConfirmDialog->setOkButtonText(tr("删除"));
-//    m_delConfirmDialog->setCancelButtonText(tr("取消"));
-//    m_delConfirmDialog->setMessage(tr("您确定要删除这条记事项吗？"));
-//    m_delConfirmDialog->setIcon()
+    audioPlayer = new QMediaPlayer(this);
+    connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
 
 
 }
@@ -70,7 +68,9 @@ void RightNoteList::addWidgetItem(NOTE note)
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);        
-        connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
+        connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));        
+        connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
+        connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString)), this, SLOT(play(VoiceNoteItem *, QString)));
         QListWidgetItem *item=new QListWidgetItem(this);
         item->setSizeHint(QSize(this->width(),140));
         this->setItemWidget(item, voiceItem);
@@ -128,3 +128,71 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     }
 
 }
+
+void RightNoteList::handleClickRecordButton()
+{
+    // Must stop player before new record.
+    if (QMediaPlayer::StoppedState !=audioPlayer->state())
+    {
+        audioPlayer->stop();
+        m_currPlayingItem->handleStopPlay();
+        m_currPlayingItem = nullptr;
+    }
+}
+
+void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath)
+{
+    if (filepath != getPlayingFilepath()) {
+        audioPlayer->stop();
+        if (nullptr != m_currPlayingItem)
+        {
+            m_currPlayingItem->handleStopPlay();
+        }
+    }
+    m_currPlayingItem = voiceNoteItem;
+    //waveform->show();
+
+    audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
+    audioPlayer->play();
+}
+
+void RightNoteList::pause()
+{
+    audioPlayer->pause();
+}
+
+//void RightNoteList::resume()
+//{
+//    audioPlayer->play();
+//}
+
+//void RightNoteList::stop(QString filepath)
+//{
+//    if (filepath == getPlayingFilepath()) {
+//        audioPlayer->stop();
+//    }
+//}
+
+//void RightNoteList::stopPlayer()
+//{
+//    audioPlayer->stop();
+//}
+
+QString RightNoteList::getPlayingFilepath()
+{
+    if (audioPlayer->isAudioAvailable()) {
+        return audioPlayer->media().resources().first().url().path();
+    } else {
+        return "";
+    }
+}
+
+void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
+{
+    if (QMediaPlayer::StoppedState == state)
+    {
+        m_currPlayingItem->handleStopPlay();
+        m_currPlayingItem = nullptr;
+    }
+}
+

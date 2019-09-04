@@ -45,11 +45,14 @@ void VoiceNoteItem::initUI()
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
-    m_ctrlBtn = new DImageButton(m_bgWidget);
-    m_ctrlBtn->setFixedSize(QSize(40, 40));
-    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
-    m_ctrlBtn->setHoverPic(":/image/icon/hover/play_hover.svg");
-    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
+//    m_ctrlBtn = new DImageButton(m_bgWidget);
+//    m_ctrlBtn->setFixedSize(QSize(40, 40));
+//    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
+//    m_ctrlBtn->setHoverPic(":/image/icon/hover/play_hover.svg");
+//    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
+
+    m_playingButton = new PlayingButton();
+    m_playingButton->setFixedSize(QSize(40, 40));
     m_voiceShape = new QWidget();
     QSizePolicy spShape = m_voiceShape->sizePolicy();
     sp.setHorizontalStretch(1);
@@ -63,7 +66,7 @@ void VoiceNoteItem::initUI()
     m_voiceTimeLabel->setFixedSize(46, 20);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
-    m_hBoxLayout->addWidget(m_ctrlBtn);
+    m_hBoxLayout->addWidget(m_playingButton);
     m_hBoxLayout->addWidget(m_voiceShape);
     m_hBoxLayout->addWidget(m_voiceTimeLabel);
     m_hBoxLayout->addWidget(m_menuBtn);
@@ -76,6 +79,9 @@ void VoiceNoteItem::initUI()
 void VoiceNoteItem::initConnection()
 {
     connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
+    connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
+    connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
+
 }
 
 void VoiceNoteItem::handleMenuBtnClicked()
@@ -86,4 +92,14 @@ void VoiceNoteItem::handleMenuBtnClicked()
     emit menuBtnClicked(arrowPoint, pParent, this, m_note);
     //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
     //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
+}
+
+void VoiceNoteItem::handleStopPlay()
+{
+    m_playingButton->handleStop();
+}
+
+void VoiceNoteItem::handleResumePlaying()
+{
+     emit resumePlayingSignal(this, m_note.contentPath);
 }

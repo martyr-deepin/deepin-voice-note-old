@@ -59,6 +59,7 @@ void RightView::initConnection()
     connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
+    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
 }
 
