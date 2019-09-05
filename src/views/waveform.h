@@ -29,6 +29,7 @@
 #include <QEvent>
 #include <QTimer>
 #include <QWidget>
+enum DISPLAY_TYPE {WHOLE=0, PART_SAMPLE=1};
 
 class Waveform : public QWidget
 {
@@ -51,6 +52,7 @@ public:
 
     void setWholeSampleList(QList<float> wholeList);
     QList<float> getWholeSampleList();
+    void setCurrDisplayType(DISPLAY_TYPE);
                                                                                     
 public slots:
     void renderWave();
@@ -64,6 +66,9 @@ private:
     QList<float> sampleList;
     QList<float> wholeSampleList;
     QTimer *renderTimer;
+    DISPLAY_TYPE m_currDisplayType;
+
+    void genSampleListFromWhole();
 
 
 };

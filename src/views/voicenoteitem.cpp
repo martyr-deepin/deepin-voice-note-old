@@ -54,6 +54,7 @@ void VoiceNoteItem::initUI()
     m_playingButton = new PlayingButton();
     m_playingButton->setFixedSize(QSize(40, 40));
     m_waveform = new Waveform();
+    m_waveform->setCurrDisplayType(WHOLE);
     m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
     m_waveform->setFixedHeight(50);
     //m_voiceShape = new QWidget();

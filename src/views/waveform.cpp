@@ -37,7 +37,7 @@ const int Waveform::SAMPLE_DURATION = 30;
 const int Waveform::WAVE_WIDTH = 2;
 const int Waveform::WAVE_DURATION = 4;
 
-Waveform::Waveform(QWidget *parent) : QWidget(parent)
+Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE)
 {
     //setFixedSize(350, 50);
 
@@ -52,6 +52,10 @@ void Waveform::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
+    if (WHOLE == m_currDisplayType)
+    {
+        genSampleListFromWhole();
+    }
 
     // Background render just for test.
     // QRect testRect(rect());
@@ -115,44 +119,44 @@ void Waveform::updateWave(float sample)
 void Waveform::setWholeSampleList(QList<float> wholeList)
 {
     wholeSampleList.clear();
-    sampleList.clear();
+    //sampleList.clear();
     wholeSampleList = wholeList;
-    int pointNum = rect().width() / WAVE_DURATION;
-    float sample = wholeList.size() * 1.0 / pointNum;
-    qDebug() << "whole list";
-    for (int t = 0; t < wholeList.size(); t++)
-    {
-        qDebug() << t << ":" << wholeList.at(t);
-    }
-    for (int i = 0; i < pointNum; i++)
-    {
-        if (i == 0)
-        {
-            sampleList << wholeList[i];
-        }
+//    int pointNum = rect().width() / WAVE_DURATION;
+//    float sample = wholeList.size() * 1.0 / pointNum;
+////    qDebug() << "whole list";
+////    for (int t = 0; t < wholeList.size(); t++)
+////    {
+////        qDebug() << t << ":" << wholeList.at(t);
+////    }
+//    for (int i = 0; i < pointNum; i++)
+//    {
+//        if (i == 0)
+//        {
+//            sampleList << wholeList[i];
+//        }
 
-        else
-        {
-            float pointPos = i * sample;
-            if (pointPos > wholeList.size() - 1)
-            {
-                sampleList << wholeList[wholeList.size() - 1];
-            }
-            else
-            {
-                int prePoint = static_cast<int>(pointPos);
-                int nextPoint = prePoint + 1;
-                float currPointValue = (pointPos - prePoint) * wholeList[nextPoint] + (nextPoint - pointPos) * wholeList[prePoint];
-                sampleList << currPointValue;
-            }
-        }
-    }
+//        else
+//        {
+//            float pointPos = i * sample;
+//            if (pointPos > wholeList.size() - 1)
+//            {
+//                sampleList << wholeList[wholeList.size() - 1];
+//            }
+//            else
+//            {
+//                int prePoint = static_cast<int>(pointPos);
+//                int nextPoint = prePoint + 1;
+//                float currPointValue = (pointPos - prePoint) * wholeList[nextPoint] + (nextPoint - pointPos) * wholeList[prePoint];
+//                sampleList << currPointValue;
+//            }
+//        }
+//    }
 
-    qDebug() << "sample list";
-    for (int t = 0; t < sampleList.size(); t++)
-    {
-        qDebug() << t << ":" << sampleList.at(t);
-    }
+//    qDebug() << "sample list";
+//    for (int t = 0; t < sampleList.size(); t++)
+//    {
+//        qDebug() << t << ":" << sampleList.at(t);
+//    }
 
 }
 
@@ -275,4 +279,44 @@ qreal Waveform::getPeakValue(const QAudioFormat& format)
     }
 
     return qreal(0);
+}
+
+void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
+{
+    m_currDisplayType = type;
+}
+
+void Waveform::genSampleListFromWhole()
+{
+    sampleList.clear();
+    int pointNum = rect().width() / WAVE_DURATION;
+    float sample = wholeSampleList.size() * 1.0 / pointNum;
+//    qDebug() << "whole list";
+//    for (int t = 0; t < wholeList.size(); t++)
+//    {
+//        qDebug() << t << ":" << wholeList.at(t);
+//    }
+    for (int i = 0; i < pointNum; i++)
+    {
+        if (i == 0)
+        {
+            sampleList << wholeSampleList[i];
+        }
+
+        else
+        {
+            float pointPos = i * sample;
+            if (pointPos > wholeSampleList.size() - 1)
+            {
+                sampleList << wholeSampleList[wholeSampleList.size() - 1];
+            }
+            else
+            {
+                int prePoint = static_cast<int>(pointPos);
+                int nextPoint = prePoint + 1;
+                float currPointValue = (pointPos - prePoint) * wholeSampleList[nextPoint] + (nextPoint - pointPos) * wholeSampleList[prePoint];
+                sampleList << currPointValue;
+            }
+        }
+    }
 }
