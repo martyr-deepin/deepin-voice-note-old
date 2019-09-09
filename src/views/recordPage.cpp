@@ -180,6 +180,7 @@ void RecordPage::initUI()
 
     m_waveform = new Waveform();
     m_waveform->setFixedHeight(50);
+    m_waveform->setWavePosition(-1);
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);

@@ -138,6 +138,7 @@ void RightView::addTextNote()
     note.noteType = NOTE_TYPE::TEXT;
     note.createTime = QDateTime::currentDateTime();
     note.contentText = "";
+
     m_noteListWidget->addWidgetItem(note);
 
 

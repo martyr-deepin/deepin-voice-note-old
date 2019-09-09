@@ -9,7 +9,7 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr) : m_isTextCon
 
 //    this->setMinimumHeight(100);
 //    this->setMaximumHeight(200);
-
+    //this->setFixedHeight(64);
     initUI();
     initConnection();
 //    this->setStyleSheet("background: blue");

@@ -34,13 +34,23 @@ void RightNoteList::initUI()
     audioPlayer = new QMediaPlayer(this);
     connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
 
+    m_myslider = new MySlider(Qt::Horizontal, this);
+    //m_myslider = new MyCustomSlider(Qt::Horizontal, this);
+
+    //m_myslider->setFixedSize(350, 70);
+    //m_myslider->setHandleType(MySlider::HandleType::SharpHandler);
+    m_myslider->setPageStep(SLIDER_PAGE_STEP);
+    m_myslider->setGeometry(0, 0, 350, 121);
+    m_myslider->hide();
 
 }
 void RightNoteList::initConnection()
 {
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
     connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
+    connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
+    connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
 }
 
 //void LeftFolderList::addWidgetItem(FOLDER folder) {
@@ -70,9 +80,9 @@ void RightNoteList::addWidgetItem(NOTE note)
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);        
         connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));        
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
-        connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString)), this, SLOT(play(VoiceNoteItem *, QString)));
+        connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem(this);
-        item->setSizeHint(QSize(this->width(),140));
+        item->setSizeHint(QSize(this->width(),64));
         this->setItemWidget(item, voiceItem);
     }
 }
@@ -140,7 +150,7 @@ void RightNoteList::handleClickRecordButton()
     }
 }
 
-void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath)
+void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos)
 {
     if (filepath != getPlayingFilepath()) {
         audioPlayer->stop();
@@ -154,6 +164,15 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath)
 
     audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
     audioPlayer->play();
+    if (m_myslider->isHidden())
+    {
+        QPoint waveformPoint = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
+        //QPoint x = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
+        qDebug() << "width: " << waveformPos.width() << "height: " << m_myslider->y();
+        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y(), waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        m_myslider->setRange(0, waveformPos.width());
+        m_myslider->show();
+    }
 }
 
 void RightNoteList::pause()
@@ -191,8 +210,33 @@ void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
 {
     if (QMediaPlayer::StoppedState == state)
     {
+        m_currPlayingItem->m_waveform->setWavePosition(0);
         m_currPlayingItem->handleStopPlay();
         m_currPlayingItem = nullptr;
+        m_myslider->hide();
     }
 }
 
+
+void RightNoteList::handleAudioPositionChanged(qint64 position)
+{
+    int audioLength = m_currPlayingItem->m_note.voiceTime;
+    int sliderPos = 0;
+    if (audioLength > 0)
+    {
+        sliderPos = position * ( m_myslider->width()) / audioLength;
+    }
+
+    qDebug() << "handleAudioPositionChanged:" << position;
+    m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
+    m_myslider->setTimeText(UiUtil::formatMillisecond(position));
+    m_myslider->setSliderPostion(sliderPos);
+}
+
+void RightNoteList::handleSliderReleased()
+{
+    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+
+    audioPlayer->setPosition(audioPos);
+}

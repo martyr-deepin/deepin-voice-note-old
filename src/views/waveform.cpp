@@ -37,7 +37,8 @@ const int Waveform::SAMPLE_DURATION = 30;
 const int Waveform::WAVE_WIDTH = 2;
 const int Waveform::WAVE_DURATION = 4;
 
-Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE)
+
+Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")
 {
     //setFixedSize(350, 50);
 
@@ -80,13 +81,15 @@ void Waveform::paintEvent(QPaintEvent *)
         if (volume == 0) {
             QPainterPath path;
             path.addRect(QRectF(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - 1) / 2, WAVE_DURATION, 1));
-            painter.fillPath(path, QColor("#848484"));
+            painter.fillPath(path, QColor(getColor(rect().x() + i * WAVE_DURATION)));
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
             QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
-            gradient.setColorAt(0, QColor("#848484"));
-            gradient.setColorAt(1, QColor("#848484"));
+            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
+            gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
+
+
             painter.fillRect(sampleRect, gradient);
         }
     }
@@ -97,8 +100,29 @@ void Waveform::paintEvent(QPaintEvent *)
                             rect().y() + (rect().height() - 1) / 2,
                             rect().width() - (rect().x() + sampleList.size() * WAVE_DURATION),
                             1));
-        painter.fillPath(path, QColor("#848484"));
+        painter.fillPath(path, QColor(rect().x() + sampleList.size() * WAVE_DURATION));
     }
+}
+
+QString Waveform::getColor(int xPos)
+{
+    if (-1 == m_currWavePos)
+    {
+        return m_blueColor;
+    }
+    else if ((xPos > 0) && (xPos <= m_currWavePos))
+    {
+        return m_blueColor;
+    }
+    else
+    {
+        return m_greyColor;
+    }
+}
+
+void Waveform::setWavePosition(int pos)
+{
+    m_currWavePos = pos;
 }
 
 void Waveform::updateWave(float sample)

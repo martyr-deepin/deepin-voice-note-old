@@ -56,7 +56,11 @@ SOURCES += \
     src/views/recordPage.cpp \
     src/views/recordingButton.cpp \
     src/views/waveform.cpp \
-    src/views/playingbutton.cpp
+    src/views/playingbutton.cpp \
+    src/views/mycustomslider.cpp \
+    src/views/sliderhandler.cpp \
+    src/views/mysliderbar.cpp \
+    src/views/myslider.cpp
 
 HEADERS += \
     src/app \
@@ -82,7 +86,11 @@ HEADERS += \
     src/views/recordPage.h \
     src/views/recordingButton.h \
     src/views/waveform.h \
-    src/views/playingbutton.h
+    src/views/playingbutton.h \
+    src/views/mycustomslider.h \
+    src/views/sliderhandler.h \
+    src/views/mysliderbar.h \
+    src/views/myslider.h
 
 INCLUDEPATH += \
     src/app \

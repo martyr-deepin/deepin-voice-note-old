@@ -29,6 +29,7 @@
 #include <QEvent>
 #include <QTimer>
 #include <QWidget>
+#define SLIDER_TICK_INTAVAL 4
 enum DISPLAY_TYPE {WHOLE=0, PART_SAMPLE=1};
 
 class Waveform : public QWidget
@@ -53,6 +54,7 @@ public:
     void setWholeSampleList(QList<float> wholeList);
     QList<float> getWholeSampleList();
     void setCurrDisplayType(DISPLAY_TYPE);
+    void setWavePosition(int pos);
                                                                                     
 public slots:
     void renderWave();
@@ -67,10 +69,12 @@ private:
     QList<float> wholeSampleList;
     QTimer *renderTimer;
     DISPLAY_TYPE m_currDisplayType;
+    int m_currWavePos;
 
+    QString m_blueColor;
+    QString m_greyColor;
     void genSampleListFromWhole();
-
-
+    QString getColor(int xPos);
 };
 
 #endif

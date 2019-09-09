@@ -1,6 +1,7 @@
 #ifndef RIGHTNOTELIST_H
 #define RIGHTNOTELIST_H
 
+#include "myslider.h"
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
 
@@ -12,8 +13,11 @@
 #include <DDialog>
 #include <QMediaPlayer>
 //#include <DArrowRectangle>
+#include <mycustomslider.h>
 
 DWIDGET_USE_NAMESPACE
+
+#define SLIDER_PAGE_STEP 4
 
 class RightNoteList : public QListWidget
 {
@@ -33,9 +37,11 @@ public slots:
     void handleSaveAsItem(bool);
     void handleDelDialogClicked(int index, const QString &text);
     void handlePlayingStateChanged(QMediaPlayer::State state);
-    void play(VoiceNoteItem * voiceNoteItem, QString filepath);
+    void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
     void pause();
     void handleClickRecordButton();
+    void handleAudioPositionChanged(qint64 position);
+    void handleSliderReleased();
 
 private:
     QMenu *m_contextMenu;
@@ -48,6 +54,8 @@ private:
     DDialog *m_delConfirmDialog;
     VoiceNoteItem *m_currPlayingItem;
     QMediaPlayer *audioPlayer;
+    MySlider *m_myslider;
+    //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();
 

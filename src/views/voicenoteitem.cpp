@@ -56,7 +56,7 @@ void VoiceNoteItem::initUI()
     m_waveform = new Waveform();
     m_waveform->setCurrDisplayType(WHOLE);
     m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
-    m_waveform->setFixedHeight(50);
+    m_waveform->setFixedHeight(33);
     //m_voiceShape = new QWidget();
     QSizePolicy spShape = m_waveform->sizePolicy();
     sp.setHorizontalStretch(1);
@@ -105,5 +105,8 @@ void VoiceNoteItem::handleStopPlay()
 
 void VoiceNoteItem::handleResumePlaying()
 {
-     emit resumePlayingSignal(this, m_note.contentPath);
+//    QPoint itemPointToParent = this->mapToParent(QPoint(0,0));
+//    QPoint waveformPointToParent(itemPointToParent.x() + m_waveform->x(), itemPointToParent.y());
+    QRect waveformPoint = m_waveform->geometry();
+    emit resumePlayingSignal(this, m_note.contentPath, waveformPoint);
 }

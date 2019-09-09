@@ -32,7 +32,7 @@ public:
 
 signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
-    void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath);
+    void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect);
     void pausePlayingSignal();
 public slots:
     void handleStopPlay();
