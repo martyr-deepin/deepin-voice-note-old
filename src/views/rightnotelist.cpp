@@ -62,20 +62,19 @@ void RightNoteList::initConnection()
 //    this->setItemWidget(item, folderItem);
 //}
 
-void RightNoteList::addWidgetItem(NOTE note)
+void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
 {
 
 
     if(note.noteType == NOTE_TYPE::TEXT)
     {
-        TextNoteItem *textItem = new TextNoteItem(note, m_noteController);
+        TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         qDebug() << "text item height: " << textItem->height();
         item->setSizeHint(QSize(this->width(),140));
         this->setItemWidget(item, textItem);
-
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);        

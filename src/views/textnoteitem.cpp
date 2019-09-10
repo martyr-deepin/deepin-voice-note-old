@@ -2,10 +2,11 @@
 #include "uiutil.h"
 #include <QDebug>
 
-TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr) : m_isTextConverted(false)
+TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey) : m_isTextConverted(false)
 {
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
+    m_searchKey = searchKey;
 
 //    this->setMinimumHeight(100);
 //    this->setMaximumHeight(200);
@@ -101,7 +102,7 @@ void TextNoteItem::initUI()
     labelFont.setPointSize(12);
     m_textEdit->setFont(labelFont);
     QString elidedText = UiUtil::getElidedText(labelFont, m_textNote.contentText, 614 * 5, m_isTextConverted);
-    m_textEdit->setText(elidedText);
+    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
 //    sizePolicy.setVerticalStretch(0);

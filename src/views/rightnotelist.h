@@ -25,7 +25,7 @@ class RightNoteList : public DListWidget
 public:
     RightNoteList(NoteController *noteController);
     ~RightNoteList();
-    void addWidgetItem(NOTE note);
+    void addWidgetItem(NOTE note, QString searchKey);
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -55,6 +55,7 @@ private:
     VoiceNoteItem *m_currPlayingItem;
     QMediaPlayer *audioPlayer;
     MySlider *m_myslider;
+
     //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();

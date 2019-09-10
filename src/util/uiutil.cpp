@@ -123,12 +123,14 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey)
 {
     QString richText = "<p  style=\"font-size:%1px\">%2</p>";
     QString searchStr = "<font color=#349ae8>%1</font>";
-    QString tmpText = richText.arg(fontSize).arg(src);
-
+    QString destSrc = src;
     if (!searchKey.isEmpty())
     {
-        tmpText = tmpText.replace(searchKey, searchStr.arg(searchKey));
+        destSrc = src.replace(searchKey, searchStr.arg(searchKey));
     }
+
+    QString tmpText = richText.arg(fontSize).arg(destSrc);
+
     return tmpText;
 }
 

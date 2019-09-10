@@ -146,7 +146,7 @@ void RightView::addTextNote()
     note.createTime = QDateTime::currentDateTime();
     note.contentText = "";
 
-    m_noteListWidget->addWidgetItem(note);
+    m_noteListWidget->addWidgetItem(note, "");
 
 
     m_noteController->addNote(note);
@@ -164,7 +164,7 @@ void RightView::updateNoteList()
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(noteList.at(i));
+            m_noteListWidget->addWidgetItem(noteList.at(i), "");
         }
         m_noteListWidget->scrollToBottom();
     }
@@ -175,10 +175,19 @@ void RightView::searchNoteList(QString searchKey)
     m_noteListWidget->clear();
     if (m_currFolderId > 0)
     {
-        QList<NOTE> noteList = m_noteController->searchNote(m_currFolderId, searchKey);
+        QList<NOTE> noteList;
+        if (searchKey.isEmpty())
+        {
+            noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
+        }
+        else
+        {
+            noteList = m_noteController->searchNote(m_currFolderId, searchKey);
+        }
+
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(noteList.at(i));
+            m_noteListWidget->addWidgetItem(noteList.at(i), searchKey);
         }
         m_noteListWidget->scrollToBottom();
     }

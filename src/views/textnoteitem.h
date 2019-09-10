@@ -23,7 +23,7 @@ class TextNoteItem : public QWidget
 {
     Q_OBJECT
 public:
-    TextNoteItem(NOTE m_textNote, NoteController *noteCtr);
+    TextNoteItem(NOTE m_textNote, NoteController *noteCtr, QString searchKey);
     ~TextNoteItem();
 
     NOTE m_textNote;
@@ -58,6 +58,7 @@ private:
 //    QAction *m_saveAsAction;
 //    QAction *m_delAction;
     bool m_isTextConverted;
+    QString m_searchKey;
     void initUI();
     void initConnection();
     void updateNote();
