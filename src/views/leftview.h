@@ -10,7 +10,7 @@
 #include <QObject>
 #include "consts.h"
 DWIDGET_USE_NAMESPACE
-#define LEFTVIEW_MAX_WIDTH 200
+#define LEFTVIEW_MAX_WIDTH 250
 class LeftView : public QFrame
 {
     Q_OBJECT

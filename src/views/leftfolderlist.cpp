@@ -2,6 +2,7 @@
 
 #include <QFrame>
 #include <QDebug>
+#include <DPalette>
 
 LeftFolderList::LeftFolderList(FolderController *folderCtr)
 {
@@ -30,6 +31,7 @@ void LeftFolderList::initUI()
 
 //    addWidgetItem(folder1);
 //    addWidgetItem(folder2);
+    this->setFrameShape(QListWidget::NoFrame);
     m_contextMenu = new QMenu;
     m_renameAction = new QAction(tr(FOLDER_MENU_RENAME),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
@@ -48,8 +50,12 @@ void LeftFolderList::initConnection()
 
 void LeftFolderList::addWidgetItem(FOLDER folder) {
     QListWidgetItem *item=new QListWidgetItem(this);
-    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
-    item->setSizeHint(QSize(200,60));
+//    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
+    item->setSizeHint(QSize(230,64));
+//    DPalette palette;
+//    palette.setColor(DPalette::Background, QColor(247, 247, 247));
+//    item->setAutoFillBackground(true);
+//    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr);
     this->setItemWidget(item, folderItem);
 }

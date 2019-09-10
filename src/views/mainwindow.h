@@ -12,9 +12,9 @@
 #include <QStackedWidget>
 #include <QPushButton>
 #include <DSearchEdit>
-#define DEFAULT_WINDOWS_WIDTH 960
-#define DEFAULT_WINDOWS_HEIGHT 540
-#define TITLE_FIXED_HEIGHT 40
+#define DEFAULT_WINDOWS_WIDTH 820
+#define DEFAULT_WINDOWS_HEIGHT 634
+#define TITLE_FIXED_HEIGHT 50
 
 
 DWIDGET_USE_NAMESPACE

@@ -1,14 +1,14 @@
 #ifndef LEFTFOLDERVIEW_H
 #define LEFTFOLDERVIEW_H
 
-#include <QListWidget>
+#include <DListWidget>
 #include <QMenu>
 #include "folerwidgetitem.h"
 #include "src/app/consts.h"
 
 
 
-class LeftFolderList : public QListWidget
+class LeftFolderList : public DListWidget
 {
     Q_OBJECT
 public:

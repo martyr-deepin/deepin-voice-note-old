@@ -14,6 +14,7 @@ VoiceNoteItem::~VoiceNoteItem()
 
 void VoiceNoteItem::initUI()
 {
+
     m_timeLabel = new QLabel();
     QSizePolicy sp = m_timeLabel->sizePolicy();
     sp.setVerticalPolicy(QSizePolicy::Fixed);

@@ -1,5 +1,6 @@
 #include "leftview.h"
 
+#include <DPalette>
 #include <QVBoxLayout>
 #include <folderoper.h>
 
@@ -53,6 +54,12 @@ void LeftView::initUI()
         m_leftFolderView->setCurrentRow(0);
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
+
+    DPalette palette;
+    palette.setColor(DPalette::Background, QColor(255, 255, 255));
+
+    this->setAutoFillBackground(true);
+    this->setPalette(palette);
 
 
 

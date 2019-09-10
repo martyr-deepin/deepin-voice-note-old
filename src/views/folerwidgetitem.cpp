@@ -2,7 +2,7 @@
 
 #include <QString>
 #include <uiutil.h>
-
+#include <DPalette>
 
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr)
@@ -23,6 +23,7 @@ void FolerWidgetItem::initUI()
     //this->resize(196, 60);
     //setNormalBackground();
     //this->setStyleSheet("background: red");
+    this->setFixedSize(230, 64);
     m_imageLabel = new QLabel(this);
     m_imageLabel->setGeometry(QRect(10, 10, 50, 40));
     m_imageLabel->setObjectName("imageLabel");
@@ -59,6 +60,8 @@ void FolerWidgetItem::initUI()
     m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     m_createTimeLabel->setObjectName("createTimeLabel");
     m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
+
+
 }
 
 void FolerWidgetItem::initConnection()

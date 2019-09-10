@@ -5,7 +5,7 @@
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
 
-#include <QListWidget>
+#include <DListWidget>
 #include <notecontroller.h>
 #include <consts.h>
 #include <QObject>
@@ -19,7 +19,7 @@ DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
 
-class RightNoteList : public QListWidget
+class RightNoteList : public DListWidget
 {
     Q_OBJECT
 public:

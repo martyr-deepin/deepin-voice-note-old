@@ -5,6 +5,7 @@
 #include "consts.h"
 #include <DArrowRectangle>
 //#include "darrowrectangle.h"
+#include <DPalette>
 #include <QTableWidgetItem>
 
 
@@ -49,6 +50,12 @@ void RightView::initUI()
 //    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
 //    self.plainTextEdit.setObjectName("plainTextEdit")
     m_stackedWidget->addWidget(m_detailPage);
+
+    DPalette palette;
+    palette.setColor(DPalette::Background, QColor(255, 255, 255));
+
+    this->setAutoFillBackground(true);
+    this->setPalette(palette);
 
 
 }

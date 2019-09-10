@@ -17,6 +17,7 @@ RightNoteList::~RightNoteList()
 
 void RightNoteList::initUI()
 {
+    this->setFrameShape(QListWidget::NoFrame);
     m_contextMenu = new QMenu;
     m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
