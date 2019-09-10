@@ -30,7 +30,7 @@ void LeftView::initUI()
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
-        m_leftFolderView->addWidgetItem(folderList.at(i));
+        m_leftFolderView->addWidgetItem(folderList.at(i), "");
     }
 
     m_leftFolderView->setObjectName("LeftSideBar");
@@ -82,7 +82,7 @@ void LeftView::updateFolderView()
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
-        m_leftFolderView->addWidgetItem(folderList.at(i));
+        m_leftFolderView->addWidgetItem(folderList.at(i), "");
     }
     if (m_leftFolderView->count() > 0)
     {
@@ -102,7 +102,7 @@ void LeftView::searchFolder(QString searchKey)
     QList<FOLDER> folderList = m_folderCtr-> searchFolder(searchKey);
     for (int i = 0; i < folderList.size(); i++)
     {
-        m_leftFolderView->addWidgetItem(folderList.at(i));
+        m_leftFolderView->addWidgetItem(folderList.at(i), searchKey);
     }
     if (m_leftFolderView->count() > 0)
     {

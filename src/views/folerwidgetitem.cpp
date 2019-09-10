@@ -5,10 +5,11 @@
 #include <DPalette>
 
 //FolerWidgetItem::FolerWidgetItem()
-FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr)
+FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QString searchKey)
 {
     this->m_folder = folder;
     this->m_folderCtr = folderCtr;
+    this->m_searchKey = searchKey;
     initUI();
     initConnection();
 }
@@ -48,7 +49,7 @@ void FolerWidgetItem::initUI()
     m_nameLabel->setFont(labelFont);
     bool isConverted = false;
     QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-    m_nameLabel->setText(folderNameElided);
+    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey));
 
     m_lineEdit = new DLineEdit(this);
     m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
@@ -135,7 +136,7 @@ void FolerWidgetItem::checkNameValid()
                 m_lineEdit->showAlertMessage("修改目录名失败");
 
             }
-            m_nameLabel->setText(m_lineEdit->text());
+            m_nameLabel->setText(UiUtil::getHtmlText(m_lineEdit->text(), 14, m_searchKey));
             m_nameLabel->setVisible(true);
             m_lineEdit->setVisible(false);
         }

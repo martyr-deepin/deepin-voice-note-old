@@ -14,7 +14,7 @@ class LeftFolderList : public DListWidget
 public:
     LeftFolderList(FolderController *m_folderCtr);
     ~LeftFolderList();
-    void addWidgetItem(FOLDER folder);
+    void addWidgetItem(FOLDER folder, QString searchKey);
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void handleDelItem(bool checked);

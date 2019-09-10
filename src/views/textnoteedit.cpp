@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 
 #include <QDebug>
+#include <uiutil.h>
 
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
 {
@@ -41,7 +42,7 @@ TextNoteEdit::~TextNoteEdit()
 void TextNoteEdit::setTextNote(NOTE textNote)
 {
     m_textNote = textNote;
-    this->setText(m_textNote.contentText);
+    this->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, ""));
 }
 
 void TextNoteEdit::mousePressEvent(QMouseEvent *event)

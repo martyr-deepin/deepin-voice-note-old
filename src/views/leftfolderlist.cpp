@@ -48,7 +48,7 @@ void LeftFolderList::initConnection()
     connect(m_renameAction, SIGNAL(triggered(bool)), this, SLOT(handleRenameItem(bool)));
 }
 
-void LeftFolderList::addWidgetItem(FOLDER folder) {
+void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     QListWidgetItem *item=new QListWidgetItem(this);
 //    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     item->setSizeHint(QSize(230,64));
@@ -56,7 +56,7 @@ void LeftFolderList::addWidgetItem(FOLDER folder) {
 //    palette.setColor(DPalette::Background, QColor(247, 247, 247));
 //    item->setAutoFillBackground(true);
 //    item->setPalette(palette);
-    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr);
+    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
     this->setItemWidget(item, folderItem);
 }
 

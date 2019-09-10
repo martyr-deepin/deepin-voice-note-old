@@ -119,4 +119,17 @@ QList<float> UiUtil::convertStringToFloatList(QString str)
     return list;
 }
 
+QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey)
+{
+    QString richText = "<p  style=\"font-size:%1px\">%2</p>";
+    QString searchStr = "<font color=#349ae8>%1</font>";
+    QString tmpText = richText.arg(fontSize).arg(src);
+
+    if (!searchKey.isEmpty())
+    {
+        tmpText = tmpText.replace(searchKey, searchStr.arg(searchKey));
+    }
+    return tmpText;
+}
+
 

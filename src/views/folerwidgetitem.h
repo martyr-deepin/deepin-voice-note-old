@@ -20,7 +20,7 @@ class FolerWidgetItem : public QWidget
     Q_OBJECT
 public:
     //FolerWidgetItem();
-    FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr);
+    FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr, QString searchKey);
     ~FolerWidgetItem();
     DLineEdit *m_lineEdit;
     QLabel *m_imageLabel;
@@ -36,6 +36,7 @@ private:
 
 
     FolderController *m_folderCtr;
+    QString m_searchKey;
 
 
     void initUI();

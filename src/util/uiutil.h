@@ -23,6 +23,7 @@ public:
     static QString getRecordingSaveDirectory();
     static QString convertFloatListToString(QList<float> list);
     static QList<float> convertStringToFloatList(QString str);
+    static QString getHtmlText(QString src, int fontSize, QString searchKey);
 
 };
 
