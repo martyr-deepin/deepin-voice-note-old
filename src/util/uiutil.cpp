@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QStandardPaths>
+#include <QTextStream>
 
 UiUtil::UiUtil()
 {
@@ -133,5 +134,69 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey)
 
     return tmpText;
 }
+
+bool UiUtil::saveTxt(QString path, QString content)
+{
+    QString sFilePath="C:\\test.txt";
+    QFile file(path);
+    if(!file.open(QIODevice::WriteOnly|QIODevice::Text))
+    {
+        return false;
+    }
+    QTextStream textStream(&file);
+    textStream << content;
+    file.close();
+}
+
+QString UiUtil::convertFolderDate(QDateTime dateTime)
+{
+    QString dayStr = "%1天前";
+    QString monthStr = "%1个月前";
+    QDate currDateTime = QDate::currentDate();
+    QDate folerDate = dateTime.date();
+    qint64 offset = folerDate.daysTo(currDateTime);
+    if (0 == offset)
+    {
+        return "今天";
+    }
+    else if ((offset < 30) && (offset > 0))
+    {
+        return dayStr.arg(offset);
+    }
+    else if (offset >= 30)
+    {
+        int month = offset / 30;
+        return monthStr.arg(month);
+    }
+    return "今天";
+}
+
+QString UiUtil::convertNoteDate(QDateTime dateTime)
+{
+    QString dayStr = "%1天前";
+    QString hourStr = "%1个小时前";
+    QDateTime currDateTime = QDateTime::currentDateTime();
+    //QDate folerDate = dateTime.date();
+    qint64 offsetMS = dateTime.msecsTo(currDateTime);
+    qint64 offsetSec = offsetMS / (60 * 1000);
+    if (offsetSec >= 0 && offsetSec <= 60 )
+    {
+        return "刚刚";
+    }
+    else if((offsetSec > 60) && (offsetSec <= 24 * 60))
+    {
+        int hour = offsetSec / 60;
+        return hourStr.arg(hour);
+
+    }
+    else if (offsetSec > 24 * 60)
+    {
+        int day = offsetSec / (24 * 60);
+        return dayStr.arg(day);
+    }
+
+    return "刚刚";
+}
+
 
 

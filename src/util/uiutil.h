@@ -24,6 +24,9 @@ public:
     static QString convertFloatListToString(QList<float> list);
     static QList<float> convertStringToFloatList(QString str);
     static QString getHtmlText(QString src, int fontSize, QString searchKey);
+    static bool saveTxt(QString path, QString content);
+    static QString convertFolderDate(QDateTime dateTime);
+    static QString convertNoteDate(QDateTime dateTime);
 
 };
 

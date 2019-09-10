@@ -36,7 +36,8 @@ void VoiceNoteItem::initUI()
 
     m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
-    m_timeLabel->setText(m_note.createTime.toString());
+    m_timeLabel->setText(UiUtil::convertNoteDate(m_note.createTime));
+//    m_timeLabel->setText(m_note.createTime.toString());
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");

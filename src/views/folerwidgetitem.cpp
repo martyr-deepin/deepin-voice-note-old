@@ -60,7 +60,8 @@ void FolerWidgetItem::initUI()
     m_createTimeLabel = new QLabel(this);
     m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     m_createTimeLabel->setObjectName("createTimeLabel");
-    m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
+    //m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
+    m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
 
 
 }

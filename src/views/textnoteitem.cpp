@@ -47,7 +47,7 @@ void TextNoteItem::initUI()
 
     m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
-    m_timeLabel->setText(m_textNote.createTime.toString());
+    m_timeLabel->setText(UiUtil::convertNoteDate(m_textNote.createTime));
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
