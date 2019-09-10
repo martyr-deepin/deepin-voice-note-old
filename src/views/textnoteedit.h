@@ -15,7 +15,8 @@ public:
     TextNoteEdit(QWidget *parent = nullptr, NoteController *noteCtr = nullptr);
     ~TextNoteEdit();
 
-    void setTextNote(NOTE textNote);
+    void setTextNote(NOTE textNote, QString searchKey);
+    void searchText(QString searchKey);
 signals:
     void clicked();
 

@@ -129,14 +129,21 @@ void MyMainWindow::initStackedWidget()
 
 void MyMainWindow::showNoteDetail(NOTE note)
 {
-    m_textNoteEdit->setTextNote(note);
+    m_textNoteEdit->setTextNote(note, m_searchEdit->text());
     m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
 }
 
 void MyMainWindow::showListPage()
 {
-    m_mainPage->updateNoteList();
+    if (m_searchEdit->text().isEmpty())
+    {
+        m_mainPage->updateNoteList();
+    }
+    else
+    {
+        m_mainPage->searchFolder(m_searchEdit->text());
+    }
     m_stackedWidget->setCurrentIndex(0);
     m_returnBtn->setVisible(false);
 }
@@ -150,7 +157,7 @@ void MyMainWindow::handleSearchKey()
     }
     else
     {
-
+        m_textNoteEdit->searchText(searchKey);
     }
 }
 
