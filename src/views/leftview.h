@@ -9,6 +9,7 @@
 #include <dimagebutton.h>
 #include <QObject>
 #include "consts.h"
+#include <DtkGuis>
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
 class LeftView : public QFrame

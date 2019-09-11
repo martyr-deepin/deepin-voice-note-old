@@ -56,6 +56,7 @@ void LeftView::initUI()
     }
 
     DPalette palette;
+
     palette.setColor(DPalette::Background, QColor(255, 255, 255));
 
     this->setAutoFillBackground(true);

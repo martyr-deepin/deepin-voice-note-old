@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="96px" height="96px" viewBox="0 0 96 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>deepin-sound-recorder</title>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>voice-note-32px 2</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <linearGradient x1="49.9997735%" y1="0%" x2="49.9997727%" y2="99.833549%" id="linearGradient-1">
-            <stop stop-color="#FF9BBA" offset="0%"></stop>
-            <stop stop-color="#DA0C0C" offset="100%"></stop>
+        <filter x="-15.4%" y="-14.3%" width="130.8%" height="128.6%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="0" y="0" width="26" height="28" rx="4"></rect>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#FD5E5E" offset="0%"></stop>
+            <stop stop-color="#ED5656" offset="100%"></stop>
         </linearGradient>
-        <linearGradient x1="49.9997727%" y1="1.85111235%" x2="49.9997727%" y2="99.833549%" id="linearGradient-2">
-            <stop stop-color="#FF4B83" offset="0%"></stop>
-            <stop stop-color="#EE3A3A" offset="100%"></stop>
-        </linearGradient>
-        <linearGradient x1="49.9997727%" y1="1.85111235%" x2="49.9997727%" y2="99.833549%" id="linearGradient-3">
-            <stop stop-color="#FF0050" offset="0%"></stop>
-            <stop stop-color="#FF8192" offset="100%"></stop>
-        </linearGradient>
+        <path d="M12.9833344,18.1034483 C12.1722176,18.1034483 11.4833365,17.8103481 10.9166667,17.224139 C10.3499972,16.6379277 10.0666667,15.9252921 10.0666667,15.086208 L10.0666667,14 L15.9333333,14 L15.9333333,15.086208 C15.9333333,15.9252921 15.644448,16.6379277 15.0666667,17.224139 C14.4888853,17.8103481 13.7944491,18.1034483 12.9833344,18.1034483 Z M14,21 L16,21 L16,22 L10,22 L10,21 L12,21 L12,19.8999819 C9.71775968,19.4367116 8,17.4189579 8,15 L9,15 C9,17.209139 10.790861,19 13,19 C15.209139,19 17,17.209139 17,15 L18,15 C18,17.4189579 16.2822403,19.4367116 14,19.8999819 L14,21 Z M10.0666667,9.01724248 C10.0666667,8.18965186 10.3499972,7.47988745 10.9166667,6.88793159 C11.4833365,6.29597352 12.1722176,6 12.9833344,6 C13.7944491,6 14.4888853,6.29597352 15.0666667,6.88793159 C15.644448,7.47988745 15.9333333,8.18965186 15.9333333,9.01724248 L15.9333333,13 L10.0666667,13 L10.0666667,9.01724248 Z" id="path-5"></path>
+        <filter x="-55.0%" y="-21.9%" width="210.0%" height="168.8%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.97254902   0 0 0 0 0.17254902   0 0 0 0 0.277440324  0 0 0 0.4 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="deepin-sound-recorder">
-            <image id="Bitmap" x="1" y="3" width="94" height="93" xlink:href="data:image/png;base64,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"></image>
-            <circle id="Combined-Shape" fill="url(#linearGradient-1)" cx="48" cy="48" r="42"></circle>
-            <circle id="Combined-Shape" fill="url(#linearGradient-2)" cx="48" cy="48" r="40"></circle>
-            <path d="M38,30.0066862 C38,24.480146 42.4759382,20 48,20 L48,20 C53.5228475,20 58,24.4748366 58,30.0066862 L58,51.9933138 C58,57.519854 53.5240618,62 48,62 L48,62 C42.4771525,62 38,57.5251634 38,51.9933138 L38,30.0066862 Z" id="Combined-Shape" fill="url(#linearGradient-3)"></path>
-            <path d="M62.4953201,45.5 L62.4953201,50.2097172 L62.4953201,50.2097172 C62.4953201,51.0284288 62.426891,53.6645786 62.2954498,54.4461515 C61.145032,61.2867419 55.1676753,66.5 47.9953201,66.5 C39.9871913,66.5 33.4953201,60.0519997 33.4953201,52.056806 L33.4953201,45.5" id="Rectangle-41" stroke="#FF7890" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M62.4953201,45.5 L62.4953201,48.2097172 L62.4953201,48.2097172 C62.4953201,49.0284288 62.426891,51.6645786 62.2954498,52.4461515 C61.145032,59.2867419 55.1676753,64.5 47.9953201,64.5 C39.9871913,64.5 33.4953201,58.0519997 33.4953201,50.056806 L33.4953201,45.5" id="Rectangle-41" stroke="#EC143A" stroke-width="3" stroke-linecap="square"></path>
-            <polygon id="Combined-Shape" fill="#FF7890" points="38 72 38 75 58 75 58 72"></polygon>
-            <polygon id="Combined-Shape" fill="#E40F35" points="38 70 38 73 58 73 58 70"></polygon>
-            <rect id="Combined-Shape" fill="#FFFFFF" x="38" y="21" width="20" height="40" rx="10"></rect>
-            <path d="M62.4953201,46.5 L62.4953201,49.2097172 L62.4953201,49.2097172 C62.4953201,50.0284288 62.426891,52.6645786 62.2954498,53.4461515 C61.145032,60.2867419 55.1676753,65.5 47.9953201,65.5 C39.9871913,65.5 33.4953201,59.0519997 33.4953201,51.056806 L33.4953201,46.5" id="Rectangle-41" stroke="#FFFFFF" stroke-width="3" stroke-linecap="square" stroke-linejoin="round"></path>
-            <polygon id="Combined-Shape" fill="#FFFFFF" points="50 71 50 65 46 65 46 71 38 71 38 74 58 74 58 71"></polygon>
-            <circle id="Oval" fill="#F94568" cx="48" cy="30" r="2"></circle>
-            <rect id="Rectangle-3" fill="#F94569" x="38" y="43" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#F94569" x="50" y="43" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#F94569" x="38" y="39" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#F94569" x="50" y="39" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#F94569" x="38" y="35" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#F94569" x="50" y="35" width="8" height="2"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="38" y="43" width="8" height="1"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="50" y="43" width="8" height="1"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="38" y="39" width="8" height="1"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="50" y="39" width="8" height="1"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="38" y="35" width="8" height="1"></rect>
-            <rect id="Rectangle-3" fill="#FF0050" x="50" y="35" width="8" height="1"></rect>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="语音记事本-首页" transform="translate(-560.000000, -224.000000)">
+            <g id="voice-note-32px-2" transform="translate(560.000000, 224.000000)">
+                <g id="voice-note-32px">
+                    <g id="Group" filter="url(#filter-1)" transform="translate(3.000000, 2.000000)">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="#FFFFFF" xlink:href="#path-2"></use>
+                        <path d="M4,23 L4,19 L2.5,19 L2.5,18 L4,18 L4,14 L2.5,14 L2.5,13 L4,13 L4,9 L2.5,9 L2.5,8 L4,8 L4,4 L2.5,4 L2.5,3 L4,3 L4,0 L5,0 L5,3 L23,3 L23,4 L5,4 L5,8 L23,8 L23,9 L5,9 L5,13 L23,13 L23,14 L5,14 L5,18 L23,18 L23,19 L5,19 L5,23 L23,23 L23,24 L5,24 L5,27.5 L4,27.5 L4,24 L2.5,24 L2.5,23 L4,23 Z" id="Combined-Shape" fill-opacity="0.1" fill="#000000" mask="url(#mask-3)"></path>
+                        <g id="Combined-Shape" mask="url(#mask-3)">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                            <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
         </g>
     </g>
 </svg>

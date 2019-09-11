@@ -4,8 +4,8 @@
 #include <QVBoxLayout>
 #include "consts.h"
 #include <DArrowRectangle>
-//#include "darrowrectangle.h"
-#include <DPalette>
+#include <DtkGuis>
+#include <QPalette>
 #include <QTableWidgetItem>
 
 
@@ -51,8 +51,8 @@ void RightView::initUI()
 //    self.plainTextEdit.setObjectName("plainTextEdit")
     m_stackedWidget->addWidget(m_detailPage);
 
-    DPalette palette;
-    palette.setColor(DPalette::Background, QColor(255, 255, 255));
+    QPalette palette;
+    palette.setColor(QPalette::Background, QColor(255, 255, 255));
 
     this->setAutoFillBackground(true);
     this->setPalette(palette);

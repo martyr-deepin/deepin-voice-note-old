@@ -6,6 +6,7 @@
 #include <DTitlebar>
 #include <uiutil.h>
 
+
 MyMainWindow::MyMainWindow()
 {
     initUI();
@@ -37,14 +38,17 @@ void MyMainWindow::initTitleFrame()
 {
     m_logo = new QLabel();
     m_logo->setObjectName("LogoButton");
-    m_logo->setFixedSize(QSize(24, 24));
+    m_logo->setFixedSize(QSize(32, 32));
     m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/voice_note_logo.svg"));
 
     m_returnBtn = new DImageButton();
     m_returnBtn->setFixedSize(QSize(24, 24));
-    m_returnBtn->setNormalPic(":/image/add_normal.svg");
-    m_returnBtn->setHoverPic(":/image/add_hover.svg");
-    m_returnBtn->setPressPic(":/image/add_press.svg");
+    m_returnBtn->setNormalPic(":/image/icon/normal/back_normal.svg");
+    //m_returnBtn->setHoverPic(":/image/add_hover.svg");
+    m_returnBtn->setPressPic(":/image/icon/press/back_press.svg");
+//    QString returnIcon = "";
+//    QString text = "<";
+//    m_returnBtn = new DIconButton(returnIcon, text);
     m_returnBtn->setVisible(false);
 
     m_searchEdit = new DSearchEdit();

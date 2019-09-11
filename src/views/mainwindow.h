@@ -12,6 +12,7 @@
 #include <QStackedWidget>
 #include <QPushButton>
 #include <DSearchEdit>
+#include <DIconButton>
 #define DEFAULT_WINDOWS_WIDTH 820
 #define DEFAULT_WINDOWS_HEIGHT 634
 #define TITLE_FIXED_HEIGHT 50
@@ -43,6 +44,7 @@ private:
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;
     DImageButton *m_returnBtn;
+    //DIconButton *m_returnBtn;
     QFrame *m_titleFrame;
     DSearchEdit *m_searchEdit;
 

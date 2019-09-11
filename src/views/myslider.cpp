@@ -59,7 +59,7 @@ void MySlider::initUI()
 
 void MySlider::initConnection()
 {
-    connect(m_mySliderBar, SIGNAL(sliderMoved(INT)), this, SIGNAL(sliderMoved(INT)));
+    //connect(m_mySliderBar, SIGNAL(sliderMoved(INT)), this, SIGNAL(sliderMoved(INT)));
     connect(m_mySliderBar, SIGNAL(sliderPressed()), this, SIGNAL(sliderPressed()));
     connect(m_mySliderBar, SIGNAL(sliderReleased()), this, SIGNAL(sliderReleased()));
 }
