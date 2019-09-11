@@ -3,6 +3,7 @@
 #include "voicenoteitem.h"
 #include <QDebug>
 #include <uiutil.h>
+#include <DFileDialog>
 
 RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
 {
@@ -41,7 +42,7 @@ void RightNoteList::initUI()
     //m_myslider->setFixedSize(350, 70);
     //m_myslider->setHandleType(MySlider::HandleType::SharpHandler);
     m_myslider->setPageStep(SLIDER_PAGE_STEP);
-    m_myslider->setGeometry(0, 0, 350, 121);
+    m_myslider->setGeometry(0, 0, 350, m_myslider->m_defaultHeight);
     m_myslider->hide();
 
 }
@@ -115,10 +116,37 @@ void RightNoteList::handleDelItem(bool)
     m_arrowMenu->hide();
 //    return;
 }
+
+//dialog.setAcceptMode(DFileDialog::AcceptOpen);
+//        dialog.setFileMode(DFileDialog::Directory);
+//        dialog.setDirectory(m_pathstr);
+
+//        const int mode = dialog.exec();
+
+//        if (mode != QDialog::Accepted) {
+//            return;
+//        }
+
+//        QList<QUrl> pathlist = dialog.selectedUrls();
+//        QString curpath = pathlist.at(0).toLocalFile();
 void RightNoteList::handleSaveAsItem(bool)
 {
 
     m_arrowMenu->hide();
+    DFileDialog fileDialog(this);
+    fileDialog.setWindowTitle(tr("Save as"));
+    fileDialog.setDirectory(".");
+    fileDialog.setFileMode(DFileDialog::AnyFile);
+    //fileDialog->setFilter(QDir::filePath());
+    if(fileDialog.exec() == QDialog::Accepted) {
+        QString path = fileDialog.selectedFiles()[0];
+        UiUtil::saveTxt(path, m_currSelNote.contentText);
+        //QList<QUrl> pathlist = fileDialog.selectedUrls();
+       //QMessageBox::information(NULL, tr("Path"), tr("You selected ") + path);
+    } else {
+       //QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+    }
+
 }
 
 void RightNoteList::handleDelDialogClicked(int index, const QString &text)
@@ -169,7 +197,8 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         QPoint waveformPoint = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
         //QPoint x = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
         qDebug() << "width: " << waveformPos.width() << "height: " << m_myslider->y();
-        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y(), waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        // - m_myslider->m_handleTextHeight
+        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 16, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
         m_myslider->setRange(0, waveformPos.width());
         m_myslider->show();
     }

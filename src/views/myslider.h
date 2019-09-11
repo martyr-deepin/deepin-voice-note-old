@@ -4,8 +4,10 @@
 #include "mysliderbar.h"
 
 #include <QWidget>
+#include <DLabel>
 
-#define DEFAULT_HEIGHT 121
+#define SLIDER_DEFAULT_HEIGHT 141
+#define SLIDER_HANDLE_TEXT_HEIGHT 33
 
 
 DWIDGET_USE_NAMESPACE
@@ -27,6 +29,7 @@ public:
     void setPageStep(int ti);
     void setRange(int min, int max);
     int m_defaultHeight;
+    int m_handleTextHeight;
     int sliderPosition();
     void setTimeText(QString time);
 
@@ -41,7 +44,8 @@ protected:
 
 private:
     MySliderBar *m_mySliderBar;
-    SliderHandler *m_sliderHandler;
+    DLabel *m_sliderHandler;
+    //SliderHandler *m_sliderHandler;
 
     void initUI();
     void initConnection();

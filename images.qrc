@@ -52,5 +52,6 @@
         <file>image/slider_handle_line.png</file>
         <file>image/icon/press/back_press.svg</file>
         <file>image/icon/normal/back_normal.svg</file>
+        <file>image/slider_handle_waveform.svg</file>
     </qresource>
 </RCC>

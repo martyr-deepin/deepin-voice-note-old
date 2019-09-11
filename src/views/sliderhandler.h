@@ -5,6 +5,7 @@
 #include <QLayout>
 #include <QWidget>
 
+
 class SliderHandler : public QWidget
 {
     Q_OBJECT

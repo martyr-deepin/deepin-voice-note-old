@@ -1,12 +1,12 @@
 #include "myslider.h"
 #include <QDebug>
 
-MySlider::MySlider(QWidget *parent) : QWidget(parent), m_defaultHeight(DEFAULT_HEIGHT)
+MySlider::MySlider(QWidget *parent) : QWidget(parent), m_defaultHeight(SLIDER_DEFAULT_HEIGHT), m_handleTextHeight(SLIDER_HANDLE_TEXT_HEIGHT)
 {
     initUI();
     initConnection();
 }
-MySlider::MySlider(Qt::Orientation orientation, QWidget *parent) : QWidget(parent), m_defaultHeight(DEFAULT_HEIGHT)
+MySlider::MySlider(Qt::Orientation orientation, QWidget *parent) : QWidget(parent), m_defaultHeight(SLIDER_DEFAULT_HEIGHT), m_handleTextHeight(SLIDER_HANDLE_TEXT_HEIGHT)
 {
     initUI();
     initConnection();
@@ -50,8 +50,20 @@ int MySlider::getHandlerWidth()
 
 void MySlider::initUI()
 {
+    m_sliderHandler = new DLabel(this);
+    m_sliderHandler->setFixedSize(50, 141);
+    QPalette pal;
+    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider_handle_waveform.svg")));
+    m_sliderHandler->setAutoFillBackground(true);
+    m_sliderHandler->setPalette(pal);
+    m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
+    QFont labelFont;
+    labelFont.setFamily("SourceHanSansSC");
+    labelFont.setPointSize(12);
+    m_sliderHandler->setFont(labelFont);
+    m_sliderHandler->setContentsMargins(0, 8, 0, 0);
     m_mySliderBar = new MySliderBar(this);
-    m_sliderHandler = new SliderHandler(this);
+    //m_sliderHandler = new SliderHandler(this);
     m_mySliderBar->setRange(0,100);
     m_mySliderBar->setPageStep(1);
     //this->setStyleSheet("background: green");
@@ -87,5 +99,6 @@ int MySlider::sliderPosition()
 
 void MySlider::setTimeText(QString time)
 {
-    m_sliderHandler->m_timeLabel->setText(time);
+    //m_sliderHandler->m_timeLabel->setText(time);
+    m_sliderHandler->setText(time);
 }
