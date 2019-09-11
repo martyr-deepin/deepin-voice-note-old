@@ -4,8 +4,15 @@
 #include <QDebug>
 #include <uiutil.h>
 #include <DFileDialog>
+#include <DToast>
+#include <DMessageBox>
+#include <QMessageBox>
 
 RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
+  , m_defaultTxtName("文本.TXT")
+  , m_defaultTxtPath("/home/deepin/Desktop")
+  , m_defaultAudioName("语音.MP3")
+  , m_defaultAudioPath("/home/deepin/Desktop")
 {
     initUI();
     initConnection();
@@ -31,7 +38,9 @@ void RightNoteList::initUI()
     m_arrowMenu->setContent(m_contextMenu);
     m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
 
-    m_delConfirmDialog = UiUtil::createDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr);
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
+    m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
+    m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     audioPlayer = new QMediaPlayer(this);
     connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
@@ -53,6 +62,8 @@ void RightNoteList::initConnection()
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
+    connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
+
 }
 
 //void LeftFolderList::addWidgetItem(FOLDER folder) {
@@ -134,13 +145,46 @@ void RightNoteList::handleSaveAsItem(bool)
 
     m_arrowMenu->hide();
     DFileDialog fileDialog(this);
-    fileDialog.setWindowTitle(tr("Save as"));
-    fileDialog.setDirectory(".");
-    fileDialog.setFileMode(DFileDialog::AnyFile);
+    fileDialog.setWindowTitle(tr("另存为TXT"));
+    fileDialog.setDirectory(m_defaultTxtPath);
+    fileDialog.setFileMode(DFileDialog::Directory);
+    fileDialog.addLineEdit(tr("文件名"));
+    fileDialog.setLabelText(DFileDialog::Accept, tr("保存"));
     //fileDialog->setFilter(QDir::filePath());
     if(fileDialog.exec() == QDialog::Accepted) {
         QString path = fileDialog.selectedFiles()[0];
-        UiUtil::saveTxt(path, m_currSelNote.contentText);
+        QString fileName = fileDialog.getLineEditValue(tr("文件名"));
+        QString filePath = path + '/' + fileName;
+        DToast toast(this);
+        //toast.move(width() - toast.width() / 2.0 , height() - toast.height());
+        toast.move(0, 0);
+        if (fileName.isEmpty())
+        {
+            DMessageBox::information(this, tr(""), tr("文件名不能为空"));
+//            toast.setText(tr("文件名不能为空"));
+//            toast.pop();
+//            fileDialog.exec();
+        }
+        else if (!UiUtil::checkFileExtension(fileName, ".txt"))
+        {
+            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + ".txt");
+//            toast.setText(tr("文件扩展名必须是") + ".txt");
+//            toast.pop();
+        }
+        else if(UiUtil::checkFileExist(filePath))
+        {
+            m_fileExistsDialog->setSavePath(filePath);
+            m_fileExistsDialog->setNote(m_currSelNote);
+            m_fileExistsDialog->show();
+            //DDialog *fileExistDialog = UiUtil::createDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("是")), QString(tr("否")));;
+        }
+        else
+        {
+            bool result = UiUtil::saveTxt(filePath, m_currSelNote.contentText);
+            handleSaveFileEnd(result);
+        }
+
+
         //QList<QUrl> pathlist = fileDialog.selectedUrls();
        //QMessageBox::information(NULL, tr("Path"), tr("You selected ") + path);
     } else {
@@ -268,4 +312,21 @@ void RightNoteList::handleSliderReleased()
     qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
     audioPlayer->setPosition(audioPos);
+}
+
+void RightNoteList::handleSaveFileEnd(bool result)
+{
+    QString title;
+
+    if (result)
+    {
+        title = tr("保存文件成功!");
+    }
+    else
+    {
+        title = tr("保存文件失败!");
+    }
+    m_saveFileEndDialog->setTitle(title);
+    m_saveFileEndDialog->show();
+    //UiUtil::createConfirmDialog(QString(""), title, this);
 }

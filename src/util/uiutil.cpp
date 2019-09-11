@@ -40,13 +40,13 @@ QPixmap UiUtil::getPixmap(QSize size, QString imgPath)
 
 }
 
-DDialog* UiUtil::createDialog(const QString &title, const QString &content, QWidget *parent)
+DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content, QWidget *parent, QString cancelStr, QString okStr)
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
     dialog->setIcon(QIcon(":/image/voice_note_logo.svg"));
-    dialog->addButton(QString(QObject::tr("Cancel")), false, DDialog::ButtonNormal);
-    dialog->addButton(QString(QObject::tr("Delete")), false, DDialog::ButtonNormal);
+    dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
+    dialog->addButton(okStr, false, DDialog::ButtonNormal);
 
     return dialog;
 }
@@ -137,8 +137,9 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey)
 
 bool UiUtil::saveTxt(QString path, QString content)
 {
-    QString sFilePath="C:\\test.txt";
+    //QString sFilePath="./wltest.txt";
     QFile file(path);
+    //QFile file(sFilePath);
     if(!file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
         return false;
@@ -146,6 +147,7 @@ bool UiUtil::saveTxt(QString path, QString content)
     QTextStream textStream(&file);
     textStream << content;
     file.close();
+    return true;
 }
 
 QString UiUtil::convertFolderDate(QDateTime dateTime)
@@ -198,5 +200,31 @@ QString UiUtil::convertNoteDate(QDateTime dateTime)
     return "刚刚";
 }
 
+bool UiUtil::checkFileExtension(QString fileName, QString extension)
+{
+    if (fileName.toLower().endsWith(extension.toLower()))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+bool UiUtil::checkFileExist(QString filePath)
+{
+    QFile file(filePath);
+    return file.exists();
+}
+
+DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &content, QWidget *parent)
+{
+    DDialog *dialog = new DDialog(title, content, parent);
+    dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
+    dialog->setIcon(QIcon(":/image/voice_note_logo.svg"));
+    dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
+    return dialog;
+    //dialog->addButton(okStr, false, DDialog::ButtonNormal);
+}
 
 

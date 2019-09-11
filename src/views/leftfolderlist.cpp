@@ -91,6 +91,8 @@ void LeftFolderList::handleDelItem(bool checked)
 
         QListWidgetItem * item = this->takeItem(this->currentRow());
         delete item;
+        emit itemClicked(this->currentItem());
+        //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
     }
     else {
         qDebug() << "error: delete item error";

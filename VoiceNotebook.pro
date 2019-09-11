@@ -59,7 +59,8 @@ SOURCES += \
     src/views/playingbutton.cpp \
     src/views/sliderhandler.cpp \
     src/views/mysliderbar.cpp \
-    src/views/myslider.cpp
+    src/views/myslider.cpp \
+    src/views/fileexistsdialog.cpp
 
 HEADERS += \
     src/app \
@@ -88,7 +89,8 @@ HEADERS += \
     src/views/playingbutton.h \
     src/views/sliderhandler.h \
     src/views/mysliderbar.h \
-    src/views/myslider.h
+    src/views/myslider.h \
+    src/views/fileexistsdialog.h
 
 INCLUDEPATH += \
     src/app \
