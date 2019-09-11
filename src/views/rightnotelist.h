@@ -13,7 +13,6 @@
 #include <DDialog>
 #include <QMediaPlayer>
 //#include <DArrowRectangle>
-#include <mycustomslider.h>
 
 DWIDGET_USE_NAMESPACE
 
