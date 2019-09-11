@@ -82,7 +82,7 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem(this);
-        item->setSizeHint(QSize(this->width(),64));
+        item->setSizeHint(QSize(this->width(), 94));
         this->setItemWidget(item, voiceItem);
     }
 }

@@ -1,5 +1,6 @@
 #include "textnoteitem.h"
 #include "uiutil.h"
+#include <DPalette>
 #include <QDebug>
 
 TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey) : m_isTextConverted(false)
@@ -26,14 +27,25 @@ TextNoteItem::~TextNoteItem()
 
 void TextNoteItem::initUI()
 {
+    this->setFixedHeight(94);
     m_timeLabel = new QLabel();
-    QSizePolicy sp = m_timeLabel->sizePolicy();
-    sp.setVerticalPolicy(QSizePolicy::Fixed);
-    m_timeLabel->setSizePolicy(sp);
+    m_timeLabel->setFixedHeight(30);
+    QFont timeLabelFont;
+    timeLabelFont.setFamily("PingFangSC-Regular");
+    timeLabelFont.setPointSize(11);
+    m_timeLabel->setFont(timeLabelFont);
+    QPalette pa;
+    pa.setColor(QPalette::WindowText, Qt::red);
+    //pa.setColor(DPalette::WindowText, QColor("#001a2e"));
+    m_timeLabel->setPalette(pa);
+//    QSizePolicy sp = m_timeLabel->sizePolicy();
+//    sp.setVerticalPolicy(QSizePolicy::Fixed);
+//    m_timeLabel->setSizePolicy(sp);
     m_bgWidget = new QWidget();
-    QSizePolicy sp1 = m_bgWidget->sizePolicy();
-    sp.setVerticalPolicy(QSizePolicy::Fixed);
-    m_bgWidget->setSizePolicy(sp1);
+    m_bgWidget->setFixedHeight(64);
+//    QSizePolicy sp1 = m_bgWidget->sizePolicy();
+//    sp.setVerticalPolicy(QSizePolicy::Fixed);
+//    m_bgWidget->setSizePolicy(sp1);
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 

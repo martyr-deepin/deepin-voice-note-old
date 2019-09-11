@@ -9,8 +9,8 @@
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
-#define DEFAULT_WINDOWS_WIDTH 960
-#define DEFAULT_WINDOWS_HEIGHT 540
+#define DEFAULT_WINDOWS_WIDTH 820
+#define DEFAULT_WINDOWS_HEIGHT 634
 
 
 DWIDGET_USE_NAMESPACE
