@@ -19,16 +19,19 @@ public:
     void searchText(QString searchKey);
 signals:
     void clicked();
+    void focusOutSignal();
 
 public slots:
     void updateNote();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
+    void focusOutEvent(QFocusEvent *e);
 
 private:
     NOTE m_textNote;
     NoteController *m_noteCtr;
+    QString m_searchKey;
 
     void initConnection();
 

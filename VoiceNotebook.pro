@@ -8,7 +8,7 @@ QT       += core gui sql dtkcore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = VoiceNotebook
+TARGET = deepin-voice-note
 TEMPLATE = app
 PKGCONFIG += dtkwidget
 QT += multimedia
@@ -60,7 +60,8 @@ SOURCES += \
     src/views/sliderhandler.cpp \
     src/views/mysliderbar.cpp \
     src/views/myslider.cpp \
-    src/views/fileexistsdialog.cpp
+    src/views/fileexistsdialog.cpp \
+    src/views/notepreviewedit.cpp
 
 HEADERS += \
     src/app \
@@ -90,7 +91,8 @@ HEADERS += \
     src/views/sliderhandler.h \
     src/views/mysliderbar.h \
     src/views/myslider.h \
-    src/views/fileexistsdialog.h
+    src/views/fileexistsdialog.h \
+    src/views/notepreviewedit.h
 
 INCLUDEPATH += \
     src/app \

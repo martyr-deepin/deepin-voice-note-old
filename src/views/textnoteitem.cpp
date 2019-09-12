@@ -27,7 +27,7 @@ TextNoteItem::~TextNoteItem()
 
 void TextNoteItem::initUI()
 {
-    this->setFixedHeight(94);
+    this->setFixedHeight(140);
     m_timeLabel = new QLabel();
     m_timeLabel->setFixedHeight(30);
     QFont timeLabelFont;
@@ -42,7 +42,8 @@ void TextNoteItem::initUI()
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_timeLabel->setSizePolicy(sp);
     m_bgWidget = new QWidget();
-    m_bgWidget->setFixedHeight(64);
+    //m_bgWidget->setFixedHeight(64);
+    m_bgWidget->setFixedHeight(124);
 //    QSizePolicy sp1 = m_bgWidget->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_bgWidget->setSizePolicy(sp1);
@@ -114,6 +115,11 @@ void TextNoteItem::initUI()
     labelFont.setPointSize(12);
     m_textEdit->setFont(labelFont);
     QString elidedText = UiUtil::getElidedText(labelFont, m_textNote.contentText, 614 * 5, m_isTextConverted);
+    qDebug() << "m_isTextConverted: " << m_isTextConverted;
+    if (m_isTextConverted)
+    {
+        m_textEdit->setReadOnly(true);
+    }
     m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
@@ -166,6 +172,7 @@ void TextNoteItem::initConnection()
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
+    connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOut);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
@@ -233,4 +240,22 @@ void TextNoteItem::handleMenuBtnClicked()
     emit menuBtnClicked(arrowPoint, pParent, this, m_textNote);
     //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
     //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
+}
+
+void TextNoteItem::handleTextEditFocusOut()
+{
+    m_textNote.contentText = m_textEdit->toPlainText();
+    QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, 614 * 5, m_isTextConverted);
+
+    if (m_isTextConverted)
+    {
+        qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(true)";
+        m_textEdit->setReadOnly(true);
+    }
+    else
+    {
+        qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
+        m_textEdit->setReadOnly(false);
+    }
+    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
 }

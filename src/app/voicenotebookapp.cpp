@@ -42,7 +42,8 @@ void VoiceNotebookApp::initApp()
     //m_app->setTheme("light");
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("voice note");
-    m_app->setApplicationVersion(DApplication::buildVersion("20190906"));
+    m_app->setApplicationVersion(DApplication::buildVersion("20190911"));
+    //installEventFilter(new GlobalEventFilter());
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
     m_app->setProductName("Voice note Application");

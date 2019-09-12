@@ -48,6 +48,7 @@ public slots:
     void textAreaChanged();
     void handleTextEditClicked();
     void handleMenuBtnClicked();
+    void handleTextEditFocusOut();
 
 
 

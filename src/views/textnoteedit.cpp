@@ -41,6 +41,7 @@ TextNoteEdit::~TextNoteEdit()
 
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
+    m_searchKey = searchKey;
     m_textNote = textNote;
     this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey));
 }
@@ -58,6 +59,15 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 //    //要继续保留QListWidget原有的点击事件.
     QTextEdit::mousePressEvent(event);
 }
+
+void TextNoteEdit::focusOutEvent(QFocusEvent *e)
+{
+    if (this->isReadOnly())
+    {
+        return;
+    }
+    emit focusOutSignal();
+}
 void TextNoteEdit::initConnection()
 {
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);
@@ -66,7 +76,13 @@ void TextNoteEdit::initConnection()
 
 void TextNoteEdit::updateNote()
 {
-
+    qDebug() << "TextNoteEdit::updateNote" << "start";
+    if (this->isReadOnly())
+    {
+        qDebug() << "TextNoteEdit::updateNote" << "return";
+        return;
+    }
+    qDebug() << "TextNoteEdit::updateNote" << "exec";
     NOTE note = m_textNote;
     note.contentText = this->toPlainText();
     if(!m_noteCtr->updateNote(note))
@@ -82,5 +98,7 @@ void TextNoteEdit::updateNote()
 
 void TextNoteEdit::searchText(QString searchKey)
 {
+    m_searchKey = searchKey;
     this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey));
 }
+
