@@ -28,7 +28,7 @@ void FolerWidgetItem::initUI()
     m_imageLabel = new QLabel(this);
     m_imageLabel->setGeometry(QRect(10, 10, 50, 40));
     m_imageLabel->setObjectName("imageLabel");
-    m_imageLabel->size();
+    //m_imageLabel->size();
     //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
 
 //    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
@@ -37,9 +37,9 @@ void FolerWidgetItem::initUI()
         m_imageLabel->setPixmap(UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath));
 //    }
 
-    m_nameLabel = new QLabel(this);
+    m_nameLabel = new QLabel();
 
-    m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
+    //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
 
@@ -49,14 +49,26 @@ void FolerWidgetItem::initUI()
     m_nameLabel->setFont(labelFont);
     bool isConverted = false;
     QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey));
 
-    m_lineEdit = new DLineEdit(this);
-    m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
+    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey));
+    m_nameLabel->setMouseTracking(false);
+    m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
+
+    m_lineEdit = new DLineEdit();
+    //m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
 
     m_lineEdit->setText(m_folder.folderName);
-    m_lineEdit->setVisible(false);
+    //m_lineEdit->setVisible(false);
+
+    m_stackedWidget = new QStackedWidget(this);
+    m_stackedWidget->setGeometry(QRect(70, 10, 110, 21));
+    m_stackedWidget->setObjectName("stackedWidget");
+
+    m_stackedWidget->addWidget(m_nameLabel);
+    m_stackedWidget->addWidget(m_lineEdit);
+    m_stackedWidget->setCurrentIndex(0);
+
     m_createTimeLabel = new QLabel(this);
     m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     m_createTimeLabel->setObjectName("createTimeLabel");
@@ -71,35 +83,8 @@ void FolerWidgetItem::initConnection()
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
 }
 
-//QPixmap FolerWidgetItem::getPixmap(QSize size, QString imgPath)
-//{
-//    if ((nullptr == imgPath) || (imgPath.length() <= 0))
-//    {
-//        //todo:如果沒有圖片，要使用默認的圖片
-//    }
-//    QImage *img = new QImage();
-//    img->load(imgPath);
-//    // 设定图像大小自适应label窗口的大小
-//    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//    return QPixmap::fromImage(*img);
-//}
-QString FolerWidgetItem::getCreateTimeLabel(QDateTime createTime)
-{
-//    int destDayOfYear = createTime.date().dayOfYear();
-//    int currDayOfYear = QDateTime::currentDateTime().date().dayOfYear();
-//    int oneMonthAgo = currDayOfYear - 30;
-//    int destYear = createTime.date().year();
-//    int currYear = QDateTime::currentDateTime().date().year();
-//    int yearDiff = currYear - destYear;
-//    if (yearDiff > 0)
-//    {
 
-//    }
-//    else {
 
-//    }
-    return createTime.date().toString();
-}
 
 void FolerWidgetItem::setItemBackground(QString imgPath)
 {
@@ -114,8 +99,9 @@ void FolerWidgetItem::setNormalBackground()
 
 void FolerWidgetItem::changeToEditMode()
 {
-    m_nameLabel->setVisible(false);
-    m_lineEdit->setVisible(true);
+//    m_nameLabel->setVisible(false);
+//    m_lineEdit->setVisible(true);
+    m_stackedWidget->setCurrentIndex(1);
     m_lineEdit->selectAll();
 }
 
@@ -138,8 +124,9 @@ void FolerWidgetItem::checkNameValid()
 
             }
             m_nameLabel->setText(UiUtil::getHtmlText(m_lineEdit->text(), 14, m_searchKey));
-            m_nameLabel->setVisible(true);
-            m_lineEdit->setVisible(false);
+            m_stackedWidget->setCurrentIndex(0);
+//            m_nameLabel->setVisible(true);
+//            m_lineEdit->setVisible(false);
         }
 
     } else {

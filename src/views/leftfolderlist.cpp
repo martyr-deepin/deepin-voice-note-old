@@ -73,7 +73,7 @@ void LeftFolderList::handleCurrentItemChanged(QListWidgetItem *current, QListWid
 void LeftFolderList::mousePressEvent(QMouseEvent *event)
 {
     //要继续保留QListWidget原有的点击事件.
-    QListWidget::mousePressEvent(event);
+    DListWidget::mousePressEvent(event);
     //确保右键点击，然后跳出菜单.
     if ((event->button() == Qt::RightButton) && (this->count() > 0))
     {

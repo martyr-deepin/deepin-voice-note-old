@@ -7,6 +7,7 @@
 #include <foldercontroller.h>
 #include "consts.h"
 #include <DLineEdit>
+#include <QStackedWidget>
 
 DWIDGET_USE_NAMESPACE
 
@@ -37,6 +38,7 @@ private:
 
     FolderController *m_folderCtr;
     QString m_searchKey;
+    QStackedWidget * m_stackedWidget;
 
 
     void initUI();
