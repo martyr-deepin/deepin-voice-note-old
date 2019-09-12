@@ -104,9 +104,18 @@ INCLUDEPATH += \
 FORMS +=
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+isEmpty(BINDIR):BINDIR=/usr/bin
+isEmpty(APPDIR):APPDIR=/usr/share/applications
+isEmpty(DSRDIR):DSRDIR=/usr/share/deepin-voice-note
+
+target.path = $$INSTROOT$$BINDIR
+
+
+icon_files.path = /usr/share/icons/hicolor/scalable/apps
+icon_files.files = $$PWD/images/voice_note_logo.svg
+
+INSTALLS += target translations icon_files
 
 RESOURCES += \
     images.qrc
+
