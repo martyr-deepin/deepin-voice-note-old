@@ -66,6 +66,7 @@ private:
     //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();
+    void showFileDialog(SAVE_INFO saveInfo);
 
 
     QString getPlayingFilepath();

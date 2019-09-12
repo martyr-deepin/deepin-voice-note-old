@@ -84,7 +84,7 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
-        qDebug() << "text item height: " << textItem->height();
+        //qDebug() << "text item height: " << textItem->height();
         item->setSizeHint(QSize(this->width(),140));
         this->setItemWidget(item, textItem);
     }
@@ -142,10 +142,28 @@ void RightNoteList::handleDelItem(bool)
 //        QString curpath = pathlist.at(0).toLocalFile();
 void RightNoteList::handleSaveAsItem(bool)
 {
-
     m_arrowMenu->hide();
+
+    SAVE_INFO saveInfo;
+    saveInfo.note = m_currSelNote;
+    if (TEXT == m_currSelNote.noteType)
+    {
+        saveInfo.windowTitle = QString(tr("另存为TXT"));
+        saveInfo.fileExtension = QString(".txt");
+    }
+    else
+    {
+        saveInfo.windowTitle = QString(tr("另存为MP3"));
+        saveInfo.fileExtension = QString(".mp3");
+    }
+    showFileDialog(saveInfo);
+
+}
+
+void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
+{
     DFileDialog fileDialog(this);
-    fileDialog.setWindowTitle(tr("另存为TXT"));
+    fileDialog.setWindowTitle(saveInfo.windowTitle);
     fileDialog.setDirectory(m_defaultTxtPath);
     fileDialog.setFileMode(DFileDialog::Directory);
     fileDialog.addLineEdit(tr("文件名"));
@@ -155,21 +173,14 @@ void RightNoteList::handleSaveAsItem(bool)
         QString path = fileDialog.selectedFiles()[0];
         QString fileName = fileDialog.getLineEditValue(tr("文件名"));
         QString filePath = path + '/' + fileName;
-        DToast toast(this);
-        //toast.move(width() - toast.width() / 2.0 , height() - toast.height());
-        toast.move(0, 0);
         if (fileName.isEmpty())
         {
             DMessageBox::information(this, tr(""), tr("文件名不能为空"));
-//            toast.setText(tr("文件名不能为空"));
-//            toast.pop();
-//            fileDialog.exec();
+
         }
-        else if (!UiUtil::checkFileExtension(fileName, ".txt"))
+        else if (!UiUtil::checkFileExtension(fileName, saveInfo.fileExtension))
         {
-            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + ".txt");
-//            toast.setText(tr("文件扩展名必须是") + ".txt");
-//            toast.pop();
+            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + saveInfo.fileExtension);
         }
         else if(UiUtil::checkFileExist(filePath))
         {
@@ -180,17 +191,21 @@ void RightNoteList::handleSaveAsItem(bool)
         }
         else
         {
-            bool result = UiUtil::saveTxt(filePath, m_currSelNote.contentText);
+            bool result = false;
+            if (VOICE == m_currSelNote.noteType)
+            {
+                result = UiUtil::saveMP3(m_currSelNote.contentPath, filePath);
+            }
+            else
+            {
+                result = UiUtil::saveTxt(filePath, m_currSelNote.contentText);
+            }
             handleSaveFileEnd(result);
         }
 
-
-        //QList<QUrl> pathlist = fileDialog.selectedUrls();
-       //QMessageBox::information(NULL, tr("Path"), tr("You selected ") + path);
     } else {
        //QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
     }
-
 }
 
 void RightNoteList::handleDelDialogClicked(int index, const QString &text)

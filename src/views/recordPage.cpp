@@ -129,7 +129,10 @@ RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_audioRecorder->setAudioSettings(audioSettings);
-    m_audioRecorder->setContainerFormat("audio/x-wav");
+    //m_audioRecorder->setContainerFormat("audio/x-wav");
+    //m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
+    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
+    //m_audioRecorder->setContainerFormat("audio/mp3");
 #else
     audioSettings.setCodec("audio/PCM");
     m_audioRecorder->setAudioSettings(audioSettings);
@@ -285,7 +288,8 @@ void RecordPage::resumeRecord()
 
 QString RecordPage::generateRecordingFilepath()
 {
-    return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).wav").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
+    //return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).wav").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
+    return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).mp3").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
 }
 
 QString RecordPage::getRecordingFilepath()

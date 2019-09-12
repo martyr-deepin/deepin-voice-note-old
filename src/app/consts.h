@@ -26,6 +26,8 @@ typedef struct
     QDateTime createTime;
 }FOLDER;
 
+
+
 typedef struct
 {
     int id;
@@ -37,6 +39,13 @@ typedef struct
     int folderId;
     QDateTime createTime;
 }NOTE;
+
+typedef struct
+{
+    NOTE note;
+    QString windowTitle;
+    QString fileExtension;
+}SAVE_INFO;
 
 typedef struct
 {

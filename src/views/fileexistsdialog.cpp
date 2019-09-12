@@ -30,18 +30,19 @@ void FileExistsDialog::handleDialogClicked(int index, const QString &text)
     if (index == 1)
     {
         bool result = false;
+        QFile::remove(m_filePath);
         if ((TEXT == m_note.noteType) && (!m_filePath.isEmpty()))
         {
-            QFile::remove(m_filePath);
             result = UiUtil::saveTxt(m_filePath, m_note.contentText);
         }
         else if (VOICE == m_note.noteType)
         {
-
+            result = UiUtil::saveMP3(m_note.contentPath, m_filePath);
         }
         emit saveFileEnd(result);
     }
 }
+
 
 void FileExistsDialog::setNote(NOTE note)
 {

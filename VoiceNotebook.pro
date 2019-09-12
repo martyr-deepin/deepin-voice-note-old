@@ -10,7 +10,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = VoiceNotebook
 TEMPLATE = app
-PKGCONFIG += dtkwidget libavformat libavcodec libavutil
+PKGCONFIG += dtkwidget
+#libavcodec libavformat libavutil
 QT += multimedia
 
 

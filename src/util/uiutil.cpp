@@ -5,6 +5,7 @@
 #include <QStandardPaths>
 #include <QTextStream>
 
+
 UiUtil::UiUtil()
 {
 
@@ -148,6 +149,12 @@ bool UiUtil::saveTxt(QString path, QString content)
     textStream << content;
     file.close();
     return true;
+}
+
+bool UiUtil::saveMP3(QString src, QString target)
+{
+    bool result = QFile::copy(src, target);
+    return result;
 }
 
 QString UiUtil::convertFolderDate(QDateTime dateTime)

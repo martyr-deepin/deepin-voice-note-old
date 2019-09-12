@@ -26,6 +26,7 @@ public:
     static QList<float> convertStringToFloatList(QString str);
     static QString getHtmlText(QString src, int fontSize, QString searchKey);
     static bool saveTxt(QString path, QString content);
+    static bool saveMP3(QString src, QString target);
     static QString convertFolderDate(QDateTime dateTime);
     static QString convertNoteDate(QDateTime dateTime);
     static bool checkFileExtension(QString fileName, QString extension);
