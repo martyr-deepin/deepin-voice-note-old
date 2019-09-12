@@ -56,7 +56,7 @@ public:
     //QVBoxLayout *layout;
     RecordingButton *m_recordingButton;
     
-    QString generateRecordingFilepath();
+    QString generateRecordingFilename();
     QString getRecordingFilepath();
                                   
 protected:

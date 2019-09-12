@@ -2,6 +2,7 @@
 
 #include <uiutil.h>
 #include <QFile>
+#include <QDir>
 
 FileExistsDialog::FileExistsDialog()
 {
@@ -37,7 +38,7 @@ void FileExistsDialog::handleDialogClicked(int index, const QString &text)
         }
         else if (VOICE == m_note.noteType)
         {
-            result = UiUtil::saveMP3(m_note.contentPath, m_filePath);
+            result = UiUtil::saveMP3(UiUtil::getRecordingVoiceFullPath(m_note.contentPath), m_filePath);
         }
         emit saveFileEnd(result);
     }

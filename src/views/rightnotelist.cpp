@@ -194,7 +194,7 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
             bool result = false;
             if (VOICE == m_currSelNote.noteType)
             {
-                result = UiUtil::saveMP3(m_currSelNote.contentPath, filePath);
+                result = UiUtil::saveMP3(UiUtil::getRecordingVoiceFullPath(m_currSelNote.contentPath), filePath);
             }
             else
             {

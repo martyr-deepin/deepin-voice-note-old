@@ -242,7 +242,8 @@ void RecordPage::renderRecordingTime()
 
 void RecordPage::startRecord()
 {
-    recordPath = generateRecordingFilepath();
+    QString fileName = generateRecordingFilename();
+    recordPath = UiUtil::getRecordingVoiceFullPath(fileName);
     m_audioRecorder->setOutputLocation(recordPath);
     m_waveform->clearWave();
     m_recordingTime = 0;
@@ -250,7 +251,7 @@ void RecordPage::startRecord()
 
     QDateTime currentTime = QDateTime::currentDateTime();
     lastUpdateTime = currentTime;
-    voiceInfo.voicePath = recordPath;
+    voiceInfo.voicePath = fileName;
     m_audioRecorder->record();
 }
 
@@ -286,10 +287,11 @@ void RecordPage::resumeRecord()
     m_audioRecorder->record();
 }
 
-QString RecordPage::generateRecordingFilepath()
+QString RecordPage::generateRecordingFilename()
 {
+    return QString("%1 (%2).mp3").arg(tr("New voice note")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss"));
     //return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).wav").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
-    return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).mp3").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
+    //return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).mp3").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
 }
 
 QString RecordPage::getRecordingFilepath()

@@ -31,6 +31,7 @@ public:
     static QString convertNoteDate(QDateTime dateTime);
     static bool checkFileExtension(QString fileName, QString extension);
     static bool checkFileExist(QString filePath);
+    static QString getRecordingVoiceFullPath(QString fileName);
 
 };
 

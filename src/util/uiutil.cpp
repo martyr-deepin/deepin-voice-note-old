@@ -4,7 +4,11 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QTextStream>
-
+//extern "C"
+//{
+//#include "libavcodec/avcodec.h"
+//#include "libavformat/avformat.h"
+//}
 
 UiUtil::UiUtil()
 {
@@ -80,8 +84,8 @@ QString UiUtil::formatMillisecond(int millisecond)
 
 QString UiUtil::getRecordingSaveDirectory()
 {
-    QDir musicDirectory = QDir(QStandardPaths::standardLocations(QStandardPaths::MusicLocation).first());
-    QString subDirectory = tr("Recordings");
+    QDir musicDirectory = QDir(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
+    QString subDirectory = tr("voicenote");
     musicDirectory.mkdir(subDirectory);
 
     return musicDirectory.filePath(subDirectory);
@@ -232,6 +236,11 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
     dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);
+}
+
+QString UiUtil::getRecordingVoiceFullPath(QString fileName)
+{
+    return QDir(getRecordingSaveDirectory()).filePath(fileName);
 }
 
 

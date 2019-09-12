@@ -115,5 +115,5 @@ void VoiceNoteItem::handleResumePlaying()
 //    QPoint itemPointToParent = this->mapToParent(QPoint(0,0));
 //    QPoint waveformPointToParent(itemPointToParent.x() + m_waveform->x(), itemPointToParent.y());
     QRect waveformPoint = m_waveform->geometry();
-    emit resumePlayingSignal(this, m_note.contentPath, waveformPoint);
+    emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint);
 }
