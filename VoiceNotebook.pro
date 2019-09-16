@@ -111,11 +111,13 @@ isEmpty(DSRDIR):DSRDIR=/usr/share/deepin-voice-note
 
 target.path = $$INSTROOT$$BINDIR
 
+desktop.path = $$INSTROOT$$APPDIR
+desktop.files =  deepin-voice-note.desktop
 
 icon_files.path = /usr/share/icons/hicolor/scalable/apps
-icon_files.files = $$PWD/images/voice_note_logo.svg
+icon_files.files = $$PWD/images/deepin-voice-note.svg
 
-INSTALLS += target translations icon_files
+INSTALLS += target desktop icon_files
 
 RESOURCES += \
     images.qrc

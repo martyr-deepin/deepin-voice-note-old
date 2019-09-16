@@ -39,7 +39,7 @@ void MyMainWindow::initTitleFrame()
     m_logo = new QLabel();
     m_logo->setObjectName("LogoButton");
     m_logo->setFixedSize(QSize(32, 32));
-    m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/voice_note_logo.svg"));
+    m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/deepin-voice-note.svg"));
 
     m_returnBtn = new DImageButton();
     m_returnBtn->setFixedSize(QSize(24, 24));

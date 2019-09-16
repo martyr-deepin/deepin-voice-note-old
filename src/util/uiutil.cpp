@@ -49,7 +49,7 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/voice_note_logo.svg"));
+    dialog->setIcon(QIcon(":/image/deepin-voice-note.svg"));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
     dialog->addButton(okStr, false, DDialog::ButtonNormal);
 
@@ -232,7 +232,7 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/voice_note_logo.svg"));
+    dialog->setIcon(QIcon(":/image/deepin-voice-note.svg"));
     dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);

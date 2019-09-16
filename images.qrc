@@ -8,7 +8,6 @@
         <file>image/text_bg.png</file>
         <file>image/add_text_btn.png</file>
         <file>image/add_text_btn_press.png</file>
-        <file>image/voice_note_logo.svg</file>
         <file>image/icon/disabled/play_disabled.svg</file>
         <file>image/icon/disabled/circlebutton_add_disabled.svg</file>
         <file>image/icon/disabled/more_disabled.svg</file>
@@ -53,5 +52,6 @@
         <file>image/icon/press/back_press.svg</file>
         <file>image/icon/normal/back_normal.svg</file>
         <file>image/slider_handle_waveform.svg</file>
+        <file>image/deepin-voice-note.svg</file>
     </qresource>
 </RCC>
