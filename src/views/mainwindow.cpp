@@ -15,7 +15,7 @@ MyMainWindow::MyMainWindow()
 
 void MyMainWindow::initUI() {
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
-    setWindowRadius(20);
+    //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     initTitleBar();
     initCentralWidget();
