@@ -115,7 +115,7 @@ desktop.path = $$INSTROOT$$APPDIR
 desktop.files =  deepin-voice-note.desktop
 
 icon_files.path = /usr/share/icons/hicolor/scalable/apps
-icon_files.files = $$PWD/images/deepin-voice-note.svg
+icon_files.files = $$PWD/image/deepin-voice-note.svg
 
 INSTALLS += target desktop icon_files
 
