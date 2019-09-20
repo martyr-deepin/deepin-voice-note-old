@@ -145,8 +145,17 @@ int LeftView::getCurrSelectFolderId()
 
 void LeftView::handleSelFolderChg(QListWidgetItem *item)
 {
-    FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
-    int folderId = folderItem->m_folder.id;
+    int folderId = -1;
+    if (nullptr != item)
+    {
+        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
+        folderId = folderItem->m_folder.id;
+    }
+    else {
+        emit selFolderIdChg(folderId);
+        return;
+    }
+
     if (m_currSearchKey.isEmpty())
     {
         emit selFolderIdChg(folderId);

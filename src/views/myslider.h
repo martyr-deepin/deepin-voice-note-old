@@ -11,6 +11,8 @@
 
 
 DWIDGET_USE_NAMESPACE
+
+//录音拖拽slider
 class MySlider : public QWidget
 {
     Q_OBJECT

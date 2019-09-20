@@ -7,6 +7,7 @@
 
 DWIDGET_USE_NAMESPACE
 
+//录音回放按钮
 class PlayingButton : public QWidget
 {
     Q_OBJECT

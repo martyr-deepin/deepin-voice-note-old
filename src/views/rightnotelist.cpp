@@ -53,7 +53,6 @@ void RightNoteList::initUI()
     m_myslider->setPageStep(SLIDER_PAGE_STEP);
     m_myslider->setGeometry(0, 0, 350, m_myslider->m_defaultHeight);
     m_myslider->hide();
-
 }
 void RightNoteList::initConnection()
 {
@@ -76,8 +75,6 @@ void RightNoteList::initConnection()
 
 void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
 {
-
-
     if(note.noteType == NOTE_TYPE::TEXT)
     {
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
@@ -85,12 +82,13 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
-        item->setSizeHint(QSize(this->width(),140));
+        //item->setSizeHint(QSize(this->width(),92));
+        item->setSizeHint(QSize(this->width(),140));  //orig
         this->setItemWidget(item, textItem);
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
-        VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);        
-        connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));        
+        VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
+        connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem(this);
@@ -231,25 +229,28 @@ void RightNoteList::handleClickRecordButton()
     // Must stop player before new record.
     if (QMediaPlayer::StoppedState !=audioPlayer->state())
     {
-        audioPlayer->stop();
         m_currPlayingItem->handleStopPlay();
+        audioPlayer->stop();
         m_currPlayingItem = nullptr;
     }
 }
 
 void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos)
 {
+
     if (filepath != getPlayingFilepath()) {
         audioPlayer->stop();
         if (nullptr != m_currPlayingItem)
         {
             m_currPlayingItem->handleStopPlay();
         }
+        m_currPlayingItem = voiceNoteItem;
+        audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
     }
-    m_currPlayingItem = voiceNoteItem;
+
     //waveform->show();
 
-    audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
+
     audioPlayer->play();
     if (m_myslider->isHidden())
     {
@@ -308,6 +309,10 @@ void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
 
 void RightNoteList::handleAudioPositionChanged(qint64 position)
 {
+//    if(0 != position)
+//    {
+
+//    }
     int audioLength = m_currPlayingItem->m_note.voiceTime;
     int sliderPos = 0;
     if (audioLength > 0)

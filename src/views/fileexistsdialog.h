@@ -6,7 +6,7 @@
 #include <QObject>
 
 DWIDGET_USE_NAMESPACE
-
+//提示文件重复的对话框
 class FileExistsDialog : public QObject
 {
     Q_OBJECT

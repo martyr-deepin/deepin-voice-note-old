@@ -5,7 +5,7 @@
 #include <QLayout>
 #include <QWidget>
 
-
+//语音控制条handle
 class SliderHandler : public QWidget
 {
     Q_OBJECT

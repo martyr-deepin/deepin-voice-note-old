@@ -48,6 +48,7 @@ void MainPage::initSplitter(){
     m_splitter->addWidget(m_leftView);
     m_splitter->addWidget(m_rightView);
     m_splitter->setChildrenCollapsible(false);
+    qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
 }
 
 void MainPage::initLeftView(){

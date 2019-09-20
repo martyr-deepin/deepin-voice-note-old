@@ -12,6 +12,8 @@
 #include <DtkGuis>
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
+
+//左侧View
 class LeftView : public QFrame
 {
     Q_OBJECT

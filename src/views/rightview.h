@@ -13,7 +13,7 @@
 #include <QObject>
 
 DWIDGET_USE_NAMESPACE
-
+//右侧文字语音记录View
 class RightView : public QFrame
 {
     Q_OBJECT

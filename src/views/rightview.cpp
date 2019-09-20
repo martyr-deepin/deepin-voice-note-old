@@ -34,14 +34,16 @@ void RightView::initUI()
     m_stackedWidget = new QStackedWidget();
     m_stackedWidgetLayout->addWidget(m_stackedWidget);
     //m_stackedWidget->setStyleSheet("background: blue");
+    //m_stackedWidget->setGeometry(QRect(10, 10, 548, this->height()));
     m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
     m_stackedWidget->setObjectName("stackedWidget");
-
     /*self.listPage.setObjectName("listPage")
     self.listWidget = QtWidgets.QListWidget(self.listPage)
     self.listWidget.setGeometry(QtCore.QRect(0, 10, 1111, 861))
     self.listWidget.setObjectName("listWidget")*/
+    //m_noteListPage->resize(548,m_noteListPage->height());
     m_stackedWidget->addWidget(m_noteListPage);
+    //m_noteListWidget->resize(548,m_noteListWidget->height());
     m_detailPage = new QWidget();
     m_plainTextEdit = new QPlainTextEdit(m_detailPage);
 //    self.detailPage = QtWidgets.QWidget()
@@ -50,14 +52,11 @@ void RightView::initUI()
 //    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
 //    self.plainTextEdit.setObjectName("plainTextEdit")
     m_stackedWidget->addWidget(m_detailPage);
-
     QPalette palette;
     palette.setColor(QPalette::Background, QColor(255, 255, 255));
 
     this->setAutoFillBackground(true);
     this->setPalette(palette);
-
-
 }
 
 
@@ -75,6 +74,7 @@ void RightView::initNoteList()
 {
     m_noteController = new NoteController();
     m_noteListPage = new QWidget();
+    m_noteListPage->resize(548,m_noteListPage->height());
     //m_noteListPage->setStyleSheet("background: blue");
     m_noteListLayout = new QVBoxLayout();
     m_noteListLayout->setContentsMargins(0, 0, 0, 0);
@@ -82,7 +82,6 @@ void RightView::initNoteList()
 
 
     m_noteListWidget = new RightNoteList(m_noteController);
-
     m_noteListLayout->addWidget(m_noteListWidget);
 
     //m_noteListWidget->setObjectName("LeftSideBar");
@@ -158,7 +157,9 @@ void RightView::addTextNote()
 
 void RightView::updateNoteList()
 {
+    qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
     m_noteListWidget->clear();
+    qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
     if (m_currFolderId > 0)
     {
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);

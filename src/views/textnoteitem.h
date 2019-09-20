@@ -19,6 +19,7 @@
 
 
 DWIDGET_USE_NAMESPACE
+//右侧文字记录Item
 class TextNoteItem : public QWidget
 {
     Q_OBJECT

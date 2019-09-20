@@ -30,6 +30,7 @@
 
 DWIDGET_USE_NAMESPACE
 
+//录音暂停按钮和开始录音按钮
 class RecordingButton : public QWidget
 {
     Q_OBJECT

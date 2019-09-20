@@ -8,6 +8,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+//QSlider录音Bar复用了DSlider
 class MySliderBarPrivate;
 class LIBDTKWIDGETSHARED_EXPORT MySliderBar : public QSlider
 {

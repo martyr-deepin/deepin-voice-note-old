@@ -27,7 +27,10 @@ TextNoteItem::~TextNoteItem()
 
 void TextNoteItem::initUI()
 {
+
+    //this->setFixedHeight(150);
     this->setFixedHeight(140);
+    //this->resize(500, this->height());
     m_timeLabel = new QLabel();
     m_timeLabel->setFixedHeight(30);
     QFont timeLabelFont;
@@ -43,7 +46,10 @@ void TextNoteItem::initUI()
 //    m_timeLabel->setSizePolicy(sp);
     m_bgWidget = new QWidget();
     //m_bgWidget->setFixedHeight(64);
-    m_bgWidget->setFixedHeight(124);
+
+
+//    m_bgWidget->setFixedHeight(124);//orig
+    m_bgWidget->setFixedHeight(93);
 //    QSizePolicy sp1 = m_bgWidget->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_bgWidget->setSizePolicy(sp1);
@@ -57,6 +63,7 @@ void TextNoteItem::initUI()
 //    QSizePolicy sp = m_bgWidget->sizePolicy();
 //    sp.setHorizontalStretch(1);
 //    m_bgWidget->setSizePolicy(sp);
+
 
     m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
@@ -112,14 +119,19 @@ void TextNoteItem::initUI()
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
     QFont labelFont;
     labelFont.setFamily("PingFangSC-Regular");
-    labelFont.setPointSize(12);
+    labelFont.setPointSize(9);
     m_textEdit->setFont(labelFont);
-    QString elidedText = UiUtil::getElidedText(labelFont, m_textNote.contentText, 614 * 5, m_isTextConverted);
+
+    QFont labelFontForWidth;
+    labelFontForWidth.setFamily("PingFangSC-Regular");
+    labelFontForWidth.setPointSize(12);
+    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
     qDebug() << "m_isTextConverted: " << m_isTextConverted;
     if (m_isTextConverted)
     {
         m_textEdit->setReadOnly(true);
     }
+
     m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
@@ -127,6 +139,8 @@ void TextNoteItem::initUI()
 //    sizePolicy.setHeightForWidth(m_textEdit->sizePolicy().hasHeightForWidth());
 //    m_textEdit->setSizePolicy(sizePolicy);
     m_textEdit->setFrameShape(QFrame::NoFrame);
+    m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     m_hBoxLayout->addWidget(m_textEdit);
 
 
@@ -245,7 +259,11 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     m_textNote.contentText = m_textEdit->toPlainText();
-    QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, 614 * 5, m_isTextConverted);
+    QFont labelFontForWidth;
+    labelFontForWidth.setFamily("PingFangSC-Regular");
+    labelFontForWidth.setPointSize(12);
+    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
+    //QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, 614 * 5, m_isTextConverted);
 
     if (m_isTextConverted)
     {
@@ -257,5 +275,6 @@ void TextNoteItem::handleTextEditFocusOut()
         qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
         m_textEdit->setReadOnly(false);
     }
+
     m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
 }

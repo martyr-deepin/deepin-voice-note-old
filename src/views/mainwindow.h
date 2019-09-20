@@ -20,6 +20,7 @@
 
 DWIDGET_USE_NAMESPACE
 
+//主窗口，包含两层Page
 class MyMainWindow : public DMainWindow
 {
     Q_OBJECT

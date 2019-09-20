@@ -32,6 +32,7 @@
 #define SLIDER_TICK_INTAVAL 4
 enum DISPLAY_TYPE {WHOLE=0, PART_SAMPLE=1};
 
+//语音波形
 class Waveform : public QWidget
 {
     Q_OBJECT

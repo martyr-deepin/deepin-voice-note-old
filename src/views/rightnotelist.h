@@ -19,6 +19,7 @@ DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
 
+//右侧文字语音记录列表
 class RightNoteList : public DListWidget
 {
     Q_OBJECT

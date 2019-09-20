@@ -60,10 +60,13 @@ QString UiUtil::getElidedText(QFont font, QString str, int MaxWidth, bool& isCon
 {
     QFontMetrics fontWidth(font);
     int width = fontWidth.width(str);  //计算字符串宽度
-    if(width >= MaxWidth)  //当字符串宽度大于最大宽度时进行转换
+    int CorMaxWidth = MaxWidth - 20;
+    if(width >= CorMaxWidth)  //当字符串宽度大于最大宽度时进行转换
     {
         isConverted = true;
-        str = fontWidth.elidedText(str, Qt::ElideRight, MaxWidth);  //右部显示省略号
+        //由于…要在地5行末尾出现，所以需要调整一下计算…出现的位置
+        str = fontWidth.elidedText(str, Qt::ElideRight, CorMaxWidth);  //右部显示省略号
+        //str = fontWidth.elidedText(str, Qt::ElideRight, MaxWidth);  //右部显示省略号
     }
     else
     {

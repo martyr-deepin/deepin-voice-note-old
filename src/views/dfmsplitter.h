@@ -24,6 +24,7 @@
 #include <QSplitter>
 #include <QSplitterHandle>
 
+//FILManager复用，分割主界面
 class DFMSplitterHandle: public QSplitterHandle
 {
     Q_OBJECT

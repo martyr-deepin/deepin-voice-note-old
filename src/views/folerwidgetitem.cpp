@@ -102,7 +102,11 @@ void FolerWidgetItem::changeToEditMode()
 //    m_nameLabel->setVisible(false);
 //    m_lineEdit->setVisible(true);
     m_stackedWidget->setCurrentIndex(1);
+
     m_lineEdit->selectAll();
+    m_lineEdit->setCursorPosition(m_lineEdit->text().size());
+    m_lineEdit->setFocus();
+
 }
 
 void FolerWidgetItem::checkNameValid()

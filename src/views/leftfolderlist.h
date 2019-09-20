@@ -7,7 +7,7 @@
 #include "src/app/consts.h"
 
 
-
+//左侧ItemList
 class LeftFolderList : public DListWidget
 {
     Q_OBJECT

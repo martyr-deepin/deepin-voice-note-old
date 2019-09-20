@@ -15,7 +15,7 @@ DWIDGET_USE_NAMESPACE
 #define FOLDER_MAX_WIDTH 100
 
 
-
+//左侧item项
 class FolerWidgetItem : public QWidget
 {
     Q_OBJECT

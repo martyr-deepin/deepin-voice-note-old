@@ -41,6 +41,7 @@
 
 DWIDGET_USE_NAMESPACE
 
+//录音按钮Page
 class RecordPage : public QWidget
 {
     Q_OBJECT

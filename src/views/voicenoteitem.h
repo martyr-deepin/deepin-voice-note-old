@@ -11,6 +11,7 @@
 #include "waveform.h"
 
 DWIDGET_USE_NAMESPACE
+//右侧语音记录Item
 class VoiceNoteItem : public QWidget
 {
     Q_OBJECT
