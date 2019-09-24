@@ -37,4 +37,5 @@ int main(int argc, char *argv[])
     DApplication a(argc, argv);
 
     VoiceNotebookApp app(a);
+
 }

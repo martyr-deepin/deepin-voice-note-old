@@ -66,7 +66,7 @@ QList<NOTE> NoteOper::searchNote(int folderId, QString searchKey)
 
 }
 
-bool NoteOper::addNote(NOTE noteInfo)
+bool NoteOper::addNote(NOTE &noteInfo)
 {
     QStringList columnName = {"note_type", "content_text", "content_path", "voice_time", "voice_sample_data", "folder_id", "create_time"};
     QList<QVariant> values;
@@ -77,7 +77,18 @@ bool NoteOper::addNote(NOTE noteInfo)
     values.append(noteInfo.voiceSampleData);
     values.append(noteInfo.folderId);
     values.append(noteInfo.createTime);
-    return DatabaseOper::getInstance()->insertData(TABLE_NOTE, columnName, values);
+    //return DatabaseOper::getInstance()->insertData(TABLE_NOTE, columnName, values);
+    if (DatabaseOper::getInstance()->insertData(TABLE_NOTE, columnName, values))
+    {
+        QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
+        QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(noteInfo.folderId);
+
+        QList<QVariant> result;
+        if (DatabaseOper::getInstance()->queryLastData(queryStrFinal, 8, result))
+        {
+            noteInfo.id = result.at(0).toInt();
+        }
+    }
 
 }
 

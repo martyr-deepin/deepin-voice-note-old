@@ -5,6 +5,7 @@
 #include <uiutil.h>
 #include <DFileDialog>
 #include <DToast>
+#include <DApplication>
 #include <DMessageBox>
 #include <QMessageBox>
 
@@ -13,6 +14,7 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
   , m_defaultTxtPath("/home/deepin/Desktop")
   , m_defaultAudioName("语音.MP3")
   , m_defaultAudioPath("/home/deepin/Desktop")
+  , m_arrowMenu_want_show(true)
 {
     initUI();
     initConnection();
@@ -37,6 +39,7 @@ void RightNoteList::initUI()
 
     m_arrowMenu->setContent(m_contextMenu);
     m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
+    m_arrowMenu->hide();
 
     m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
@@ -53,6 +56,7 @@ void RightNoteList::initUI()
     m_myslider->setPageStep(SLIDER_PAGE_STEP);
     m_myslider->setGeometry(0, 0, 350, m_myslider->m_defaultHeight);
     m_myslider->hide();
+    qApp->installEventFilter(this);
 }
 void RightNoteList::initConnection()
 {
@@ -62,7 +66,6 @@ void RightNoteList::initConnection()
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
-
 }
 
 //void LeftFolderList::addWidgetItem(FOLDER folder) {
@@ -97,19 +100,50 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
     }
 }
 
+bool RightNoteList::eventFilter(QObject *o, QEvent *e)
+{
+    switch (e->type())
+    {
+        case QEvent::MouseButtonRelease:
+//        if(!m_arrowMenu->isHidden())
+//        {
+//            m_arrowMenu->hide();
+//        }
+        qDebug()<<"click filter";
+        break;
+    }
+    return DListWidget::eventFilter(o,e);
+}
+
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
-    QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
-    m_currSelItem= this->itemAt(itemGlobalPoint);
-    m_currSelNote = note;
-    if (note.noteType == NOTE_TYPE::TEXT)
+//    if(!m_arrowMenu_want_show)
+//    {
+//        m_arrowMenu_want_show = true;
+    if(m_arrowMenu->isHidden())
     {
-        m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+        QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
+        m_currSelItem= this->itemAt(itemGlobalPoint);
+        m_currSelNote = note;
+        if (note.noteType == NOTE_TYPE::TEXT)
+        {
+            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+        }
+        else {
+            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+        }
+        m_arrowMenu->show(menuArrowPointGlobal.x(), menuArrowPointGlobal.y());
     }
     else {
-        m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+        m_arrowMenu->hide();
+        //m_arrowMenu_want_show = false;
     }
-    m_arrowMenu->show(menuArrowPointGlobal.x(), menuArrowPointGlobal.y());
+
+//    else
+//    {
+//        m_arrowMenu->hide();
+//    }
+
 
 //    this->removeItemWidget(widgetItem);
 //    delete widgetItem;
@@ -229,23 +263,26 @@ void RightNoteList::handleClickRecordButton()
     // Must stop player before new record.
     if (QMediaPlayer::StoppedState !=audioPlayer->state())
     {
-        m_currPlayingItem->handleStopPlay();
+        //m_currPlayingItem->handleStopPlay();
         audioPlayer->stop();
-        m_currPlayingItem = nullptr;
+        //audioPlayer->setMedia(QUrl::fromLocalFile("default"));//clear path
+        //m_currPlayingItem = nullptr;
     }
 }
 
 void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos)
 {
-
     if (filepath != getPlayingFilepath()) {
         audioPlayer->stop();
-        if (nullptr != m_currPlayingItem)
-        {
-            m_currPlayingItem->handleStopPlay();
-        }
+//        if (nullptr != m_currPlayingItem)
+//        {
+//            m_currPlayingItem->handleStopPlay();
+//        }
         m_currPlayingItem = voiceNoteItem;
         audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
+    }
+    else {
+        m_currPlayingItem = voiceNoteItem;
     }
 
     //waveform->show();

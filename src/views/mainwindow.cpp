@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QVBoxLayout>
 #include <DTitlebar>
+#include <DMenu>
 #include <uiutil.h>
 
 
@@ -70,7 +71,6 @@ void MyMainWindow::initTitleFrame()
     titleLayout->addWidget(m_searchEdit);
     titleLayout->setSpacing(0);
     titleLayout->setContentsMargins(0, 0, 0, 0);
-
 
     QSizePolicy spLogo= m_logo->sizePolicy();
     spLogo.setHorizontalStretch(1);

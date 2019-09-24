@@ -17,7 +17,7 @@ QList<NOTE> NoteController::getNoteListByFolderId(int folderId)
 {
     return NoteOper::getNoteListByFolderId(folderId);
 }
-bool NoteController::addNote(NOTE noteInfo)
+bool NoteController::addNote(NOTE &noteInfo)
 {
     //todo:检查文件夹id是否存在
     return NoteOper::addNote(noteInfo);

@@ -42,7 +42,7 @@ void VoiceNotebookApp::initApp()
     //m_app->setTheme("light");
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("voice note");
-    m_app->setApplicationVersion(DApplication::buildVersion("20190911"));
+    m_app->setApplicationVersion(DApplication::buildVersion("20190925"));
     //installEventFilter(new GlobalEventFilter());
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
@@ -50,7 +50,6 @@ void VoiceNotebookApp::initApp()
     m_app->setApplicationDescription("This is a dtk voice notebook application.");
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
-
 
     initMainWindow();
     //DatabaseOper *test = DatabaseOper::getInstance();

@@ -145,14 +145,29 @@ void RightView::addTextNote()
     note.createTime = QDateTime::currentDateTime();
     note.contentText = "";
 
-    m_noteListWidget->addWidgetItem(note, "");
-
 
     m_noteController->addNote(note);
-    updateNoteList();
+    addNoteToNoteList(note);
+    //updateNoteList();
     TextNoteItem *item = (TextNoteItem*)(m_noteListWidget->itemWidget(m_noteListWidget->item(m_noteListWidget->count() - 1)));
     item->changeToEditMode();
 //    m_leftFolderView->setCurrentRow(0);
+}
+
+void RightView::addNoteToNoteList(NOTE note)
+{
+    m_noteListWidget->addWidgetItem(note, "");
+    m_noteListWidget->scrollToBottom();
+
+//    if (m_currFolderId > 0)
+//    {
+//        QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
+//        for (int i = noteList.size() - 1; i < noteList.size(); i++)
+//        {
+//            m_noteListWidget->addWidgetItem(noteList.at(i), "");
+//        }
+//        m_noteListWidget->scrollToBottom();
+//    }
 }
 
 void RightView::updateNoteList()
@@ -229,7 +244,8 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
         qDebug() << "handleStopRecord： add voice note error！";
     }
     m_recordStackedWidget->setCurrentIndex(0);
-    updateNoteList();
+    addNoteToNoteList(voiceNote);
+    //updateNoteList();
 }
 
 void RightView::handleClearNote()

@@ -32,6 +32,9 @@ signals:
     void textEditClicked(NOTE textNote);
 
 
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
+
 public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void handleDelItem(bool);
@@ -64,6 +67,7 @@ private:
     QString m_defaultTxtPath;
     QString m_defaultAudioName;
     QString m_defaultAudioPath;
+    bool m_arrowMenu_want_show;
     //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();

@@ -140,6 +140,7 @@ void TextNoteItem::initUI()
 //    m_textEdit->setSizePolicy(sizePolicy);
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
 
     m_hBoxLayout->addWidget(m_textEdit);
 
@@ -176,9 +177,8 @@ void TextNoteItem::initUI()
 //   m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
    m_hBoxLayout->addWidget(m_menuBtn);
 
-
-
    textAreaChanged();
+
 }
 
 void TextNoteItem::initConnection()

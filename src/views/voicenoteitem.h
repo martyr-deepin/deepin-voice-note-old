@@ -37,6 +37,7 @@ signals:
     void pausePlayingSignal();
 public slots:
     void handleStopPlay();
+    void handlePausePlay();
     void handleResumePlaying();
     //void handle
 

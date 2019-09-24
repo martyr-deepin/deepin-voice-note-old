@@ -21,6 +21,7 @@ public:
     RightView();
     ~RightView();
 
+    void addNoteToNoteList(NOTE note);
     void updateNoteList();
     void searchNoteList(QString searchKey);
 signals:

@@ -19,6 +19,7 @@ public:
     bool insertData(QString tableName, QStringList columnName, QList<QVariant> values);
     bool updateData(QString updateSql, QMap<QString, QVariant> valuesMap);
     bool queryData(QString queryStr, int resultItemSize, QList<QList<QVariant>> & result);
+    bool queryLastData(QString queryStr, int resultItemSize, QList<QVariant> & result);
     bool deleteDataById(QString tableName, QString id, int idValue);
 
 

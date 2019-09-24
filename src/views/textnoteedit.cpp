@@ -56,7 +56,7 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 //    {
 //        emit clicked();
 //    }
-//    //要继续保留QListWidget原有的点击事件.
+    //要继续保留QListWidget原有的点击事件.
     QTextEdit::mousePressEvent(event);
 }
 

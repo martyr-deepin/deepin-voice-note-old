@@ -110,6 +110,11 @@ void VoiceNoteItem::handleStopPlay()
     m_playingButton->handleStop();
 }
 
+void VoiceNoteItem::handlePausePlay()
+{
+    m_playingButton->handlePause();
+}
+
 void VoiceNoteItem::handleResumePlaying()
 {
 //    QPoint itemPointToParent = this->mapToParent(QPoint(0,0));

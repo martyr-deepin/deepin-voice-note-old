@@ -170,6 +170,29 @@ bool DatabaseOper::queryData(QString queryStr, int resultItemSize, QList<QList<Q
 
 }
 
+bool DatabaseOper::queryLastData(QString queryStr, int resultItemSize, QList<QVariant> & result)
+{
+    m_sqlQuery.prepare(queryStr);
+    if(!m_sqlQuery.exec())
+    {
+        qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
+        return false;
+    }
+    else
+    {
+        if (m_sqlQuery.last())
+        {
+            for (int i = 0; i < resultItemSize; i++)
+            {
+                result.append(m_sqlQuery.value(i));
+            }
+        }
+
+        return true;
+    }
+
+}
+
 bool DatabaseOper::deleteDataById(QString tableName, QString id, int idValue)
 {
     QString deleteSql = "delete from %1 where %2 = ?";
