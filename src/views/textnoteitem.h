@@ -44,12 +44,15 @@ public:
 signals:
     void textEditClicked(NOTE m_textNote);
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
+    void sig_menuBtnPressed();
+    void sig_menuBtnReleased();
 
 public slots:
     void textAreaChanged();
     void handleTextEditClicked();
     void handleMenuBtnClicked();
     void handleTextEditFocusOut();
+    void handleMenuBtnStateChanged();
 
 private:
     NoteController *m_noteCtr;
@@ -58,6 +61,7 @@ private:
 //    QAction *m_delAction;
     bool m_isTextConverted;
     QString m_searchKey;
+    int m_menuBtnState;
     void initUI();
     void initConnection();
     void updateNote();

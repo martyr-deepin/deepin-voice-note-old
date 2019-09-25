@@ -41,17 +41,12 @@
         <file>image/icon/press/more_press.svg</file>
         <file>image/icon/press/record_press.svg</file>
         <file>image/icon/press/pause_blue_press.svg</file>
-        <file>image/icon/scrollbar/scrollbar_active.svg</file>
-        <file>image/icon/scrollbar/scrollbar_hover.svg</file>
-        <file>image/icon/normal/circlebutton_add.svg</file>
-        <file>image/icon/focus/circlebutton_add_focus.svg</file>
-        <file>image/icon/normal/play_normal.svg</file>
         <file>image/time_label.png</file>
         <file>image/slider_handle.png</file>
         <file>image/slider_handle_line.png</file>
-        <file>image/icon/press/back_press.svg</file>
-        <file>image/icon/normal/back_normal.svg</file>
         <file>image/slider_handle_waveform.svg</file>
         <file>image/deepin-voice-note.svg</file>
+        <file>image/icon/normal/circlebutton_add 2.svg</file>
+        <file>image/icon/normal/play_normal.svg</file>
     </qresource>
 </RCC>

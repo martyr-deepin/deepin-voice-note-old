@@ -1,7 +1,7 @@
 #include "rightview.h"
 #include "textnoteitem.h"
 
-#include <QVBoxLayout>
+//#include <QVBoxLayout>
 #include "consts.h"
 #include <DArrowRectangle>
 #include <DtkGuis>
@@ -98,6 +98,7 @@ void RightView::initNoteList()
     initRecordStackedWidget();
 
     m_noteListLayout->addWidget(m_recordStackedWidget);
+    m_noteListLayout->addSpacing(1);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
     sp.setVerticalStretch(1);

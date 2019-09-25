@@ -4,6 +4,9 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QTextStream>
+#include <QBitmap>
+#include <QPainter>
+
 //extern "C"
 //{
 //#include "libavcodec/avcodec.h"
@@ -43,6 +46,25 @@ QPixmap UiUtil::getPixmap(QSize size, QString imgPath)
 //    *img = img->scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 //    return QPixmap::fromImage(*img);
 
+}
+
+QPixmap UiUtil::PixmapToRound(QPixmap &src, int radius)
+{
+    if (src.isNull()) {
+        return QPixmap();
+    }
+
+    QSize size(2*radius, 2*radius);
+    QBitmap mask(size);
+    QPainter painter(&mask);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform);
+    painter.fillRect(0, 0, size.width(), size.height(), Qt::white);
+    painter.setBrush(QColor(0, 0, 0));
+    painter.drawRoundedRect(0, 0, size.width(), size.height(), 99, 99);
+    QPixmap image = src.scaled(size);
+    image.setMask(mask);
+    return image;
 }
 
 DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content, QWidget *parent, QString cancelStr, QString okStr)

@@ -46,7 +46,7 @@ private:
     QWidget *m_noteListPage;
     QWidget *m_detailPage;
     QPlainTextEdit *m_plainTextEdit;
-    QLayout *m_noteListLayout;
+    QVBoxLayout *m_noteListLayout;
     RightNoteList *m_noteListWidget;
     DImageButton *m_addVoiceBtn;
     DImageButton *m_addTextBtn;

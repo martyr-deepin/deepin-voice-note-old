@@ -3,7 +3,8 @@
 #include <QString>
 #include <uiutil.h>
 #include <DPalette>
-
+#include <QLabel>
+#include <QPalette>
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QString searchKey)
 {
@@ -22,11 +23,12 @@ void FolerWidgetItem::initUI()
 {
 
     //this->resize(196, 60);
-    //setNormalBackground();
+    setNormalBackground();
     //this->setStyleSheet("background: red");
     this->setFixedSize(230, 64);
+
     m_imageLabel = new QLabel(this);
-    m_imageLabel->setGeometry(QRect(10, 10, 50, 40));
+    m_imageLabel->setGeometry(QRect(10, 10, 40, 40));
     m_imageLabel->setObjectName("imageLabel");
     //m_imageLabel->size();
     //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
@@ -34,7 +36,9 @@ void FolerWidgetItem::initUI()
 //    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
 //    if (convertFlag)
 //    {
-        m_imageLabel->setPixmap(UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath));
+    QPixmap docIcon = UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath);
+    QPixmap raddocIcon = UiUtil::PixmapToRound(docIcon,20);
+        m_imageLabel->setPixmap(raddocIcon);
 //    }
 
     m_nameLabel = new QLabel();
@@ -47,6 +51,10 @@ void FolerWidgetItem::initUI()
     labelFont.setFamily("SourceHanSansSC");
     labelFont.setPointSize(14);
     m_nameLabel->setFont(labelFont);
+
+    QPalette pe;
+    pe.setColor(QPalette::Text,QColor(QRgb(0x001A2E)));
+    m_nameLabel->setPalette(pe);
     bool isConverted = false;
     QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
 
@@ -70,11 +78,16 @@ void FolerWidgetItem::initUI()
     m_stackedWidget->setCurrentIndex(0);
 
     m_createTimeLabel = new QLabel(this);
-    m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
+    m_createTimeLabel->setGeometry(QRect(70, 31, 110, 18));
+    //m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
+    //m_createTimeLabel->setLineWidth(150);
     m_createTimeLabel->setObjectName("createTimeLabel");
+    labelFont.setPointSize(9);
+    m_createTimeLabel->setFont(labelFont);
+    pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
+    m_createTimeLabel->setPalette(pe);
     //m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
     m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
-
 
 }
 
@@ -82,8 +95,6 @@ void FolerWidgetItem::initConnection()
 {
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
 }
-
-
 
 
 void FolerWidgetItem::setItemBackground(QString imgPath)
@@ -94,7 +105,10 @@ void FolerWidgetItem::setItemBackground(QString imgPath)
 }
 void FolerWidgetItem::setNormalBackground()
 {
-    setItemBackground(":/image/folder_normal.png");
+    //setItemBackground(":/image/folder_normal.png");
+//    QPalette p = this->palette();
+//    p.setBrush(this->backgroundRole(),QBrush(QColor(51,51,51)));
+//    this->setPalette(p);
 }
 
 void FolerWidgetItem::changeToEditMode()
@@ -106,7 +120,25 @@ void FolerWidgetItem::changeToEditMode()
     m_lineEdit->selectAll();
     m_lineEdit->setCursorPosition(m_lineEdit->text().size());
     m_lineEdit->setFocus();
+    m_createTimeLabel->setVisible(false);
 
+}
+
+void FolerWidgetItem::changeToClickMode()
+{
+    QPalette pe;
+    pe.setColor(QPalette::Text,Qt::white);
+    m_nameLabel->setPalette(pe);
+    m_createTimeLabel->setPalette(pe);
+}
+
+void FolerWidgetItem::changeToUnClickMode()
+{
+    QPalette pe;
+    pe.setColor(QPalette::Text,QColor(QRgb(0x001A2E)));
+    m_nameLabel->setPalette(pe);
+    pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
+    m_createTimeLabel->setPalette(pe);
 }
 
 void FolerWidgetItem::checkNameValid()
@@ -132,7 +164,7 @@ void FolerWidgetItem::checkNameValid()
 //            m_nameLabel->setVisible(true);
 //            m_lineEdit->setVisible(false);
         }
-
+        m_createTimeLabel->setVisible(true);
     } else {
         //警告用户输入不能为空
         m_lineEdit->setAlert(true);

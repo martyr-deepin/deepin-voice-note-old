@@ -32,6 +32,7 @@ void LeftFolderList::initUI()
 //    addWidgetItem(folder1);
 //    addWidgetItem(folder2);
     this->setFrameShape(QListWidget::NoFrame);
+    this->setSelectionRectVisible(false);
     m_contextMenu = new QMenu;
     m_renameAction = new QAction(tr(FOLDER_MENU_RENAME),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
@@ -52,12 +53,18 @@ void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     QListWidgetItem *item=new QListWidgetItem(this);
 //    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     item->setSizeHint(QSize(230,64));
+    item->setBackgroundColor(QColor(Qt::red));
 //    DPalette palette;
 //    palette.setColor(DPalette::Background, QColor(247, 247, 247));
 //    item->setAutoFillBackground(true);
 //    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
+
     this->setItemWidget(item, folderItem);
+//    QWidget *pNewWidget = new QWidget;
+//    pNewWidget->setFixedSize(QSize(230,64));
+//    this->setItemWidget(item, pNewWidget);
+
 }
 
 void LeftFolderList::handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)

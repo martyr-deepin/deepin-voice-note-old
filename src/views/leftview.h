@@ -7,9 +7,11 @@
 #include <foldercontroller.h>
 //#include <DImageButton>
 #include <dimagebutton.h>
+//#include <DIconButton>
 #include <QObject>
 #include "consts.h"
 #include <DtkGuis>
+#include <QVBoxLayout>
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
 
@@ -33,7 +35,7 @@ public slots:
     void handleSelFolderChg(QListWidgetItem *item);
 
 private:
-    QLayout *m_leftViewLayout;
+    QVBoxLayout *m_leftViewLayout;
     //QListWidget *folderList;
     LeftFolderList *m_leftFolderView;
     DImageButton *m_addFolderBtn;

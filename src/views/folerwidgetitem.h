@@ -30,6 +30,8 @@ public:
     FOLDER m_folder;
 
     void changeToEditMode();
+    void changeToClickMode();
+    void changeToUnClickMode();
 
 public slots:
     void checkNameValid();

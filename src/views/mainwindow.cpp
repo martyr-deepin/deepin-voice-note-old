@@ -59,17 +59,27 @@ void MyMainWindow::initTitleFrame()
 
     m_titleFrame = new QFrame;
     m_titleFrame->setObjectName("TitleBar");
-    //m_titleFrame->setStyleSheet("background: blue");
+
+    //no use
+//    //m_pWidget->setGeometry(0, 0, 300, 100);
+//    QPalette pal(m_titleFrame->palette());
+//    pal.setColor(QPalette::Background, Qt::blue);
+//    m_titleFrame->setAutoFillBackground(true);
+//    m_titleFrame->setPalette(pal);
+//    m_titleFrame->show();
+//    m_titleFrame->setStyleSheet("background: blue");
+    //no use
+
     QHBoxLayout *titleLayout = new QHBoxLayout;
     titleLayout->setMargin(0);
     titleLayout->setSpacing(0);
-    titleLayout->addSpacing(12);
+    titleLayout->addSpacing(2);
     titleLayout->addWidget(m_logo);
     titleLayout->addSpacing(12);
     titleLayout->addWidget(m_returnBtn);
-    titleLayout->addSpacing(12);
+    titleLayout->addSpacing(155);
     titleLayout->addWidget(m_searchEdit);
-    titleLayout->setSpacing(0);
+    titleLayout->setSpacing(52);
     titleLayout->setContentsMargins(0, 0, 0, 0);
 
     QSizePolicy spLogo= m_logo->sizePolicy();
@@ -77,6 +87,7 @@ void MyMainWindow::initTitleFrame()
     m_logo->setSizePolicy(spLogo);
     m_titleFrame->setLayout(titleLayout);
     m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
+
     this->titlebar()->setCustomWidget(m_titleFrame, false);
 
 }

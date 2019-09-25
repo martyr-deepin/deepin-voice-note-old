@@ -1,7 +1,6 @@
 #include "leftview.h"
 
 #include <DPalette>
-#include <QVBoxLayout>
 #include <folderoper.h>
 
 LeftView::LeftView()
@@ -37,12 +36,14 @@ void LeftView::initUI()
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     m_leftViewLayout->addWidget(m_leftFolderView);
 
-    m_addFolderBtn = new DImageButton();
-    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add.svg");
+    m_addFolderBtn = new DImageButton;
+//    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add.svg"));
+    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
     m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
     m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
-
     m_leftViewLayout->addWidget(m_addFolderBtn);
+    m_leftViewLayout->addSpacing(9);
+
     QSizePolicy sp = m_leftFolderView->sizePolicy();
     sp.setVerticalPolicy(QSizePolicy::Expanding);
     m_leftFolderView->setSizePolicy(sp);
@@ -146,10 +147,20 @@ int LeftView::getCurrSelectFolderId()
 void LeftView::handleSelFolderChg(QListWidgetItem *item)
 {
     int folderId = -1;
+
+    int count = m_leftFolderView->count();
+    for(int i = 0; i < count; i++)
+    {
+        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
+        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
+        tmpfolderItem->changeToUnClickMode();
+    }
+
     if (nullptr != item)
     {
         FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
         folderId = folderItem->m_folder.id;
+        folderItem->changeToClickMode();
     }
     else {
         emit selFolderIdChg(folderId);

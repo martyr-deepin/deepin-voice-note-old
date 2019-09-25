@@ -19,6 +19,20 @@ DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
 
+class MMenu : public QMenu
+{
+    Q_OBJECT
+public:
+    explicit MMenu(QWidget *parent = nullptr);
+    ~MMenu();
+
+signals:
+    void sigMMenu();
+
+protected:
+    void leaveEvent(QEvent* event);
+};
+
 //右侧文字语音记录列表
 class RightNoteList : public DListWidget
 {
@@ -47,9 +61,12 @@ public slots:
     void handleAudioPositionChanged(qint64 position);
     void handleSliderReleased();
     void handleSaveFileEnd(bool);
-
+    void handleMenuBtnPressed();
+    void handleMenuBtnReleased();
+    void OnActionHoverd();
+    void OnLeaveContentMenu();
 private:
-    QMenu *m_contextMenu;
+    MMenu *m_contextMenu;
     QAction *m_saveAsAction;
     QAction *m_delAction;
     NoteController *m_noteController;
@@ -67,7 +84,8 @@ private:
     QString m_defaultTxtPath;
     QString m_defaultAudioName;
     QString m_defaultAudioPath;
-    bool m_arrowMenu_want_show;
+    bool m_arrowButtonPressed;
+    bool m_actionHoverd;
     //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();

@@ -9,12 +9,31 @@
 #include <DMessageBox>
 #include <QMessageBox>
 
+MMenu::MMenu(QWidget *parent)
+{
+
+}
+
+MMenu::~MMenu()
+{
+
+}
+
+void MMenu::leaveEvent(QEvent* event)
+{
+    emit sigMMenu();
+    return QMenu::leaveEvent(event);
+}
+
+
+
 RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
   , m_defaultTxtName("文本.TXT")
   , m_defaultTxtPath("/home/deepin/Desktop")
   , m_defaultAudioName("语音.MP3")
   , m_defaultAudioPath("/home/deepin/Desktop")
-  , m_arrowMenu_want_show(true)
+  , m_arrowButtonPressed(false)
+  , m_actionHoverd(false)
 {
     initUI();
     initConnection();
@@ -28,7 +47,7 @@ RightNoteList::~RightNoteList()
 void RightNoteList::initUI()
 {
     this->setFrameShape(QListWidget::NoFrame);
-    m_contextMenu = new QMenu;
+    m_contextMenu = new MMenu;
     m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_saveAsAction);
@@ -60,8 +79,11 @@ void RightNoteList::initUI()
 }
 void RightNoteList::initConnection()
 {
+    connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
+    connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
+    connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
@@ -83,6 +105,8 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
+        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
+        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
         QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
         //item->setSizeHint(QSize(this->width(),92));
@@ -105,11 +129,12 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
     switch (e->type())
     {
         case QEvent::MouseButtonRelease:
-//        if(!m_arrowMenu->isHidden())
-//        {
-//            m_arrowMenu->hide();
-//        }
-        qDebug()<<"click filter";
+        if((!m_arrowButtonPressed)&&(!m_actionHoverd))
+        {
+            m_arrowMenu->hide();
+            m_actionHoverd = false;
+            qDebug()<<"click filter";
+        }
         break;
     }
     return DListWidget::eventFilter(o,e);
@@ -117,9 +142,6 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
-//    if(!m_arrowMenu_want_show)
-//    {
-//        m_arrowMenu_want_show = true;
     if(m_arrowMenu->isHidden())
     {
         QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
@@ -136,7 +158,7 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
     }
     else {
         m_arrowMenu->hide();
-        //m_arrowMenu_want_show = false;
+        m_actionHoverd = false;
     }
 
 //    else
@@ -157,7 +179,18 @@ void RightNoteList::handleDelItem(bool)
     m_delConfirmDialog->show();
 
     m_arrowMenu->hide();
+    m_actionHoverd = false;
 //    return;
+}
+
+void RightNoteList::OnActionHoverd()
+{
+    m_actionHoverd = true;
+}
+
+void RightNoteList::OnLeaveContentMenu()
+{
+    m_actionHoverd = false;
 }
 
 //dialog.setAcceptMode(DFileDialog::AcceptOpen);
@@ -175,6 +208,7 @@ void RightNoteList::handleDelItem(bool)
 void RightNoteList::handleSaveAsItem(bool)
 {
     m_arrowMenu->hide();
+    m_actionHoverd = false;
 
     SAVE_INFO saveInfo;
     saveInfo.note = m_currSelNote;
@@ -386,4 +420,14 @@ void RightNoteList::handleSaveFileEnd(bool result)
     m_saveFileEndDialog->setTitle(title);
     m_saveFileEndDialog->show();
     //UiUtil::createConfirmDialog(QString(""), title, this);
+}
+
+void RightNoteList::handleMenuBtnPressed()
+{
+    m_arrowButtonPressed = true;
+}
+
+void RightNoteList::handleMenuBtnReleased()
+{
+    m_arrowButtonPressed = false;
 }

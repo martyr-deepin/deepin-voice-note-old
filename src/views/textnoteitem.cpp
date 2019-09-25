@@ -8,6 +8,7 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searc
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
     m_searchKey = searchKey;
+    m_menuBtnState = 0;
 
 //    this->setMinimumHeight(100);
 //    this->setMaximumHeight(200);
@@ -190,7 +191,7 @@ void TextNoteItem::initConnection()
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
-
+    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
 }
 
 void TextNoteItem::changeToEditMode()
@@ -277,4 +278,24 @@ void TextNoteItem::handleTextEditFocusOut()
     }
 
     m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+}
+
+void TextNoteItem::handleMenuBtnStateChanged()
+{
+    int preState = m_menuBtnState;
+    m_menuBtnState = m_menuBtn->getState();
+    qDebug()<<"handleMenuBtnCheckeChanged m_menuBtnState:"<<m_menuBtnState;
+
+    if((preState == 1) && (m_menuBtnState == 2))
+    {
+        //press
+        qDebug()<<"press";
+        emit sig_menuBtnPressed();
+    }
+    else if((preState == 2) && (m_menuBtnState == 1))
+    {
+        //release
+        qDebug()<<"release";
+        emit sig_menuBtnReleased();
+    }
 }

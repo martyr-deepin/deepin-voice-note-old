@@ -32,7 +32,7 @@ public:
     static bool checkFileExtension(QString fileName, QString extension);
     static bool checkFileExist(QString filePath);
     static QString getRecordingVoiceFullPath(QString fileName);
-
+    static QPixmap PixmapToRound(QPixmap &src, int radius);
 };
 
 #endif // UIUTIL_H

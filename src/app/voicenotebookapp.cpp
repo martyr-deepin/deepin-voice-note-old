@@ -19,10 +19,10 @@ VoiceNotebookApp::VoiceNotebookApp(DApplication &a)
 
 VoiceNotebookApp::~VoiceNotebookApp()
 {
-//    if (NULL != mainWindow) {
-//        delete mainWindow;
-//        mainWindow = NULL;
-//    }
+    if (nullptr != m_mainWindow) {
+            delete m_mainWindow;
+            m_mainWindow = nullptr;
+        }
 }
 
 //initI18n();
