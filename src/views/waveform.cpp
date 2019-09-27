@@ -30,6 +30,8 @@
 #include <QTime>
 #include <QTimer>
 #include <QWidget>
+#include <DWidget>
+
 
 #include "waveform.h"
 
@@ -41,6 +43,19 @@ const int Waveform::WAVE_DURATION = 4;
 Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")
 {
     //setFixedSize(350, 50);
+
+    if(PART_SAMPLE == m_currDisplayType)
+    {
+        m_Slider = new QLabel(this);
+        m_Slider->setFixedSize(5, 52);
+        QPalette pal;
+        pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/icon/normal/cursor.svg")));
+        m_Slider->setAutoFillBackground(true);
+        m_Slider->setPalette(pal);
+        m_Slider->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
+        m_Slider->move(0,0);
+    }
+
 
     lastSampleTime = QDateTime::currentDateTime();
 
@@ -73,6 +88,13 @@ void Waveform::paintEvent(QPaintEvent *)
     } else {
         painter.setClipRect(QRect(rect().x(), rect().y(), rect().width(), rect().height()));
     }
+
+    //qDebug()<<"pointNum:"<<sampleList.size();
+    if(PART_SAMPLE == m_currDisplayType)
+    {
+        m_Slider->move(rect().x() + rect().width(),m_Slider->y());
+    }
+
         
     int volume = 0;
     for (int i = 0; i < sampleList.size(); i++) {
@@ -85,12 +107,21 @@ void Waveform::paintEvent(QPaintEvent *)
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
-            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
+            //QLinearGradient 不渐变色
+           QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
             gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
             gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
+            //QLinearGradient 可以做渐变色
+//            QLinearGradient gradient(rect().topLeft(), rect().topRight());
+//            gradient.setColorAt(0, QColor("#03D0D6"));
+//            gradient.setColorAt(1, QColor("#0079FF"));
 
 
             painter.fillRect(sampleRect, gradient);
+        }
+        if((PART_SAMPLE == m_currDisplayType)&&(i == sampleList.size() - 1))
+        {
+            m_Slider->move(rect().x() + i * WAVE_DURATION,m_Slider->y());
         }
     }
 
@@ -102,6 +133,7 @@ void Waveform::paintEvent(QPaintEvent *)
                             1));
         painter.fillPath(path, QColor(rect().x() + sampleList.size() * WAVE_DURATION));
     }
+
 }
 
 QString Waveform::getColor(int xPos)
@@ -312,9 +344,10 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
 
 void Waveform::genSampleListFromWhole()
 {
-    sampleList.clear();
+    //sampleList.clear();
     int pointNum = rect().width() / WAVE_DURATION;
     float sample = wholeSampleList.size() * 1.0 / pointNum;
+    //qDebug()<<"pointNum:"<<pointNum;
 //    qDebug() << "whole list";
 //    for (int t = 0; t < wholeList.size(); t++)
 //    {

@@ -34,6 +34,7 @@ public slots:
     void handleStartRecord();
     void handleStopRecord(VOICE_INFO voiceInfo);
     void handleClearNote();
+    void OnCurrentRowChanged(int curRow);
 private:
     void initUI();
     void initConnection();

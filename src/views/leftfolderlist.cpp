@@ -51,16 +51,21 @@ void LeftFolderList::initConnection()
 
 void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     QListWidgetItem *item=new QListWidgetItem(this);
+    //QListWidgetItem *item=new QListWidgetItem();
 //    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
-    item->setSizeHint(QSize(230,64));
-    item->setBackgroundColor(QColor(Qt::red));
+    //item->setSizeHint(QSize(230,64));
+    item->setSizeHint(QSize(230,74));
+    //item->setBackgroundColor(QColor(QRgb(0x00f5f5f5)));
 //    DPalette palette;
 //    palette.setColor(DPalette::Background, QColor(247, 247, 247));
 //    item->setAutoFillBackground(true);
 //    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
+    item->setData(Qt::BackgroundRole,QBrush(QColor(QRgb(0x00000000))));
 
+    //this->addItem(item);
     this->setItemWidget(item, folderItem);
+
 //    QWidget *pNewWidget = new QWidget;
 //    pNewWidget->setFixedSize(QSize(230,64));
 //    this->setItemWidget(item, pNewWidget);
@@ -91,11 +96,11 @@ void LeftFolderList::mousePressEvent(QMouseEvent *event)
 
 void LeftFolderList::handleDelItem(bool checked)
 {
+
     FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 
     if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
     {
-
         QListWidgetItem * item = this->takeItem(this->currentRow());
         delete item;
         emit itemClicked(this->currentItem());

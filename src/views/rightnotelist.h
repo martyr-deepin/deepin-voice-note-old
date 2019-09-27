@@ -57,6 +57,7 @@ public slots:
     void handlePlayingStateChanged(QMediaPlayer::State state);
     void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
     void pause();
+    void stop();
     void handleClickRecordButton();
     void handleAudioPositionChanged(qint64 position);
     void handleSliderReleased();

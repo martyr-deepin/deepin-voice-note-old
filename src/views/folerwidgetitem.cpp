@@ -3,8 +3,12 @@
 #include <QString>
 #include <uiutil.h>
 #include <DPalette>
+#include <QPalette>
+#include <QBrush>
 #include <QLabel>
 #include <QPalette>
+#include <DWidget>
+
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QString searchKey)
 {
@@ -25,10 +29,21 @@ void FolerWidgetItem::initUI()
     //this->resize(196, 60);
     setNormalBackground();
     //this->setStyleSheet("background: red");
-    this->setFixedSize(230, 64);
+    this->setFixedSize(230, 74);
+
+//    m_BackGround = new DBlurEffectWidget(this);
+//    m_BackGround->move(0,5);
+//    m_BackGround->setFixedSize(230, 64);
+//    QPalette p;
+//    //p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(255,245,245,100)));
+//    p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(QRgb(0x00F5F5F5))));
+    //m_BackGround->setPalette(p);
+    //m_BackGround->setAutoFillBackground(true);
+    //m_BackGround->setStyleSheet("background: #f5f5f5");
+
 
     m_imageLabel = new QLabel(this);
-    m_imageLabel->setGeometry(QRect(10, 10, 40, 40));
+    m_imageLabel->setGeometry(QRect(10, 15, 40, 40));
     m_imageLabel->setObjectName("imageLabel");
     //m_imageLabel->size();
     //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
@@ -56,7 +71,12 @@ void FolerWidgetItem::initUI()
     pe.setColor(QPalette::Text,QColor(QRgb(0x001A2E)));
     m_nameLabel->setPalette(pe);
     bool isConverted = false;
-    QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+    QFont labelFontForWidth;
+    labelFontForWidth.setFamily("SourceHanSansSC");
+    labelFontForWidth.setPointSize(11);
+    //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+    //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, m_nameLabel->width(), isConverted);
+    QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
 
     m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey));
     m_nameLabel->setMouseTracking(false);
@@ -70,7 +90,7 @@ void FolerWidgetItem::initUI()
     //m_lineEdit->setVisible(false);
 
     m_stackedWidget = new QStackedWidget(this);
-    m_stackedWidget->setGeometry(QRect(70, 10, 110, 21));
+    m_stackedWidget->setGeometry(QRect(70, 15, 110, 21));
     m_stackedWidget->setObjectName("stackedWidget");
 
     m_stackedWidget->addWidget(m_nameLabel);
@@ -78,7 +98,7 @@ void FolerWidgetItem::initUI()
     m_stackedWidget->setCurrentIndex(0);
 
     m_createTimeLabel = new QLabel(this);
-    m_createTimeLabel->setGeometry(QRect(70, 31, 110, 18));
+    m_createTimeLabel->setGeometry(QRect(70, 36, 110, 18));
     //m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     //m_createTimeLabel->setLineWidth(150);
     m_createTimeLabel->setObjectName("createTimeLabel");
@@ -105,6 +125,7 @@ void FolerWidgetItem::setItemBackground(QString imgPath)
 }
 void FolerWidgetItem::setNormalBackground()
 {
+
     //setItemBackground(":/image/folder_normal.png");
 //    QPalette p = this->palette();
 //    p.setBrush(this->backgroundRole(),QBrush(QColor(51,51,51)));
@@ -117,8 +138,9 @@ void FolerWidgetItem::changeToEditMode()
 //    m_lineEdit->setVisible(true);
     m_stackedWidget->setCurrentIndex(1);
 
-    m_lineEdit->selectAll();
-    m_lineEdit->setCursorPosition(m_lineEdit->text().size());
+    //Update DlineEidt没有这个接口了
+    m_lineEdit->lineEdit()->selectAll();
+    m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
     m_lineEdit->setFocus();
     m_createTimeLabel->setVisible(false);
 
@@ -130,6 +152,7 @@ void FolerWidgetItem::changeToClickMode()
     pe.setColor(QPalette::Text,Qt::white);
     m_nameLabel->setPalette(pe);
     m_createTimeLabel->setPalette(pe);
+    //m_BackGround->setVisible(false);
 }
 
 void FolerWidgetItem::changeToUnClickMode()
@@ -139,6 +162,8 @@ void FolerWidgetItem::changeToUnClickMode()
     m_nameLabel->setPalette(pe);
     pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
     m_createTimeLabel->setPalette(pe);
+    //m_BackGround->setVisible(true);
+
 }
 
 void FolerWidgetItem::checkNameValid()
@@ -159,7 +184,14 @@ void FolerWidgetItem::checkNameValid()
                 m_lineEdit->showAlertMessage("修改目录名失败");
 
             }
-            m_nameLabel->setText(UiUtil::getHtmlText(m_lineEdit->text(), 14, m_searchKey));
+            bool isConverted = false;
+
+            QFont labelFont;
+            labelFont.setFamily("SourceHanSansSC");
+            labelFont.setPointSize(11);
+            //m_nameLabel->setText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), m_nameLabel->width(), isConverted));
+            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+            //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
             m_stackedWidget->setCurrentIndex(0);
 //            m_nameLabel->setVisible(true);
 //            m_lineEdit->setVisible(false);

@@ -82,7 +82,8 @@ QString UiUtil::getElidedText(QFont font, QString str, int MaxWidth, bool& isCon
 {
     QFontMetrics fontWidth(font);
     int width = fontWidth.width(str);  //计算字符串宽度
-    int CorMaxWidth = MaxWidth - 20;
+    //int CorMaxWidth = MaxWidth - 20;
+    int CorMaxWidth = MaxWidth;
     if(width >= CorMaxWidth)  //当字符串宽度大于最大宽度时进行转换
     {
         isConverted = true;

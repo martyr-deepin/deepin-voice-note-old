@@ -8,12 +8,13 @@
 #include "consts.h"
 #include <DLineEdit>
 #include <QStackedWidget>
+#include <DBlurEffectWidget>
 
 DWIDGET_USE_NAMESPACE
 
 //#define FOLDER_MAX_WIDTH 160
-#define FOLDER_MAX_WIDTH 100
-
+//#define FOLDER_MAX_WIDTH 100
+#define FOLDER_MAX_WIDTH 110
 
 //左侧item项
 class FolerWidgetItem : public QWidget
@@ -24,6 +25,7 @@ public:
     FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr, QString searchKey);
     ~FolerWidgetItem();
     DLineEdit *m_lineEdit;
+    DBlurEffectWidget *m_BackGround;
     QLabel *m_imageLabel;
     QLabel *m_nameLabel;
     QLabel *m_createTimeLabel;

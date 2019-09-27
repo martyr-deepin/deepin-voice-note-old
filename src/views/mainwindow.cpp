@@ -20,7 +20,6 @@ void MyMainWindow::initUI() {
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     initTitleBar();
     initCentralWidget();
-
 }
 
 
@@ -51,6 +50,9 @@ void MyMainWindow::initTitleFrame()
 //    QString text = "<";
 //    m_returnBtn = new DIconButton(returnIcon, text);
     m_returnBtn->setVisible(false);
+    m_replaceForReturn = new DWidget;
+    m_replaceForReturn->setFixedSize(QSize(24, 24));
+    m_replaceForReturn->setVisible(true);
 
     m_searchEdit = new DSearchEdit();
     QSizePolicy sp = m_searchEdit->sizePolicy();
@@ -77,9 +79,10 @@ void MyMainWindow::initTitleFrame()
     titleLayout->addWidget(m_logo);
     titleLayout->addSpacing(12);
     titleLayout->addWidget(m_returnBtn);
-    titleLayout->addSpacing(155);
+    titleLayout->addWidget(m_replaceForReturn);
+    titleLayout->addSpacing(179);
     titleLayout->addWidget(m_searchEdit);
-    titleLayout->setSpacing(52);
+    //titleLayout->setSpacing(52);
     titleLayout->setContentsMargins(0, 0, 0, 0);
 
     QSizePolicy spLogo= m_logo->sizePolicy();
@@ -132,7 +135,9 @@ void MyMainWindow::initStackedWidget()
     m_textNoteEdit = new TextNoteEdit();
     m_detailPageLayout->addWidget(m_textNoteEdit);
     m_stackedWidget->addWidget(m_detailPage);
-
+    //m_textNoteEdit->setStyleSheet("border: none;");
+    m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
+    m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
 //    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
 //    //    self.detailPage = QtWidgets.QWidget()
 //    //    self.detailPage.setObjectName("detailPage")
@@ -147,6 +152,7 @@ void MyMainWindow::showNoteDetail(NOTE note)
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
     m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
+    m_replaceForReturn->setVisible(false);
 }
 
 void MyMainWindow::showListPage()
@@ -161,6 +167,7 @@ void MyMainWindow::showListPage()
     }
     m_stackedWidget->setCurrentIndex(0);
     m_returnBtn->setVisible(false);
+    m_replaceForReturn->setVisible(true);
 }
 
 void MyMainWindow::handleSearchKey()

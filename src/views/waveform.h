@@ -29,6 +29,7 @@
 #include <QEvent>
 #include <QTimer>
 #include <QWidget>
+#include <QLabel>
 #define SLIDER_TICK_INTAVAL 4
 enum DISPLAY_TYPE {WHOLE=0, PART_SAMPLE=1};
 
@@ -71,6 +72,7 @@ private:
     QTimer *renderTimer;
     DISPLAY_TYPE m_currDisplayType;
     int m_currWavePos;
+    QLabel *m_Slider;
 
     QString m_blueColor;
     QString m_greyColor;

@@ -44,7 +44,15 @@ void VoiceNoteItem::initUI()
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    m_bgWidget->setStyleSheet("background: #f2f2f2");
+    QPalette p;
+    //p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(255,245,245,100)));
+    p.setBrush(m_bgWidget->backgroundRole(),QBrush(QColor(QRgb(0x00ffff00))));
+    m_bgWidget->setAutoFillBackground(true);
+    m_bgWidget->setPalette(p);
+
+    m_timeLabel->setPalette(p);
+    m_timeLabel->setAutoFillBackground(true);
+    //m_bgWidget->setStyleSheet("background: #f2f2f2");
 
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);

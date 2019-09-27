@@ -26,6 +26,7 @@ void LeftView::initUI()
 
 
     m_leftFolderView = new LeftFolderList(m_folderCtr);
+    m_leftFolderView->setFocusPolicy(Qt::NoFocus);//会隐去DListWidget的选择背景样式，但是由于失去焦点无法通过键盘上下滚动list。
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
     {
@@ -34,6 +35,7 @@ void LeftView::initUI()
 
     m_leftFolderView->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
+    m_leftViewLayout->addSpacing(5);
     m_leftViewLayout->addWidget(m_leftFolderView);
 
     m_addFolderBtn = new DImageButton;

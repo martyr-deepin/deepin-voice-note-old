@@ -54,6 +54,9 @@ public slots:
     void handleTextEditFocusOut();
     void handleMenuBtnStateChanged();
 
+protected:
+    void resizeEvent(QResizeEvent * event);
+
 private:
     NoteController *m_noteCtr;
 //    QMenu *m_contextMenu;

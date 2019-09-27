@@ -2,6 +2,7 @@
 
 #include <DApplication>
 #include <DWidgetUtil>
+#include <DApplicationSettings>
 #include <DLog>
 
 #include <src/database/databaseoper.h>
@@ -40,9 +41,10 @@ void VoiceNotebookApp::initApp()
 {
     m_app->setAttribute(Qt::AA_UseHighDpiPixmaps);
     //m_app->setTheme("light");
+    m_app->loadTranslator();
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("voice note");
-    m_app->setApplicationVersion(DApplication::buildVersion("20190925"));
+    m_app->setApplicationVersion(DApplication::buildVersion("20190927"));
     //installEventFilter(new GlobalEventFilter());
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     m_app->setProductIcon(QIcon(":/images/logo.svg"));
@@ -51,6 +53,9 @@ void VoiceNotebookApp::initApp()
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
 
+
+    //save theme
+    DApplicationSettings saveTheme;
     initMainWindow();
     //DatabaseOper *test = DatabaseOper::getInstance();
     //FolderOper *test1 = new FolderOper();

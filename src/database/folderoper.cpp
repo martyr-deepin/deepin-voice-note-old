@@ -68,8 +68,9 @@ QList<FOLDER> FolderOper::getFolderList()
 
 QList<FOLDER> FolderOper::searchFolder(QString searchKey)
 {
-    QString queryStr = "select id, name, image_path, create_time from %1 where name like \'\%%2\%\' order by create_time desc";
-    QString queryStrFinal = QString(queryStr).arg(TABLE_FOLDER).arg(searchKey);
+    //QString queryStr = "select id, name, image_path, create_time from %1 where name like \'\%%2\%\' order by create_time desc";
+    QString queryStr = "select distinct id, name, image_path, create_time from %1 where name like \'\%%3\%\' or id in (select folder_id from %2 where content_text like \'\%%3\%\') order by create_time desc";
+    QString queryStrFinal = QString(queryStr).arg(TABLE_FOLDER).arg(TABLE_NOTE).arg(searchKey);
     QList<QList<QVariant>> result;
     QList<FOLDER> folderInfo;
     if (DatabaseOper::getInstance()->queryData(queryStrFinal, 4, result))

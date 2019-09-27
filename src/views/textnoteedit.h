@@ -8,7 +8,8 @@
 DWIDGET_USE_NAMESPACE
 
 //文字编辑框(Detal和非Deltal都在使用)
-class TextNoteEdit : public QTextEdit
+class TextNoteEdit : public DTextEdit
+//class TextNoteEdit : public QTextEdit
 {
     Q_OBJECT
 public:

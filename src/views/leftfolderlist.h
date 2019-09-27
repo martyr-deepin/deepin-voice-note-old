@@ -2,7 +2,8 @@
 #define LEFTFOLDERVIEW_H
 
 #include <DListWidget>
-#include <QMenu>
+//#include <QMenu>
+#include <DMenu>
 #include "folerwidgetitem.h"
 #include "src/app/consts.h"
 
@@ -15,6 +16,10 @@ public:
     LeftFolderList(FolderController *m_folderCtr);
     ~LeftFolderList();
     void addWidgetItem(FOLDER folder, QString searchKey);
+
+//signals:
+//    void sigDelFolder(int delfolderID);
+
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void handleDelItem(bool checked);
@@ -24,7 +29,7 @@ protected:
     void mousePressEvent(QMouseEvent *event);
 private:
     FolderController *m_folderCtr;
-    QMenu *m_contextMenu;
+    DMenu *m_contextMenu;
     QAction *m_renameAction;
     QAction *m_delAction;
     void initUI();

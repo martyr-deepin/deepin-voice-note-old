@@ -72,6 +72,10 @@ void TextNoteItem::initUI()
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
+    QPalette pal;
+    pal.setColor(QPalette::Background,Qt::red);
+    m_bgWidget->setAutoFillBackground(true);
+    m_bgWidget->setPalette(pal);
     m_bgWidget->setStyleSheet("background: #f5f5f5");
 
     //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
@@ -123,17 +127,22 @@ void TextNoteItem::initUI()
     labelFont.setPointSize(9);
     m_textEdit->setFont(labelFont);
 
+    m_hBoxLayout->addWidget(m_textEdit);
+
     QFont labelFontForWidth;
     labelFontForWidth.setFamily("PingFangSC-Regular");
-    labelFontForWidth.setPointSize(12);
-    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
+    labelFontForWidth.setPointSize(10);
+    //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (m_textEdit->width() + 26) * 5, m_isTextConverted);
+    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 536 * 5, m_isTextConverted);
     qDebug() << "m_isTextConverted: " << m_isTextConverted;
     if (m_isTextConverted)
     {
         m_textEdit->setReadOnly(true);
+        m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
 
-    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+//    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+
 //    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 //    sizePolicy.setHorizontalStretch(0);
 //    sizePolicy.setVerticalStretch(0);
@@ -141,10 +150,6 @@ void TextNoteItem::initUI()
 //    m_textEdit->setSizePolicy(sizePolicy);
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
-
-    m_hBoxLayout->addWidget(m_textEdit);
-
 
 
 //    m_textLabel = new QLabel(m_bgWidget);
@@ -262,19 +267,21 @@ void TextNoteItem::handleTextEditFocusOut()
     m_textNote.contentText = m_textEdit->toPlainText();
     QFont labelFontForWidth;
     labelFontForWidth.setFamily("PingFangSC-Regular");
-    labelFontForWidth.setPointSize(12);
-    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
-    //QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, 614 * 5, m_isTextConverted);
+    labelFontForWidth.setPointSize(10);
+    //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, m_textEdit->width() * 5, m_isTextConverted);
+    QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
 
     if (m_isTextConverted)
     {
         qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(true)";
         m_textEdit->setReadOnly(true);
+        m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
     else
     {
         qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
         m_textEdit->setReadOnly(false);
+        m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
     }
 
     m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
@@ -298,4 +305,33 @@ void TextNoteItem::handleMenuBtnStateChanged()
         qDebug()<<"release";
         emit sig_menuBtnReleased();
     }
+}
+
+void TextNoteItem::resizeEvent(QResizeEvent * event)
+{
+    int maxwidth = event->size().width();
+    qDebug()<<"TextNoteItem width:"<<maxwidth;
+    if(nullptr != m_textEdit)
+    {
+        QFont labelFontForWidth;
+        labelFontForWidth.setFamily("PingFangSC-Regular");
+        labelFontForWidth.setPointSize(10);
+        QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (maxwidth - 21) * 5, m_isTextConverted);
+        //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
+        qDebug() << "m_isTextConverted: " << m_isTextConverted;
+        if (m_isTextConverted)
+        {
+            m_textEdit->setReadOnly(true);
+            m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
+        }
+        else
+        {
+            m_textEdit->setReadOnly(false);
+            m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
+        }
+
+        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+    }
+
+    return QWidget::resizeEvent(event);
 }

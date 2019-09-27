@@ -25,6 +25,7 @@
 #include "voicenotebookapp.h"
 
 #include <DApplication>
+//#include <DApplicationSettings>
 //#include <DMainWindow>
 
 #include <DWidgetUtil>
@@ -37,5 +38,6 @@ int main(int argc, char *argv[])
     DApplication a(argc, argv);
 
     VoiceNotebookApp app(a);
+
 
 }

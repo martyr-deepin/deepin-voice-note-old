@@ -27,36 +27,38 @@ void RightView::initUI()
 //    m_arrowMenu->setHeight(80);
 //    m_arrowMenu->setWidth(80);
 //    m_arrowMenu->show(0, 0);
-    initNoteList();
-    //this->setStyleSheet("background: blue");
-    m_stackedWidgetLayout = new QVBoxLayout();
-    this->setLayout(m_stackedWidgetLayout);
-    m_stackedWidget = new QStackedWidget();
-    m_stackedWidgetLayout->addWidget(m_stackedWidget);
-    //m_stackedWidget->setStyleSheet("background: blue");
-    //m_stackedWidget->setGeometry(QRect(10, 10, 548, this->height()));
-    m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
-    m_stackedWidget->setObjectName("stackedWidget");
-    /*self.listPage.setObjectName("listPage")
-    self.listWidget = QtWidgets.QListWidget(self.listPage)
-    self.listWidget.setGeometry(QtCore.QRect(0, 10, 1111, 861))
-    self.listWidget.setObjectName("listWidget")*/
-    //m_noteListPage->resize(548,m_noteListPage->height());
-    m_stackedWidget->addWidget(m_noteListPage);
-    //m_noteListWidget->resize(548,m_noteListWidget->height());
-    m_detailPage = new QWidget();
-    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
-//    self.detailPage = QtWidgets.QWidget()
-//    self.detailPage.setObjectName("detailPage")
-//    self.plainTextEdit = QtWidgets.QPlainTextEdit(self.detailPage)
-//    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
-//    self.plainTextEdit.setObjectName("plainTextEdit")
-    m_stackedWidget->addWidget(m_detailPage);
-    QPalette palette;
-    palette.setColor(QPalette::Background, QColor(255, 255, 255));
 
-    this->setAutoFillBackground(true);
-    this->setPalette(palette);
+    initNoteList();
+    this->resize(548,this->height());
+//    //this->setStyleSheet("background: blue");
+//    m_stackedWidgetLayout = new QVBoxLayout();
+//    this->setLayout(m_stackedWidgetLayout);
+//    m_stackedWidget = new QStackedWidget();
+//    m_stackedWidgetLayout->addWidget(m_stackedWidget);
+//    this->setStyleSheet("background: green");
+//    //m_stackedWidget->setGeometry(QRect(10, 10, 548, this->height()));
+//    //m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
+//    m_stackedWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
+//    m_stackedWidget->setObjectName("stackedWidget");
+//    /*self.listPage.setObjectName("listPage")
+//    self.listWidget = QtWidgets.QListWidget(self.listPage)
+//    self.listWidget.setGeometry(QtCore.QRect(0, 10, 1111, 861))
+//    self.listWidget.setObjectName("listWidget")*/
+//    //m_noteListPage->resize(548,m_noteListPage->height());
+//    m_stackedWidget->addWidget(m_noteListPage);
+//    //m_noteListWidget->resize(548,m_noteListWidget->height());
+//    m_detailPage = new QWidget();
+//    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
+////    self.detailPage = QtWidgets.QWidget()
+////    self.detailPage.setObjectName("detailPage")
+////    self.plainTextEdit = QtWidgets.QPlainTextEdit(self.detailPage)
+////    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
+////    self.plainTextEdit.setObjectName("plainTextEdit")
+//    m_stackedWidget->addWidget(m_detailPage);
+//    QPalette palette;
+//    palette.setColor(QPalette::Background, QColor(255, 255, 255));
+//    this->setAutoFillBackground(true);
+//    this->setPalette(palette);
 }
 
 
@@ -64,6 +66,7 @@ void RightView::initConnection()
 {
     connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
+    connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
     connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
@@ -74,6 +77,7 @@ void RightView::initNoteList()
 {
     m_noteController = new NoteController();
     m_noteListPage = new QWidget();
+    //m_noteListPage->resize(500,m_noteListPage->height());
     m_noteListPage->resize(548,m_noteListPage->height());
     //m_noteListPage->setStyleSheet("background: blue");
     m_noteListLayout = new QVBoxLayout();
@@ -82,8 +86,12 @@ void RightView::initNoteList()
 
 
     m_noteListWidget = new RightNoteList(m_noteController);
-    m_noteListLayout->addWidget(m_noteListWidget);
+    //m_noteListWidget.set
 
+    m_noteListWidget->setFocusPolicy(Qt::NoFocus);
+    //qDebug()<<"m_noteListWidget width7:"<<m_noteListWidget->width();
+    m_noteListLayout->addWidget(m_noteListWidget);
+    //qDebug()<<"m_noteListWidget width8:"<<m_noteListWidget->width();
     //m_noteListWidget->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     //m_noteListWidget->addWidget(m_leftFolderView);
@@ -104,8 +112,28 @@ void RightView::initNoteList()
     sp.setVerticalStretch(1);
     //sp.setVerticalPolicy(QSizePolicy::Expanding);
     m_noteListWidget->setSizePolicy(sp);
+    //qDebug()<<"m_noteListWidget width1:"<<m_noteListWidget->width();
     m_noteListPage->setLayout(m_noteListLayout);
+    //qDebug()<<"m_noteListWidget width2:"<<m_noteListWidget->width();
+    QVBoxLayout *rightViewLayout = new QVBoxLayout();
+    rightViewLayout->setContentsMargins(0, 0, 0, 0);
+    rightViewLayout->addWidget(m_noteListPage);
+    //qDebug()<<"m_noteListWidget width3:"<<m_noteListWidget->width();
+    this->setLayout(rightViewLayout);
+    //qDebug()<<"m_noteListWidget width4:"<<m_noteListWidget->width();
     //m_noteListPage->setFixedWidth(pare);
+
+    //test
+    //m_noteListPage->move(0,m_noteListPage->y());
+//    QWidget *ptm = new QWidget(this);
+//    ptm->setFixedSize(this->width(),this->height());
+//    ptm->move(0,0);
+//    QPalette p;
+//    //p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(255,245,245,100)));
+//    p.setBrush(ptm->backgroundRole(),QBrush(QColor(QRgb(0x00000000))));
+//    ptm->setPalette(p);
+//    ptm->setAutoFillBackground(true);
+    //ptm->show();
 }
 
 void RightView::initRecordStackedWidget()
@@ -127,6 +155,9 @@ void RightView::initRecordStackedWidget()
 
 void RightView::handleSelFolderChg(int folderId)
 {
+    //stopAllNeedStop
+    m_noteListWidget->stop();
+
     m_currFolderId = folderId;
     updateNoteList();
 
@@ -253,4 +284,10 @@ void RightView::handleClearNote()
 {
     m_noteListWidget->clear();
     m_currFolderId = -1;
+}
+
+void RightView::OnCurrentRowChanged(int curRow)
+{
+    qDebug()<<"curRow:"<<curRow;
+    m_noteListWidget->setCurrentRow(1);
 }

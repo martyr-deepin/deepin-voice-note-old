@@ -47,6 +47,7 @@ RightNoteList::~RightNoteList()
 void RightNoteList::initUI()
 {
     this->setFrameShape(QListWidget::NoFrame);
+    this->resize(548,this->height());
     m_contextMenu = new MMenu;
     m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
@@ -76,6 +77,7 @@ void RightNoteList::initUI()
     m_myslider->setGeometry(0, 0, 350, m_myslider->m_defaultHeight);
     m_myslider->hide();
     qApp->installEventFilter(this);
+    //this->setStyleSheet("background: red");
 }
 void RightNoteList::initConnection()
 {
@@ -110,16 +112,20 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
         //item->setSizeHint(QSize(this->width(),92));
+        qDebug()<<"textItem width1:"<<textItem->width();
         item->setSizeHint(QSize(this->width(),140));  //orig
+        qDebug()<<"textItem width2:"<<textItem->width();
         this->setItemWidget(item, textItem);
+        qDebug()<<"textItem width3:"<<textItem->width();
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
         connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
-        QListWidgetItem *item=new QListWidgetItem(this);
+        QListWidgetItem *item=new QListWidgetItem();
         item->setSizeHint(QSize(this->width(), 94));
+        this->addItem(item);
         this->setItemWidget(item, voiceItem);
     }
 }
@@ -133,7 +139,7 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
         {
             m_arrowMenu->hide();
             m_actionHoverd = false;
-            qDebug()<<"click filter";
+            //qDebug()<<"click filter";
         }
         break;
     }
@@ -280,7 +286,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     {
         if (m_noteController->deleteNote(m_currSelNote.id))
         {
-
+            audioPlayer->stop();
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
@@ -340,6 +346,11 @@ void RightNoteList::pause()
     audioPlayer->pause();
 }
 
+void RightNoteList::stop()
+{
+    audioPlayer->stop();
+}
+
 //void RightNoteList::resume()
 //{
 //    audioPlayer->play();
@@ -392,6 +403,7 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     }
 
     qDebug() << "handleAudioPositionChanged:" << position;
+    qDebug() << "sliderPos:" <<sliderPos;
     m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
     m_myslider->setTimeText(UiUtil::formatMillisecond(position));
     m_myslider->setSliderPostion(sliderPos);
