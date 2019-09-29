@@ -60,7 +60,8 @@ SOURCES += \
     src/views/sliderhandler.cpp \
     src/views/mysliderbar.cpp \
     src/views/myslider.cpp \
-    src/views/fileexistsdialog.cpp
+    src/views/fileexistsdialog.cpp \
+    src/views/addtextbtn.cpp
 
 HEADERS += \
     src/app \
@@ -90,7 +91,8 @@ HEADERS += \
     src/views/sliderhandler.h \
     src/views/mysliderbar.h \
     src/views/myslider.h \
-    src/views/fileexistsdialog.h
+    src/views/fileexistsdialog.h \
+    src/views/addtextbtn.h
 
 INCLUDEPATH += \
     src/app \

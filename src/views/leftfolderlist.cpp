@@ -17,29 +17,25 @@ LeftFolderList::~LeftFolderList()
 
 void LeftFolderList::initUI()
 {
-
-
-//    FOLDER folder1;
-//    folder1.imgPath = "/mnt/hgfs/D/test/img/test.png";
-//    folder1.folderName = "測試文件夾";
-//    folder1.createTime = QDateTime();
-
-//    FOLDER folder2;
-//    folder2.imgPath = "/mnt/hgfs/D/test/img/test.png";
-//    folder2.folderName = "測試文件夾2";
-//    folder2.createTime = QDateTime();
-
-//    addWidgetItem(folder1);
-//    addWidgetItem(folder2);
     this->setFrameShape(QListWidget::NoFrame);
     this->setSelectionRectVisible(false);
-    m_contextMenu = new QMenu;
+    //this->setFocusPolicy(Qt::NoFocus);
+    //this->setFocus(Qt::NoFocusReason);
+    //this->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    this->setFixedWidth(250);
+    //this->move(-10,this->y());
+    m_contextMenu = new DMenu;
     m_renameAction = new QAction(tr(FOLDER_MENU_RENAME),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_renameAction);
     m_contextMenu->addAction(m_delAction);
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_boader = new DBlurEffectWidget(this);
+    m_boader->setMaskAlpha(255);
+    m_boader->setFixedWidth(8);
+    m_boader->setFixedHeight(1000);
+    m_boader->move(0,0);
 }
 
 void LeftFolderList::initConnection()
@@ -51,20 +47,22 @@ void LeftFolderList::initConnection()
 
 void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     QListWidgetItem *item=new QListWidgetItem(this);
+
     //QListWidgetItem *item=new QListWidgetItem();
 //    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
     //item->setSizeHint(QSize(230,64));
-    item->setSizeHint(QSize(230,74));
+    item->setSizeHint(QSize(250,74));
     //item->setBackgroundColor(QColor(QRgb(0x00f5f5f5)));
 //    DPalette palette;
 //    palette.setColor(DPalette::Background, QColor(247, 247, 247));
 //    item->setAutoFillBackground(true);
 //    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
-    item->setData(Qt::BackgroundRole,QBrush(QColor(QRgb(0x00000000))));
+    //item->setData(Qt::BackgroundRole,QBrush(QColor(QRgb(0x00000000))));
 
-    //this->addItem(item);
+    this->addItem(item);
     this->setItemWidget(item, folderItem);
+    //folderItem->Init();
 
 //    QWidget *pNewWidget = new QWidget;
 //    pNewWidget->setFixedSize(QSize(230,64));

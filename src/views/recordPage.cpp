@@ -48,7 +48,8 @@
 
 DWIDGET_USE_NAMESPACE
 
-RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
+RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
+//RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
     initUI();
     initConnection();
@@ -168,6 +169,15 @@ RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 
 void RecordPage::initUI()
 {
+    //this->setBackgroundRole();
+    //this->setAutoFillBackground(true);
+    QPalette palette = this->palette();
+    palette.setColor(palette.Background,QColor(255, 255, 255));
+    //palette.setColor(palette.Background, QColor(0, 0, 0));
+    this->setPalette(palette);
+    this->setBlurRectXRadius(8);
+    this->setBlurRectYRadius(8);
+
     m_hBoxLayout = new QHBoxLayout(this);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");

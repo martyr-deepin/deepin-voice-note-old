@@ -37,22 +37,26 @@
 //#include "waveform.h"
 #include <QDateTime>
 #include <QTimer>
+#include <DWidget>
 #include "consts.h"
+#include <DBlurEffectWidget>
+
 
 DWIDGET_USE_NAMESPACE
 
 //录音按钮Page
-class RecordPage : public QWidget
+class RecordPage : public DBlurEffectWidget
+//class RecordPage : public QWidget
 {
     Q_OBJECT
     
 public:
-    RecordPage(QWidget *parent = 0);
+    RecordPage(DWidget *parent = 0);
+    //RecordPage(QWidget *parent = 0);
 
 
     //QLabel *m_voiceTimeLabel;
 
-    
     DImageButton *m_finishButton;
     //QVBoxLayout *layout;
     RecordingButton *m_recordingButton;

@@ -340,6 +340,10 @@ qreal Waveform::getPeakValue(const QAudioFormat& format)
 void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
 {
     m_currDisplayType = type;
+    if(PART_SAMPLE != type)
+    {
+        m_Slider->hide();
+    }
 }
 
 void Waveform::genSampleListFromWhole()

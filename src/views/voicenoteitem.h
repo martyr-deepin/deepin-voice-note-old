@@ -4,6 +4,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QWidget>
+#include <DBlurEffectWidget>
 #include <dimagebutton.h>
 #include "consts.h"
 #include "notecontroller.h"
@@ -12,18 +13,19 @@
 
 DWIDGET_USE_NAMESPACE
 //右侧语音记录Item
-class VoiceNoteItem : public QWidget
+class VoiceNoteItem : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
     VoiceNoteItem(NOTE note, NoteController *noteCtr);
     ~VoiceNoteItem();
+    void init();
 
     NOTE m_note;
 
     QLabel *m_timeLabel;
-    QWidget *m_bgWidget;
-    QLayout *m_itemLayout;
+    DBlurEffectWidget *m_bgWidget;
+    QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
     //DImageButton *m_ctrlBtn;
     DImageButton *m_menuBtn;

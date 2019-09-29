@@ -5,7 +5,7 @@
 #include "dfmsplitter.h"
 #include "leftfolderlist.h"
 #include "rightview.h"
-
+#include "leftview.h"
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
@@ -32,7 +32,7 @@ signals:
 
 private:
      DFMSplitter *m_splitter;
-     QFrame *m_leftView;
+     LeftView *m_leftView;
 
      RightView *m_rightView;
 

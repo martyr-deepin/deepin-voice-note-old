@@ -19,10 +19,10 @@ LeftView::~LeftView()
 
 void LeftView::initUI()
 {
-    //this->setStyleSheet("background: blue");
+    this->setFixedWidth(250);
+    //this->setStyleSheet("background: red");
     m_leftViewLayout = new QVBoxLayout;
     m_leftViewLayout->setContentsMargins(0, 0, 0, 0);
-
 
 
     m_leftFolderView = new LeftFolderList(m_folderCtr);
@@ -58,14 +58,12 @@ void LeftView::initUI()
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
 
-    DPalette palette;
+//    DPalette palette;
 
-    palette.setColor(DPalette::Background, QColor(255, 255, 255));
+//    palette.setColor(DPalette::Background, QColor(255, 255, 255));
 
-    this->setAutoFillBackground(true);
-    this->setPalette(palette);
-
-
+//    this->setAutoFillBackground(true);
+//    this->setPalette(palette);
 
 }
 
@@ -77,6 +75,7 @@ void LeftView::initConnection()
 {
     connect(m_addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
     connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
+    connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
 
 }
 
@@ -178,6 +177,23 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
         emit searchNote(folderId, m_currSearchKey);
     }
 
+}
+
+void LeftView::handlePressFolderChg(QListWidgetItem *item)
+{
+//    int count = m_leftFolderView->count();
+//    for(int i = 0; i < count; i++)
+//    {
+//        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
+//        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
+//        tmpfolderItem->changeToUnClickMode();
+//    }
+
+//    if (nullptr != item)
+//    {
+//        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
+//        folderItem->changeToClickMode();
+//    }
 }
 
 void LeftView::clearNoteList()

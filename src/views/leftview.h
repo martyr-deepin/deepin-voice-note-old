@@ -12,11 +12,13 @@
 #include "consts.h"
 #include <DtkGuis>
 #include <QVBoxLayout>
+#include <DBlurEffectWidget>
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
 
 //左侧View
-class LeftView : public QFrame
+class LeftView : public DBlurEffectWidget
+//class LeftView : public QFrame
 {
     Q_OBJECT
 public:
@@ -33,6 +35,7 @@ signals:
 public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);
+    void handlePressFolderChg(QListWidgetItem *item);
 
 private:
     QVBoxLayout *m_leftViewLayout;

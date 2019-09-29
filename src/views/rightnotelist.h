@@ -5,6 +5,7 @@
 #include "myslider.h"
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
+#include "addtextbtn.h"
 
 #include <DListWidget>
 #include <notecontroller.h>
@@ -13,6 +14,8 @@
 #include <darrowrectangle.h>
 #include <DDialog>
 #include <QMediaPlayer>
+#include <DPushButton>
+
 //#include <DArrowRectangle>
 
 DWIDGET_USE_NAMESPACE
@@ -41,9 +44,12 @@ public:
     RightNoteList(NoteController *noteController);
     ~RightNoteList();
     void addWidgetItem(NOTE note, QString searchKey);
+    void addAddTextBtn();
+    void delAddTextBtn();
 
 signals:
     void textEditClicked(NOTE textNote);
+    void addTextItem();
 
 
 protected:
@@ -80,6 +86,7 @@ private:
     MySlider *m_myslider;
     FileExistsDialog *m_fileExistsDialog;
     DDialog *m_saveFileEndDialog;
+    AddTextBtn *m_addTextBtn;
 
     QString m_defaultTxtName;
     QString m_defaultTxtPath;

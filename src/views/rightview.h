@@ -35,6 +35,10 @@ public slots:
     void handleStopRecord(VOICE_INFO voiceInfo);
     void handleClearNote();
     void OnCurrentRowChanged(int curRow);
+
+protected:
+    void resizeEvent(QResizeEvent * event);
+
 private:
     void initUI();
     void initConnection();
@@ -50,7 +54,6 @@ private:
     QVBoxLayout *m_noteListLayout;
     RightNoteList *m_noteListWidget;
     DImageButton *m_addVoiceBtn;
-    DImageButton *m_addTextBtn;
     NoteController *m_noteController;
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;

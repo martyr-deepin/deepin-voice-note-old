@@ -1,5 +1,7 @@
 #include "voicenoteitem.h"
 #include "uiutil.h"
+#include <DLabel>
+#include <QGraphicsOpacityEffect>
 
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
@@ -12,17 +14,33 @@ VoiceNoteItem::~VoiceNoteItem()
 
 }
 
+void VoiceNoteItem::init()
+{
+    if(nullptr != m_timeLabel)
+    {
+        QPalette pe;
+        //pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
+        pe.setColor(QPalette::WindowText,QColor(00,26,46));
+        m_timeLabel->setPalette(pe);
+
+        QGraphicsOpacityEffect *opacityEffect=new QGraphicsOpacityEffect;
+        m_timeLabel->setGraphicsEffect(opacityEffect);
+        opacityEffect->setOpacity(0.5);
+    }
+}
+
 void VoiceNoteItem::initUI()
 {
-
     this->setFixedHeight(94);
-    m_timeLabel = new QLabel();
-    m_timeLabel->setFixedHeight(30);
+    this->setBlurEnabled(false);
+
+    m_timeLabel = new DLabel();
+    //m_timeLabel->setFixedHeight(30);
 
 //    QSizePolicy sp = m_timeLabel->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_timeLabel->setSizePolicy(sp);
-    m_bgWidget = new QWidget();
+    m_bgWidget = new DBlurEffectWidget();
 //    QSizePolicy sp1 = m_bgWidget->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_bgWidget->setSizePolicy(sp1);
@@ -31,28 +49,32 @@ void VoiceNoteItem::initUI()
 
     m_itemLayout->addWidget(m_timeLabel);
     m_itemLayout->addWidget(m_bgWidget);
+    m_itemLayout->addSpacing(5);
     m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
     this->setLayout(m_itemLayout);
     QSizePolicy sp = m_bgWidget->sizePolicy();
     sp.setHorizontalStretch(1);
     m_bgWidget->setSizePolicy(sp);
 
-    m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
+    //m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
-    m_timeLabel->setText(UiUtil::convertNoteDate(m_note.createTime));
-//    m_timeLabel->setText(m_note.createTime.toString());
+
+    QFont timeLabelFont;
+    timeLabelFont.setFamily("PingFangSC-Regular");
+    timeLabelFont.setPointSize(8);
+    m_timeLabel->setFont(timeLabelFont);
+    m_timeLabel->setText("   " + UiUtil::convertNoteDate(m_note.createTime));
+    m_timeLabel->setFixedHeight(16);
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    QPalette p;
-    //p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(255,245,245,100)));
-    p.setBrush(m_bgWidget->backgroundRole(),QBrush(QColor(QRgb(0x00ffff00))));
-    m_bgWidget->setAutoFillBackground(true);
-    m_bgWidget->setPalette(p);
+    m_bgWidget->setBlurRectXRadius(8);
+    m_bgWidget->setBlurRectYRadius(8);
 
-    m_timeLabel->setPalette(p);
-    m_timeLabel->setAutoFillBackground(true);
-    //m_bgWidget->setStyleSheet("background: #f2f2f2");
+    QPalette pb;
+    pb.setColor(QPalette::Background,QColor(00,00,00));
+    m_bgWidget->setPalette(pb);
+    m_bgWidget->setMaskAlpha(14);
 
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);

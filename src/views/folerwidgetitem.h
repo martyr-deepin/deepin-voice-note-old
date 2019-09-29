@@ -9,6 +9,7 @@
 #include <DLineEdit>
 #include <QStackedWidget>
 #include <DBlurEffectWidget>
+#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
 
@@ -17,7 +18,8 @@ DWIDGET_USE_NAMESPACE
 #define FOLDER_MAX_WIDTH 110
 
 //左侧item项
-class FolerWidgetItem : public QWidget
+class FolerWidgetItem : public DBlurEffectWidget
+//class FolerWidgetItem : public QWidget
 {
     Q_OBJECT
 public:
@@ -26,14 +28,16 @@ public:
     ~FolerWidgetItem();
     DLineEdit *m_lineEdit;
     DBlurEffectWidget *m_BackGround;
+    DBlurEffectWidget *m_BackBorad;
     QLabel *m_imageLabel;
-    QLabel *m_nameLabel;
+    DLabel *m_nameLabel;
     QLabel *m_createTimeLabel;
     FOLDER m_folder;
 
     void changeToEditMode();
     void changeToClickMode();
     void changeToUnClickMode();
+    void Init();
 
 public slots:
     void checkNameValid();
@@ -44,8 +48,6 @@ private:
     QString m_searchKey;
     QStackedWidget * m_stackedWidget;
 
-
-    void initUI();
     void initConnection();
     //QPixmap getPixmap(QSize size, QString imgPath);
     QString getCreateTimeLabel(QDateTime createTime);

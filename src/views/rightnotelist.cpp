@@ -48,6 +48,9 @@ void RightNoteList::initUI()
 {
     this->setFrameShape(QListWidget::NoFrame);
     this->resize(548,this->height());
+
+    m_addTextBtn = nullptr;
+
     m_contextMenu = new MMenu;
     m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
@@ -76,11 +79,18 @@ void RightNoteList::initUI()
     m_myslider->setPageStep(SLIDER_PAGE_STEP);
     m_myslider->setGeometry(0, 0, 350, m_myslider->m_defaultHeight);
     m_myslider->hide();
+
+
+//    m_addTextBtn->setNormalPic(":/image/add_text_btn.png");
+//    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
+//    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
+
     qApp->installEventFilter(this);
     //this->setStyleSheet("background: red");
 }
 void RightNoteList::initConnection()
 {
+
     connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
     connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
@@ -109,14 +119,17 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
-        QListWidgetItem *item=new QListWidgetItem(this);
+        QListWidgetItem *item=new QListWidgetItem();
+        //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
         //item->setSizeHint(QSize(this->width(),92));
-        qDebug()<<"textItem width1:"<<textItem->width();
-        item->setSizeHint(QSize(this->width(),140));  //orig
-        qDebug()<<"textItem width2:"<<textItem->width();
+        //qDebug()<<"textItem width1:"<<textItem->width();
+        item->setSizeHint(QSize(this->width(),123));  //orig
+        //qDebug()<<"textItem width2:"<<textItem->width();
+        this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, textItem);
-        qDebug()<<"textItem width3:"<<textItem->width();
+        textItem->init();
+        //qDebug()<<"textItem width3:"<<textItem->width();
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
@@ -125,8 +138,38 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem();
         item->setSizeHint(QSize(this->width(), 94));
-        this->addItem(item);
+        this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, voiceItem);
+        voiceItem->init();
+    }
+}
+
+void RightNoteList::addAddTextBtn()
+{
+    if(nullptr == m_addTextBtn)
+    {
+        m_addTextBtn = new AddTextBtn();
+        m_addTextBtn->init();
+        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+        QListWidgetItem *item=new QListWidgetItem();
+        item->setSizeHint(QSize(this->width(),m_addTextBtn->height()));
+        this->addItem(item);
+        this->setItemWidget(item, m_addTextBtn);
+    }
+}
+
+void RightNoteList::delAddTextBtn()
+{
+    if(nullptr != m_addTextBtn)
+    {
+        QListWidgetItem *item = takeItem(count() - 1);
+        if(nullptr != item)
+        {
+            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+            m_addTextBtn = (AddTextBtn*)itemWidget(item);
+            delete m_addTextBtn;
+            m_addTextBtn = nullptr;
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #include "uiutil.h"
 #include <DPalette>
 #include <QDebug>
+#include <QGraphicsOpacityEffect>
 
 TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey) : m_isTextConverted(false)
 {
@@ -26,26 +27,44 @@ TextNoteItem::~TextNoteItem()
 
 }
 
+void TextNoteItem::init()
+{
+    if(nullptr != m_timeLabel)
+    {
+        QPalette pe;
+        //pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
+        pe.setColor(QPalette::WindowText,QColor(00,26,46));
+        m_timeLabel->setPalette(pe);
+
+        QGraphicsOpacityEffect *opacityEffect=new QGraphicsOpacityEffect;
+        m_timeLabel->setGraphicsEffect(opacityEffect);
+        opacityEffect->setOpacity(0.5);
+    }
+}
+
 void TextNoteItem::initUI()
 {
 
     //this->setFixedHeight(150);
-    this->setFixedHeight(140);
+    //this->setFixedHeight(140);
+    this->setFixedHeight(123);
     //this->resize(500, this->height());
-    m_timeLabel = new QLabel();
-    m_timeLabel->setFixedHeight(30);
+    m_timeLabel = new DLabel();
+
+    //m_timeLabel->setFixedHeight(30);
     QFont timeLabelFont;
     timeLabelFont.setFamily("PingFangSC-Regular");
-    timeLabelFont.setPointSize(11);
+    timeLabelFont.setPointSize(8);
     m_timeLabel->setFont(timeLabelFont);
-    QPalette pa;
-    pa.setColor(QPalette::WindowText, Qt::red);
+    m_timeLabel->setFixedHeight(16);
+//    QPalette pa;
+//    pa.setColor(QPalette::WindowText, Qt::red);
     //pa.setColor(DPalette::WindowText, QColor("#001a2e"));
-    m_timeLabel->setPalette(pa);
+    //m_timeLabel->setPalette(pa);
 //    QSizePolicy sp = m_timeLabel->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_timeLabel->setSizePolicy(sp);
-    m_bgWidget = new QWidget();
+    m_bgWidget = new DBlurEffectWidget();
     //m_bgWidget->setFixedHeight(64);
 
 
@@ -57,8 +76,10 @@ void TextNoteItem::initUI()
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
+    m_itemLayout->addSpacing(2);
     m_itemLayout->addWidget(m_timeLabel);
     m_itemLayout->addWidget(m_bgWidget);
+    m_itemLayout->addSpacing(6);
     m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
     this->setLayout(m_itemLayout);
 //    QSizePolicy sp = m_bgWidget->sizePolicy();
@@ -66,17 +87,30 @@ void TextNoteItem::initUI()
 //    m_bgWidget->setSizePolicy(sp);
 
 
-    m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
+    //m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
-    m_timeLabel->setText(UiUtil::convertNoteDate(m_textNote.createTime));
+    m_timeLabel->setText("   " + UiUtil::convertNoteDate(m_textNote.createTime));
+    //m_timeLabel->setStyleSheet("background: red");
+
+//    QPalette pe;
+//    pe.setColor(QPalette::Text,QColor(QRgb(0x001A2E)));
+//    m_timeLabel->setPalette(pe);
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    QPalette pal;
-    pal.setColor(QPalette::Background,Qt::red);
-    m_bgWidget->setAutoFillBackground(true);
-    m_bgWidget->setPalette(pal);
-    m_bgWidget->setStyleSheet("background: #f5f5f5");
+//    QPalette pal;
+//    pal.setColor(QPalette::Background,Qt::red);
+//    m_bgWidget->setAutoFillBackground(true);
+//    m_bgWidget->setPalette(pal);
+//    m_bgWidget->setStyleSheet("background: #f5f5f5");
+
+    m_bgWidget->setBlurRectXRadius(8);
+    m_bgWidget->setBlurRectYRadius(8);
+
+    QPalette pb;
+    pb.setColor(QPalette::Background,QColor(00,00,00));
+    m_bgWidget->setPalette(pb);
+    m_bgWidget->setMaskAlpha(14);
 
     //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
 //   self.horizontalLayoutWidget = QtWidgets.QWidget(self.widget)
@@ -128,6 +162,9 @@ void TextNoteItem::initUI()
     m_textEdit->setFont(labelFont);
 
     m_hBoxLayout->addWidget(m_textEdit);
+    QPalette pl = m_textEdit->palette();
+    pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
+    m_textEdit->setPalette(pl);
 
     QFont labelFontForWidth;
     labelFontForWidth.setFamily("PingFangSC-Regular");
@@ -163,8 +200,15 @@ void TextNoteItem::initUI()
 
    //m_hBoxLayout->addWidget(m_textLabel);
 //   m_menuBtn = new DImageButton(m_bgWidget);
-   m_menuBtn = new DImageButton(m_bgWidget);
+
+   m_MenuBtnBackground = new DWidget(m_bgWidget);
+   m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
+
+   //m_menuBtn = new DIconButton(m_MenuBtnBackground);
+   m_menuBtn = new DImageButton(m_MenuBtnBackground);
    m_menuBtn->setFixedSize(QSize(40, 40));
+   m_menuBtn->move(0,7);
+   //m_menuBtn->setIcon();
    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
@@ -181,7 +225,7 @@ void TextNoteItem::initUI()
 
 //   m_arrowMenu->setContent(m_contextMenu);
 //   m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
-   m_hBoxLayout->addWidget(m_menuBtn);
+   m_hBoxLayout->addWidget(m_MenuBtnBackground);
 
    textAreaChanged();
 

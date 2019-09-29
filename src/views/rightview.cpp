@@ -64,7 +64,8 @@ void RightView::initUI()
 
 void RightView::initConnection()
 {
-    connect(m_addTextBtn, &DImageButton::clicked, this, &RightView::addTextNote);
+    //&RightView::addTextNote
+    connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
@@ -96,16 +97,16 @@ void RightView::initNoteList()
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
     //m_noteListWidget->addWidget(m_leftFolderView);
 
-    m_addTextBtn = new DImageButton();
-    m_addTextBtn->setNormalPic(":/image/add_text_btn.png");
-    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
-    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
+//    m_addTextBtn = new DImageButton();
+//    m_addTextBtn->setNormalPic(":/image/add_text_btn.png");
+//    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
+//    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
 
-    m_noteListLayout->addWidget(m_addTextBtn);
+    //m_noteListLayout->addWidget(m_addTextBtn);
 
-    initRecordStackedWidget();
+    //initRecordStackedWidget();
 
-    m_noteListLayout->addWidget(m_recordStackedWidget);
+    //m_noteListLayout->addWidget(m_recordStackedWidget);
     m_noteListLayout->addSpacing(1);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
@@ -123,6 +124,8 @@ void RightView::initNoteList()
     //qDebug()<<"m_noteListWidget width4:"<<m_noteListWidget->width();
     //m_noteListPage->setFixedWidth(pare);
 
+    initRecordStackedWidget();
+
     //test
     //m_noteListPage->move(0,m_noteListPage->y());
 //    QWidget *ptm = new QWidget(this);
@@ -138,7 +141,8 @@ void RightView::initNoteList()
 
 void RightView::initRecordStackedWidget()
 {
-    m_recordStackedWidget = new QStackedWidget();
+    m_recordStackedWidget = new QStackedWidget(this);
+    m_recordStackedWidget->setFixedSize(QSize(548,64));
 
     m_addVoiceBtn = new DImageButton();
     m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
@@ -150,6 +154,12 @@ void RightView::initRecordStackedWidget()
     m_recordStackedWidget->addWidget(m_addVoiceBtn);
     m_recordStackedWidget->setCurrentIndex(0);
     m_recordStackedWidget->addWidget(m_recordPage);
+
+    //m_recordStackedWidget->move(0,0);
+
+//    qDebug()<<"RightView width:"<<this->width();
+//    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
+//    m_recordStackedWidget->show();
 }
 
 
@@ -166,6 +176,7 @@ void RightView::handleSelFolderChg(int folderId)
 void RightView::handleSearchNote(int folderId, QString searchKey)
 {
     m_currFolderId = folderId;
+
     searchNoteList(searchKey);
 }
 
@@ -204,11 +215,13 @@ void RightView::addNoteToNoteList(NOTE note)
 
 void RightView::updateNoteList()
 {
-    qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
+    //qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
+    m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
-    qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
+    //qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
     if (m_currFolderId > 0)
     {
+        m_noteListWidget->addAddTextBtn();
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         for (int i = 0; i < noteList.size(); i++)
         {
@@ -220,6 +233,7 @@ void RightView::updateNoteList()
 
 void RightView::searchNoteList(QString searchKey)
 {
+    m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     if (m_currFolderId > 0)
     {
@@ -233,6 +247,7 @@ void RightView::searchNoteList(QString searchKey)
             noteList = m_noteController->searchNote(m_currFolderId, searchKey);
         }
 
+        m_noteListWidget->addAddTextBtn();
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(noteList.at(i), searchKey);
@@ -290,4 +305,14 @@ void RightView::OnCurrentRowChanged(int curRow)
 {
     qDebug()<<"curRow:"<<curRow;
     m_noteListWidget->setCurrentRow(1);
+}
+
+void RightView::resizeEvent(QResizeEvent * event)
+{
+    if(nullptr != m_recordStackedWidget)
+    {
+        qDebug()<<"RightView width:"<<this->width();
+        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
+        m_recordStackedWidget->show();
+    }
 }

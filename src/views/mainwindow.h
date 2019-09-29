@@ -44,7 +44,8 @@ private:
     QWidget *m_detailPage;
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;
-    DImageButton *m_returnBtn;
+    DIconButton *m_returnBtn;
+    //DImageButton *m_returnBtn;
     DWidget *m_replaceForReturn;
     //DIconButton *m_returnBtn;
     QFrame *m_titleFrame;

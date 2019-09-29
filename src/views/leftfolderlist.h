@@ -32,6 +32,7 @@ private:
     DMenu *m_contextMenu;
     QAction *m_renameAction;
     QAction *m_delAction;
+    DBlurEffectWidget *m_boader;
     void initUI();
     void initConnection();
 
