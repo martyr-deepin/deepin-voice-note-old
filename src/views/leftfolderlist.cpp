@@ -113,6 +113,7 @@ void LeftFolderList::handleDelItem(bool checked)
 void LeftFolderList::handleRenameItem(bool checked)
 {
     FolerWidgetItem *item = (FolerWidgetItem*)this->itemWidget(this->currentItem());
+    qDebug()<<"curItemRow:"<<this->currentRow();
     item->changeToEditMode();
 }
 

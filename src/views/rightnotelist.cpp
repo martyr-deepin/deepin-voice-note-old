@@ -186,6 +186,7 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
             m_actionHoverd = false;
             //qDebug()<<"click filter";
         }
+        qDebug()<<"click filter";
         break;
     }
     return DListWidget::eventFilter(o,e);

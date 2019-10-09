@@ -35,6 +35,7 @@ public:
     QLabel *m_createTimeLabel;
     FOLDER m_folder;
     FolderImage *m_FolderImage;
+    QString m_BakLineContent;
 
     void changeToEditMode();
     void changeToClickMode();
@@ -43,6 +44,7 @@ public:
 
 public slots:
     void checkNameValid();
+    void checkNameLenth();
 private:
 
 

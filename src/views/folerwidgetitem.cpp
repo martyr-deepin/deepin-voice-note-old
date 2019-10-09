@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QPalette>
 #include <DWidget>
-
+#include <QDebug>
 
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QString searchKey)
@@ -26,6 +26,7 @@ FolerWidgetItem::~FolerWidgetItem()
 void FolerWidgetItem::initConnection()
 {
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
+    connect(m_lineEdit, &DLineEdit::textChanged, this, &FolerWidgetItem::checkNameLenth);
 }
 
 
@@ -51,7 +52,7 @@ void FolerWidgetItem::changeToEditMode()
 
     m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
     m_lineEdit->lineEdit()->selectAll();
-    m_lineEdit->setFocus(Qt::OtherFocusReason);
+    //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
     m_createTimeLabel->setVisible(false);
 
@@ -232,6 +233,7 @@ void FolerWidgetItem::checkNameValid()
             m_stackedWidget->setCurrentIndex(0);
 //            m_nameLabel->setVisible(true);
 //            m_lineEdit->setVisible(false);
+            m_BakLineContent.clear();
         }
         m_createTimeLabel->setVisible(true);
     } else {
@@ -240,5 +242,22 @@ void FolerWidgetItem::checkNameValid()
         m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
     }
 
+}
+
+void FolerWidgetItem::checkNameLenth()
+{
+    if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64))
+    {
+        m_BakLineContent.clear();
+        m_BakLineContent = m_lineEdit->text();
+    }
+
+    if(m_lineEdit->text().length() >= 64)
+    {
+        qDebug()<<"m_lineEdit->text().length():"<<m_lineEdit->text().length();
+        //m_lineEdit->setAlert(true);
+        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
+        m_lineEdit->setText(m_BakLineContent);
+    }
 }
 

@@ -125,6 +125,7 @@ void Waveform::paintEvent(QPaintEvent *)
         }
     }
 
+    //qDebug()<<"sampleList.size():"<<sampleList.size();
     if (sampleList.size() < rect().width() / WAVE_DURATION) {
         QPainterPath path;
         path.addRect(QRectF(rect().x() + sampleList.size() * WAVE_DURATION,
@@ -163,7 +164,8 @@ void Waveform::updateWave(float sample)
     QDateTime currentTime = QDateTime::currentDateTime();
 
     if (lastSampleTime.msecsTo(currentTime) > SAMPLE_DURATION) {
-        if (sampleList.size() > rect().width() / WAVE_DURATION) {
+        if (sampleList.size() > (rect().width() / WAVE_DURATION) - 1) {
+        //if (sampleList.size() > rect().width() / WAVE_DURATION) {
             sampleList.pop_front();
         }
         sampleList << sample;       

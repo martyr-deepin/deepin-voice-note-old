@@ -28,7 +28,8 @@ void MyMainWindow::initConnection()
     //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
-    connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
+    //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
+    connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::handleSearchKey);
 
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
