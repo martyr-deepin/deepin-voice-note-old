@@ -20,7 +20,7 @@ public:
     VoiceNoteItem(NOTE note, NoteController *noteCtr);
     ~VoiceNoteItem();
     void init();
-
+    bool getwaveformPoint(QRect &rect);
     NOTE m_note;
 
     QLabel *m_timeLabel;
@@ -37,6 +37,7 @@ signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect);
     void pausePlayingSignal();
+
 public slots:
     void handleStopPlay();
     void handlePausePlay();

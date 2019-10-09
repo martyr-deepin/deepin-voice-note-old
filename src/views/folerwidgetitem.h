@@ -10,6 +10,7 @@
 #include <QStackedWidget>
 #include <DBlurEffectWidget>
 #include <DLabel>
+#include "folderimage.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -29,10 +30,11 @@ public:
     DLineEdit *m_lineEdit;
     DBlurEffectWidget *m_BackGround;
     DBlurEffectWidget *m_BackBorad;
-    QLabel *m_imageLabel;
+    //QLabel *m_imageLabel;
     DLabel *m_nameLabel;
     QLabel *m_createTimeLabel;
     FOLDER m_folder;
+    FolderImage *m_FolderImage;
 
     void changeToEditMode();
     void changeToClickMode();

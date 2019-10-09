@@ -29,6 +29,17 @@ void VoiceNoteItem::init()
     }
 }
 
+bool VoiceNoteItem::getwaveformPoint(QRect &rect)
+{
+    bool ret = false;
+    if(nullptr != m_waveform)
+    {
+        rect = m_waveform->geometry();
+        ret = true;
+    }
+    return ret;
+}
+
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(94);

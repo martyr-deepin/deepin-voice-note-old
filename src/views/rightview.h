@@ -8,6 +8,7 @@
 #include <QPlainTextEdit>
 #include <QStackedWidget>
 #include <QWidget>
+#include <DWidget>
 #include <dimagebutton.h>
 //#include <DImageButton>
 #include <QObject>

@@ -8,6 +8,7 @@
 #include <DApplication>
 #include <DMessageBox>
 #include <QMessageBox>
+#include <QScrollBar>
 
 MMenu::MMenu(QWidget *parent)
 {
@@ -100,6 +101,7 @@ void RightNoteList::initConnection()
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
+    connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
 
 //void LeftFolderList::addWidgetItem(FOLDER folder) {
@@ -240,6 +242,23 @@ void RightNoteList::OnActionHoverd()
 void RightNoteList::OnLeaveContentMenu()
 {
     m_actionHoverd = false;
+}
+
+void RightNoteList::handleVScrollBarChanged(int value)
+{
+    qDebug()<<"handleVScrollBarChanged:"<<value;
+    if((nullptr != m_myslider)&&(nullptr != m_currPlayingItem))
+    {
+        if (!m_myslider->isHidden())
+        {
+            QRect rect;
+            if(m_currPlayingItem->getwaveformPoint(rect))
+            {
+                QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
+                m_myslider->move(m_myslider->x(),waveformPoint.y() - 16);
+            }
+        }
+    }
 }
 
 //dialog.setAcceptMode(DFileDialog::AcceptOpen);

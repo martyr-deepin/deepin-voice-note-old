@@ -48,9 +48,11 @@ void FolerWidgetItem::changeToEditMode()
     m_stackedWidget->setCurrentIndex(1);
 
     //Update DlineEidt没有这个接口了
-    m_lineEdit->lineEdit()->selectAll();
+
     m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
-    m_lineEdit->setFocus();
+    m_lineEdit->lineEdit()->selectAll();
+    m_lineEdit->setFocus(Qt::OtherFocusReason);
+
     m_createTimeLabel->setVisible(false);
 
 }
@@ -109,26 +111,35 @@ void FolerWidgetItem::Init()
     m_BackGround->setBlurRectXRadius(8);
     m_BackGround->setBlurRectYRadius(8);
 
-    QPalette pe;
-    pe.setColor(QPalette::Background,QColor(00,00,00));
-    //pe.setColor(QPalette::Background,QColor(00,129,255));
-    m_BackGround->setPalette(pe);
-    m_BackGround->setMaskAlpha(7);
+    m_FolderImage = new FolderImage(m_BackGround);
+    m_FolderImage->move(10,15);
 
 
-    m_imageLabel = new QLabel(m_BackGround);
-    m_imageLabel->setGeometry(QRect(10, 15, 40, 40));
-    m_imageLabel->setObjectName("imageLabel");
-    //m_imageLabel->size();
-    //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
+//    QPalette pe;
+//    pe.setColor(QPalette::Background,QColor(00,00,00));
+//    //pe.setColor(QPalette::Background,QColor(00,129,255));
+//    m_BackGround->setPalette(pe);
+//    m_BackGround->setMaskAlpha(7);
 
-//    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
-//    if (convertFlag)
-//    {
-    QPixmap docIcon = UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath);
-    QPixmap raddocIcon = UiUtil::PixmapToRound(docIcon,20);
-        m_imageLabel->setPixmap(raddocIcon);
-//    }
+//    m_ImageBoard = new DBlurEffectWidget(m_BackGround);
+
+
+//    m_imageLabel = new QLabel(m_ImageBoard);
+//    m_imageLabel->setFixedSize(QSize(40,40));
+//    m_imageLabel->move(0,0);
+//    //m_imageLabel->setGeometry(QRect(10, 15, 40, 40));
+//    m_imageLabel->setObjectName("imageLabel");
+//    //m_imageLabel->size();
+//    //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
+
+////    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
+////    if (convertFlag)
+////    {
+//    QPixmap docIcon = UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath);
+//    //QPixmap raddocIcon = UiUtil::PixmapToRound(docIcon,20);
+//        //m_imageLabel->setPixmap(raddocIcon);
+//    m_imageLabel->setPixmap(docIcon);
+////    }
 
     m_nameLabel = new DLabel(m_BackGround);
     //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
@@ -140,7 +151,7 @@ void FolerWidgetItem::Init()
     labelFont.setPointSize(14);
     m_nameLabel->setFont(labelFont);
 
-    //QPalette pe;
+    QPalette pe;
     pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
     m_nameLabel->setPalette(pe);
 
@@ -189,6 +200,7 @@ void FolerWidgetItem::Init()
     m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
 
     initConnection();
+    m_FolderImage->loadPic(m_folder.imgPath);
 }
 
 void FolerWidgetItem::checkNameValid()

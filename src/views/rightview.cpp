@@ -145,16 +145,27 @@ void RightView::initRecordStackedWidget()
     m_recordStackedWidget->setFixedSize(QSize(548,64));
 
     m_addVoiceBtn = new DImageButton();
+    m_addVoiceBtn->setFixedSize(QSize(68,68));
     m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
     m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
     m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
 
+
+//    QHBoxLayout *HLayout = new QHBoxLayout(HBoard);
+//    HLayout->addWidget(m_addVoiceBtn);
+//    DWidget *VBoard = new DWidget;
+//    QVBoxLayout *VLayout = new QVBoxLayout(VBoard);
+//    VLayout->addWidget(HBoard);
+
     m_recordPage = new RecordPage();
 
     m_recordStackedWidget->addWidget(m_addVoiceBtn);
-    m_recordStackedWidget->setCurrentIndex(0);
     m_recordStackedWidget->addWidget(m_recordPage);
-
+    m_recordStackedWidget->setCurrentIndex(0);
+    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
+    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+    //m_recordStackedWidget->setFixedWidth(m_addVoiceBtn->width());
+    //qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
     //m_recordStackedWidget->move(0,0);
 
 //    qDebug()<<"RightView width:"<<this->width();
@@ -259,6 +270,9 @@ void RightView::searchNoteList(QString searchKey)
 void RightView::handleStartRecord()
 {
     m_recordStackedWidget->setCurrentIndex(1);
+    m_recordStackedWidget->setFixedSize(QSize(548,m_recordStackedWidget->height()));
+    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+    //m_recordStackedWidget->move(0,this->height() - m_recordStackedWidget->height());
     m_recordPage->startRecord();
 }
 //typedef struct
@@ -291,6 +305,8 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
         qDebug() << "handleStopRecord： add voice note error！";
     }
     m_recordStackedWidget->setCurrentIndex(0);
+    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
+    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
     addNoteToNoteList(voiceNote);
     //updateNoteList();
 }
@@ -312,7 +328,9 @@ void RightView::resizeEvent(QResizeEvent * event)
     if(nullptr != m_recordStackedWidget)
     {
         qDebug()<<"RightView width:"<<this->width();
-        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
+        qDebug()<<"m_recordStackedWidget width:"<<m_recordStackedWidget->width();
+        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 12 - m_recordStackedWidget->height());
+        qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
         m_recordStackedWidget->show();
     }
 }
