@@ -89,7 +89,7 @@ void TextNoteItem::initUI()
 
     //m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
-    m_timeLabel->setText("   " + UiUtil::convertNoteDate(m_textNote.createTime));
+    m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
     //m_timeLabel->setStyleSheet("background: red");
 
 //    QPalette pe;
@@ -309,26 +309,33 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     m_textNote.contentText = m_textEdit->toPlainText();
-    QFont labelFontForWidth;
-    labelFontForWidth.setFamily("PingFangSC-Regular");
-    labelFontForWidth.setPointSize(10);
-    //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, m_textEdit->width() * 5, m_isTextConverted);
-    QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
-
-    if (m_isTextConverted)
+    if(m_textNote.contentText.isEmpty())
     {
-        qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(true)";
-        m_textEdit->setReadOnly(true);
-        m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
+        emit sig_TextEditEmpty();
     }
     else
     {
-        qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
-        m_textEdit->setReadOnly(false);
-        m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
-    }
+        QFont labelFontForWidth;
+        labelFontForWidth.setFamily("PingFangSC-Regular");
+        labelFontForWidth.setPointSize(10);
+        //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, m_textEdit->width() * 5, m_isTextConverted);
+        QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
 
-    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+        if (m_isTextConverted)
+        {
+            qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(true)";
+            m_textEdit->setReadOnly(true);
+            m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
+        }
+        else
+        {
+            qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
+            m_textEdit->setReadOnly(false);
+            m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
+        }
+
+        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+    }
 }
 
 void TextNoteItem::handleMenuBtnStateChanged()

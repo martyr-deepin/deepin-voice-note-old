@@ -74,7 +74,7 @@ void VoiceNoteItem::initUI()
     timeLabelFont.setFamily("PingFangSC-Regular");
     timeLabelFont.setPointSize(8);
     m_timeLabel->setFont(timeLabelFont);
-    m_timeLabel->setText("   " + UiUtil::convertNoteDate(m_note.createTime));
+    m_timeLabel->setText("   " + UiUtil::convertDateTime(m_note.createTime));
     m_timeLabel->setFixedHeight(16);
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));

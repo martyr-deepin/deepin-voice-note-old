@@ -27,8 +27,9 @@ public:
     static QString getHtmlText(QString src, int fontSize, QString searchKey);
     static bool saveTxt(QString path, QString content);
     static bool saveMP3(QString src, QString target);
-    static QString convertFolderDate(QDateTime dateTime);
-    static QString convertNoteDate(QDateTime dateTime);
+    //static QString convertFolderDate(QDateTime dateTime);
+    static QString convertDateTime(QDateTime dateTime);
+    //static QString convertNoteDate(QDateTime dateTime);
     static bool checkFileExtension(QString fileName, QString extension);
     static bool checkFileExist(QString filePath);
     static QString getRecordingVoiceFullPath(QString fileName);

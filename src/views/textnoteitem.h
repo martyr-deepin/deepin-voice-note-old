@@ -50,6 +50,7 @@ signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
+    void sig_TextEditEmpty();
 
 public slots:
     void textAreaChanged();

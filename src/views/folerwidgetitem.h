@@ -36,6 +36,7 @@ public:
     FOLDER m_folder;
     FolderImage *m_FolderImage;
     QString m_BakLineContent;
+    QString m_BakDefaultName;
 
     void changeToEditMode();
     void changeToClickMode();

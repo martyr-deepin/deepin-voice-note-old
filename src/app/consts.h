@@ -2,6 +2,7 @@
 #define CONSTS_H
 
 #include <QDateTime>
+#include <QTime>
 #include <QString>
 
 #define TABLE_FOLDER "folder"

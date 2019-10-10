@@ -55,6 +55,7 @@ void FolerWidgetItem::changeToEditMode()
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
     m_createTimeLabel->setVisible(false);
+    m_BakDefaultName = m_lineEdit->text();
 
 }
 
@@ -198,17 +199,26 @@ void FolerWidgetItem::Init()
     pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
     m_createTimeLabel->setPalette(pe);
     //m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
-    m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
-
+    //m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
+    m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));
     initConnection();
     m_FolderImage->loadPic(m_folder.imgPath);
 }
 
 void FolerWidgetItem::checkNameValid()
 {
-    if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
+    //if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
+    if ((m_lineEdit->text().length() >= 0) && (m_lineEdit->text().length() < 64)) {
         //todo:更新数据库
-        m_folder.folderName = m_lineEdit->text();
+        if(m_lineEdit->text().length() == 0)
+        {
+            m_folder.folderName = m_BakDefaultName;
+        }
+        else
+        {
+            m_folder.folderName = m_lineEdit->text();
+        }
+
         if (m_folderCtr->checkFolderNameExist(m_folder))
         {
             m_lineEdit->setAlert(true);
@@ -227,21 +237,49 @@ void FolerWidgetItem::checkNameValid()
             QFont labelFont;
             labelFont.setFamily("SourceHanSansSC");
             labelFont.setPointSize(11);
+
             //m_nameLabel->setText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), m_nameLabel->width(), isConverted));
-            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+
+            //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+
             //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
             m_stackedWidget->setCurrentIndex(0);
 //            m_nameLabel->setVisible(true);
 //            m_lineEdit->setVisible(false);
             m_BakLineContent.clear();
+            m_BakDefaultName.clear();
         }
         m_createTimeLabel->setVisible(true);
     } else {
         //警告用户输入不能为空
-        m_lineEdit->setAlert(true);
-        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
-    }
+//        m_folder.folderName = m_BakDefaultName;
+//        if (m_folderCtr->checkFolderNameExist(m_folder))
+//        {
+//            m_lineEdit->setAlert(true);
+//            m_lineEdit->showAlertMessage("目录名重复！");
+//        }
+//        else {
+//            if(!m_folderCtr->updateFolder(m_folder))
+//            {
+//                m_lineEdit->setAlert(true);
+//                m_lineEdit->showAlertMessage("修改目录名失败");
 
+//            }
+
+//            bool isConverted = false;
+
+//            QFont labelFont;
+//            labelFont.setFamily("SourceHanSansSC");
+//            labelFont.setPointSize(11);
+//            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_BakLineContent, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+//            //m_lineEdit->setAlert(true);
+//            //m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
+//            m_stackedWidget->setCurrentIndex(0);
+//            m_BakLineContent.clear();
+//            m_BakDefaultName.clear();
+//        }
+    }
 }
 
 void FolerWidgetItem::checkNameLenth()

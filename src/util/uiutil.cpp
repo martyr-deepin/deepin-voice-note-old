@@ -187,55 +187,106 @@ bool UiUtil::saveMP3(QString src, QString target)
     return result;
 }
 
-QString UiUtil::convertFolderDate(QDateTime dateTime)
+//QString UiUtil::convertFolderDate(QDateTime dateTime)
+//{
+//    QString dayStr = "%1天前";
+//    QString monthStr = "%1个月前";
+//    QDate currDateTime = QDate::currentDate();
+//    QDate folerDate = dateTime.date();
+//    qint64 offset = folerDate.daysTo(currDateTime);
+//    if (0 == offset)
+//    {
+//        return "今天";
+//    }
+//    else if ((offset < 30) && (offset > 0))
+//    {
+//        return dayStr.arg(offset);
+//    }
+//    else if (offset >= 30)
+//    {
+//        int month = offset / 30;
+//        return monthStr.arg(month);
+//    }
+//    return "今天";
+//}
+
+QString UiUtil::convertDateTime(QDateTime dateTime)
 {
-    QString dayStr = "%1天前";
-    QString monthStr = "%1个月前";
     QDate currDateTime = QDate::currentDate();
     QDate folerDate = dateTime.date();
+    QTime folerTime = dateTime.time();
+    QString disptime;
     qint64 offset = folerDate.daysTo(currDateTime);
     if (0 == offset)
     {
-        return "今天";
+        //今天：展示时间hh：mm ；
+        int hour = folerTime.hour();
+        int minute = folerTime.minute();
+        QString strhour;
+        QString strminute;
+        if(hour < 10)
+        {
+            strhour.append("0" + QString::number(hour));
+        }
+        else
+        {
+            strhour.append(QString::number(hour));
+        }
+
+        if(minute < 10)
+        {
+            strminute.append("0" + QString::number(minute));
+        }
+        else
+        {
+            strminute.append(QString::number(minute));
+        }
+        disptime.append(strhour + ":" + strminute);
     }
-    else if ((offset < 30) && (offset > 0))
+    else if(1 == offset)
     {
-        return dayStr.arg(offset);
+        //昨天
+        disptime.append("昨天");
     }
-    else if (offset >= 30)
+    else if(folerDate.year() == currDateTime.year())
     {
-        int month = offset / 30;
-        return monthStr.arg(month);
+        //不跨年 其他时间：MM-DD（例如：9⽉27日）；
+        disptime.append(QString::number(folerDate.month()) + "月" + QString::number(folerDate.day()) + "日");
     }
-    return "今天";
+    else
+    {
+        //跨年:YYYY-MM-DD（例如2018年9月26日）；
+        disptime.append(QString::number(folerDate.year()) + "年" + QString::number(folerDate.month()) + "月" + QString::number(folerDate.day()) + "日");
+    }
+    return disptime;
 }
 
-QString UiUtil::convertNoteDate(QDateTime dateTime)
-{
-    QString dayStr = "%1天前";
-    QString hourStr = "%1个小时前";
-    QDateTime currDateTime = QDateTime::currentDateTime();
-    //QDate folerDate = dateTime.date();
-    qint64 offsetMS = dateTime.msecsTo(currDateTime);
-    qint64 offsetSec = offsetMS / (60 * 1000);
-    if (offsetSec >= 0 && offsetSec <= 60 )
-    {
-        return "刚刚";
-    }
-    else if((offsetSec > 60) && (offsetSec <= 24 * 60))
-    {
-        int hour = offsetSec / 60;
-        return hourStr.arg(hour);
+//QString UiUtil::convertNoteDate(QDateTime dateTime)
+//{
+//    QString dayStr = "%1天前";
+//    QString hourStr = "%1个小时前";
+//    QDateTime currDateTime = QDateTime::currentDateTime();
+//    //QDate folerDate = dateTime.date();
+//    qint64 offsetMS = dateTime.msecsTo(currDateTime);
+//    qint64 offsetSec = offsetMS / (60 * 1000);
+//    if (offsetSec >= 0 && offsetSec <= 60 )
+//    {
+//        return "刚刚";
+//    }
+//    else if((offsetSec > 60) && (offsetSec <= 24 * 60))
+//    {
+//        int hour = offsetSec / 60;
+//        return hourStr.arg(hour);
 
-    }
-    else if (offsetSec > 24 * 60)
-    {
-        int day = offsetSec / (24 * 60);
-        return dayStr.arg(day);
-    }
+//    }
+//    else if (offsetSec > 24 * 60)
+//    {
+//        int day = offsetSec / (24 * 60);
+//        return dayStr.arg(day);
+//    }
 
-    return "刚刚";
-}
+//    return "刚刚";
+//}
 
 bool UiUtil::checkFileExtension(QString fileName, QString extension)
 {

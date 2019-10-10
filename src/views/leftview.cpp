@@ -2,7 +2,7 @@
 
 #include <DPalette>
 #include <folderoper.h>
-
+#include <QTime>
 LeftView::LeftView()
 {
     initController();
@@ -126,6 +126,7 @@ void LeftView::addFolder()
     newFolder.imgPath = DEFAULT_FOLDER_IMG_PATH;
     newFolder.folderName = m_folderCtr->getNextFolderName();
     newFolder.createTime = QDateTime::currentDateTime();
+
     m_folderCtr->addFolder(newFolder);
     updateFolderView();
     FolerWidgetItem *item = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->item(0)));

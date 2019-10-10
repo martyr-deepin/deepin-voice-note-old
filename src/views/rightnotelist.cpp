@@ -100,7 +100,7 @@ void RightNoteList::initConnection()
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
-    connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
+    //connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
 
@@ -121,6 +121,7 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
+        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL());
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
@@ -335,7 +336,7 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
             {
                 result = UiUtil::saveTxt(filePath, m_currSelNote.contentText);
             }
-            handleSaveFileEnd(result);
+            //handleSaveFileEnd(result);
         }
 
     } else {
