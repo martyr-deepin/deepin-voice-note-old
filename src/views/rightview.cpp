@@ -203,8 +203,10 @@ void RightView::addTextNote()
     m_noteController->addNote(note);
     addNoteToNoteList(note);
     //updateNoteList();
-    TextNoteItem *item = (TextNoteItem*)(m_noteListWidget->itemWidget(m_noteListWidget->item(m_noteListWidget->count() - 1)));
-    item->changeToEditMode();
+
+//    TextNoteItem *item = (TextNoteItem*)(m_noteListWidget->itemWidget(m_noteListWidget->item(m_noteListWidget->count() - 1)));
+//    item->changeToEditMode();
+
 //    m_leftFolderView->setCurrentRow(0);
 }
 

@@ -122,6 +122,8 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+        connect(textItem, SIGNAL(sig_TextEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
+
 
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
@@ -282,6 +284,16 @@ void RightNoteList::onAbleAddBtn()
     }
 }
 
+void RightNoteList::onCallDelDialog(NOTE textNote)
+{
+    m_currSelNote = textNote;
+    m_currSelItem = getListItemById(textNote.id);
+    if(nullptr != m_currSelItem)
+    {
+        m_delConfirmDialog->show();
+    }
+}
+
 //dialog.setAcceptMode(DFileDialog::AcceptOpen);
 //        dialog.setFileMode(DFileDialog::Directory);
 //        dialog.setDirectory(m_pathstr);
@@ -363,6 +375,21 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
     }
 }
 
+QListWidgetItem *RightNoteList::getListItemById(int id)
+{
+    QListWidgetItem * tmpItem = nullptr;
+    for(int i = 0; i < this->count(); i++)
+    {
+        tmpItem = this->item(i);
+        TextNoteItem* pTextNoteItem = (TextNoteItem*)this->itemWidget(tmpItem);
+        if(id == pTextNoteItem->getId())
+        {
+            break;
+        }
+    }
+    return tmpItem;
+}
+
 void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 {
     if (index == 1)
@@ -377,6 +404,10 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
         else {
             qDebug() << "error: delete item error";
         }
+    }
+    else {
+        TextNoteItem *pPreDelItem = (TextNoteItem*)this->itemWidget(m_currSelItem);
+        pPreDelItem->changeToEditMode();
     }
 
 }

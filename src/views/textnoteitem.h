@@ -43,14 +43,15 @@ public:
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
 //    DArrowRectangle *m_arrowMenu;
-    void changeToEditMode();  
+    void changeToEditMode();
     void init();
+    int getId();
 signals:
     void textEditClicked(NOTE m_textNote);
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
-    void sig_TextEditEmpty();
+    void sig_TextEditEmpty(NOTE m_textNote);
     void sig_TextEditNotEmpty();
 
 public slots:

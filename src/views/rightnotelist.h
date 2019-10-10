@@ -75,6 +75,7 @@ public slots:
     void handleVScrollBarChanged(int value);
     void onDisableAddBtn();
     void onAbleAddBtn();
+    void onCallDelDialog(NOTE textNote);
 private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
@@ -101,6 +102,7 @@ private:
     void initUI();
     void initConnection();
     void showFileDialog(SAVE_INFO saveInfo);
+    QListWidgetItem *getListItemById(int id);
 
 
     QString getPlayingFilepath();

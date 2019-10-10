@@ -42,6 +42,11 @@ void TextNoteItem::init()
     }
 }
 
+int TextNoteItem::getId()
+{
+    return m_textNote.id;
+}
+
 void TextNoteItem::initUI()
 {
 
@@ -64,7 +69,7 @@ void TextNoteItem::initUI()
 //    QSizePolicy sp = m_timeLabel->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_timeLabel->setSizePolicy(sp);
-    m_bgWidget = new DBlurEffectWidget();
+    m_bgWidget = new DBlurEffectWidget(this);
     //m_bgWidget->setFixedHeight(64);
 
 
@@ -229,6 +234,9 @@ void TextNoteItem::initUI()
 
    textAreaChanged();
 
+//   QTextEdit *textEdit = new QTextEdit(this);
+//   textEdit->setFixedSize(QSize(100,100));
+//   textEdit->move(100,0);
 }
 
 void TextNoteItem::initConnection()
@@ -248,6 +256,12 @@ void TextNoteItem::changeToEditMode()
 //    m_stackedWidget->setCurrentIndex(1);
 //    QTextCursor textCursor = m_plainTextEdit->textCursor();
 //    textCursor.movePosition(QTextCursor::End);
+
+    if(nullptr != m_textEdit)
+    {
+        m_textEdit->setReadOnly(false);
+        m_textEdit->setFocus();
+    }
 }
 
 void TextNoteItem::updateNote()
@@ -299,6 +313,10 @@ void TextNoteItem::handleTextEditClicked()
     {
         emit textEditClicked(m_textNote);
     }
+    else
+    {
+        m_textEdit->setReadOnly(false);
+    }
 }
 
 void TextNoteItem::handleMenuBtnClicked()
@@ -316,7 +334,7 @@ void TextNoteItem::handleTextEditFocusOut()
     m_textNote.contentText = m_textEdit->toPlainText();
     if(m_textNote.contentText.isEmpty())
     {
-        emit sig_TextEditEmpty();
+        emit sig_TextEditEmpty(m_textNote);
     }
     else
     {
@@ -335,7 +353,7 @@ void TextNoteItem::handleTextEditFocusOut()
         else
         {
             qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
-            m_textEdit->setReadOnly(false);
+            m_textEdit->setReadOnly(true);
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
