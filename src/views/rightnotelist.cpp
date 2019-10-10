@@ -121,7 +121,8 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
-        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL());
+        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
@@ -154,6 +155,7 @@ void RightNoteList::addAddTextBtn()
         m_addTextBtn = new AddTextBtn();
         m_addTextBtn->init();
         connect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
         QListWidgetItem *item=new QListWidgetItem();
         item->setSizeHint(QSize(this->width(),m_addTextBtn->height()));
         this->addItem(item);
@@ -169,6 +171,7 @@ void RightNoteList::delAddTextBtn()
         if(nullptr != item)
         {
             disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
             m_addTextBtn = (AddTextBtn*)itemWidget(item);
             delete m_addTextBtn;
             m_addTextBtn = nullptr;
@@ -260,6 +263,22 @@ void RightNoteList::handleVScrollBarChanged(int value)
                 m_myslider->move(m_myslider->x(),waveformPoint.y() - 16);
             }
         }
+    }
+}
+
+void RightNoteList::onDisableAddBtn()
+{
+    if(nullptr != m_addTextBtn)
+    {
+        m_addTextBtn->setDisableBtn(true);
+    }
+}
+
+void RightNoteList::onAbleAddBtn()
+{
+    if(nullptr != m_addTextBtn)
+    {
+        m_addTextBtn->setDisableBtn(false);
     }
 }
 

@@ -73,6 +73,8 @@ public slots:
     void OnActionHoverd();
     void OnLeaveContentMenu();
     void handleVScrollBarChanged(int value);
+    void onDisableAddBtn();
+    void onAbleAddBtn();
 private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;

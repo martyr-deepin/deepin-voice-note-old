@@ -37,10 +37,12 @@ void MyMainWindow::initConnection()
 
 void MyMainWindow::initTitleFrame()
 {
+    QIcon icon = QIcon::fromTheme("deepin-voice-note");
     m_logo = new QLabel();
     m_logo->setObjectName("LogoButton");
     m_logo->setFixedSize(QSize(32, 32));
-    m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/deepin-voice-note.svg"));
+    //m_logo->setPixmap(UiUtil::getPixmap(m_logo->size(), ":/image/deepin-voice-note.svg"));
+    m_logo->setPixmap(icon.pixmap(QSize(32, 32)));
 
 
 //    m_returnBtn = new DImageButton();

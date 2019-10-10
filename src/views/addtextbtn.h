@@ -18,6 +18,7 @@ signals:
     void addTextItem();
 
 public slots:
+    void setDisableBtn(bool flag);
 
 private:
     DPushButton *m_addBtn;

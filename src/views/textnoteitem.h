@@ -51,6 +51,7 @@ signals:
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
     void sig_TextEditEmpty();
+    void sig_TextEditNotEmpty();
 
 public slots:
     void textAreaChanged();

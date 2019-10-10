@@ -285,6 +285,11 @@ void TextNoteItem::textAreaChanged()
 //    m_textEdit->setFixedHeight(newHeight);
 //    m_bgWidget->setFixedHeight(newHeight);
 //    this->setFixedHeight(m_timeLabel->height() + newHeight);
+    if(!m_textEdit->toPlainText().isEmpty())
+    {
+        //非空
+        emit sig_TextEditNotEmpty();
+    }
 }
 
 

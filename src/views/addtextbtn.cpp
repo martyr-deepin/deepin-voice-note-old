@@ -24,7 +24,6 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
     QPalette pb;
     pb.setColor(QPalette::Button,QColor(00,00,00,10));
     m_addBtn->setPalette(pb);
-
 }
 
 AddTextBtn::~AddTextBtn()
@@ -45,5 +44,13 @@ void AddTextBtn::init()
         QPalette pe;
         pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
         m_addBtn->setPalette(pe);
+    }
+}
+
+void AddTextBtn::setDisableBtn(bool flag)
+{
+    if(nullptr != m_addBtn)
+    {
+        m_addBtn->setDisabled(flag);
     }
 }
