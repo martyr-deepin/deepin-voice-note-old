@@ -37,7 +37,10 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
     DApplication a(argc, argv);
 
+    if (!a.setSingleInstance("deepin-voice-note"))
+    {
+        return 0;
+    }
+
     VoiceNotebookApp app(a);
-
-
 }

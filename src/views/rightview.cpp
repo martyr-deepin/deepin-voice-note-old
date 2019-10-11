@@ -179,6 +179,7 @@ void RightView::initRecordStackedWidget()
 //    qDebug()<<"RightView width:"<<this->width();
 //    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
 //    m_recordStackedWidget->show();
+    m_addVoiceBtn->setVisible(false);
 }
 
 void RightView::onShowNoResult()
@@ -193,7 +194,14 @@ void RightView::handleSelFolderChg(int folderId)
 
     m_currFolderId = folderId;
     updateNoteList();
-
+    if(-1 != folderId)
+    {
+        m_addVoiceBtn->setVisible(true);
+    }
+    else
+    {
+        m_addVoiceBtn->setVisible(false);
+    }
 }
 
 void RightView::handleSearchNote(int folderId, QString searchKey)
@@ -201,6 +209,11 @@ void RightView::handleSearchNote(int folderId, QString searchKey)
     m_currFolderId = folderId;
 
     searchNoteList(searchKey);
+    if(searchKey.isEmpty())
+    {
+        m_NoSearchResault->setVisible(false);
+    }
+    m_addVoiceBtn->setVisible(true);
 }
 
 void RightView::addTextNote()
@@ -346,6 +359,7 @@ void RightView::handleClearNote()
     m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     m_currFolderId = -1;
+    m_addVoiceBtn->setVisible(false);
 }
 
 void RightView::OnCurrentRowChanged(int curRow)

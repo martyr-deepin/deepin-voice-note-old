@@ -329,17 +329,35 @@ void RightNoteList::handleSaveAsItem(bool)
 
 void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 {
+//    DFileDialog fileDialog(this);
+//    fileDialog.setWindowTitle(saveInfo.windowTitle);
+//    fileDialog.setDirectory(m_defaultTxtPath);
+//    fileDialog.setFileMode(DFileDialog::Directory);
+//    fileDialog.addLineEdit(tr("文件名"));
+//    fileDialog.setLabelText(DFileDialog::Accept, tr("保存"));
+
     DFileDialog fileDialog(this);
-    fileDialog.setWindowTitle(saveInfo.windowTitle);
-    fileDialog.setDirectory(m_defaultTxtPath);
-    fileDialog.setFileMode(DFileDialog::Directory);
-    fileDialog.addLineEdit(tr("文件名"));
-    fileDialog.setLabelText(DFileDialog::Accept, tr("保存"));
+        fileDialog.setWindowTitle(saveInfo.windowTitle);
+        fileDialog.setDirectory(m_defaultTxtPath);
+        fileDialog.setFileMode(DFileDialog::Directory);
+        fileDialog.setAcceptMode(DFileDialog::AcceptSave);
+        if (TEXT == m_currSelNote.noteType) {
+            fileDialog.setDefaultSuffix("txt");
+            fileDialog.setNameFilter(tr("TXT(*.txt)"));
+            fileDialog.selectFile("文本.txt");
+        }else {
+            fileDialog.setDefaultSuffix("mp3");
+            fileDialog.setNameFilter(tr("MP3(*.mp3)"));
+            fileDialog.selectFile("音频.mp3");
+        }
+
     //fileDialog->setFilter(QDir::filePath());
     if(fileDialog.exec() == QDialog::Accepted) {
         QString path = fileDialog.selectedFiles()[0];
-        QString fileName = fileDialog.getLineEditValue(tr("文件名"));
-        QString filePath = path + '/' + fileName;
+//        QString fileName = fileDialog.getLineEditValue(tr("文件名"));
+        QString fileName = QFileInfo(path).fileName();
+//        QString filePath = path + '/' + fileName;
+        QString filePath = path;
         if (fileName.isEmpty())
         {
             DMessageBox::information(this, tr(""), tr("文件名不能为空"));

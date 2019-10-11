@@ -54,6 +54,7 @@ void VoiceNotebookApp::initApp()
     DLogManager::registerFileAppender();
 
 
+
     //save theme
     DApplicationSettings saveTheme;
     initMainWindow();

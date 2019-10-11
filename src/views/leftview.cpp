@@ -83,6 +83,7 @@ void LeftView::updateFolderView()
 {
     m_leftFolderView->clear();
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
+
     for (int i = 0; i < folderList.size(); i++)
     {
         m_leftFolderView->addWidgetItem(folderList.at(i), "");
