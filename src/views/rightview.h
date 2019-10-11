@@ -29,6 +29,7 @@ signals:
     void textEditClicked(NOTE textNote);
 
 public slots:
+    void onShowNoResult();
     void handleSelFolderChg(int folderId);
     void handleSearchNote(int folderId, QString searchKey);
     void addTextNote();
@@ -47,6 +48,7 @@ private:
     void initRecordStackedWidget();
 
     int m_currFolderId;
+    DLabel *m_NoSearchResault;
     QStackedWidget *m_stackedWidget;
     QLayout *m_stackedWidgetLayout;
     QWidget *m_noteListPage;

@@ -54,7 +54,7 @@ void FolerWidgetItem::changeToEditMode()
     m_lineEdit->lineEdit()->selectAll();
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
-    m_createTimeLabel->setVisible(false);
+    //m_createTimeLabel->setVisible(false);
     m_BakDefaultName = m_lineEdit->text();
 
 }

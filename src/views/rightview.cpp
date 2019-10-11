@@ -28,6 +28,7 @@ void RightView::initUI()
 //    m_arrowMenu->setWidth(80);
 //    m_arrowMenu->show(0, 0);
 
+
     initNoteList();
     this->resize(548,this->height());
 //    //this->setStyleSheet("background: blue");
@@ -59,6 +60,13 @@ void RightView::initUI()
 //    palette.setColor(QPalette::Background, QColor(255, 255, 255));
 //    this->setAutoFillBackground(true);
 //    this->setPalette(palette);
+
+    m_NoSearchResault = new DLabel(this);
+    m_NoSearchResault->setText("无结果");
+    m_NoSearchResault->setFixedSize(QSize(200,56));
+    m_NoSearchResault->setAlignment(Qt::AlignCenter);
+    m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
+    m_NoSearchResault->setVisible(false);
 }
 
 
@@ -173,6 +181,10 @@ void RightView::initRecordStackedWidget()
 //    m_recordStackedWidget->show();
 }
 
+void RightView::onShowNoResult()
+{
+    m_NoSearchResault->setVisible(true);
+}
 
 void RightView::handleSelFolderChg(int folderId)
 {
@@ -212,6 +224,7 @@ void RightView::addTextNote()
 
 void RightView::addNoteToNoteList(NOTE note)
 {
+    m_NoSearchResault->setVisible(false);
     m_noteListWidget->addWidgetItem(note, "");
     m_noteListWidget->scrollToBottom();
 
@@ -236,6 +249,14 @@ void RightView::updateNoteList()
     {
         m_noteListWidget->addAddTextBtn();
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
+        if(noteList.size() > 0)
+        {
+            //m_NoSearchResault->setVisible(false);
+        }
+        else
+        {
+            //m_NoSearchResault->setVisible(true);
+        }
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(noteList.at(i), "");
@@ -261,6 +282,13 @@ void RightView::searchNoteList(QString searchKey)
         }
 
         m_noteListWidget->addAddTextBtn();
+        if(0 == noteList.size())
+        {
+            onShowNoResult();
+        }
+        else {
+            m_NoSearchResault->setVisible(false);
+        }
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(noteList.at(i), searchKey);
@@ -315,6 +343,7 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
 
 void RightView::handleClearNote()
 {
+    m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     m_currFolderId = -1;
 }
@@ -334,5 +363,10 @@ void RightView::resizeEvent(QResizeEvent * event)
         m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 12 - m_recordStackedWidget->height());
         qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
         m_recordStackedWidget->show();
+    }
+
+    if(nullptr != m_NoSearchResault)
+    {
+        m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     }
 }

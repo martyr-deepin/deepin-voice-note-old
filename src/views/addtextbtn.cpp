@@ -3,7 +3,7 @@
 AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 {
     this->setFixedHeight(84);
-    m_addBtn = new DPushButton();
+    m_addBtn = new DPushButton(this);
     m_addBtn->setFixedSize(QSize(548,64));
 
     connect(m_addBtn, SIGNAL(clicked()), this, SIGNAL(addTextItem()));
@@ -28,7 +28,11 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 
 AddTextBtn::~AddTextBtn()
 {
-
+    if(nullptr != m_addBtn)
+    {
+        delete m_addBtn;
+        m_addBtn = nullptr;
+    }
 }
 
 void AddTextBtn::init()

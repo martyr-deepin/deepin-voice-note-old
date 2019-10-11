@@ -30,6 +30,7 @@ public:
 signals:
     void selFolderIdChg(int folderId);
     void searchNote(int folderId, QString searchKey);
+    void noResult();
     void clearNoteListSignal();
 
 public slots:

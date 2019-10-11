@@ -107,15 +107,18 @@ void LeftView::searchFolder(QString searchKey)
     {
         m_leftFolderView->addWidgetItem(folderList.at(i), searchKey);
     }
+
     if (m_leftFolderView->count() > 0)
     {
         m_leftFolderView->setCurrentRow(0);
         FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->currentItem()));
         int folderId = folderItem->m_folder.id;
         emit searchNote(folderId, searchKey);
+        folderItem->changeToClickMode();
     }
     else
     {
+        emit noResult();
         clearNoteList();
     }
 }
