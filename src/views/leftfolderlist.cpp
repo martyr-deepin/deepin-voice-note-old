@@ -36,12 +36,15 @@ void LeftFolderList::initUI()
     m_boader->setFixedWidth(8);
     m_boader->setFixedHeight(1000);
     m_boader->move(0,0);
+
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除记事本吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
 }
 
 void LeftFolderList::initConnection()
 {
     connect(this, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(handleCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
+    connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &LeftFolderList::handleDelDialogClicked);
     connect(m_renameAction, SIGNAL(triggered(bool)), this, SLOT(handleRenameItem(bool)));
 }
 
@@ -92,22 +95,41 @@ void LeftFolderList::mousePressEvent(QMouseEvent *event)
 
 }
 
-void LeftFolderList::handleDelItem(bool checked)
+void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
 {
+    if (index == 1){
+        FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 
-    FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
-
-    if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
-    {
-        QListWidgetItem * item = this->takeItem(this->currentRow());
-        delete item;
-        emit itemClicked(this->currentItem());
-        //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
-    }
-    else {
-        qDebug() << "error: delete item error";
+        if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
+        {
+            QListWidgetItem * item = this->takeItem(this->currentRow());
+            delete item;
+            emit itemClicked(this->currentItem());
+            //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
+        }
+        else {
+            qDebug() << "error: delete item error";
+        }
     }
     return;
+}
+
+void LeftFolderList::handleDelItem(bool checked)
+{
+    m_delConfirmDialog->show();
+//    FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
+
+//    if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
+//    {
+//        QListWidgetItem * item = this->takeItem(this->currentRow());
+//        delete item;
+//        emit itemClicked(this->currentItem());
+//        //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
+//    }
+//    else {
+//        qDebug() << "error: delete item error";
+//    }
+//    return;
 }
 
 void LeftFolderList::handleRenameItem(bool checked)

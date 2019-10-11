@@ -4,9 +4,10 @@
 #include <DListWidget>
 //#include <QMenu>
 #include <DMenu>
+#include <DDialog>
 #include "folerwidgetitem.h"
 #include "src/app/consts.h"
-
+#include "src/util/uiutil.h"
 
 //左侧ItemList
 class LeftFolderList : public DListWidget
@@ -24,6 +25,7 @@ public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void handleDelItem(bool checked);
     void handleRenameItem(bool checked);
+    void handleDelDialogClicked(int index, const QString &text);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -33,6 +35,7 @@ private:
     QAction *m_renameAction;
     QAction *m_delAction;
     DBlurEffectWidget *m_boader;
+    DDialog *m_delConfirmDialog;
     void initUI();
     void initConnection();
 
