@@ -127,7 +127,7 @@ void LeftView::searchFolder(QString searchKey)
 void LeftView::addFolder()
 {
     FOLDER newFolder;
-    newFolder.imgPath = DEFAULT_FOLDER_IMG_PATH;
+    newFolder.imgPath = UiUtil::getDefaultAvatarByRand();
     newFolder.folderName = m_folderCtr->getNextFolderName();
     newFolder.createTime = QDateTime::currentDateTime();
 

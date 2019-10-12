@@ -34,6 +34,7 @@ public:
     static bool checkFileExist(QString filePath);
     static QString getRecordingVoiceFullPath(QString fileName);
     static QPixmap PixmapToRound(QPixmap &src, int radius);
+    static QString getDefaultAvatarByRand();
 };
 
 #endif // UIUTIL_H

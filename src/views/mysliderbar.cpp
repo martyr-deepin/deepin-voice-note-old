@@ -201,42 +201,48 @@ void MySliderBar::removeScale(int value)
 
 void MySliderBar::mousePressEvent(QMouseEvent *event)
 {
-    QAbstractSlider::mousePressEvent(event);
+    if(event->y() < 116)
+    {
+        QAbstractSlider::mousePressEvent(event);
 
-    if (event->button() == Qt::LeftButton) {
-        if (orientation() == Qt::Vertical) {
-            setValue(minimum() + ((maximum() - minimum()) * (height() - event->y())) / height()) ;
-        } else {
-            // FIXME
-            // the value 10 is specified in MySliderBar.theme, it's ugly here, but I don't have any
-            // good idea for now, maybe someone can help.
-            setValue(minimum() + ((maximum() - minimum()) * (event->x() - 10)) / (width() - 10 - 10)) ;
+        if (event->button() == Qt::LeftButton) {
+            if (orientation() == Qt::Vertical) {
+                setValue(minimum() + ((maximum() - minimum()) * (height() - event->y())) / height()) ;
+            } else {
+                // FIXME
+                // the value 10 is specified in MySliderBar.theme, it's ugly here, but I don't have any
+                // good idea for now, maybe someone can help.
+                setValue(minimum() + ((maximum() - minimum()) * (event->x() - 10)) / (width() - 10 - 10)) ;
+            }
+
+            event->accept();
+
+            Q_D(MySliderBar);
+
+            QStyleOptionSlider opt;
+            initStyleOption(&opt);
+            setRepeatAction(SliderNoAction);
+            QRect sr = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
+
+            d->clickOffset = d->pick(event->pos() - sr.topLeft());
+            d->mousePressed = true;
+
+            Q_EMIT sliderPressed();
         }
-
-        event->accept();
-
-        Q_D(MySliderBar);
-
-        QStyleOptionSlider opt;
-        initStyleOption(&opt);
-        setRepeatAction(SliderNoAction);
-        QRect sr = style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, this);
-
-        d->clickOffset = d->pick(event->pos() - sr.topLeft());
-        d->mousePressed = true;
-
-        Q_EMIT sliderPressed();
     }
 }
 
 void MySliderBar::mouseReleaseEvent(QMouseEvent *event)
 {
-    QAbstractSlider::mouseReleaseEvent(event);
+    if(event->y() < 116)
+    {
+        QAbstractSlider::mouseReleaseEvent(event);
 
-    if(event->button() == Qt::LeftButton) {
-        d_func()->mousePressed = false;
+        if(event->button() == Qt::LeftButton) {
+            d_func()->mousePressed = false;
 
-        Q_EMIT sliderReleased();
+            Q_EMIT sliderReleased();
+        }
     }
 }
 

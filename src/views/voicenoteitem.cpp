@@ -40,6 +40,11 @@ bool VoiceNoteItem::getwaveformPoint(QRect &rect)
     return ret;
 }
 
+int VoiceNoteItem::getNoteID()
+{
+    return m_note.id;
+}
+
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(94);

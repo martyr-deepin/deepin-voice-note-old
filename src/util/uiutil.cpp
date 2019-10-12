@@ -1,4 +1,5 @@
 #include "uiutil.h"
+#include "consts.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -71,7 +72,7 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/deepin-voice-note.svg"));
+    dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
     dialog->addButton(okStr, false, DDialog::ButtonNormal);
 
@@ -309,7 +310,7 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/deepin-voice-note.svg"));
+    dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
     dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);
@@ -318,6 +319,16 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
 QString UiUtil::getRecordingVoiceFullPath(QString fileName)
 {
     return QDir(getRecordingSaveDirectory()).filePath(fileName);
+}
+
+QString UiUtil::getDefaultAvatarByRand()
+{
+    QString ImgPath;
+
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    int rand = qrand()%MAX_FOLDERIMG_NUM;
+    ImgPath = default_folder_imgpath.at(rand);
+    return ImgPath;
 }
 
 

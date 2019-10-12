@@ -57,7 +57,7 @@ void RightNoteList::initUI()
     m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_saveAsAction);
     m_contextMenu->addAction(m_delAction);
-    m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
+    m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
     m_arrowMenu->setHeight(200);
     m_arrowMenu->setWidth(200);
 
@@ -249,6 +249,7 @@ void RightNoteList::OnActionHoverd()
 void RightNoteList::OnLeaveContentMenu()
 {
     m_actionHoverd = false;
+    //handleVScrollBarChanged(-1);
 }
 
 void RightNoteList::handleVScrollBarChanged(int value)
@@ -262,6 +263,7 @@ void RightNoteList::handleVScrollBarChanged(int value)
             if(m_currPlayingItem->getwaveformPoint(rect))
             {
                 QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
+                qDebug()<<"waveformPoint.y():"<<waveformPoint.y();
                 m_myslider->move(m_myslider->x(),waveformPoint.y() - 16);
             }
         }
@@ -367,13 +369,13 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         {
             DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + saveInfo.fileExtension);
         }
-        else if(UiUtil::checkFileExist(filePath))
-        {
-            m_fileExistsDialog->setSavePath(filePath);
-            m_fileExistsDialog->setNote(m_currSelNote);
-            m_fileExistsDialog->show();
-            //DDialog *fileExistDialog = UiUtil::createDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("是")), QString(tr("否")));;
-        }
+//        else if(UiUtil::checkFileExist(filePath))
+//        {
+//            m_fileExistsDialog->setSavePath(filePath);
+//            m_fileExistsDialog->setNote(m_currSelNote);
+//            m_fileExistsDialog->show();
+//            //DDialog *fileExistDialog = UiUtil::createDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("是")), QString(tr("否")));;
+//        }
         else
         {
             bool result = false;
@@ -414,7 +416,10 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     {
         if (m_noteController->deleteNote(m_currSelNote.id))
         {
-            audioPlayer->stop();
+            if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
+            {
+                audioPlayer->stop();
+            }
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
@@ -427,7 +432,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
         TextNoteItem *pPreDelItem = (TextNoteItem*)this->itemWidget(m_currSelItem);
         pPreDelItem->changeToEditMode();
     }
-
+    handleVScrollBarChanged(-1);
 }
 
 void RightNoteList::handleClickRecordButton()
@@ -523,22 +528,21 @@ void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
 
 void RightNoteList::handleAudioPositionChanged(qint64 position)
 {
-//    if(0 != position)
-//    {
-
-//    }
-    int audioLength = m_currPlayingItem->m_note.voiceTime;
-    int sliderPos = 0;
-    if (audioLength > 0)
+    if(nullptr != m_currPlayingItem)
     {
-        sliderPos = position * ( m_myslider->width()) / audioLength;
-    }
+        int audioLength = m_currPlayingItem->m_note.voiceTime;
+        int sliderPos = 0;
+        if (audioLength > 0)
+        {
+            sliderPos = position * ( m_myslider->width()) / audioLength;
+        }
 
-    qDebug() << "handleAudioPositionChanged:" << position;
-    qDebug() << "sliderPos:" <<sliderPos;
-    m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
-    m_myslider->setTimeText(UiUtil::formatMillisecond(position));
-    m_myslider->setSliderPostion(sliderPos);
+        qDebug() << "handleAudioPositionChanged:" << position;
+        qDebug() << "sliderPos:" <<sliderPos;
+        m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
+        m_myslider->setTimeText(UiUtil::formatMillisecond(position));
+        m_myslider->setSliderPostion(sliderPos);
+    }
 }
 
 void RightNoteList::handleSliderReleased()

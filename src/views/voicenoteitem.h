@@ -21,6 +21,7 @@ public:
     ~VoiceNoteItem();
     void init();
     bool getwaveformPoint(QRect &rect);
+    int getNoteID();
     NOTE m_note;
 
     QLabel *m_timeLabel;

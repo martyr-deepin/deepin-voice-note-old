@@ -1,5 +1,6 @@
 #include "myslider.h"
 #include <QDebug>
+#include <QMouseEvent>
 
 MySlider::MySlider(QWidget *parent) : QWidget(parent), m_defaultHeight(SLIDER_DEFAULT_HEIGHT), m_handleTextHeight(SLIDER_HANDLE_TEXT_HEIGHT)
 {
@@ -27,6 +28,7 @@ void MySlider::paintEvent(QPaintEvent *event)
 
     m_sliderHandler->setGeometry(sliderPos, 0, m_sliderHandler->width(), m_sliderHandler->height());
     m_mySliderBar->setGeometry(m_sliderHandler->width()/ 2, 0, this->width() - m_sliderHandler->width(), this->height());
+    //m_mySliderBar->setGeometry(m_sliderHandler->width()/ 2, 0, this->width() - m_sliderHandler->width(), 116);
 }
 
 void MySlider::mousePressEvent(QMouseEvent *event)
@@ -35,7 +37,10 @@ void MySlider::mousePressEvent(QMouseEvent *event)
 }
 void MySlider::mouseReleaseEvent(QMouseEvent *event)
 {
-    m_mySliderBar->mouseReleaseEvent(event);
+    if(116 > event->y())
+    {
+        m_mySliderBar->mouseReleaseEvent(event);
+    }
 }
 void MySlider::mouseMoveEvent(QMouseEvent *event)
 {
@@ -53,7 +58,7 @@ void MySlider::initUI()
     m_sliderHandler = new DLabel(this);
     m_sliderHandler->setFixedSize(50, 141);
     QPalette pal;
-    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider_handle_waveform.svg")));
+    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider.svg")));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
