@@ -103,7 +103,7 @@ void LeftView::searchFolder(QString searchKey)
 {
     m_currSearchKey = searchKey;
     m_leftFolderView->clear();
-    QList<FOLDER> folderList = m_folderCtr-> searchFolder(searchKey);
+    QList<FOLDER> folderList = m_folderCtr->searchFolder(searchKey);
     for (int i = 0; i < folderList.size(); i++)
     {
         m_leftFolderView->addWidgetItem(folderList.at(i), searchKey);

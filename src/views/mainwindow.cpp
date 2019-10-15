@@ -99,7 +99,6 @@ void MyMainWindow::initTitleFrame()
     m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
 
     this->titlebar()->setCustomWidget(m_titleFrame, false);
-
 }
 
 void MyMainWindow::initCentralWidget()
@@ -169,11 +168,7 @@ void MyMainWindow::showNoteDetail(NOTE note)
 
 void MyMainWindow::showListPage()
 {
-    if (m_searchEdit->text().isEmpty())
-    {
-        m_mainPage->updateNoteList();
-    }
-    else
+    if(!m_searchEdit->text().isEmpty())
     {
         m_mainPage->searchFolder(m_searchEdit->text());
     }

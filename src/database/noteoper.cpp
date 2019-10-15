@@ -1,9 +1,40 @@
 #include "databaseoper.h"
 #include "noteoper.h"
+#include "uiutil.h"
+#include <QFileInfo>
 
 NoteOper::NoteOper()
 {
 
+}
+
+void NoteOper::checkCleanDataBaseForVoiceByForderId(int folderId)
+{
+    QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
+    QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(folderId);
+
+    QList<QList<QVariant>> result;
+    if (DatabaseOper::getInstance()->queryData(queryStrFinal, 8, result))
+    {
+        for (int i = 0; i < result.size(); i++)
+        {
+            QList<QVariant> tmp = result.at(i);
+            NOTE noteInfoTmp;
+            noteInfoTmp.id = tmp.at(0).toInt();
+            noteInfoTmp.noteType = NOTE_TYPE(tmp.at(1).toInt());
+            if(VOICE == noteInfoTmp.noteType)
+            {
+                noteInfoTmp.contentPath = tmp.at(3).toString();
+                QString filepath = UiUtil::getRecordingVoiceFullPath(noteInfoTmp.contentPath);
+
+                QFileInfo fileInfo(filepath);
+                if(!fileInfo.isFile())
+                {
+                    DatabaseOper::getInstance()->deleteDataById(TABLE_NOTE, "id", noteInfoTmp.id);
+                }
+            }
+        }
+    }
 }
 
 QList<NOTE> NoteOper::getNoteListByFolderId(int folderId)
@@ -66,6 +97,33 @@ QList<NOTE> NoteOper::searchNote(int folderId, QString searchKey)
 
 }
 
+QString NoteOper::getConttextByNoteID(int folderId, int noteId)
+{
+    QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
+    QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(folderId);
+
+    QList<QList<QVariant>> result;
+    QList<NOTE> noteInfo;
+    QString text;
+    if (DatabaseOper::getInstance()->queryData(queryStrFinal, 8, result))
+    {
+        for (int i = 0; i < result.size(); i++)
+        {
+            QList<QVariant> tmp = result.at(i);
+            NOTE noteInfoTmp;
+            noteInfoTmp.id = tmp.at(0).toInt();
+            if(noteId == noteInfoTmp.id)
+            {
+                noteInfoTmp.contentText = tmp.at(2).toString();
+                text = noteInfoTmp.contentText;
+                break;
+            }
+        }
+
+    }
+    return text;
+}
+
 bool NoteOper::addNote(NOTE &noteInfo)
 {
     bool ret = false;
@@ -96,17 +154,30 @@ bool NoteOper::addNote(NOTE &noteInfo)
 
 bool NoteOper::updateNote(NOTE noteInfo)
 {
-    QString updateSql = "update %1 set content_text = :content, content_path = :contentPath where id = :id";
+    //QString updateSql = "update %1 set content_text = :content, content_path = :contentPath where id = :id";
+    QString updateSql = "update %1 set content_text = :content, content_path = :contentPath, create_time = :createTime where id = :id";
     QString queryStrFinal = QString(updateSql).arg(TABLE_NOTE);
     QMap<QString, QVariant> valuesMap;
     valuesMap[":content"] = noteInfo.contentText;
     valuesMap[":contentPath"] = noteInfo.contentPath;
+    valuesMap[":createTime"] = noteInfo.createTime;
     valuesMap[":id"] = noteInfo.id;
     return DatabaseOper::getInstance()->updateData(queryStrFinal, valuesMap);
 
 }
 
-bool NoteOper::deleteNote(int id)
+bool NoteOper::deleteNote(NOTE noteInfo)
 {
-    return DatabaseOper::getInstance()->deleteDataById(TABLE_NOTE, "id", id);
+    if(VOICE == noteInfo.noteType)
+    {
+        QString filepath = UiUtil::getRecordingVoiceFullPath(noteInfo.contentPath);
+
+        QFileInfo fileInfo(filepath);
+        if(fileInfo.isFile())
+        {
+            QFile file(filepath);
+            file.remove();
+        }
+    }
+    return DatabaseOper::getInstance()->deleteDataById(TABLE_NOTE, "id", noteInfo.id);
 }

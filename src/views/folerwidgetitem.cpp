@@ -49,7 +49,7 @@ void FolerWidgetItem::changeToEditMode()
     m_stackedWidget->setCurrentIndex(1);
 
     //Update DlineEidt没有这个接口了
-
+    //m_lineEdit->setText(m_nameLabel->text());
     m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
     m_lineEdit->lineEdit()->selectAll();
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
@@ -73,6 +73,14 @@ void FolerWidgetItem::changeToClickMode()
         pe.setColor(QPalette::WindowText,Qt::white);
         m_nameLabel->setPalette(pe);
         m_createTimeLabel->setPalette(pe);
+
+        bool isConverted = false;
+        QFont labelFontForWidth;
+        labelFontForWidth.setFamily("SourceHanSansSC");
+        labelFontForWidth.setPointSize(11);
+        QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+        m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
+
         //m_BackGround->setVisible(false);
     }
 }
@@ -93,6 +101,13 @@ void FolerWidgetItem::changeToUnClickMode()
         pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
         m_createTimeLabel->setPalette(pe);
         //m_BackGround->setVisible(true);
+
+        bool isConverted = false;
+        QFont labelFontForWidth;
+        labelFontForWidth.setFamily("SourceHanSansSC");
+        labelFontForWidth.setPointSize(11);
+        QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+        m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
     }
 }
 
@@ -165,7 +180,7 @@ void FolerWidgetItem::Init()
     //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
     //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, m_nameLabel->width(), isConverted);
     QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey));
+    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
@@ -213,6 +228,7 @@ void FolerWidgetItem::checkNameValid()
         if(m_lineEdit->text().length() == 0)
         {
             m_folder.folderName = m_BakDefaultName;
+            m_lineEdit->setText(m_BakDefaultName);
         }
         else
         {
@@ -241,7 +257,7 @@ void FolerWidgetItem::checkNameValid()
             //m_nameLabel->setText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), m_nameLabel->width(), isConverted));
 
             //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
-            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
+            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
 
             //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
             m_stackedWidget->setCurrentIndex(0);

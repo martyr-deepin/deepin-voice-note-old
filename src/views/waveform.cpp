@@ -66,6 +66,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 
 void Waveform::paintEvent(QPaintEvent *)
 {
+    //qDebug()<<"Waveform::paintEvent:";
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     if (WHOLE == m_currDisplayType)
@@ -80,7 +81,7 @@ void Waveform::paintEvent(QPaintEvent *)
     // testGradient.setColorAt(1, QColor("#00ff00"));
     // painter.fillRect(testRect, testGradient);
 
-    // FIXME: 
+    // FIXME:
     // I don't know why need clip less than rect width when HiDPI.
     qreal devicePixelRatio = qApp->devicePixelRatio();
     if (devicePixelRatio > 1.0) {
@@ -97,6 +98,7 @@ void Waveform::paintEvent(QPaintEvent *)
 
         
     int volume = 0;
+    qDebug()<<"sampleList.size():"<<sampleList.size();
     for (int i = 0; i < sampleList.size(); i++) {
         volume = sampleList[i] * rect().height() * 2;
 
@@ -107,12 +109,15 @@ void Waveform::paintEvent(QPaintEvent *)
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
+//            qDebug()<<"sampleRect.x:"<<sampleRect.x();
+//            qDebug()<<"rect.x:"<<rect().x();
             //QLinearGradient 不渐变色
            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
             gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
             gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
             //QLinearGradient 可以做渐变色
-//            QLinearGradient gradient(rect().topLeft(), rect().topRight());
+//            //QLinearGradient gradient(rect().topLeft(), rect().topRight());
+//            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
 //            gradient.setColorAt(0, QColor("#03D0D6"));
 //            gradient.setColorAt(1, QColor("#0079FF"));
 
@@ -179,6 +184,7 @@ void Waveform::setWholeSampleList(QList<float> wholeList)
     wholeSampleList.clear();
     //sampleList.clear();
     wholeSampleList = wholeList;
+    qDebug()<<"wholeSampleList.size:"<<wholeSampleList.size();
 //    int pointNum = rect().width() / WAVE_DURATION;
 //    float sample = wholeList.size() * 1.0 / pointNum;
 ////    qDebug() << "whole list";

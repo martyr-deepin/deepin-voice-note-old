@@ -299,9 +299,11 @@ void TextNoteItem::textAreaChanged()
 //    m_textEdit->setFixedHeight(newHeight);
 //    m_bgWidget->setFixedHeight(newHeight);
 //    this->setFixedHeight(m_timeLabel->height() + newHeight);
+
     if(!m_textEdit->toPlainText().isEmpty())
     {
         //非空
+        //m_textNote.contentText = m_textEdit->toPlainText();
         emit sig_TextEditNotEmpty();
     }
 }
@@ -324,7 +326,9 @@ void TextNoteItem::handleMenuBtnClicked()
     QPoint pGlobal = m_menuBtn->mapToGlobal(QPoint(0,0));
     QPoint arrowPoint(pGlobal.x() + m_menuBtn->width() / 2, pGlobal.y() +m_menuBtn->height());
     QPoint pParent = m_menuBtn->mapTo(this, QPoint(0,0));
-    emit menuBtnClicked(arrowPoint, pParent, this, m_textNote);
+    NOTE tmpNote = m_textNote;
+    tmpNote.contentText = m_noteCtr->getConttextByNoteID(tmpNote.folderId, tmpNote.id);
+    emit menuBtnClicked(arrowPoint, pParent, this, tmpNote);
     //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
     //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
 }
@@ -332,6 +336,9 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     m_textNote.contentText = m_textEdit->toPlainText();
+    m_textNote.createTime = QDateTime::currentDateTime();
+    m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
+    m_noteCtr->updateNote(m_textNote);
     if(m_textNote.contentText.isEmpty())
     {
         emit sig_TextEditEmpty(m_textNote);
@@ -357,7 +364,9 @@ void TextNoteItem::handleTextEditFocusOut()
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
-        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+        QString txt = UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE);
+        m_textEdit->setText(txt);
+        //m_textEdit->setHtml(txt);
     }
 }
 
@@ -404,7 +413,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
-        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
+        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
     }
 
     return QWidget::resizeEvent(event);

@@ -41,6 +41,7 @@ static const char * NOTE_MENU_SAVE_AS_TXT = "保存为TXT";
 static const char * NOTE_MENU_SAVE_AS_MP3 = "保存为MP3";
 
 enum NOTE_TYPE {VOICE=0, TEXT=1};
+enum RICH_TEXT_COLOR {BLUE=0, WHITE=1};
 
 typedef struct
 {

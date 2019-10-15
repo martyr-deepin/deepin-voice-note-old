@@ -261,6 +261,7 @@ void RightView::updateNoteList()
     if (m_currFolderId > 0)
     {
         m_noteListWidget->addAddTextBtn();
+        m_noteController->checkCleanDataBaseForVoiceByForderId(m_currFolderId);
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         if(noteList.size() > 0)
         {

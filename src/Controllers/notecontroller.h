@@ -8,11 +8,13 @@ public:
     NoteController();
     ~NoteController();
 
+    void checkCleanDataBaseForVoiceByForderId(int folderId);
     QList<NOTE> getNoteListByFolderId(int folderId);
     QList<NOTE> searchNote(int folderId, QString searchKey);
+    QString getConttextByNoteID(int folderId, int noteID);
     bool addNote(NOTE &noteInfo);
     bool updateNote(NOTE noteInfo);
-    bool deleteNote(int noteId);
+    bool deleteNote(NOTE noteInfo);
 };
 
 #endif // NOTECONTROLLER_H

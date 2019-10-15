@@ -43,7 +43,7 @@ void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
     m_searchKey = searchKey;
     m_textNote = textNote;
-    this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey));
+    this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
 }
 
 void TextNoteEdit::mousePressEvent(QMouseEvent *event)
@@ -99,6 +99,6 @@ void TextNoteEdit::updateNote()
 void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
-    this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey));
+    this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
 }
 

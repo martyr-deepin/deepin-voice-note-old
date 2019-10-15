@@ -1,12 +1,11 @@
 #include "uiutil.h"
-#include "consts.h"
-
 #include <QDateTime>
 #include <QDir>
 #include <QStandardPaths>
 #include <QTextStream>
 #include <QBitmap>
 #include <QPainter>
+#include <QDebug>
 
 //extern "C"
 //{
@@ -152,16 +151,34 @@ QList<float> UiUtil::convertStringToFloatList(QString str)
     return list;
 }
 
-QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey)
+QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color)
 {
     QString richText = "<p  style=\"font-size:%1px\">%2</p>";
     QString searchStr = "<font color=#349ae8>%1</font>";
+    if(BLUE == color)
+    {
+        searchStr.clear();
+        searchStr = "<font color=#349ae8>%1</font>";
+    }
+    else if(WHITE == color)
+    {
+        searchStr.clear();
+        searchStr = "<font color=#ffffff>%1</font>";
+    }
     QString destSrc = src;
     if (!searchKey.isEmpty())
     {
-        destSrc = src.replace(searchKey, searchStr.arg(searchKey));
+        destSrc = src.replace(searchKey, searchStr.arg(searchKey));        
     }
 
+    QString n = "\n";
+    QString br = "<br/>";
+    destSrc = destSrc.replace(n,br);
+
+
+    QString space = " ";
+    QString RichSpace = "&nbsp;";
+    destSrc = destSrc.replace(space,RichSpace);
     QString tmpText = richText.arg(fontSize).arg(destSrc);
 
     return tmpText;
@@ -174,6 +191,7 @@ bool UiUtil::saveTxt(QString path, QString content)
     //QFile file(sFilePath);
     if(!file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
+        qDebug()<<"saveTxt failed";
         return false;
     }
     QTextStream textStream(&file);
@@ -185,6 +203,10 @@ bool UiUtil::saveTxt(QString path, QString content)
 bool UiUtil::saveMP3(QString src, QString target)
 {
     bool result = QFile::copy(src, target);
+    if(!result)
+    {
+        qDebug()<<"saveMP3 failed";
+    }
     return result;
 }
 

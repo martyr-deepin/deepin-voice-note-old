@@ -54,6 +54,7 @@ signals:
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
+    void paintEvent(QPaintEvent *event);
 
 public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);

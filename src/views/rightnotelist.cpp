@@ -192,10 +192,15 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
             m_actionHoverd = false;
             //qDebug()<<"click filter";
         }
-        qDebug()<<"click filter";
+        //qDebug()<<"click filter";
         break;
     }
     return DListWidget::eventFilter(o,e);
+}
+
+void RightNoteList::paintEvent(QPaintEvent *event)
+{
+    qDebug()<<"RightNoteList::paintEvent";
 }
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
@@ -414,11 +419,14 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
-        if (m_noteController->deleteNote(m_currSelNote.id))
+        if (m_noteController->deleteNote(m_currSelNote))
         {
-            if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
+            if(nullptr != m_currPlayingItem)
             {
-                audioPlayer->stop();
+                if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
+                {
+                    audioPlayer->stop();
+                }
             }
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
@@ -532,6 +540,7 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     {
         int audioLength = m_currPlayingItem->m_note.voiceTime;
         int sliderPos = 0;
+        qDebug()<<"position:"<<position;
         if (audioLength > 0)
         {
             sliderPos = position * ( m_myslider->width()) / audioLength;

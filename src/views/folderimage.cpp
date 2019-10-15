@@ -1,6 +1,7 @@
 #include "folderimage.h"
 #include "uiutil.h"
 #include <QPainter>
+#include <QDebug>
 
 FolderImage::FolderImage(QWidget *parent) : DWidget(parent)
 {
@@ -15,6 +16,7 @@ void FolderImage::loadPic(QString imagePath)
 
 void FolderImage::paintEvent(QPaintEvent *event)
 {
+
     QPixmap pix(m_PicPath);
     QPainter painter(this);
 
