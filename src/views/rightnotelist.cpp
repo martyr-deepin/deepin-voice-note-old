@@ -99,7 +99,8 @@ void RightNoteList::initConnection()
     connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
-    connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
+    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderReleased()));
+    //connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     //connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
@@ -554,7 +555,15 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     }
 }
 
-void RightNoteList::handleSliderReleased()
+//void RightNoteList::handleSliderReleased()
+//{
+//    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+
+//    audioPlayer->setPosition(audioPos);
+//}
+
+void RightNoteList::handleSliderPressed()
 {
     int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
     qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();

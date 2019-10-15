@@ -234,6 +234,7 @@ void RecordPage::initConnection()
 
 void RecordPage::handleClickFinishButton()
 {
+    m_recordingButton->handleResume();
     stopRecord();
 
 

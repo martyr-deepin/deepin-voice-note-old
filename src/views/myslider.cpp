@@ -59,12 +59,14 @@ void MySlider::initUI()
     m_sliderHandler->setFixedSize(50, 141);
     QPalette pal;
     pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider.svg")));
+    pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
     QFont labelFont;
     labelFont.setFamily("SourceHanSansSC");
-    labelFont.setPointSize(12);
+    //labelFont.setPointSize(12);
+    labelFont.setPixelSize(12);
     m_sliderHandler->setFont(labelFont);
     m_sliderHandler->setContentsMargins(0, 8, 0, 0);
     m_mySliderBar = new MySliderBar(this);

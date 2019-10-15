@@ -356,7 +356,7 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
 
 void Waveform::genSampleListFromWhole()
 {
-    //sampleList.clear();
+    sampleList.clear();
     int pointNum = rect().width() / WAVE_DURATION;
     float sample = wholeSampleList.size() * 1.0 / pointNum;
     //qDebug()<<"pointNum:"<<pointNum;

@@ -67,7 +67,8 @@ public slots:
     void stop();
     void handleClickRecordButton();
     void handleAudioPositionChanged(qint64 position);
-    void handleSliderReleased();
+    //void handleSliderReleased();
+    void handleSliderPressed();
     void handleSaveFileEnd(bool);
     void handleMenuBtnPressed();
     void handleMenuBtnReleased();

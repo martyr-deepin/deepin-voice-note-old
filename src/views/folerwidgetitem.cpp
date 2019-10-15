@@ -223,7 +223,7 @@ void FolerWidgetItem::Init()
 void FolerWidgetItem::checkNameValid()
 {
     //if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
-    if ((m_lineEdit->text().length() >= 0) && (m_lineEdit->text().length() < 64)) {
+    if ((m_lineEdit->text().length() >= 0) && (m_lineEdit->text().length() <= 64)) {
         //todo:更新数据库
         if(m_lineEdit->text().length() == 0)
         {
@@ -300,13 +300,13 @@ void FolerWidgetItem::checkNameValid()
 
 void FolerWidgetItem::checkNameLenth()
 {
-    if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64))
+    if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() <= 64))
     {
         m_BakLineContent.clear();
         m_BakLineContent = m_lineEdit->text();
     }
 
-    if(m_lineEdit->text().length() >= 64)
+    if(m_lineEdit->text().length() > 64)
     {
         qDebug()<<"m_lineEdit->text().length():"<<m_lineEdit->text().length();
         //m_lineEdit->setAlert(true);

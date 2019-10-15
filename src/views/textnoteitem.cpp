@@ -323,14 +323,17 @@ void TextNoteItem::handleTextEditClicked()
 
 void TextNoteItem::handleMenuBtnClicked()
 {
-    QPoint pGlobal = m_menuBtn->mapToGlobal(QPoint(0,0));
-    QPoint arrowPoint(pGlobal.x() + m_menuBtn->width() / 2, pGlobal.y() +m_menuBtn->height());
-    QPoint pParent = m_menuBtn->mapTo(this, QPoint(0,0));
-    NOTE tmpNote = m_textNote;
-    tmpNote.contentText = m_noteCtr->getConttextByNoteID(tmpNote.folderId, tmpNote.id);
-    emit menuBtnClicked(arrowPoint, pParent, this, tmpNote);
-    //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
-    //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
+//    if((TEXT == m_textNote.noteType)&&(!m_textNote.contentText.isEmpty()))
+//    {
+        QPoint pGlobal = m_menuBtn->mapToGlobal(QPoint(0,0));
+        QPoint arrowPoint(pGlobal.x() + m_menuBtn->width() / 2, pGlobal.y() +m_menuBtn->height());
+        QPoint pParent = m_menuBtn->mapTo(this, QPoint(0,0));
+        NOTE tmpNote = m_textNote;
+        tmpNote.contentText = m_noteCtr->getConttextByNoteID(tmpNote.folderId, tmpNote.id);
+        emit menuBtnClicked(arrowPoint, pParent, this, tmpNote);
+        //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
+        //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
+//    }
 }
 
 void TextNoteItem::handleTextEditFocusOut()
