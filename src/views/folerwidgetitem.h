@@ -11,6 +11,7 @@
 #include <DBlurEffectWidget>
 #include <DLabel>
 #include "folderimage.h"
+#include "renameedit.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -27,7 +28,7 @@ public:
     //FolerWidgetItem();
     FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr, QString searchKey);
     ~FolerWidgetItem();
-    DLineEdit *m_lineEdit;
+    RenameEdit *m_lineEdit;
     DBlurEffectWidget *m_BackGround;
     DBlurEffectWidget *m_BackBorad;
     //QLabel *m_imageLabel;
@@ -46,6 +47,7 @@ public:
 public slots:
     void checkNameValid();
     void checkNameLenth();
+    void tryToFouceout();
 private:
 
 

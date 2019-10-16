@@ -166,10 +166,6 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
         searchStr = "<font color=#ffffff>%1</font>";
     }
     QString destSrc = src;
-    if (!searchKey.isEmpty())
-    {
-        destSrc = src.replace(searchKey, searchStr.arg(searchKey));        
-    }
 
     QString n = "\n";
     QString br = "<br/>";
@@ -181,7 +177,13 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     destSrc = destSrc.replace(space,RichSpace);
     QString tmpText = richText.arg(fontSize).arg(destSrc);
 
+    if (!searchKey.isEmpty())
+    {
+        tmpText = src.replace(searchKey, searchStr.arg(searchKey));
+    }
+
     return tmpText;
+
 }
 
 bool UiUtil::saveTxt(QString path, QString content)

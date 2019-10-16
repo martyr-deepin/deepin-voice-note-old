@@ -130,6 +130,7 @@ RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_audioRecorder->setAudioSettings(audioSettings);
+
     //m_audioRecorder->setContainerFormat("audio/x-wav");
     //m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
     m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
@@ -145,6 +146,7 @@ RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
         connect(audioProbe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(renderLevel(QAudioBuffer)));
     }
 
+    int birrate = m_audioRecorder->audioSettings().bitRate();
     m_tickerTimer = new QTimer(this);
     connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
 

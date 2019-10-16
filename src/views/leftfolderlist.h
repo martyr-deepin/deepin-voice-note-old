@@ -20,6 +20,8 @@ public:
 
 //signals:
 //    void sigDelFolder(int delfolderID);
+signals:
+    void sigBoardPress();
 
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
@@ -27,8 +29,11 @@ public slots:
     void handleRenameItem(bool checked);
     void handleDelDialogClicked(int index, const QString &text);
 
+
 protected:
     void mousePressEvent(QMouseEvent *event);
+    bool eventFilter(QObject *o, QEvent *e);
+
 private:
     FolderController *m_folderCtr;
     DMenu *m_contextMenu;

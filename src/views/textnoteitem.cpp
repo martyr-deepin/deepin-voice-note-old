@@ -10,6 +10,8 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searc
     this->m_noteCtr = noteCtr;
     m_searchKey = searchKey;
     m_menuBtnState = 0;
+    m_isEdited = false;
+    m_mouseIsIn = false;
 
 //    this->setMinimumHeight(100);
 //    this->setMaximumHeight(200);
@@ -180,6 +182,7 @@ void TextNoteItem::initUI()
     if (m_isTextConverted)
     {
         m_textEdit->setReadOnly(true);
+        m_isEdited = true;
         m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
 
@@ -261,6 +264,7 @@ void TextNoteItem::changeToEditMode()
     {
         m_textEdit->setReadOnly(false);
         m_textEdit->setFocus();
+        m_isEdited = true;
     }
 }
 
@@ -318,6 +322,7 @@ void TextNoteItem::handleTextEditClicked()
     else
     {
         m_textEdit->setReadOnly(false);
+        m_isEdited = true;
     }
 }
 
@@ -369,6 +374,7 @@ void TextNoteItem::handleTextEditFocusOut()
 
         QString txt = UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE);
         m_textEdit->setText(txt);
+        m_isEdited = false;
         //m_textEdit->setHtml(txt);
     }
 }
@@ -390,6 +396,14 @@ void TextNoteItem::handleMenuBtnStateChanged()
         //release
         qDebug()<<"release";
         emit sig_menuBtnReleased();
+    }
+}
+
+void TextNoteItem::tryToFouceout()
+{
+    if(m_isEdited && !m_mouseIsIn)
+    {
+        m_textEdit->focusOutSignal();
     }
 }
 
@@ -417,7 +431,20 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         }
 
         m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+        m_isEdited = false;
     }
 
     return QWidget::resizeEvent(event);
+}
+
+void TextNoteItem::leaveEvent(QEvent *event)
+{
+    m_mouseIsIn = false;
+    return QWidget::leaveEvent(event);
+}
+
+void TextNoteItem::enterEvent(QEvent *event)
+{
+    m_mouseIsIn = true;
+    return QWidget::enterEvent(event);
 }

@@ -76,6 +76,7 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
+    connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
     connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
     connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
@@ -100,6 +101,7 @@ void RightView::initNoteList()
     m_noteListWidget->setFocusPolicy(Qt::NoFocus);
     //qDebug()<<"m_noteListWidget width7:"<<m_noteListWidget->width();
     m_noteListLayout->addWidget(m_noteListWidget);
+    //m_noteListWidget->setResizeMode(QListWidget::Adjust);
     //qDebug()<<"m_noteListWidget width8:"<<m_noteListWidget->width();
     //m_noteListWidget->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
@@ -383,5 +385,12 @@ void RightView::resizeEvent(QResizeEvent * event)
     if(nullptr != m_NoSearchResault)
     {
         m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
+    }
+
+    if(nullptr != m_noteListWidget)
+    {
+        m_noteListWidget->resize(this->width(),m_noteListWidget->height());
+        qDebug()<<"RightView width:"<<this->width();
+        qDebug()<<"m_noteListWidget width:"<<this->m_noteListWidget->width();
     }
 }

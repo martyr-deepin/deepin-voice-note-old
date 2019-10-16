@@ -52,6 +52,7 @@ void FolerWidgetItem::changeToEditMode()
     //m_lineEdit->setText(m_nameLabel->text());
     m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
     m_lineEdit->lineEdit()->selectAll();
+    m_lineEdit->setToEdited(true);
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
     //m_createTimeLabel->setVisible(false);
@@ -184,7 +185,7 @@ void FolerWidgetItem::Init()
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
-    m_lineEdit = new DLineEdit();
+    m_lineEdit = new RenameEdit();
     //m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
 
@@ -315,3 +316,7 @@ void FolerWidgetItem::checkNameLenth()
     }
 }
 
+void FolerWidgetItem::tryToFouceout()
+{
+    m_lineEdit->tryToFouceout();
+}

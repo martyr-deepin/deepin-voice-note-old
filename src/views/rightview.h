@@ -27,6 +27,7 @@ public:
     void searchNoteList(QString searchKey);
 signals:
     void textEditClicked(NOTE textNote);
+    void sigBoardPress();
 
 public slots:
     void onShowNoResult();

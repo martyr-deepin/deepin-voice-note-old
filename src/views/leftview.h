@@ -32,6 +32,7 @@ signals:
     void searchNote(int folderId, QString searchKey);
     void noResult();
     void clearNoteListSignal();
+    void sigBoardPress();
 
 public slots:
     void addFolder();

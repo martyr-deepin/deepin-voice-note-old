@@ -62,6 +62,7 @@ void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
 //    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
     //item->setData(Qt::BackgroundRole,QBrush(QColor(QRgb(0x00000000))));
+    connect(this, SIGNAL(sigBoardPress()), folderItem, SLOT(tryToFouceout()));
 
     this->addItem(item);
     this->setItemWidget(item, folderItem);
@@ -93,6 +94,18 @@ void LeftFolderList::mousePressEvent(QMouseEvent *event)
         m_contextMenu->exec(event->globalPos());
     }
 
+}
+
+bool LeftFolderList::eventFilter(QObject *o, QEvent *e)
+{
+    switch (e->type())
+    {
+        case QEvent::MouseButtonPress:
+            emit sigBoardPress();
+            qDebug()<<"LeftFolderList::MouseButtonPress";
+        break;
+    }
+    return DListWidget::eventFilter(o,e);
 }
 
 void LeftFolderList::handleDelDialogClicked(int index, const QString &text)

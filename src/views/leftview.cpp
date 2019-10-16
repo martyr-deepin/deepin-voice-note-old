@@ -76,6 +76,7 @@ void LeftView::initConnection()
     connect(m_addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
     connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
+    connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
 
 }
 

@@ -60,9 +60,12 @@ public slots:
     void handleMenuBtnClicked();
     void handleTextEditFocusOut();
     void handleMenuBtnStateChanged();
+    void tryToFouceout();
 
 protected:
     void resizeEvent(QResizeEvent * event);
+    void leaveEvent(QEvent *event);
+    void enterEvent(QEvent *event);
 
 private:
     NoteController *m_noteCtr;
@@ -72,6 +75,8 @@ private:
     bool m_isTextConverted;
     QString m_searchKey;
     int m_menuBtnState;
+    bool m_isEdited;
+    bool m_mouseIsIn;
     void initUI();
     void initConnection();
     void updateNote();

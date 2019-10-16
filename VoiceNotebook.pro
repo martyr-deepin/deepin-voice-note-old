@@ -62,7 +62,8 @@ SOURCES += \
     src/views/myslider.cpp \
     src/views/fileexistsdialog.cpp \
     src/views/addtextbtn.cpp \
-    src/views/folderimage.cpp
+    src/views/folderimage.cpp \
+    src/views/renameedit.cpp
 
 HEADERS += \
     src/app \
@@ -94,7 +95,8 @@ HEADERS += \
     src/views/myslider.h \
     src/views/fileexistsdialog.h \
     src/views/addtextbtn.h \
-    src/views/folderimage.h
+    src/views/folderimage.h \
+    src/views/renameedit.h
 
 INCLUDEPATH += \
     src/app \

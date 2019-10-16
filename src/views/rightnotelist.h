@@ -50,11 +50,13 @@ public:
 signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();
+    void sigBoardPress();
 
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
     void paintEvent(QPaintEvent *event);
+    void resizeEvent(QResizeEvent * event);
 
 public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
@@ -67,8 +69,9 @@ public slots:
     void stop();
     void handleClickRecordButton();
     void handleAudioPositionChanged(qint64 position);
-    //void handleSliderReleased();
+    void handleSliderReleased();
     void handleSliderPressed();
+    void handleSliderMove(int value);
     void handleSaveFileEnd(bool);
     void handleMenuBtnPressed();
     void handleMenuBtnReleased();

@@ -9,6 +9,7 @@
 #include <DMessageBox>
 #include <QMessageBox>
 #include <QScrollBar>
+#include <QStandardPaths>
 
 MMenu::MMenu(QWidget *parent)
 {
@@ -30,12 +31,13 @@ void MMenu::leaveEvent(QEvent* event)
 
 RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
   , m_defaultTxtName("文本.TXT")
-  , m_defaultTxtPath("/home/deepin/Desktop")
+  //, m_defaultTxtPath("/home/deepin/Desktop")
   , m_defaultAudioName("语音.MP3")
   , m_defaultAudioPath("/home/deepin/Desktop")
   , m_arrowButtonPressed(false)
   , m_actionHoverd(false)
 {
+    m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     initUI();
     initConnection();
 }
@@ -88,10 +90,10 @@ void RightNoteList::initUI()
 
     qApp->installEventFilter(this);
     //this->setStyleSheet("background: red");
+
 }
 void RightNoteList::initConnection()
 {
-
     connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
     connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
@@ -99,8 +101,9 @@ void RightNoteList::initConnection()
     connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
-    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderReleased()));
-    //connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
+//    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));
+//    connect(m_myslider, SIGNAL(sliderMoved(int)), this, SLOT(handleSliderMove(int)));
+    connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     //connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
@@ -124,7 +127,7 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
         connect(textItem, SIGNAL(sig_TextEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
-
+        connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
@@ -195,13 +198,27 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
         }
         //qDebug()<<"click filter";
         break;
+        case QEvent::MouseButtonPress:
+            qDebug()<<"RightNoteList::MouseButtonPress";
+            emit sigBoardPress();
+        break;
     }
     return DListWidget::eventFilter(o,e);
 }
 
 void RightNoteList::paintEvent(QPaintEvent *event)
 {
-    qDebug()<<"RightNoteList::paintEvent";
+    //qDebug()<<"RightNoteList::paintEvent";
+}
+
+void RightNoteList::resizeEvent(QResizeEvent * event)
+{
+    for(int i = 0; i < this->count(); i++)
+    {
+        QListWidgetItem *ptmp = this->item(i);
+        QWidget* ptmpWidget = this->itemWidget(ptmp);
+        ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
+    }
 }
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
@@ -352,11 +369,11 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         if (TEXT == m_currSelNote.noteType) {
             fileDialog.setDefaultSuffix("txt");
             fileDialog.setNameFilter(tr("TXT(*.txt)"));
-            fileDialog.selectFile("文本.txt");
+            fileDialog.selectFile("记事本1.txt");
         }else {
             fileDialog.setDefaultSuffix("mp3");
             fileDialog.setNameFilter(tr("MP3(*.mp3)"));
-            fileDialog.selectFile("音频.mp3");
+            fileDialog.selectFile("记事本1.mp3");
         }
 
     //fileDialog->setFilter(QDir::filePath());
@@ -371,10 +388,10 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
             DMessageBox::information(this, tr(""), tr("文件名不能为空"));
 
         }
-        else if (!UiUtil::checkFileExtension(fileName, saveInfo.fileExtension))
-        {
-            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + saveInfo.fileExtension);
-        }
+//        else if (!UiUtil::checkFileExtension(fileName, saveInfo.fileExtension))
+//        {
+//            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + saveInfo.fileExtension);
+//        }
 //        else if(UiUtil::checkFileExist(filePath))
 //        {
 //            m_fileExistsDialog->setSavePath(filePath);
@@ -385,6 +402,7 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         else
         {
             bool result = false;
+            filePath.append(saveInfo.fileExtension);
             if (VOICE == m_currSelNote.noteType)
             {
                 result = UiUtil::saveMP3(UiUtil::getRecordingVoiceFullPath(m_currSelNote.contentPath), filePath);
@@ -555,15 +573,26 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     }
 }
 
-//void RightNoteList::handleSliderReleased()
-//{
-//    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
-//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+void RightNoteList::handleSliderReleased()
+{
+    if(nullptr != m_currPlayingItem)
+    {
+        int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+        qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
-//    audioPlayer->setPosition(audioPos);
-//}
+        audioPlayer->setPosition(audioPos);
+    }
+}
 
 void RightNoteList::handleSliderPressed()
+{
+    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+
+    audioPlayer->setPosition(audioPos);
+}
+
+void RightNoteList::handleSliderMove(int value)
 {
     int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
     qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
