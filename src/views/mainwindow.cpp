@@ -87,8 +87,9 @@ void MyMainWindow::initTitleFrame()
     titleLayout->addSpacing(12);
     titleLayout->addWidget(m_returnBtn);
     titleLayout->addWidget(m_replaceForReturn);
-    titleLayout->addSpacing(179);
+    titleLayout->addSpacing(145);
     titleLayout->addWidget(m_searchEdit);
+    titleLayout->addSpacing(34);
     //titleLayout->setSpacing(52);
     titleLayout->setContentsMargins(0, 0, 0, 0);
 

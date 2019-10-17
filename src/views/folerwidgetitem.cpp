@@ -122,6 +122,7 @@ void FolerWidgetItem::Init()
     m_BackBorad->setFixedSize(this->size());
     m_BackBorad->setMaskAlpha(255);
 
+
     m_BackGround = new DBlurEffectWidget(this);
     m_BackGround->move(0,5);
     m_BackGround->setFixedSize(230, 64);
@@ -131,34 +132,7 @@ void FolerWidgetItem::Init()
     m_BackGround->setBlurRectYRadius(8);
 
     m_FolderImage = new FolderImage(m_BackGround);
-    m_FolderImage->move(10,15);
-
-
-//    QPalette pe;
-//    pe.setColor(QPalette::Background,QColor(00,00,00));
-//    //pe.setColor(QPalette::Background,QColor(00,129,255));
-//    m_BackGround->setPalette(pe);
-//    m_BackGround->setMaskAlpha(7);
-
-//    m_ImageBoard = new DBlurEffectWidget(m_BackGround);
-
-
-//    m_imageLabel = new QLabel(m_ImageBoard);
-//    m_imageLabel->setFixedSize(QSize(40,40));
-//    m_imageLabel->move(0,0);
-//    //m_imageLabel->setGeometry(QRect(10, 15, 40, 40));
-//    m_imageLabel->setObjectName("imageLabel");
-//    //m_imageLabel->size();
-//    //QPixmap pixmap = getPixmap(m_imageLabel->size(), m_folder.imgPath);
-
-////    bool convertFlag = getPixmap(imageLabel->size(), folder.imgPath, pixmap);
-////    if (convertFlag)
-////    {
-//    QPixmap docIcon = UiUtil::getPixmap(m_imageLabel->size(), m_folder.imgPath);
-//    //QPixmap raddocIcon = UiUtil::PixmapToRound(docIcon,20);
-//        //m_imageLabel->setPixmap(raddocIcon);
-//    m_imageLabel->setPixmap(docIcon);
-////    }
+    m_FolderImage->move(6,12);
 
     m_nameLabel = new DLabel(m_BackGround);
     //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
@@ -194,7 +168,9 @@ void FolerWidgetItem::Init()
     //m_lineEdit->setVisible(false);
 
     m_stackedWidget = new QStackedWidget(m_BackGround);
-    m_stackedWidget->setGeometry(QRect(70, 15, 110, 21));
+    m_stackedWidget->setFixedSize(QSize(110,21));
+    m_stackedWidget->move(53,13);
+    //m_stackedWidget->setGeometry(QRect(70, 15, 110, 21));
     m_stackedWidget->setObjectName("stackedWidget");
 
     m_stackedWidget->addWidget(m_nameLabel);
@@ -204,7 +180,9 @@ void FolerWidgetItem::Init()
 
 
     m_createTimeLabel = new QLabel(m_BackGround);
-    m_createTimeLabel->setGeometry(QRect(70, 36, 110, 18));
+    m_createTimeLabel->setFixedSize(QSize(110,18));
+    m_createTimeLabel->move(53,32);
+    //m_createTimeLabel->setGeometry(QRect(53, 36, 110, 18));
     //m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
     //m_createTimeLabel->setLineWidth(150);
     m_createTimeLabel->setObjectName("createTimeLabel");
