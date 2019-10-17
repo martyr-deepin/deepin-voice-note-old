@@ -218,6 +218,7 @@ void RightView::handleSearchNote(int folderId, QString searchKey)
     m_addVoiceBtn->setVisible(true);
 }
 
+//only for button add
 void RightView::addTextNote()
 {
     NOTE note;
@@ -237,10 +238,11 @@ void RightView::addTextNote()
 //    m_leftFolderView->setCurrentRow(0);
 }
 
+//only for button add
 void RightView::addNoteToNoteList(NOTE note)
 {
     m_NoSearchResault->setVisible(false);
-    m_noteListWidget->addWidgetItem(note, "");
+    m_noteListWidget->addWidgetItem(true,note, "");
     m_noteListWidget->scrollToBottom();
 
 //    if (m_currFolderId > 0)
@@ -275,7 +277,7 @@ void RightView::updateNoteList()
         }
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(noteList.at(i), "");
+            m_noteListWidget->addWidgetItem(false, noteList.at(i), "");
         }
         m_noteListWidget->scrollToBottom();
     }
@@ -307,7 +309,7 @@ void RightView::searchNoteList(QString searchKey)
         }
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(noteList.at(i), searchKey);
+            m_noteListWidget->addWidgetItem(false, noteList.at(i), searchKey);
         }
         m_noteListWidget->scrollToBottom();
     }

@@ -38,13 +38,9 @@ void LeftView::initUI()
     m_leftViewLayout->addSpacing(5);
     m_leftViewLayout->addWidget(m_leftFolderView);
 
-    m_addFolderBtn = new DImageButton;
-//    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add.svg"));
-    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
-    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
-    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
-    m_leftViewLayout->addWidget(m_addFolderBtn);
-    m_leftViewLayout->addSpacing(9);
+
+    //m_leftViewLayout->addWidget(m_addFolderBtn);
+    //m_leftViewLayout->addSpacing(9);
 
     QSizePolicy sp = m_leftFolderView->sizePolicy();
     sp.setVerticalPolicy(QSizePolicy::Expanding);
@@ -57,6 +53,13 @@ void LeftView::initUI()
         m_leftFolderView->setCurrentRow(0);
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
+    m_addFolderBtn = new DImageButton(this);
+    m_addFolderBtn->setFixedSize(QSize(68,68));
+//    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add.svg"));
+    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
+    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
+    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
+    //
 
 //    DPalette palette;
 
@@ -205,4 +208,9 @@ void LeftView::handlePressFolderChg(QListWidgetItem *item)
 void LeftView::clearNoteList()
 {
     emit clearNoteListSignal();
+}
+
+void LeftView::resizeEvent(QResizeEvent * event)
+{
+    m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 5);
 }

@@ -19,7 +19,6 @@ void VoiceNoteItem::init()
     if(nullptr != m_timeLabel)
     {
         QPalette pe;
-        //pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
         pe.setColor(QPalette::WindowText,QColor(00,26,46));
         m_timeLabel->setPalette(pe);
 
@@ -51,15 +50,8 @@ void VoiceNoteItem::initUI()
     this->setBlurEnabled(false);
 
     m_timeLabel = new DLabel();
-    //m_timeLabel->setFixedHeight(30);
 
-//    QSizePolicy sp = m_timeLabel->sizePolicy();
-//    sp.setVerticalPolicy(QSizePolicy::Fixed);
-//    m_timeLabel->setSizePolicy(sp);
     m_bgWidget = new DBlurEffectWidget();
-//    QSizePolicy sp1 = m_bgWidget->sizePolicy();
-//    sp.setVerticalPolicy(QSizePolicy::Fixed);
-//    m_bgWidget->setSizePolicy(sp1);
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -72,7 +64,6 @@ void VoiceNoteItem::initUI()
     sp.setHorizontalStretch(1);
     m_bgWidget->setSizePolicy(sp);
 
-    //m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
 
     QFont timeLabelFont;
@@ -119,6 +110,13 @@ void VoiceNoteItem::initUI()
     m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
     m_voiceTimeLabel = new QLabel();
     m_voiceTimeLabel->setFixedSize(46, 20);
+    QPalette pe;
+    pe.setColor(QPalette::WindowText,QColor(00,26,46));
+    m_voiceTimeLabel->setPalette(pe);
+    QFont font;
+    font.setFamily("Avenir-Book");
+    font.setPixelSize(15);
+    m_voiceTimeLabel->setFont(font);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
     m_hBoxLayout->addWidget(m_playingButton);

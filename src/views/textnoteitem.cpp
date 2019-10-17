@@ -13,15 +13,8 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searc
     m_isEdited = false;
     m_mouseIsIn = false;
 
-//    this->setMinimumHeight(100);
-//    this->setMaximumHeight(200);
-    //this->setFixedHeight(64);
     initUI();
     initConnection();
-//    this->setStyleSheet("background: blue");
-//    qDebug()<< "TextNoteItem: m_timeLabel " << m_timeLabel->height();
-//    qDebug()<< "TextNoteItem: m_bgWidget " << m_bgWidget->height();
-//    qDebug()<< "TextNoteItem: parent " << this->height();
 }
 
 TextNoteItem::~TextNoteItem()
@@ -58,21 +51,13 @@ void TextNoteItem::initUI()
     //this->resize(500, this->height());
     m_timeLabel = new DLabel();
 
-    //m_timeLabel->setFixedHeight(30);
     QFont timeLabelFont;
     timeLabelFont.setFamily("PingFangSC-Regular");
     timeLabelFont.setPointSize(8);
     m_timeLabel->setFont(timeLabelFont);
     m_timeLabel->setFixedHeight(16);
-//    QPalette pa;
-//    pa.setColor(QPalette::WindowText, Qt::red);
-    //pa.setColor(DPalette::WindowText, QColor("#001a2e"));
-    //m_timeLabel->setPalette(pa);
-//    QSizePolicy sp = m_timeLabel->sizePolicy();
-//    sp.setVerticalPolicy(QSizePolicy::Fixed);
-//    m_timeLabel->setSizePolicy(sp);
+
     m_bgWidget = new DBlurEffectWidget(this);
-    //m_bgWidget->setFixedHeight(64);
 
 
 //    m_bgWidget->setFixedHeight(124);//orig
@@ -93,15 +78,8 @@ void TextNoteItem::initUI()
 //    sp.setHorizontalStretch(1);
 //    m_bgWidget->setSizePolicy(sp);
 
-
-    //m_timeLabel->setGeometry(QRect(10, 10, 161, 16));
     m_timeLabel->setObjectName("timeLabel");
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
-    //m_timeLabel->setStyleSheet("background: red");
-
-//    QPalette pe;
-//    pe.setColor(QPalette::Text,QColor(QRgb(0x001A2E)));
-//    m_timeLabel->setPalette(pe);
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
@@ -220,6 +198,7 @@ void TextNoteItem::initUI()
    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
+   m_menuBtn->setDisabled(true);
 
 //   m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
 //   m_arrowMenu->setHeight(200);
@@ -298,17 +277,16 @@ void TextNoteItem::updateNote()
 
 void TextNoteItem::textAreaChanged()
 {
-//    QTextDocument *document = m_textEdit->document();
-//    int newHeight = document->size().height() + 20;
-//    m_textEdit->setFixedHeight(newHeight);
-//    m_bgWidget->setFixedHeight(newHeight);
-//    this->setFixedHeight(m_timeLabel->height() + newHeight);
-
     if(!m_textEdit->toPlainText().isEmpty())
     {
         //非空
         //m_textNote.contentText = m_textEdit->toPlainText();
+        m_menuBtn->setDisabled(false);
+        qDebug()<<"text: "<<m_textEdit->toPlainText();
         emit sig_TextEditNotEmpty();
+    }
+    else {
+        m_menuBtn->setDisabled(true);
     }
 }
 

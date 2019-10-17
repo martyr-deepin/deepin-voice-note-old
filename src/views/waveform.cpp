@@ -98,7 +98,7 @@ void Waveform::paintEvent(QPaintEvent *)
 
         
     int volume = 0;
-    qDebug()<<"sampleList.size():"<<sampleList.size();
+    //qDebug()<<"sampleList.size():"<<sampleList.size();
     for (int i = 0; i < sampleList.size(); i++) {
         volume = sampleList[i] * rect().height() * 2;
 

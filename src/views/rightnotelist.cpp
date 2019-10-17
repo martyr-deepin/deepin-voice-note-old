@@ -116,7 +116,7 @@ void RightNoteList::initConnection()
 //    this->setItemWidget(item, folderItem);
 //}
 
-void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
+void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
 {
     if(note.noteType == NOTE_TYPE::TEXT)
     {
@@ -139,6 +139,11 @@ void RightNoteList::addWidgetItem(NOTE note, QString searchKey)
         this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, textItem);
         textItem->init();
+        if(isAddByButton)
+        {
+            textItem->changeToEditMode();
+        }
+        //textItem->changeToEditMode();
         //qDebug()<<"textItem width3:"<<textItem->width();
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
@@ -199,7 +204,7 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
         //qDebug()<<"click filter";
         break;
         case QEvent::MouseButtonPress:
-            qDebug()<<"RightNoteList::MouseButtonPress";
+            //qDebug()<<"RightNoteList::MouseButtonPress";
             emit sigBoardPress();
         break;
     }
@@ -305,6 +310,7 @@ void RightNoteList::onAbleAddBtn()
 {
     if(nullptr != m_addTextBtn)
     {
+        qDebug()<<"m_addTextBtn->setDisableBtn(false);";
         m_addTextBtn->setDisableBtn(false);
     }
 }
@@ -319,18 +325,6 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
     }
 }
 
-//dialog.setAcceptMode(DFileDialog::AcceptOpen);
-//        dialog.setFileMode(DFileDialog::Directory);
-//        dialog.setDirectory(m_pathstr);
-
-//        const int mode = dialog.exec();
-
-//        if (mode != QDialog::Accepted) {
-//            return;
-//        }
-
-//        QList<QUrl> pathlist = dialog.selectedUrls();
-//        QString curpath = pathlist.at(0).toLocalFile();
 void RightNoteList::handleSaveAsItem(bool)
 {
     m_arrowMenu->hide();

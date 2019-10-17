@@ -20,7 +20,7 @@ public slots:
 protected:
     void leaveEvent(QEvent *event);
     void enterEvent(QEvent *event);
-
+    void keyPressEvent(QKeyEvent *event);
 private:
     bool m_isEdited;
     bool m_mouseIsIn;

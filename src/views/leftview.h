@@ -34,6 +34,9 @@ signals:
     void clearNoteListSignal();
     void sigBoardPress();
 
+protected:
+    void resizeEvent(QResizeEvent * event);
+
 public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);

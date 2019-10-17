@@ -2,7 +2,7 @@
 #define VOICENOTEITEM_H
 
 #include <QHBoxLayout>
-#include <QLabel>
+#include <DLabel>
 #include <QWidget>
 #include <DBlurEffectWidget>
 #include <dimagebutton.h>
@@ -24,7 +24,7 @@ public:
     int getNoteID();
     NOTE m_note;
 
-    QLabel *m_timeLabel;
+    DLabel *m_timeLabel;
     DBlurEffectWidget *m_bgWidget;
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;

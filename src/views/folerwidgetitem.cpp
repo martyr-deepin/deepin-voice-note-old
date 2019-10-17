@@ -50,7 +50,8 @@ void FolerWidgetItem::changeToEditMode()
 
     //Update DlineEidt没有这个接口了
     //m_lineEdit->setText(m_nameLabel->text());
-    m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
+    //m_lineEdit->lineEdit()->setCursorPosition(m_lineEdit->text().size());
+    m_lineEdit->lineEdit()->setFocus();
     m_lineEdit->lineEdit()->selectAll();
     m_lineEdit->setToEdited(true);
     //m_lineEdit->setFocus(Qt::OtherFocusReason);

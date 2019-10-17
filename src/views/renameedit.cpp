@@ -1,4 +1,6 @@
 #include "renameedit.h"
+#include <QKeyEvent>
+#include <QDebug>
 
 RenameEdit::RenameEdit(QWidget *parent) : DLineEdit(parent)
 {
@@ -29,4 +31,16 @@ void RenameEdit::enterEvent(QEvent *event)
 {
     m_mouseIsIn = true;
     return QWidget::enterEvent(event);
+}
+
+void RenameEdit::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+        case Qt::Key_Escape:
+            m_isEdited = false;
+            emit editingFinished();
+        break;
+    }
+    return QWidget::keyPressEvent(event);
 }

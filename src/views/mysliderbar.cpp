@@ -343,12 +343,8 @@ void MySliderBar::hoverTimout()
 
 void MySliderBar::init()
 {
-    Q_D(MySliderBar);
-    //this->setStyleSheet("background: red");
-    DThemeManager::registerWidget(this);
-    //m_sliderhandler = new SliderHandler(this);
-    //m_sliderhandler->setGeometry(0, 0, m_sliderhandler->x(), m_sliderhandler->y());
-
+    Q_D(MySliderBar);  
+//    DThemeManager::registerWidget(this);
     setMouseTracking(true);
     connect(&d->m_hoverTimer, &QTimer::timeout, this, &MySliderBar::hoverTimout);
 }
