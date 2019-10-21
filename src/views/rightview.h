@@ -26,6 +26,8 @@ public:
     void updateNoteList();
     void searchNoteList(QString searchKey);
     void updateFromDetal(int ID);
+    void stopAllPlayback();
+    void cancleRecord();
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();
@@ -37,6 +39,7 @@ public slots:
     void addTextNote();
     void handleStartRecord();
     void handleStopRecord(VOICE_INFO voiceInfo);
+    void handlecancelRecord();
     void handleClearNote();
     void OnCurrentRowChanged(int curRow);
 

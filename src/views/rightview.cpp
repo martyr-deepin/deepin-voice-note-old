@@ -80,6 +80,8 @@ void RightView::initConnection()
     connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
     connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
+    connect(m_recordPage, &RecordPage::cancelRecord, this, &RightView::handlecancelRecord);
+
 }
 
 
@@ -329,6 +331,16 @@ void RightView::updateFromDetal(int ID)
     }
 }
 
+void RightView::stopAllPlayback()
+{
+    m_noteListWidget->stop();
+}
+
+void RightView::cancleRecord()
+{
+    m_recordPage->exitRecord();
+}
+
 void RightView::handleStartRecord()
 {
     m_recordStackedWidget->setCurrentIndex(1);
@@ -371,6 +383,13 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
     m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
     addNoteToNoteList(voiceNote);
     //updateNoteList();
+}
+
+void RightView::handlecancelRecord()
+{
+    m_recordStackedWidget->setCurrentIndex(0);
+    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
+    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
 }
 
 void RightView::handleClearNote()

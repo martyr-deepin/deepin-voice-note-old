@@ -51,6 +51,7 @@ DWIDGET_USE_NAMESPACE
 RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
 //RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
+    this->setFocusPolicy(Qt::StrongFocus);
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter
@@ -280,7 +281,9 @@ void RecordPage::stopRecord()
 
 void RecordPage::exitRecord()
 {
-    stopRecord();
+    m_audioRecorder->stop();
+    m_tickerTimer->stop();
+    m_recordTimeLabel->setText("00:00");
 
     QFile(getRecordingFilepath()).remove();
 
@@ -324,15 +327,26 @@ void RecordPage::renderLevel(const QAudioBuffer &buffer)
     }
 }
 
-bool RecordPage::eventFilter(QObject *, QEvent *event)
+//bool RecordPage::eventFilter(QObject *, QEvent *event)
+//{
+////    if (event->type() == QEvent::KeyPress) {
+////        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+////        if (keyEvent == QKeySequence::Cancel) {
+////            exitRecord();
+////        }
+////    }
+
+//    return false;
+//}
+
+void RecordPage::keyPressEvent(QKeyEvent *event)
 {
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
-        if (keyEvent == QKeySequence::Cancel) {
+    switch(event->key())
+    {
+        case Qt::Key_Escape:
             exitRecord();
-        }
+        break;
     }
-
-    return false;
+    return QWidget::keyPressEvent(event);
 }

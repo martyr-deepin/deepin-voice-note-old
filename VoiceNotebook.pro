@@ -63,7 +63,9 @@ SOURCES += \
     src/views/fileexistsdialog.cpp \
     src/views/addtextbtn.cpp \
     src/views/folderimage.cpp \
-    src/views/renameedit.cpp
+    src/views/renameedit.cpp \
+    src/views/sliderhandle.cpp \
+    src/views/intancer.cpp
 
 HEADERS += \
     src/app \
@@ -96,7 +98,9 @@ HEADERS += \
     src/views/fileexistsdialog.h \
     src/views/addtextbtn.h \
     src/views/folderimage.h \
-    src/views/renameedit.h
+    src/views/renameedit.h \
+    src/views/sliderhandle.h \
+    src/views/intancer.h
 
 INCLUDEPATH += \
     src/app \

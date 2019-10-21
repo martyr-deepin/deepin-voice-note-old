@@ -1,5 +1,5 @@
 #include "voicenotebookapp.h"
-
+#include "intancer.h"
 #include <DApplication>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
@@ -24,6 +24,7 @@ VoiceNotebookApp::~VoiceNotebookApp()
             delete m_mainWindow;
             m_mainWindow = nullptr;
         }
+    Intancer::get_Intancer()->destroyIntance();
 }
 
 //initI18n();

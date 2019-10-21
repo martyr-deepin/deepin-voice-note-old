@@ -2,6 +2,7 @@
 #define MYSLIDER_H
 
 #include "mysliderbar.h"
+#include "sliderhandle.h"
 
 #include <QWidget>
 #include <DLabel>
@@ -46,7 +47,7 @@ protected:
 
 private:
     MySliderBar *m_mySliderBar;
-    DLabel *m_sliderHandler;
+    SliderHandle *m_sliderHandler;
     //SliderHandler *m_sliderHandler;
 
     void initUI();

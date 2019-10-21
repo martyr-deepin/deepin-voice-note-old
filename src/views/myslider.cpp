@@ -52,10 +52,9 @@ int MySlider::getHandlerWidth()
     return m_sliderHandler->width();
 }
 
-
 void MySlider::initUI()
 {
-    m_sliderHandler = new DLabel(this);
+    m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
     m_sliderHandler->setFixedSize(50, 141);
     QPalette pal;
     pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider.svg")));

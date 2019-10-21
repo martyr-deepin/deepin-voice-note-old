@@ -1,8 +1,10 @@
 #include "leftfolderlist.h"
+#include "intancer.h"
 
 #include <QFrame>
 #include <QDebug>
 #include <DPalette>
+
 
 LeftFolderList::LeftFolderList(FolderController *folderCtr)
 {
@@ -86,6 +88,10 @@ void LeftFolderList::handleCurrentItemChanged(QListWidgetItem *current, QListWid
 
 void LeftFolderList::mousePressEvent(QMouseEvent *event)
 {
+    if(Intancer::get_Intancer()->getTryToDelEmptyTextNote())
+    {
+        return;
+    }
     //要继续保留QListWidget原有的点击事件.
     DListWidget::mousePressEvent(event);
     //确保右键点击，然后跳出菜单.
@@ -93,7 +99,6 @@ void LeftFolderList::mousePressEvent(QMouseEvent *event)
     {
         m_contextMenu->exec(event->globalPos());
     }
-
 }
 
 bool LeftFolderList::eventFilter(QObject *o, QEvent *e)

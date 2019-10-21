@@ -103,13 +103,15 @@ private:
     QString m_defaultAudioPath;
     bool m_arrowButtonPressed;
     bool m_actionHoverd;
+    int curWaveformPosWidth;
     //MyCustomSlider *m_myslider;
     void initUI();
     void initConnection();
     void showFileDialog(SAVE_INFO saveInfo);
     QListWidgetItem *getListItemById(int id);
     QString getPlayingFilepath();
-    void changeSliderPosByHand();
+    void changeSliderPosByHand(int moveMovment);
+    bool getRowByID(int id, NOTE_TYPE type, int &row);
 };
 
 #endif // RIGHTNOTELIST_H

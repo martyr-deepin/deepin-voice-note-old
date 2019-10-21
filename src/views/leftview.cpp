@@ -1,5 +1,5 @@
 #include "leftview.h"
-
+#include "intancer.h"
 #include <DPalette>
 #include <folderoper.h>
 #include <QTime>
@@ -157,7 +157,10 @@ int LeftView::getCurrSelectFolderId()
 void LeftView::handleSelFolderChg(QListWidgetItem *item)
 {
     int folderId = -1;
-
+    if(Intancer::get_Intancer()->getTryToDelEmptyTextNote())
+    {
+        return;
+    }
     int count = m_leftFolderView->count();
     for(int i = 0; i < count; i++)
     {

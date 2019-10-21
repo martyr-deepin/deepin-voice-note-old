@@ -27,6 +27,7 @@ public:
 
     int getCurrSelectFolderId();
     void searchFolder(QString searchKey);
+
 signals:
     void selFolderIdChg(int folderId);
     void searchNote(int folderId, QString searchKey);

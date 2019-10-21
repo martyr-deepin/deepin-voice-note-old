@@ -1,6 +1,7 @@
 #include "rightnotelist.h"
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
+#include "intancer.h"
 #include <QDebug>
 #include <uiutil.h>
 #include <DFileDialog>
@@ -10,6 +11,7 @@
 #include <QMessageBox>
 #include <QScrollBar>
 #include <QStandardPaths>
+
 
 MMenu::MMenu(QWidget *parent)
 {
@@ -263,7 +265,6 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
 void RightNoteList::handleDelItem(bool)
 {
     m_delConfirmDialog->show();
-
     m_arrowMenu->hide();
     m_actionHoverd = false;
 //    return;
@@ -292,7 +293,7 @@ void RightNoteList::handleVScrollBarChanged(int value)
             {
                 QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
                 qDebug()<<"waveformPoint.y():"<<waveformPoint.y();
-                m_myslider->move(m_myslider->x(),waveformPoint.y() - 16);
+                m_myslider->move(m_myslider->x(),waveformPoint.y() - 27);
             }
         }
     }
@@ -322,6 +323,7 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
     if(nullptr != m_currSelItem)
     {
         m_delConfirmDialog->show();
+        Intancer::get_Intancer()->setTryToDelEmptyTextNote(true);
     }
 }
 
@@ -363,11 +365,11 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         if (TEXT == m_currSelNote.noteType) {
             fileDialog.setDefaultSuffix("txt");
             fileDialog.setNameFilter(tr("TXT(*.txt)"));
-            fileDialog.selectFile("记事本1.txt");
+            fileDialog.selectFile("记事本1");
         }else {
             fileDialog.setDefaultSuffix("mp3");
             fileDialog.setNameFilter(tr("MP3(*.mp3)"));
-            fileDialog.selectFile("记事本1.mp3");
+            fileDialog.selectFile("记事本1");
         }
 
     //fileDialog->setFilter(QDir::filePath());
@@ -386,17 +388,17 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 //        {
 //            DMessageBox::information(this, tr(""), tr("文件扩展名必须是") + saveInfo.fileExtension);
 //        }
-//        else if(UiUtil::checkFileExist(filePath))
-//        {
-//            m_fileExistsDialog->setSavePath(filePath);
-//            m_fileExistsDialog->setNote(m_currSelNote);
-//            m_fileExistsDialog->show();
-//            //DDialog *fileExistDialog = UiUtil::createDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("是")), QString(tr("否")));;
-//        }
+        else if(UiUtil::checkFileExist(filePath))
+        {
+            m_fileExistsDialog->setSavePath(filePath);
+            m_fileExistsDialog->setNote(m_currSelNote);
+            m_fileExistsDialog->show();
+            //DDialog *fileExistDialog = UiUtil::createDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("是")), QString(tr("否")));;
+        }
         else
         {
             bool result = false;
-            filePath.append(saveInfo.fileExtension);
+            //filePath.append(saveInfo.fileExtension);
             if (VOICE == m_currSelNote.noteType)
             {
                 result = UiUtil::saveMP3(UiUtil::getRecordingVoiceFullPath(m_currSelNote.contentPath), filePath);
@@ -434,28 +436,55 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     {
         if (m_noteController->deleteNote(m_currSelNote))
         {
+            bool move = false;
+            int moveMovment = 0;
             if(nullptr != m_currPlayingItem)
             {
                 if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
                 {
                     audioPlayer->stop();
                 }
+
+                int delRow = -1;
+                NOTE_TYPE delType = m_currSelNote.noteType;
+                getRowByID(m_currSelNote.id,delType,delRow);
+                int playRow = -1;
+                NOTE_TYPE playType = VOICE;
+                getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
+
+                if(delRow < playRow)
+                {
+                    move = true;
+                    moveMovment = this->itemWidget(m_currSelItem)->height();
+                    qDebug()<<"moveMovment: "<<moveMovment;
+                }
             }
+
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
             m_addTextBtn->setDisableBtn(false);
-            changeSliderPosByHand();
+
+            if(move)
+            {
+                changeSliderPosByHand(moveMovment);
+            }
+
         }
         else {
             qDebug() << "error: delete item error";
         }
     }
     else {
-        TextNoteItem *pPreDelItem = (TextNoteItem*)this->itemWidget(m_currSelItem);
-        pPreDelItem->changeToEditMode();
+        NOTE_TYPE delType = m_currSelNote.noteType;
+        if(TEXT == delType)
+        {
+            TextNoteItem *pPreDelItem = (TextNoteItem*)this->itemWidget(m_currSelItem);
+            pPreDelItem->changeToEditMode();
+        }
     }
-    handleVScrollBarChanged(-1);
+    Intancer::get_Intancer()->setTryToDelEmptyTextNote(false);
+    //handleVScrollBarChanged(-1);
 }
 
 void RightNoteList::handleClickRecordButton()
@@ -495,7 +524,10 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         //QPoint x = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
         qDebug() << "width: " << waveformPos.width() << "height: " << m_myslider->y();
         // - m_myslider->m_handleTextHeight
-        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 32, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        qDebug()<<"play y:"<<waveformPoint.y() - 27;
+        qDebug()<<"before m_currPlayingItem->pos().y():"<<m_currPlayingItem->pos().y();
+        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        curWaveformPosWidth = waveformPos.width() + m_myslider->getHandlerWidth();
         m_myslider->setRange(0, waveformPos.width());
         m_myslider->show();
     }
@@ -537,9 +569,53 @@ QString RightNoteList::getPlayingFilepath()
     }
 }
 
-void RightNoteList::changeSliderPosByHand()
+void RightNoteList::changeSliderPosByHand(int moveMovment)
 {
-    this->verticalScrollBar()->setValue(0);
+    if(nullptr != m_myslider)
+    {
+        if (!m_myslider->isHidden())
+        {
+            m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
+        }
+    }
+}
+
+bool RightNoteList::getRowByID(int id, NOTE_TYPE type,  int &row)
+{
+    bool ret = false;
+
+    int count = this->count();
+    for(int i = 0; i < count; i++)
+    {
+        QListWidgetItem* ptmp = this->item(i);
+
+        if(VOICE == type)
+        {
+            VoiceNoteItem* pWidget = (VoiceNoteItem*)this->itemWidget(ptmp);
+            if(pWidget->getNoteID() == id)
+            {
+                ret = true;
+                row = i;
+                break;
+            }
+        }
+        else if(TEXT == type)
+        {
+            TextNoteItem* pWidget = (TextNoteItem*)this->itemWidget(ptmp);
+            if(pWidget->getId() == id)
+            {
+                ret = true;
+                row = i;
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return ret;
 }
 
 void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
@@ -560,14 +636,14 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     {
         int audioLength = m_currPlayingItem->m_note.voiceTime;
         int sliderPos = 0;
-        qDebug()<<"position:"<<position;
+//        qDebug()<<"position:"<<position;
         if (audioLength > 0)
         {
             sliderPos = position * ( m_myslider->width()) / audioLength;
         }
 
-        qDebug() << "handleAudioPositionChanged:" << position;
-        qDebug() << "sliderPos:" <<sliderPos;
+//        qDebug() << "handleAudioPositionChanged:" << position;
+//        qDebug() << "sliderPos:" <<sliderPos;
         m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
         m_myslider->setTimeText(UiUtil::formatMillisecond(position));
         m_myslider->setSliderPostion(sliderPos);

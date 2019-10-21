@@ -56,9 +56,11 @@ void VoiceNoteItem::initUI()
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
+    m_itemLayout->addSpacing(6);
     m_itemLayout->addWidget(m_timeLabel);
+    m_itemLayout->addSpacing(2);
     m_itemLayout->addWidget(m_bgWidget);
-    m_itemLayout->addSpacing(5);
+    m_itemLayout->addSpacing(6);
     m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
     this->setLayout(m_itemLayout);
     QSizePolicy sp = m_bgWidget->sizePolicy();
