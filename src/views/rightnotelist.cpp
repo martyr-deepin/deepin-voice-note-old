@@ -152,7 +152,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem();
-        item->setSizeHint(QSize(this->width(), 94));
+        item->setSizeHint(QSize(this->width(), 98));
         this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, voiceItem);
         voiceItem->init();
@@ -444,6 +444,8 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
+            m_addTextBtn->setDisableBtn(false);
+            changeSliderPosByHand();
         }
         else {
             qDebug() << "error: delete item error";
@@ -493,7 +495,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         //QPoint x = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
         qDebug() << "width: " << waveformPos.width() << "height: " << m_myslider->y();
         // - m_myslider->m_handleTextHeight
-        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 16, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 32, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
         m_myslider->setRange(0, waveformPos.width());
         m_myslider->show();
     }
@@ -533,6 +535,11 @@ QString RightNoteList::getPlayingFilepath()
     } else {
         return "";
     }
+}
+
+void RightNoteList::changeSliderPosByHand()
+{
+    this->verticalScrollBar()->setValue(0);
 }
 
 void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)

@@ -21,9 +21,6 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 
     this->setLayout(m_itemLayout);
 
-    QPalette pb;
-    pb.setColor(QPalette::Button,QColor(00,00,00,10));
-    m_addBtn->setPalette(pb);
 }
 
 AddTextBtn::~AddTextBtn()
@@ -46,7 +43,11 @@ void AddTextBtn::init()
         m_addBtn->setText("点击添加文字记事项");
 
         QPalette pe;
-        pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
+        //pe.setColor(QPalette::Text,QColor(82,106,127,00));
+        pe.setColor(QPalette::ButtonText,QColor(82,106,127,255));
+        pe.setColor(QPalette::Button,QColor(00,00,00,10));
+        //pe.setColor(QPalette::Text,QColor(00,82,106,127));
+        //pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
         m_addBtn->setPalette(pe);
     }
 }

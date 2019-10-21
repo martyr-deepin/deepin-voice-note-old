@@ -108,9 +108,8 @@ private:
     void initConnection();
     void showFileDialog(SAVE_INFO saveInfo);
     QListWidgetItem *getListItemById(int id);
-
-
     QString getPlayingFilepath();
+    void changeSliderPosByHand();
 };
 
 #endif // RIGHTNOTELIST_H

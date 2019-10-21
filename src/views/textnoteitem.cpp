@@ -146,7 +146,9 @@ void TextNoteItem::initUI()
     labelFont.setPointSize(9);
     m_textEdit->setFont(labelFont);
 
+    m_hBoxLayout->addSpacing(16);
     m_hBoxLayout->addWidget(m_textEdit);
+    m_hBoxLayout->addSpacing(10);
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     m_textEdit->setPalette(pl);
@@ -164,28 +166,9 @@ void TextNoteItem::initUI()
         m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
 
-//    m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey));
-
-//    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-//    sizePolicy.setHorizontalStretch(0);
-//    sizePolicy.setVerticalStretch(0);
-//    sizePolicy.setHeightForWidth(m_textEdit->sizePolicy().hasHeightForWidth());
-//    m_textEdit->setSizePolicy(sizePolicy);
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-
-//    m_textLabel = new QLabel(m_bgWidget);
-//    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-//    sizePolicy.setHorizontalStretch(0);
-//    sizePolicy.setVerticalStretch(0);
-//    sizePolicy.setHeightForWidth(m_textLabel->sizePolicy().hasHeightForWidth());
-//    m_textLabel->setSizePolicy(sizePolicy);
-//    m_textLabel->setText(textNote.contentText);
-//    m_plainTextEdit = new QPlainTextEdit(m_bgWidget);
-
-   //m_hBoxLayout->addWidget(m_textLabel);
-//   m_menuBtn = new DImageButton(m_bgWidget);
 
    m_MenuBtnBackground = new DWidget(m_bgWidget);
    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
@@ -213,6 +196,7 @@ void TextNoteItem::initUI()
 //   m_arrowMenu->setContent(m_contextMenu);
 //   m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
    m_hBoxLayout->addWidget(m_MenuBtnBackground);
+   m_hBoxLayout->addSpacing(8);
 
    textAreaChanged();
 
@@ -241,10 +225,17 @@ void TextNoteItem::changeToEditMode()
 
     if(nullptr != m_textEdit)
     {
+        m_bakContent = m_textEdit->toPlainText();
         m_textEdit->setReadOnly(false);
         m_textEdit->setFocus();
         m_isEdited = true;
     }
+}
+
+void TextNoteItem::readFromDatabase()
+{
+    m_textEdit->readFromDatabase();
+    handleTextEditFocusOut();
 }
 
 void TextNoteItem::updateNote()
@@ -293,6 +284,7 @@ void TextNoteItem::textAreaChanged()
 
 void TextNoteItem::handleTextEditClicked()
 {
+    m_bakContent = m_textEdit->toPlainText();
     if (m_isTextConverted)
     {
         emit textEditClicked(m_textNote);
@@ -322,7 +314,10 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     m_textNote.contentText = m_textEdit->toPlainText();
-    m_textNote.createTime = QDateTime::currentDateTime();
+    if(m_bakContent != m_textNote.contentText)
+    {
+        m_textNote.createTime = QDateTime::currentDateTime();
+    }
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
     m_noteCtr->updateNote(m_textNote);
     if(m_textNote.contentText.isEmpty())

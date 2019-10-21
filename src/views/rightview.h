@@ -25,6 +25,7 @@ public:
     void addNoteToNoteList(NOTE note);
     void updateNoteList();
     void searchNoteList(QString searchKey);
+    void updateFromDetal(int ID);
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();

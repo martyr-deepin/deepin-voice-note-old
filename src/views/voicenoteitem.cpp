@@ -46,12 +46,13 @@ int VoiceNoteItem::getNoteID()
 
 void VoiceNoteItem::initUI()
 {
-    this->setFixedHeight(94);
+    this->setFixedHeight(98);
     this->setBlurEnabled(false);
 
     m_timeLabel = new DLabel();
 
     m_bgWidget = new DBlurEffectWidget();
+    m_bgWidget->setFixedHeight(68);
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -119,12 +120,14 @@ void VoiceNoteItem::initUI()
     m_voiceTimeLabel->setFont(font);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
+    m_hBoxLayout->addSpacing(6);
     m_hBoxLayout->addWidget(m_playingButton);
     m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addSpacing(20);
     m_hBoxLayout->addWidget(m_voiceTimeLabel);
     m_hBoxLayout->addSpacing(10);
     m_hBoxLayout->addWidget(m_menuBtn);
+    m_hBoxLayout->addSpacing(6);
 
     //m_hBoxLayout->addWidget(m_menuBtn);
 

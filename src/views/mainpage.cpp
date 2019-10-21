@@ -95,3 +95,8 @@ void MainPage::searchFolder(QString searchKey)
 {
     ((LeftView*)m_leftView)->searchFolder(searchKey);
 }
+
+void MainPage::updateFromDetal(int id)
+{
+    m_rightView->updateFromDetal(id);
+}

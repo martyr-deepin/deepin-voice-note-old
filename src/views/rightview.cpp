@@ -315,6 +315,20 @@ void RightView::searchNoteList(QString searchKey)
     }
 }
 
+void RightView::updateFromDetal(int ID)
+{
+    for(int i = 0; i < m_noteListWidget->count(); i++)
+    {
+        QListWidgetItem* pitem = m_noteListWidget->item(i);
+        TextNoteItem* pWidget = (TextNoteItem*)m_noteListWidget->itemWidget(pitem);
+        if(ID == pWidget->getId())
+        {
+            pWidget->readFromDatabase();
+            break;
+        }
+    }
+}
+
 void RightView::handleStartRecord()
 {
     m_recordStackedWidget->setCurrentIndex(1);

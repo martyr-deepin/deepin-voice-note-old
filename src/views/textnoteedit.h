@@ -18,7 +18,9 @@ public:
     ~TextNoteEdit();
 
     void setTextNote(NOTE textNote, QString searchKey);
+    int getID();
     void searchText(QString searchKey);
+    void readFromDatabase();
 signals:
     void clicked();
     void focusOutSignal();

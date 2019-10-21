@@ -46,6 +46,11 @@ void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
     this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
 }
 
+int TextNoteEdit::getID()
+{
+    return m_textNote.id;
+}
+
 void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 {
     emit clicked();
@@ -100,5 +105,11 @@ void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
     this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
+}
+
+void TextNoteEdit::readFromDatabase()
+{
+    m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+    this->setText(m_textNote.contentText);
 }
 

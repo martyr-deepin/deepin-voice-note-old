@@ -40,7 +40,7 @@ const int Waveform::WAVE_WIDTH = 2;
 const int Waveform::WAVE_DURATION = 4;
 
 
-Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")
+Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")//m_greyColor("#848484")
 {
     //setFixedSize(350, 50);
 

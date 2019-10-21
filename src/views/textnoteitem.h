@@ -29,6 +29,7 @@ public:
     ~TextNoteItem();
 
     NOTE m_textNote;
+    QString m_bakContent;
     DLabel *m_timeLabel;
     DBlurEffectWidget *m_bgWidget;
     DWidget *m_MenuBtnBackground;
@@ -44,6 +45,7 @@ public:
     TextNoteEdit *m_textEdit;
 //    DArrowRectangle *m_arrowMenu;
     void changeToEditMode();
+    void readFromDatabase();
     void init();
     int getId();
 signals:

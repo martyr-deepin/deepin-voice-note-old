@@ -162,6 +162,8 @@ void MyMainWindow::initStackedWidget()
 void MyMainWindow::showNoteDetail(NOTE note)
 {
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
+    m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+
     m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     m_replaceForReturn->setVisible(false);
@@ -173,6 +175,7 @@ void MyMainWindow::showListPage()
     {
         m_mainPage->searchFolder(m_searchEdit->text());
     }
+    m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     m_stackedWidget->setCurrentIndex(0);
     m_returnBtn->setVisible(false);
     m_replaceForReturn->setVisible(true);
