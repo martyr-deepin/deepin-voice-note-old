@@ -37,13 +37,12 @@ public:
     QHBoxLayout *m_hBoxLayout;
     QLabel *m_textLabel;
     QPlainTextEdit *m_plainTextEdit;
-    DImageButton *m_menuBtn;
-    //DIconButton *m_menuBtn;
+    //DImageButton *m_menuBtn;
+    DIconButton *m_menuBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
-//    DArrowRectangle *m_arrowMenu;
     void changeToEditMode();
     void readFromDatabase();
     void init();
@@ -53,7 +52,8 @@ signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
-    void sig_TextEditEmpty(NOTE m_textNote);
+    void sig_fouceOutAndEditEmpty(NOTE m_textNote);
+    void sig_TextEditEmpty();
     void sig_TextEditNotEmpty();
 
 public slots:

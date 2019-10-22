@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QScrollBar>
 #include <QStandardPaths>
+#include <QFileInfo>
 
 
 MMenu::MMenu(QWidget *parent)
@@ -39,6 +40,10 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
   , m_arrowButtonPressed(false)
   , m_actionHoverd(false)
 {
+    m_arrowMenu = nullptr;
+    m_contextMenu = nullptr;
+    m_saveAsAction = nullptr;
+    m_delAction = nullptr;
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     initUI();
     initConnection();
@@ -49,6 +54,94 @@ RightNoteList::~RightNoteList()
 
 }
 
+void RightNoteList::createDArrowMenu()
+{
+    if(nullptr == m_arrowMenu && nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
+    {
+        m_contextMenu = new MMenu;
+        m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
+        m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
+//        if (type == NOTE_TYPE::TEXT)
+//        {
+//            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+//            //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
+//        }
+//        else
+//        {
+//            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+//            //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_MP3),this);
+//        }
+//        m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
+        m_contextMenu->addAction(m_saveAsAction);
+        m_contextMenu->addAction(m_delAction);
+        m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
+        m_arrowMenu->setHeight(200);
+        m_arrowMenu->setWidth(200);
+        m_arrowMenu->setContent(m_contextMenu);
+        m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
+        m_arrowMenu->setVisible(false);
+        m_contextMenu->setVisible(false);
+
+        connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
+        connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
+        connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+        connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
+        connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+    }
+}
+
+void RightNoteList::destroyDArrowMenu()
+{
+    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    {
+        disconnect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
+        disconnect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
+        disconnect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+        disconnect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
+        disconnect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+
+        delete m_saveAsAction;
+        m_saveAsAction = nullptr;
+
+        delete m_delAction;
+        m_delAction = nullptr;
+
+        delete m_contextMenu;
+        m_contextMenu = nullptr;
+
+        delete m_arrowMenu;
+        m_arrowMenu = nullptr;
+    }
+}
+
+void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
+{
+    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    {
+        m_arrowMenu->setVisible(true);
+        m_contextMenu->setVisible(true);
+        if (type == NOTE_TYPE::TEXT)
+        {
+            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+        }
+        else
+        {
+            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+        }
+        m_arrowMenu->move(x,y);
+    }
+}
+
+void RightNoteList::hideDArrowMenu()
+{
+    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    {
+        m_arrowMenu->setVisible(false);
+        m_contextMenu->setVisible(false);
+        m_arrowMenu->move(-500,-500);
+    }
+}
+
 void RightNoteList::initUI()
 {
     this->setFrameShape(QListWidget::NoFrame);
@@ -56,18 +149,7 @@ void RightNoteList::initUI()
 
     m_addTextBtn = nullptr;
 
-    m_contextMenu = new MMenu;
-    m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
-    m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
-    m_contextMenu->addAction(m_saveAsAction);
-    m_contextMenu->addAction(m_delAction);
-    m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
-    m_arrowMenu->setHeight(200);
-    m_arrowMenu->setWidth(200);
-
-    m_arrowMenu->setContent(m_contextMenu);
-    m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
-    m_arrowMenu->hide();
+    createDArrowMenu();
 
     m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
@@ -96,11 +178,11 @@ void RightNoteList::initUI()
 }
 void RightNoteList::initConnection()
 {
-    connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
-    connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
-    connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
-    connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
-    connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+//    connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
+//    connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
+//    connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+//    connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
+//    connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
 //    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));
@@ -127,8 +209,11 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
+        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
+        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
         connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
-        connect(textItem, SIGNAL(sig_TextEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
+        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
+        connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
         connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
         QListWidgetItem *item=new QListWidgetItem();
@@ -151,6 +236,10 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
         connect(voiceItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
+        connect(voiceItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
+        connect(voiceItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
+
+
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         QListWidgetItem *item=new QListWidgetItem();
@@ -199,9 +288,9 @@ bool RightNoteList::eventFilter(QObject *o, QEvent *e)
         case QEvent::MouseButtonRelease:
         if((!m_arrowButtonPressed)&&(!m_actionHoverd))
         {
-            m_arrowMenu->hide();
+            hideDArrowMenu();
             m_actionHoverd = false;
-            //qDebug()<<"click filter";
+            qDebug()<<"RightNoteList MouseButtonRelease hide";
         }
         //qDebug()<<"click filter";
         break;
@@ -230,42 +319,31 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
-    if(m_arrowMenu->isHidden())
+    //if(nullptr == m_arrowMenu)
+    if(!m_arrowMenu->isVisible())
     {
         QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
         m_currSelItem= this->itemAt(itemGlobalPoint);
         m_currSelNote = note;
-        if (note.noteType == NOTE_TYPE::TEXT)
-        {
-            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
-        }
-        else {
-            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
-        }
-        m_arrowMenu->show(menuArrowPointGlobal.x(), menuArrowPointGlobal.y());
+        showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
+        qDebug()<<"handleMenuBtnClicked show";
     }
     else {
-        m_arrowMenu->hide();
+        hideDArrowMenu();
+//        m_arrowMenu->setVisible(false);
+//        m_contextMenu->setVisible(false);
         m_actionHoverd = false;
+        qDebug()<<"handleMenuBtnClicked hide";
     }
-
-//    else
-//    {
-//        m_arrowMenu->hide();
-//    }
-
-
-//    this->removeItemWidget(widgetItem);
-//    delete widgetItem;
-//    qDebug() << "handleMenuBtnClicked: x:" << itemGlobalPoint.x() << "handleMenuBtnClicked: y: " << itemGlobalPoint.y();
-
 }
 
 
 void RightNoteList::handleDelItem(bool)
 {
     m_delConfirmDialog->show();
-    m_arrowMenu->hide();
+    hideDArrowMenu();
+//    m_arrowMenu->setVisible(false);
+//    m_contextMenu->setVisible(false);
     m_actionHoverd = false;
 //    return;
 }
@@ -329,7 +407,9 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
 
 void RightNoteList::handleSaveAsItem(bool)
 {
-    m_arrowMenu->hide();
+    hideDArrowMenu();
+//    m_arrowMenu->setVisible(false);
+//    m_contextMenu->setVisible(false);
     m_actionHoverd = false;
 
     SAVE_INFO saveInfo;
@@ -350,26 +430,27 @@ void RightNoteList::handleSaveAsItem(bool)
 
 void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 {
-//    DFileDialog fileDialog(this);
-//    fileDialog.setWindowTitle(saveInfo.windowTitle);
-//    fileDialog.setDirectory(m_defaultTxtPath);
-//    fileDialog.setFileMode(DFileDialog::Directory);
-//    fileDialog.addLineEdit(tr("文件名"));
-//    fileDialog.setLabelText(DFileDialog::Accept, tr("保存"));
-
     DFileDialog fileDialog(this);
         fileDialog.setWindowTitle(saveInfo.windowTitle);
         fileDialog.setDirectory(m_defaultTxtPath);
         fileDialog.setFileMode(DFileDialog::Directory);
         fileDialog.setAcceptMode(DFileDialog::AcceptSave);
+
+        QDir dir(m_defaultTxtPath);
+        QStringList files;
+        QString newName;
         if (TEXT == m_currSelNote.noteType) {
             fileDialog.setDefaultSuffix("txt");
             fileDialog.setNameFilter(tr("TXT(*.txt)"));
-            fileDialog.selectFile("记事本1");
+            scanData(dir,".txt", files);
+            getNewName(newName,files);
+            fileDialog.selectFile("记事本" + newName);
         }else {
             fileDialog.setDefaultSuffix("mp3");
             fileDialog.setNameFilter(tr("MP3(*.mp3)"));
-            fileDialog.selectFile("记事本1");
+            scanData(dir,".mp3", files);
+            getNewName(newName,files);
+            fileDialog.selectFile("记事本" + newName);
         }
 
     //fileDialog->setFilter(QDir::filePath());
@@ -412,6 +493,56 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 
     } else {
        //QMessageBox::information(NULL, tr("Path"), tr("You didn't select any files."));
+    }
+}
+
+void RightNoteList::scanData(const QDir &fromDir, const QString &filter, QStringList &files)
+{
+    QFileInfoList fileInfoList = fromDir.entryInfoList(QDir::Files);
+    //QFileInfoList fileInfoList = fromDir.entryInfoList();
+    files.clear();
+    for(int i = 0; i < fileInfoList.count(); i++)
+    {
+        if(fileInfoList.at(i).fileName().endsWith(filter))
+        {
+            QString filename = fileInfoList.at(i).fileName();
+            filename = filename.remove(filename.count() - filter.count(),filter.count());
+            if(filename.count() > 3)
+            {
+                QString prefilename = filename;
+                QString tmpfilename = filename.remove(3,filename.count() - 3);
+                if(0 == tmpfilename.compare("记事本"))
+                {
+                    prefilename = prefilename.remove(0,3);
+                    files.append(prefilename);
+                }
+            }
+        }
+    }
+}
+
+void RightNoteList::getNewName(QString &outName, QStringList files)
+{
+    int newName = 0;
+    bool find = false;
+    while(!find)
+    {
+        newName++;
+        outName = QString::number(newName);
+        bool hassame = false;
+        for(int i = 0; i < files.count(); i++)
+        {
+            if(0 == files.at(i).compare(outName))
+            {
+                hassame = true;
+                break;
+            }
+        }
+
+        if(!hassame)
+        {
+            find = true;
+        }
     }
 }
 

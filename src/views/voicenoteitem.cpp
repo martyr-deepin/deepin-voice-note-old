@@ -106,11 +106,14 @@ void VoiceNoteItem::initUI()
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);
-    m_menuBtn = new DImageButton(m_bgWidget);
-    m_menuBtn->setFixedSize(QSize(44, 44));
-    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
-    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
-    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
+    m_menuBtn = new DIconButton(m_bgWidget);
+    //m_menuBtn = new DImageButton(m_bgWidget);
+    m_menuBtn->setFixedSize(QSize(40, 40));
+    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+    m_menuBtn->setIconSize(QSize(40,40));
+//    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
+//    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
+//    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
     m_voiceTimeLabel = new QLabel();
     m_voiceTimeLabel->setFixedSize(46, 20);
     QPalette pe;
@@ -138,7 +141,11 @@ void VoiceNoteItem::initUI()
 
 void VoiceNoteItem::initConnection()
 {
-    connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::pressed, this, &VoiceNoteItem::sig_menuBtnPressed);
+    connect(m_menuBtn, &QAbstractButton::pressed, this, &VoiceNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::sig_menuBtnReleased);
+
+    //connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
     connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
 
@@ -150,8 +157,6 @@ void VoiceNoteItem::handleMenuBtnClicked()
     QPoint arrowPoint(pGlobal.x() + m_menuBtn->width() / 2, pGlobal.y() +m_menuBtn->height());
     QPoint pParent = m_menuBtn->mapTo(this, QPoint(0,0));
     emit menuBtnClicked(arrowPoint, pParent, this, m_note);
-    //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
-    //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
 }
 
 void VoiceNoteItem::handleStopPlay()

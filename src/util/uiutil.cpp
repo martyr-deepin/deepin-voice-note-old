@@ -73,7 +73,7 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
     dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
-    dialog->addButton(okStr, false, DDialog::ButtonNormal);
+    dialog->addButton(okStr, false, DDialog::ButtonWarning);
 
     return dialog;
 }

@@ -6,7 +6,7 @@
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
 #include "addtextbtn.h"
-
+#include <QDir>
 #include <DListWidget>
 #include <notecontroller.h>
 #include <consts.h>
@@ -51,7 +51,6 @@ signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();
     void sigBoardPress();
-
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
@@ -105,9 +104,15 @@ private:
     bool m_actionHoverd;
     int curWaveformPosWidth;
     //MyCustomSlider *m_myslider;
+    void createDArrowMenu();
+    void destroyDArrowMenu();
+    void showDArrowMenu(int x, int y, NOTE_TYPE type);
+    void hideDArrowMenu();
     void initUI();
     void initConnection();
     void showFileDialog(SAVE_INFO saveInfo);
+    void scanData(const QDir &fromDir, const QString &filter, QStringList &files);
+    void getNewName(QString &outName, QStringList files);
     QListWidgetItem *getListItemById(int id);
     QString getPlayingFilepath();
     void changeSliderPosByHand(int moveMovment);

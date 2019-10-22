@@ -23,43 +23,8 @@ RightView::~RightView()
 
 void RightView::initUI()
 {
-//    DArrowRectangle *m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWidget, this);
-//    m_arrowMenu->setHeight(80);
-//    m_arrowMenu->setWidth(80);
-//    m_arrowMenu->show(0, 0);
-
-
     initNoteList();
     this->resize(548,this->height());
-//    //this->setStyleSheet("background: blue");
-//    m_stackedWidgetLayout = new QVBoxLayout();
-//    this->setLayout(m_stackedWidgetLayout);
-//    m_stackedWidget = new QStackedWidget();
-//    m_stackedWidgetLayout->addWidget(m_stackedWidget);
-//    this->setStyleSheet("background: green");
-//    //m_stackedWidget->setGeometry(QRect(10, 10, 548, this->height()));
-//    //m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
-//    m_stackedWidget->setGeometry(QRect(0, 0, this->width(), this->height()));
-//    m_stackedWidget->setObjectName("stackedWidget");
-//    /*self.listPage.setObjectName("listPage")
-//    self.listWidget = QtWidgets.QListWidget(self.listPage)
-//    self.listWidget.setGeometry(QtCore.QRect(0, 10, 1111, 861))
-//    self.listWidget.setObjectName("listWidget")*/
-//    //m_noteListPage->resize(548,m_noteListPage->height());
-//    m_stackedWidget->addWidget(m_noteListPage);
-//    //m_noteListWidget->resize(548,m_noteListWidget->height());
-//    m_detailPage = new QWidget();
-//    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
-////    self.detailPage = QtWidgets.QWidget()
-////    self.detailPage.setObjectName("detailPage")
-////    self.plainTextEdit = QtWidgets.QPlainTextEdit(self.detailPage)
-////    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
-////    self.plainTextEdit.setObjectName("plainTextEdit")
-//    m_stackedWidget->addWidget(m_detailPage);
-//    QPalette palette;
-//    palette.setColor(QPalette::Background, QColor(255, 255, 255));
-//    this->setAutoFillBackground(true);
-//    this->setPalette(palette);
 
     m_NoSearchResault = new DLabel(this);
     m_NoSearchResault->setText("无结果");

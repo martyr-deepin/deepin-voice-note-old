@@ -1,5 +1,6 @@
 #include "textnoteitem.h"
 #include "uiutil.h"
+#include "intancer.h"
 #include <DPalette>
 #include <QDebug>
 #include <QGraphicsOpacityEffect>
@@ -174,28 +175,19 @@ void TextNoteItem::initUI()
    m_MenuBtnBackground = new DWidget(m_bgWidget);
    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
 
-   //m_menuBtn = new DIconButton(m_MenuBtnBackground);
-   m_menuBtn = new DImageButton(m_MenuBtnBackground);
+   m_menuBtn = new DIconButton(m_MenuBtnBackground);
+   //m_menuBtn = new DImageButton(m_MenuBtnBackground);
    m_menuBtn->setFixedSize(QSize(40, 40));
-   m_menuBtn->move(0,7);
-   //m_menuBtn->setIcon();
-   m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
-   m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
-   m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
+   m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+   m_menuBtn->setIconSize(QSize(40,40));
+//   m_menuBtn->setFixedSize(QSize(40, 40));
+//   m_menuBtn->move(0,7);
+//   //m_menuBtn->setIcon();
+//   m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
+//   m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
+//   m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
    m_menuBtn->setDisabled(true);
 
-//   m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
-//   m_arrowMenu->setHeight(200);
-//   m_arrowMenu->setWidth(200);
-////   m_arrowMenu->move((m_menuBtn->x() + m_menuBtn->width() / 2), (m_menuBtn->y() + m_menuBtn->height() ));
-//   qDebug() << "m_menuBtn->x():" << m_menuBtn->x() << ",m_menuBtn->width() / 2 :" << m_menuBtn->width() / 2 << ",m_menuBtn->y() :" << m_menuBtn->y() << ",m_menuBtn->height(): " << m_menuBtn->height();
-//   //m_arrowMenu->move(100, 100);
-////   m_arrowMenu->show(0, 0);
-//   //m_arrowMenu->setContent(m_menuBtn);
-//   //m_arrowMenu->setVisible(true);
-
-//   m_arrowMenu->setContent(m_contextMenu);
-//   m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
    m_hBoxLayout->addWidget(m_MenuBtnBackground);
    m_hBoxLayout->addSpacing(8);
 
@@ -213,9 +205,13 @@ void TextNoteItem::initConnection()
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOut);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
-    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
+    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
+//    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
+    //connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
-    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
+//    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
 }
 
 void TextNoteItem::changeToEditMode()
@@ -279,21 +275,25 @@ void TextNoteItem::textAreaChanged()
     }
     else {
         m_menuBtn->setDisabled(true);
+        emit sig_TextEditEmpty();
     }
 }
 
 
 void TextNoteItem::handleTextEditClicked()
 {
-    m_bakContent = m_textEdit->toPlainText();
-    if (m_isTextConverted)
+    if(!Intancer::get_Intancer()->getTryToDelEmptyTextNote())
     {
-        emit textEditClicked(m_textNote);
-    }
-    else
-    {
-        m_textEdit->setReadOnly(false);
-        m_isEdited = true;
+        m_bakContent = m_textEdit->toPlainText();
+        if (m_isTextConverted)
+        {
+            emit textEditClicked(m_textNote);
+        }
+        else
+        {
+            m_textEdit->setReadOnly(false);
+            m_isEdited = true;
+        }
     }
 }
 
@@ -307,8 +307,6 @@ void TextNoteItem::handleMenuBtnClicked()
         NOTE tmpNote = m_textNote;
         tmpNote.contentText = m_noteCtr->getConttextByNoteID(tmpNote.folderId, tmpNote.id);
         emit menuBtnClicked(arrowPoint, pParent, this, tmpNote);
-        //qDebug()<< "p.x: " << p.x() << ", p.y: " << p.y();
-        //m_arrowMenu->show(p.x() + m_menuBtn->width() / 2, p.y() +m_menuBtn->height());
 //    }
 }
 
@@ -323,7 +321,7 @@ void TextNoteItem::handleTextEditFocusOut()
     m_noteCtr->updateNote(m_textNote);
     if(m_textNote.contentText.isEmpty())
     {
-        emit sig_TextEditEmpty(m_textNote);
+        emit sig_fouceOutAndEditEmpty(m_textNote);
     }
     else
     {
@@ -356,7 +354,7 @@ void TextNoteItem::handleTextEditFocusOut()
 void TextNoteItem::handleMenuBtnStateChanged()
 {
     int preState = m_menuBtnState;
-    m_menuBtnState = m_menuBtn->getState();
+    //m_menuBtnState = m_menuBtn->getState();
     qDebug()<<"handleMenuBtnCheckeChanged m_menuBtnState:"<<m_menuBtnState;
 
     if((preState == 1) && (m_menuBtnState == 2))
