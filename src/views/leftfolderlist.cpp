@@ -40,6 +40,8 @@ void LeftFolderList::initUI()
     m_boader->move(0,0);
 
     m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除记事本吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
+
+    m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("录音中禁止删除记事本")), nullptr);
 }
 
 void LeftFolderList::initConnection()
@@ -118,16 +120,29 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
     if (index == 1){
         FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 
-        if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
+        if(!Intancer::get_Intancer()->getRecodingFlag())
         {
-            QListWidgetItem * item = this->takeItem(this->currentRow());
-            delete item;
-            emit itemClicked(this->currentItem());
-            //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
+            if (m_folderCtr->deleteFolder(itemDel->m_folder.id))
+            {
+                QListWidgetItem * item = this->takeItem(this->currentRow());
+                delete item;
+                emit itemClicked(this->currentItem());
+
+                if(this->count() == 0)
+                {
+                    emit sigAllFolderDeleted();
+                }
+                //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
+            }
+            else {
+                qDebug() << "error: delete item error";
+            }
         }
-        else {
-            qDebug() << "error: delete item error";
+        else
+        {
+            m_delNoPromisDialog->show();
         }
+
     }
     return;
 }
@@ -135,6 +150,7 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
 void LeftFolderList::handleDelItem(bool checked)
 {
     m_delConfirmDialog->show();
+
 //    FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 
 //    if (m_folderCtr->deleteFolder(itemDel->m_folder.id))

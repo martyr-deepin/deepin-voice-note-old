@@ -39,8 +39,11 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_leftView, SIGNAL(searchNote(int, QString)), m_rightView, SLOT(handleSearchNote(int, QString)));
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
+    QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
+    QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
+
 
     //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
 }
@@ -54,6 +57,7 @@ void MainPage::initSplitter(){
     m_splitter->addWidget(m_rightView);
     m_splitter->setChildrenCollapsible(false);
     qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
+    //m_leftView->selectTheFirstFolderByCode();
 }
 
 void MainPage::initLeftView(){

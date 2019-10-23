@@ -71,12 +71,12 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     {
         return;
     }
+    qDebug()<<"--------------------------------edit focusOutEvent";
     emit focusOutSignal();
 }
 void TextNoteEdit::initConnection()
 {
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);
-
 }
 
 void TextNoteEdit::updateNote()

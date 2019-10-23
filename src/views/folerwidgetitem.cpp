@@ -81,8 +81,8 @@ void FolerWidgetItem::changeToClickMode()
         labelFontForWidth.setFamily("SourceHanSansSC");
         labelFontForWidth.setPointSize(11);
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+        //m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
         m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
-
         //m_BackGround->setVisible(false);
     }
 }

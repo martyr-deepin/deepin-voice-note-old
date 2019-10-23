@@ -1,3 +1,4 @@
+
 #ifndef RIGHTNOTELIST_H
 #define RIGHTNOTELIST_H
 
@@ -15,6 +16,7 @@
 #include <DDialog>
 #include <QMediaPlayer>
 #include <DPushButton>
+#include <DMenu>
 
 //#include <DArrowRectangle>
 
@@ -22,7 +24,7 @@ DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
 
-class MMenu : public QMenu
+class MMenu : public DMenu
 {
     Q_OBJECT
 public:
@@ -34,6 +36,7 @@ signals:
 
 protected:
     void leaveEvent(QEvent* event);
+    void paintEvent(QPaintEvent *event);
 };
 
 //右侧文字语音记录列表
@@ -51,6 +54,7 @@ signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();
     void sigBoardPress();
+    void sigBoardPressToLeft();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

@@ -42,7 +42,8 @@ void VoiceNotebookApp::initApp()
 {
     m_app->setAttribute(Qt::AA_UseHighDpiPixmaps);
     //m_app->setTheme("light");
-    m_app->loadTranslator();
+    m_app->loadTranslator(QList<QLocale>() << QLocale::system());
+    //m_app->loadTranslator();
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("deepin-voice-note");
     m_app->setApplicationVersion(DApplication::buildVersion("20191022"));
@@ -53,7 +54,6 @@ void VoiceNotebookApp::initApp()
     m_app->setApplicationDescription("This is a dtk voice notebook application.");
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
-
 
 
     //save theme

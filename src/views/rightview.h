@@ -12,6 +12,7 @@
 #include <dimagebutton.h>
 //#include <DImageButton>
 #include <QObject>
+#include <DFloatingButton>
 
 DWIDGET_USE_NAMESPACE
 //右侧文字语音记录View
@@ -28,6 +29,7 @@ public:
     void updateFromDetal(int ID);
     void stopAllPlayback();
     void cancleRecord();
+
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();
@@ -42,6 +44,8 @@ public slots:
     void handlecancelRecord();
     void handleClearNote();
     void OnCurrentRowChanged(int curRow);
+    void OnAllFolderGone();
+    void OnAddAFolder();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -61,7 +65,8 @@ private:
     QPlainTextEdit *m_plainTextEdit;
     QVBoxLayout *m_noteListLayout;
     RightNoteList *m_noteListWidget;
-    DImageButton *m_addVoiceBtn;
+    //DImageButton *m_addVoiceBtn;
+    DFloatingButton *m_addVoiceBtn;
     NoteController *m_noteController;
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;

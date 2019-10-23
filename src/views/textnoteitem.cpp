@@ -48,7 +48,7 @@ void TextNoteItem::initUI()
 
     //this->setFixedHeight(150);
     //this->setFixedHeight(140);
-    this->setFixedHeight(123);
+    this->setFixedHeight(TEXTNOTE_HEIGHT);
     //this->resize(500, this->height());
     m_timeLabel = new DLabel(this);
 
@@ -175,7 +175,7 @@ void TextNoteItem::initUI()
    m_MenuBtnBackground = new DWidget(m_bgWidget);
    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
 
-   m_menuBtn = new DIconButton(m_MenuBtnBackground);
+   m_menuBtn = new DFloatingButton(m_MenuBtnBackground);
    //m_menuBtn = new DImageButton(m_MenuBtnBackground);
    m_menuBtn->setFixedSize(QSize(40, 40));
    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
@@ -312,6 +312,7 @@ void TextNoteItem::handleMenuBtnClicked()
 
 void TextNoteItem::handleTextEditFocusOut()
 {
+    qDebug()<<"-------------------------------handleTextEditFocusOut()";
     m_textNote.contentText = m_textEdit->toPlainText();
     if(m_bakContent != m_textNote.contentText)
     {
@@ -375,7 +376,9 @@ void TextNoteItem::tryToFouceout()
 {
     if(m_isEdited && !m_mouseIsIn)
     {
-        m_textEdit->focusOutSignal();
+        qDebug()<<"tryToFouceout";
+        //m_textEdit->focusOutSignal();
+        handleTextEditFocusOut();
     }
 }
 

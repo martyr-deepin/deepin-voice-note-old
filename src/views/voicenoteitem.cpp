@@ -46,7 +46,7 @@ int VoiceNoteItem::getNoteID()
 
 void VoiceNoteItem::initUI()
 {
-    this->setFixedHeight(98);
+    this->setFixedHeight(VOICENOTE_HEIGHT);
     this->setBlurEnabled(false);
 
     m_timeLabel = new DLabel();
@@ -97,7 +97,7 @@ void VoiceNoteItem::initUI()
 //    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
 
     m_playingButton = new PlayingButton();
-    m_playingButton->setFixedSize(QSize(60, 60));
+    m_playingButton->setFixedSize(QSize(45, 45));
     m_waveform = new Waveform();
     m_waveform->setCurrDisplayType(WHOLE);
     m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
@@ -106,7 +106,9 @@ void VoiceNoteItem::initUI()
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);
-    m_menuBtn = new DIconButton(m_bgWidget);
+    m_menuBtn = new DFloatingButton(DStyle::SP_SelectElement,m_bgWidget);
+    //m_menuBtn->setFlat(true);
+    //m_menuBtn->setStyleSheet("border:none;");
     //m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
     m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));

@@ -1,8 +1,9 @@
 #include "addtextbtn.h"
+#include "consts.h"
 
 AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 {
-    this->setFixedHeight(84);
+    this->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
     m_addBtn = new DPushButton(this);
     m_addBtn->setFixedSize(QSize(548,64));
 
@@ -40,7 +41,7 @@ void AddTextBtn::init()
         Font.setFamily("SourceHanSansSC-Normal");
         Font.setPointSize(13);
         m_addBtn->setFont(Font);
-        m_addBtn->setText("点击添加文字记事项");
+        m_addBtn->setText(tr("点击添加文字记事项"));
 
         QPalette pe;
         //pe.setColor(QPalette::Text,QColor(82,106,127,00));

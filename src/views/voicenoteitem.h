@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <DBlurEffectWidget>
 #include <DIconButton>
+#include <DFloatingButton>
 #include <dimagebutton.h>
 #include "consts.h"
 #include "notecontroller.h"
@@ -30,7 +31,8 @@ public:
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
     //DImageButton *m_ctrlBtn;
-    DIconButton *m_menuBtn;
+    DFloatingButton *m_menuBtn;
+    //DIconButton *m_menuBtn;
     //DImageButton *m_menuBtn;
     QLabel *m_voiceTimeLabel;
     //QWidget *m_voiceShape;

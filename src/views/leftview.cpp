@@ -53,12 +53,16 @@ void LeftView::initUI()
         m_leftFolderView->setCurrentRow(0);
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
-    m_addFolderBtn = new DImageButton(this);
-    m_addFolderBtn->setFixedSize(QSize(68,68));
+
+    m_addFolderBtn = new DFloatingButton(this);
+    m_addFolderBtn->setFixedSize(QSize(58,58));
+    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add 2.svg"));
+    m_addFolderBtn->setIconSize(QSize(58,58));
+
 //    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add.svg"));
-    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
-    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
-    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
+//    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
+//    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
+//    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
     //
 
 //    DPalette palette;
@@ -76,9 +80,11 @@ void LeftView::initController()
 }
 void LeftView::initConnection()
 {
-    connect(m_addFolderBtn, &DImageButton::clicked, this, &LeftView::addFolder);
+    connect(m_addFolderBtn, &DFloatingButton::clicked, this, &LeftView::addFolder);
     connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
+    connect(m_leftFolderView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
+
     connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
 
 }
@@ -128,6 +134,15 @@ void LeftView::searchFolder(QString searchKey)
     }
 }
 
+void LeftView::selectTheFirstFolderByCode()
+{
+    if(m_leftFolderView->count() > 0)
+    {
+        QListWidgetItem *pItem = m_leftFolderView->item(0);
+        handleSelFolderChg(pItem);
+    }
+}
+
 void LeftView::addFolder()
 {
     FOLDER newFolder;
@@ -140,6 +155,8 @@ void LeftView::addFolder()
     FolerWidgetItem *item = (FolerWidgetItem*)(m_leftFolderView->itemWidget(m_leftFolderView->item(0)));
     item->changeToEditMode();
     m_leftFolderView->setCurrentRow(0);
+
+    emit sigAddFolder();
 }
 
 int LeftView::getCurrSelectFolderId()
@@ -215,5 +232,5 @@ void LeftView::clearNoteList()
 
 void LeftView::resizeEvent(QResizeEvent * event)
 {
-    m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 5);
+    m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 18);
 }

@@ -34,21 +34,30 @@ RecordingButton::RecordingButton(QWidget *parent) : QWidget(parent)
     layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     setLayout(layout);
-    
-    pauseButton = new DImageButton(
-        ":/image/icon/normal/pause_red_normal.svg",
-        ":/image/icon/hover/pause_red_hover.svg",
-        ":/image/icon/press/pause_red_press.svg"
-        );
-    connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
 
-    resumeButton = new DImageButton(
-        ":/image/icon/normal/play_normal.svg",
-        ":/image/icon/hover/play_hover.svg",
-        ":/image/icon/press/play_press.svg"
-        );
+    resumeButton = new DFloatingButton(this);
+    resumeButton->setFixedSize(QSize(45, 45));
+    resumeButton->setIcon(QIcon(":/image/icon/normal/record_normal.svg"));
+    resumeButton->setIconSize(QSize(45,45));
+//    resumeButton = new DImageButton(
+//        ":/image/icon/normal/record_normal.svg",
+//        ":/image/icon/hover/record_hover.svg",
+//        ":/image/icon/press/record_press.svg"
+//        );
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
     
+
+    pauseButton = new DFloatingButton(this);
+    pauseButton->setFixedSize(QSize(45, 45));
+    pauseButton->setIcon(QIcon(":/image/icon/normal/pause_red_normal.svg"));
+    pauseButton->setIconSize(QSize(45,45));
+//    pauseButton = new DImageButton(
+//        ":/image/icon/normal/pause_red_normal.svg",
+//        ":/image/icon/hover/pause_red_hover.svg",
+//        ":/image/icon/press/pause_red_press.svg"
+//        );
+    connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
+
     layout->addWidget(pauseButton);
 }
 

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <DImageButton>
 #include <QVBoxLayout>
+#include <DFloatingButton>
 
 DWIDGET_USE_NAMESPACE
 
@@ -26,8 +27,8 @@ public slots:
     void handleStop();
 
 private:
-    DImageButton *pauseButton;
-    DImageButton *resumeButton;
+    DFloatingButton *pauseButton;
+    DFloatingButton *resumeButton;
     QVBoxLayout *layout;
 };
 

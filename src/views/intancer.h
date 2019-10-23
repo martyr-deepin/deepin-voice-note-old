@@ -21,9 +21,12 @@ public:
     }
     void setTryToDelEmptyTextNote(bool value);
     bool getTryToDelEmptyTextNote();
+    void setRecodingFlag(bool value);
+    bool getRecodingFlag();
 private:
      static Intancer *instance_;
      bool tryToDelEmptyTextNote;
+     bool recording;
 };
 
 #endif // INTANCER_H

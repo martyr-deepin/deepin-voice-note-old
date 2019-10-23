@@ -42,7 +42,7 @@
 
 #include "dimagebutton.h"
 #include "recordPage.h"
-
+#include "intancer.h"
 //#include "utils.h"
 //#include "waveform.h"
 
@@ -186,12 +186,17 @@ void RecordPage::initUI()
     m_hBoxLayout->setObjectName("horizontalLayout");
 
     m_recordingButton = new RecordingButton();
+    m_recordingButton->setFixedSize(QSize(45,45));
 
-    m_finishButton = new DImageButton(
-        ":/image/icon/normal/finish_normal.svg",
-        ":/image/icon/hover/finish_hover.svg",
-        ":/image/icon/press/finish_press.svg"
-    );
+    m_finishButton = new DFloatingButton(this);
+    m_finishButton->setFixedSize(QSize(45, 45));
+    m_finishButton->setIcon(QIcon(":/image/icon/normal/finish_normal.svg"));
+    m_finishButton->setIconSize(QSize(45,45));
+//    m_finishButton = new DImageButton(
+//        ":/image/icon/normal/finish_normal.svg",
+//        ":/image/icon/hover/finish_hover.svg",
+//        ":/image/icon/press/finish_press.svg"
+//    );
 
 
     m_waveform = new Waveform();
@@ -267,6 +272,8 @@ void RecordPage::startRecord()
     lastUpdateTime = currentTime;
     voiceInfo.voicePath = fileName;
     m_audioRecorder->record();
+
+    Intancer::get_Intancer()->setRecodingFlag(true);
 }
 
 void RecordPage::stopRecord()
@@ -276,7 +283,9 @@ void RecordPage::stopRecord()
     m_recordTimeLabel->setText("00:00");
     voiceInfo.voiceLength = m_recordingTime;
     voiceInfo.voiceSampleData = UiUtil::convertFloatListToString(m_waveform->getWholeSampleList());
+    recordPath.clear();
     emit finishRecord(voiceInfo);
+    Intancer::get_Intancer()->setRecodingFlag(false);
 }
 
 void RecordPage::exitRecord()
@@ -288,6 +297,7 @@ void RecordPage::exitRecord()
     QFile(getRecordingFilepath()).remove();
 
     emit cancelRecord();
+    Intancer::get_Intancer()->setRecodingFlag(false);
 }
 
 void RecordPage::pauseRecord()

@@ -27,7 +27,7 @@
 #include <QVBoxLayout>
 
 #include <DImageButton>
-
+#include <DFloatingButton>
 DWIDGET_USE_NAMESPACE
 
 //录音暂停按钮和开始录音按钮
@@ -47,8 +47,8 @@ public slots:
     void handleResume();
     
 private:
-    DImageButton *pauseButton;
-    DImageButton *resumeButton;
+    DFloatingButton *pauseButton;
+    DFloatingButton *resumeButton;
     QVBoxLayout *layout;
 };
 

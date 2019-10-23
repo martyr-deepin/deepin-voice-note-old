@@ -179,12 +179,12 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     QString tab = "\t";
     QString Richtab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     destSrc = destSrc.replace(tab,Richtab);
-    QString tmpText = richText.arg(fontSize).arg(destSrc);
 
     if (!searchKey.isEmpty())
     {
-        tmpText = src.replace(searchKey, searchStr.arg(searchKey));
+        destSrc = destSrc.replace(searchKey, searchStr.arg(searchKey));
     }
+    QString tmpText = richText.arg(fontSize).arg(destSrc);
 
     return tmpText;
 

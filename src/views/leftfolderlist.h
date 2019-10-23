@@ -22,6 +22,7 @@ public:
 //    void sigDelFolder(int delfolderID);
 signals:
     void sigBoardPress();
+    void sigAllFolderDeleted();
 
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
@@ -41,6 +42,7 @@ private:
     QAction *m_delAction;
     DBlurEffectWidget *m_boader;
     DDialog *m_delConfirmDialog;
+    DDialog *m_delNoPromisDialog;
     void initUI();
     void initConnection();
 

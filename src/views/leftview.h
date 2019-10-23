@@ -13,6 +13,8 @@
 #include <DtkGuis>
 #include <QVBoxLayout>
 #include <DBlurEffectWidget>
+#include <DFloatingButton>
+
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
 
@@ -27,6 +29,7 @@ public:
 
     int getCurrSelectFolderId();
     void searchFolder(QString searchKey);
+    void selectTheFirstFolderByCode();
 
 signals:
     void selFolderIdChg(int folderId);
@@ -34,6 +37,8 @@ signals:
     void noResult();
     void clearNoteListSignal();
     void sigBoardPress();
+    void sigAllFolderDeleted();
+    void sigAddFolder();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -47,7 +52,7 @@ private:
     QVBoxLayout *m_leftViewLayout;
     //QListWidget *folderList;
     LeftFolderList *m_leftFolderView;
-    DImageButton *m_addFolderBtn;
+    DFloatingButton *m_addFolderBtn;
 
     FolderController *m_folderCtr;
     QString m_currSearchKey;

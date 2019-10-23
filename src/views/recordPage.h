@@ -40,7 +40,7 @@
 #include <DWidget>
 #include "consts.h"
 #include <DBlurEffectWidget>
-
+#include <DFloatingButton>
 
 DWIDGET_USE_NAMESPACE
 
@@ -57,7 +57,7 @@ public:
 
     //QLabel *m_voiceTimeLabel;
 
-    DImageButton *m_finishButton;
+    DFloatingButton *m_finishButton;
     //QVBoxLayout *layout;
     RecordingButton *m_recordingButton;
     

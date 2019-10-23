@@ -19,6 +19,7 @@
 #include <QAction>
 #include <DBlurEffectWidget>
 #include <DIconButton>
+#include <DFloatingButton>
 DWIDGET_USE_NAMESPACE
 //右侧文字记录Item
 class TextNoteItem : public DWidget
@@ -38,7 +39,7 @@ public:
     QLabel *m_textLabel;
     QPlainTextEdit *m_plainTextEdit;
     //DImageButton *m_menuBtn;
-    DIconButton *m_menuBtn;
+    DFloatingButton *m_menuBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;

@@ -7,6 +7,7 @@
 #include <DtkGuis>
 #include <QPalette>
 #include <QTableWidgetItem>
+#include <QScrollBar>
 
 
 RightView::RightView()
@@ -42,8 +43,10 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
-    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
-    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
+    connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
+    connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
+//    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
+//    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
     connect(m_recordPage, &RecordPage::cancelRecord, this, &RightView::handlecancelRecord);
 
@@ -121,11 +124,13 @@ void RightView::initRecordStackedWidget()
     m_recordStackedWidget = new QStackedWidget(this);
     m_recordStackedWidget->setFixedSize(QSize(548,64));
 
-    m_addVoiceBtn = new DImageButton();
-    m_addVoiceBtn->setFixedSize(QSize(68,68));
-    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
-    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
-    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
+    m_addVoiceBtn = new DFloatingButton(this);
+    m_addVoiceBtn->setFixedSize(QSize(58,58));
+    m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
+    m_addVoiceBtn->setIconSize(QSize(58,58));
+//    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
+//    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
+//    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
 
 
 //    QHBoxLayout *HLayout = new QHBoxLayout(HBoard);
@@ -242,11 +247,15 @@ void RightView::updateNoteList()
         {
             //m_NoSearchResault->setVisible(true);
         }
+
+
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(false, noteList.at(i), "");
         }
-        m_noteListWidget->scrollToBottom();
+
+        m_noteListWidget->setCurrentRow(noteList.size());
+        //m_noteListWidget->scrollToBottom();
     }
 }
 
@@ -369,6 +378,17 @@ void RightView::OnCurrentRowChanged(int curRow)
 {
     qDebug()<<"curRow:"<<curRow;
     m_noteListWidget->setCurrentRow(1);
+}
+
+void RightView::OnAllFolderGone()
+{
+    //cancleRecord();
+    m_recordStackedWidget->setVisible(false);
+}
+
+void RightView::OnAddAFolder()
+{
+    m_recordStackedWidget->setVisible(true);
 }
 
 void RightView::resizeEvent(QResizeEvent * event)

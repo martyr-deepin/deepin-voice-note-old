@@ -12,11 +12,18 @@
 #include <QScrollBar>
 #include <QStandardPaths>
 #include <QFileInfo>
+#include <DApplicationHelper>
+#include <QPainter>
 
 
 MMenu::MMenu(QWidget *parent)
 {
-
+//    setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
+//    setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
+//    QPalette pal = palette();
+//    pal.setColor(QPalette::Background, QColor(255,0,0,0));
+//    setPalette(pal);
+    this->setFixedSize(QSize(162,100));
 }
 
 MMenu::~MMenu()
@@ -29,7 +36,17 @@ void MMenu::leaveEvent(QEvent* event)
     emit sigMMenu();
     return QMenu::leaveEvent(event);
 }
+void MMenu::paintEvent(QPaintEvent *event)
+{
+    QPainter pianter(this);
+    QBrush brush(QColor(0,0,0,20));
+    QPalette pal = palette();
+    pal.setColor(QPalette::Background, QColor(255,255,255,20));
+    setPalette(pal);
+    pianter.fillRect(this->rect(),brush);
 
+    QMenu::paintEvent(event);
+}
 
 
 RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem(nullptr)
@@ -56,30 +73,30 @@ RightNoteList::~RightNoteList()
 
 void RightNoteList::createDArrowMenu()
 {
-    if(nullptr == m_arrowMenu && nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
+    if(nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
+    //if(nullptr == m_arrowMenu && nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
     {
         m_contextMenu = new MMenu;
         m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
         m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
-//        if (type == NOTE_TYPE::TEXT)
-//        {
-//            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
-//            //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
-//        }
-//        else
-//        {
-//            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
-//            //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_MP3),this);
-//        }
-//        m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
         m_contextMenu->addAction(m_saveAsAction);
         m_contextMenu->addAction(m_delAction);
-        m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
-        m_arrowMenu->setHeight(200);
-        m_arrowMenu->setWidth(200);
-        m_arrowMenu->setContent(m_contextMenu);
-        m_arrowMenu->setBorderColor(QColor::fromRgb(255, 0, 0));
-        m_arrowMenu->setVisible(false);
+
+//        QPalette pal = palette();
+//        pal.setColor(QPalette::Background, QColor(255,255,255,20));
+//        m_contextMenu->setPalette(pal);
+        m_contextMenu->setFixedSize(QSize(162,89));
+//        m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
+//        m_arrowMenu->setArrowHeight(29);
+//        m_arrowMenu->setArrowWidth(58);
+//        m_arrowMenu->setRadius(10);
+//        m_arrowMenu->setHeight(89);
+//        m_arrowMenu->setWidth(162);
+
+//        m_arrowMenu->setContent(m_contextMenu);
+
+//        m_arrowMenu->setBackgroundColor(QColor(255,255,255,20));
+//        m_arrowMenu->setVisible(false);
         m_contextMenu->setVisible(false);
 
         connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
@@ -92,7 +109,8 @@ void RightNoteList::createDArrowMenu()
 
 void RightNoteList::destroyDArrowMenu()
 {
-    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    if(nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    //if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
     {
         disconnect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
         disconnect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
@@ -109,16 +127,17 @@ void RightNoteList::destroyDArrowMenu()
         delete m_contextMenu;
         m_contextMenu = nullptr;
 
-        delete m_arrowMenu;
-        m_arrowMenu = nullptr;
+//        delete m_arrowMenu;
+//        m_arrowMenu = nullptr;
     }
 }
 
 void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
 {
-    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    if(nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    //if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
     {
-        m_arrowMenu->setVisible(true);
+        //m_arrowMenu->setVisible(true);
         m_contextMenu->setVisible(true);
         if (type == NOTE_TYPE::TEXT)
         {
@@ -128,17 +147,20 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
         {
             m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
         }
-        m_arrowMenu->move(x,y);
+        m_contextMenu->move(x - m_contextMenu->width()/2,y);
+        //m_arrowMenu->move(x,y);
     }
 }
 
 void RightNoteList::hideDArrowMenu()
 {
-    if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    if(nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
+    //if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
     {
-        m_arrowMenu->setVisible(false);
+        //m_arrowMenu->setVisible(false);
         m_contextMenu->setVisible(false);
-        m_arrowMenu->move(-500,-500);
+        m_contextMenu->move(-500,-500);
+        //m_arrowMenu->move(-500,-500);
     }
 }
 
@@ -320,7 +342,8 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
     //if(nullptr == m_arrowMenu)
-    if(!m_arrowMenu->isVisible())
+    if(!m_contextMenu->isVisible())
+    //if(!m_arrowMenu->isVisible())
     {
         QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
         m_currSelItem= this->itemAt(itemGlobalPoint);
