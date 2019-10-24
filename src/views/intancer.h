@@ -23,10 +23,13 @@ public:
     bool getTryToDelEmptyTextNote();
     void setRecodingFlag(bool value);
     bool getRecodingFlag();
+    void setRenameRepeatFlag(bool value);
+    bool getRenameRepeatFlag();
 private:
      static Intancer *instance_;
      bool tryToDelEmptyTextNote;
      bool recording;
+     bool isRenameRepeat;
 };
 
 #endif // INTANCER_H

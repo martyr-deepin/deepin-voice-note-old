@@ -9,6 +9,9 @@
 #include <QPalette>
 #include <DWidget>
 #include <QDebug>
+#include <DApplicationHelper>
+
+#include "intancer.h"
 
 //FolerWidgetItem::FolerWidgetItem()
 FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QString searchKey)
@@ -44,9 +47,9 @@ void FolerWidgetItem::setNormalBackground()
 
 void FolerWidgetItem::changeToEditMode()
 {
-//    m_nameLabel->setVisible(false);
-//    m_lineEdit->setVisible(true);
-    m_stackedWidget->setCurrentIndex(1);
+    m_nameLabel->setVisible(false);
+    m_lineEdit->setVisible(true);
+//    m_stackedWidget->setCurrentIndex(1);
 
     //Update DlineEidt没有这个接口了
     //m_lineEdit->setText(m_nameLabel->text());
@@ -56,8 +59,13 @@ void FolerWidgetItem::changeToEditMode()
     m_lineEdit->setToEdited(true);
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
-    //m_createTimeLabel->setVisible(false);
+    m_createTimeLabel->setVisible(false);
     m_BakDefaultName = m_lineEdit->text();
+
+//    DPalette pa = DApplicationHelper::instance()->palette(m_lineEdit->lineEdit());
+//    pa.setBrush(DPalette::Text, pa.color(DPalette::TextWarning));
+//    pa.setBrush(DPalette::Base, pa.color(DPalette::TextWarning));
+//    m_lineEdit->lineEdit()->setPalette(pa);
 
 }
 
@@ -135,6 +143,8 @@ void FolerWidgetItem::Init()
     m_FolderImage->move(6,12);
 
     m_nameLabel = new DLabel(m_BackGround);
+    m_nameLabel->setFixedSize(QSize(110,21));
+    m_nameLabel->move(53,13);
     //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
@@ -160,22 +170,41 @@ void FolerWidgetItem::Init()
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
-    m_lineEdit = new RenameEdit();
+    m_lineEdit = new RenameEdit(m_BackGround);
+    m_lineEdit->setFixedSize(QSize(160,36));
+    m_lineEdit->move(57,(m_BackGround->height() - m_lineEdit->height())/2);
     //m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
 
+
+    DPalette pa = DApplicationHelper::instance()->palette(m_lineEdit->lineEdit());
+    pa.setBrush(DPalette::Text, pa.color(DPalette::Base));
+    pa.setBrush(DPalette::Button, QColor(0,0,0,20));
+    pa.setBrush(DPalette::Base, QColor(0,0,0,20));
+    m_lineEdit->lineEdit()->setPalette(pa);
+
+//    QLineEdit * lineed = new QLineEdit(this);
+//    lineed->setFixedSize(QSize(200,50));
+//    lineed->move(0,0);
+//    QPalette Palette = lineed->palette();
+//   Palette.setBrush(QPalette::Text,QBrush(QColor(255,255,255,255)));//绿色
+//   Palette.setBrush(QPalette::Button,QBrush(QColor(0,0,0,20)));//绿色
+//       lineed->setPalette(Palette);//label2刷成绿色
+
+
+
+    m_lineEdit->setClearButtonEnabled(false);
     m_lineEdit->setText(m_folder.folderName);
-    //m_lineEdit->setVisible(false);
+    m_lineEdit->setVisible(false);
 
-    m_stackedWidget = new QStackedWidget(m_BackGround);
-    m_stackedWidget->setFixedSize(QSize(110,21));
-    m_stackedWidget->move(53,13);
-    //m_stackedWidget->setGeometry(QRect(70, 15, 110, 21));
-    m_stackedWidget->setObjectName("stackedWidget");
+//    m_stackedWidget = new QStackedWidget(m_BackGround);
+//    m_stackedWidget->setFixedSize(QSize(110,21));
+//    m_stackedWidget->move(53,13);
+//    m_stackedWidget->setObjectName("stackedWidget");
 
-    m_stackedWidget->addWidget(m_nameLabel);
-    m_stackedWidget->addWidget(m_lineEdit);
-    m_stackedWidget->setCurrentIndex(0);
+//    m_stackedWidget->addWidget(m_nameLabel);
+//    m_stackedWidget->addWidget(m_lineEdit);
+//    m_stackedWidget->setCurrentIndex(0);
 
 
 
@@ -219,6 +248,7 @@ void FolerWidgetItem::checkNameValid()
         {
             m_lineEdit->setAlert(true);
             m_lineEdit->showAlertMessage("目录名重复！");
+            Intancer::get_Intancer()->setRenameRepeatFlag(true);
         }
         else
         {
@@ -240,13 +270,16 @@ void FolerWidgetItem::checkNameValid()
             m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
 
             //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
-            m_stackedWidget->setCurrentIndex(0);
-//            m_nameLabel->setVisible(true);
-//            m_lineEdit->setVisible(false);
+            //m_stackedWidget->setCurrentIndex(0);
+            m_nameLabel->setVisible(true);
+            m_lineEdit->setVisible(false);
+            m_createTimeLabel->setVisible(true);
             m_BakLineContent.clear();
             m_BakDefaultName.clear();
+            Intancer::get_Intancer()->setRenameRepeatFlag(false);
+
         }
-        m_createTimeLabel->setVisible(true);
+        //m_createTimeLabel->setVisible(true);
     } else {
         //警告用户输入不能为空
 //        m_folder.folderName = m_BakDefaultName;

@@ -31,6 +31,8 @@
 #include <DWidgetUtil>
 
 DWIDGET_USE_NAMESPACE
+using namespace Dtk::Core;
+
 
 int main(int argc, char *argv[])
 {
@@ -41,6 +43,5 @@ int main(int argc, char *argv[])
     {
         return 0;
     }
-
     VoiceNotebookApp app(a);
 }

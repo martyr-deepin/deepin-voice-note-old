@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include <QVBoxLayout>
+#include <DApplicationHelper>
 
 
 MainPage::MainPage()
@@ -52,10 +53,22 @@ void MainPage::initSplitter(){
     initLeftView();
     initRightView();
 
-    m_splitter = new DFMSplitter(Qt::Horizontal, this);
+    m_splitter = new DFMSplitter(Qt::Horizontal,this);
     m_splitter->addWidget(m_leftView);
+    DWidget *pLine = new DWidget(this);
+    pLine->setFixedWidth(2);
+    m_splitter->addWidget(pLine);
     m_splitter->addWidget(m_rightView);
     m_splitter->setChildrenCollapsible(false);
+    //m_splitter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    //QSplitterHandle *handle = m_splitter->handle(1);
+//    DPalette pa = DApplicationHelper::instance()->palette(handle);
+//    //pa.setBrush(DPalette::AlternateBase, pa.brush(DPalette::AlternateBase));
+//    pa.setBrush(DPalette::AlternateBase, QBrush(QColor(255,0,0,254)));
+//    handle->setPalette(pa);
+
+//    handle->setStyleSheet("QSplitter::handle { background-color: black }");
+//    handle->setFixedWidth(100);
     qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
     //m_leftView->selectTheFirstFolderByCode();
 }

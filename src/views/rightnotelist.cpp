@@ -207,6 +207,8 @@ void RightNoteList::initConnection()
 //    connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
+    connect(m_delConfirmDialog, &DDialog::closed, this, &RightNoteList::handleCloseDialogClicked);
+
 //    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));
 //    connect(m_myslider, SIGNAL(sliderMoved(int)), this, SLOT(handleSliderMove(int)));
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
@@ -341,23 +343,28 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
+    bool flag = Intancer::get_Intancer()->getTryToDelEmptyTextNote();
     //if(nullptr == m_arrowMenu)
-    if(!m_contextMenu->isVisible())
-    //if(!m_arrowMenu->isVisible())
+    if(!flag)
     {
-        QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
-        m_currSelItem= this->itemAt(itemGlobalPoint);
-        m_currSelNote = note;
-        showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
-        qDebug()<<"handleMenuBtnClicked show";
+        if(!m_contextMenu->isVisible())
+        //if(!m_arrowMenu->isVisible())
+        {
+            QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
+            m_currSelItem= this->itemAt(itemGlobalPoint);
+            m_currSelNote = note;
+            showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
+            qDebug()<<"handleMenuBtnClicked show";
+        }
+        else {
+            hideDArrowMenu();
+    //        m_arrowMenu->setVisible(false);
+    //        m_contextMenu->setVisible(false);
+            m_actionHoverd = false;
+            qDebug()<<"handleMenuBtnClicked hide";
+        }
     }
-    else {
-        hideDArrowMenu();
-//        m_arrowMenu->setVisible(false);
-//        m_contextMenu->setVisible(false);
-        m_actionHoverd = false;
-        qDebug()<<"handleMenuBtnClicked hide";
-    }
+
 }
 
 
@@ -639,6 +646,17 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     }
     Intancer::get_Intancer()->setTryToDelEmptyTextNote(false);
     //handleVScrollBarChanged(-1);
+}
+
+void RightNoteList::handleCloseDialogClicked()
+{
+    NOTE_TYPE delType = m_currSelNote.noteType;
+    if(TEXT == delType)
+    {
+        TextNoteItem *pPreDelItem = (TextNoteItem*)this->itemWidget(m_currSelItem);
+        pPreDelItem->changeToEditMode();
+    }
+    Intancer::get_Intancer()->setTryToDelEmptyTextNote(false);
 }
 
 void RightNoteList::handleClickRecordButton()

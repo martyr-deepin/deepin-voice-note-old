@@ -46,7 +46,7 @@ protected:
 public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);
-    void handlePressFolderChg(QListWidgetItem *item);
+    //void handlePressFolderChg(QListWidgetItem *item);
 
 private:
     QVBoxLayout *m_leftViewLayout;

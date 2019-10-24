@@ -82,7 +82,7 @@ void LeftView::initConnection()
 {
     connect(m_addFolderBtn, &DFloatingButton::clicked, this, &LeftView::addFolder);
     connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
-    connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
+    //connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
 
     connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
@@ -178,52 +178,56 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
     {
         return;
     }
-    int count = m_leftFolderView->count();
-    for(int i = 0; i < count; i++)
-    {
-        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
-        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
-        tmpfolderItem->changeToUnClickMode();
-    }
 
-    if (nullptr != item)
+    if(!Intancer::get_Intancer()->getRenameRepeatFlag())
     {
-        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
-        folderId = folderItem->m_folder.id;
-        folderItem->changeToClickMode();
-    }
-    else {
-        emit selFolderIdChg(folderId);
-        return;
-    }
+        int count = m_leftFolderView->count();
+        for(int i = 0; i < count; i++)
+        {
+            QListWidgetItem *tmpItem = m_leftFolderView->item(i);
+            FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
+            tmpfolderItem->changeToUnClickMode();
+        }
 
-    if (m_currSearchKey.isEmpty())
-    {
-        emit selFolderIdChg(folderId);
-    }
-    else
-    {
-        emit searchNote(folderId, m_currSearchKey);
-    }
+        if (nullptr != item)
+        {
+            FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
+            folderId = folderItem->m_folder.id;
+            folderItem->changeToClickMode();
+        }
+        else
+        {
+            emit selFolderIdChg(folderId);
+            return;
+        }
 
+        if (m_currSearchKey.isEmpty())
+        {
+            emit selFolderIdChg(folderId);
+        }
+        else
+        {
+            emit searchNote(folderId, m_currSearchKey);
+        }
+    }
 }
 
-void LeftView::handlePressFolderChg(QListWidgetItem *item)
-{
-//    int count = m_leftFolderView->count();
-//    for(int i = 0; i < count; i++)
-//    {
-//        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
-//        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
-//        tmpfolderItem->changeToUnClickMode();
-//    }
+//void LeftView::handlePressFolderChg(QListWidgetItem *item)
+//{
+////    int count = m_leftFolderView->count();
+////    for(int i = 0; i < count; i++)
+////    {
+////        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
+////        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
+////        tmpfolderItem->changeToUnClickMode();
+////    }
 
-//    if (nullptr != item)
-//    {
-//        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
-//        folderItem->changeToClickMode();
-//    }
-}
+////    if (nullptr != item)
+////    {
+////        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
+////        folderItem->changeToClickMode();
+////    }
+//}
 
 void LeftView::clearNoteList()
 {

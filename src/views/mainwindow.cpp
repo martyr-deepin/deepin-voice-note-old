@@ -6,6 +6,7 @@
 #include <DTitlebar>
 #include <DMenu>
 #include <uiutil.h>
+#include "intancer.h"
 
 
 MyMainWindow::MyMainWindow()
@@ -186,6 +187,7 @@ void MyMainWindow::handleSearchKey()
     QString searchKey = m_searchEdit->text();
     if (0 == m_stackedWidget->currentIndex())
     {
+        Intancer::get_Intancer()->setRenameRepeatFlag(false);
         m_mainPage->searchFolder(searchKey);
     }
     else

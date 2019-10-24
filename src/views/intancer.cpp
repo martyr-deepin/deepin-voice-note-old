@@ -5,6 +5,7 @@ Intancer::Intancer()
 {
     tryToDelEmptyTextNote = false;
     recording = false;
+    isRenameRepeat = false;
 }
 
 Intancer::~Intancer()
@@ -30,4 +31,14 @@ void Intancer::setRecodingFlag(bool value)
 bool Intancer::getRecodingFlag()
 {
     return recording;
+}
+
+void Intancer::setRenameRepeatFlag(bool value)
+{
+    isRenameRepeat = value;
+}
+
+bool Intancer::getRenameRepeatFlag()
+{
+    return isRenameRepeat;
 }

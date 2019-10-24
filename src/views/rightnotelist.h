@@ -66,6 +66,7 @@ public slots:
     void handleDelItem(bool);
     void handleSaveAsItem(bool);
     void handleDelDialogClicked(int index, const QString &text);
+    void handleCloseDialogClicked();
     void handlePlayingStateChanged(QMediaPlayer::State state);
     void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
     void pause();

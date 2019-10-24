@@ -21,6 +21,7 @@ protected:
     void leaveEvent(QEvent *event);
     void enterEvent(QEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    //void paintEvent(QPaintEvent *event);
 private:
     bool m_isEdited;
     bool m_mouseIsIn;
