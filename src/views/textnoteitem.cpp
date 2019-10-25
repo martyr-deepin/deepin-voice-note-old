@@ -4,6 +4,7 @@
 #include <DPalette>
 #include <QDebug>
 #include <QGraphicsOpacityEffect>
+#include <DApplicationHelper>
 
 TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey) : m_isTextConverted(false)
 {
@@ -179,7 +180,10 @@ void TextNoteItem::initUI()
    //m_menuBtn = new DImageButton(m_MenuBtnBackground);
    m_menuBtn->setFixedSize(QSize(40, 40));
    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-   m_menuBtn->setIconSize(QSize(40,40));
+   m_menuBtn->setIconSize(QSize(20,20));
+   DPalette pe = DApplicationHelper::instance()->palette(m_menuBtn);
+   pe.setBrush(DPalette::Highlight, pe.color(DPalette::Base));
+   m_menuBtn->setPalette(pe);
 //   m_menuBtn->setFixedSize(QSize(40, 40));
 //   m_menuBtn->move(0,7);
 //   //m_menuBtn->setIcon();

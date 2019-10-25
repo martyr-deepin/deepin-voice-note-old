@@ -21,6 +21,7 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
     //m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
 
     this->setLayout(m_itemLayout);
+    //this->setStyleSheet("background: red");
 
 }
 

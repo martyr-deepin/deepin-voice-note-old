@@ -62,13 +62,14 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_saveAsAction = nullptr;
     m_delAction = nullptr;
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    Intancer::get_Intancer()->clearHeightForRightList();
     initUI();
     initConnection();
 }
 
 RightNoteList::~RightNoteList()
 {
-
+    Intancer::get_Intancer()->clearHeightForRightList();
 }
 
 void RightNoteList::createDArrowMenu()
@@ -236,7 +237,9 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
         connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SIGNAL(sig_TextEditNotEmpty()));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
+        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
         connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
         connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
@@ -302,6 +305,26 @@ void RightNoteList::delAddTextBtn()
             delete m_addTextBtn;
             m_addTextBtn = nullptr;
         }
+    }
+}
+
+void RightNoteList::listAddTextShow()
+{
+    if(nullptr != m_addTextBtn)
+    {
+        m_addTextBtn->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
+        //m_addTextBtn->show();
+        //m_addTextBtn->setVisible(true);
+    }
+}
+
+void RightNoteList::listAddTextHide()
+{
+    if(nullptr != m_addTextBtn)
+    {
+        m_addTextBtn->setFixedHeight(0);
+        //m_addTextBtn->hide();
+        //m_addTextBtn->setVisible(false);
     }
 }
 
@@ -601,10 +624,6 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             int moveMovment = 0;
             if(nullptr != m_currPlayingItem)
             {
-                if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
-                {
-                    audioPlayer->stop();
-                }
 
                 int delRow = -1;
                 NOTE_TYPE delType = m_currSelNote.noteType;
@@ -613,12 +632,18 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                 NOTE_TYPE playType = VOICE;
                 getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
 
+                if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
+                {
+                    audioPlayer->stop();
+                }
+
                 if(delRow < playRow)
                 {
                     move = true;
                     moveMovment = this->itemWidget(m_currSelItem)->height();
                     qDebug()<<"moveMovment: "<<moveMovment;
                 }
+
             }
 
             this->removeItemWidget(m_currSelItem);
@@ -629,6 +654,15 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             if(move)
             {
                 changeSliderPosByHand(moveMovment);
+            }
+
+            if(VOICE == m_currSelNote.noteType)
+            {
+                Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
+            }
+            else if(TEXT == m_currSelNote.noteType)
+            {
+                Intancer::get_Intancer()->delHeightForRightList(TEXTNOTE_HEIGHT);
             }
 
         }
@@ -747,7 +781,15 @@ void RightNoteList::changeSliderPosByHand(int moveMovment)
     {
         if (!m_myslider->isHidden())
         {
+            qDebug()<<"before move slider y:"<<m_myslider->y();
             m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
+            qDebug()<<"after move slider y:"<<m_myslider->y();
+
+            if(this->verticalScrollBar()->isVisible())
+            {
+                int value = this->verticalScrollBar()->value();
+                this->verticalScrollBar()->setValue(value - 1);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 #include "uiutil.h"
 #include <DLabel>
 #include <QGraphicsOpacityEffect>
+#include <DApplicationHelper>
 
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
@@ -112,7 +113,10 @@ void VoiceNoteItem::initUI()
     //m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
     m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-    m_menuBtn->setIconSize(QSize(40,40));
+    m_menuBtn->setIconSize(QSize(20,20));
+    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
+    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
+    m_menuBtn->setPalette(pa);
 //    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
 //    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
 //    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");

@@ -31,7 +31,14 @@ public slots:
     void showNoteDetail(NOTE note);
     void showListPage();
     void handleSearchKey();
+    void tryToSearch();
+    void handleDelDialogClicked(int index, const QString &text);
+    void handleCloseDialogClicked();
+    void clearSearchLine();
 
+protected:
+    //bool eventFilter(QObject *object, QEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 private:
      QFrame *m_centralWidget;
 //     DFMSplitter *m_splitter;
@@ -50,6 +57,7 @@ private:
     //DIconButton *m_returnBtn;
     QFrame *m_titleFrame;
     DSearchEdit *m_searchEdit;
+    DDialog *m_SearchDialog;
 
     void initUI();
     void initConnection();

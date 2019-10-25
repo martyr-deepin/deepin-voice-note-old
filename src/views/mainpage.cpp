@@ -41,7 +41,8 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(searchNote(int, QString)), m_rightView, SLOT(handleSearchNote(int, QString)));
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
-    QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
+    //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
+    QObject::connect(m_leftView, SIGNAL(sigAddFolder()), this, SLOT(onAddFolder()));
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
 
@@ -118,4 +119,15 @@ void MainPage::searchFolder(QString searchKey)
 void MainPage::updateFromDetal(int id)
 {
     m_rightView->updateFromDetal(id);
+}
+
+void MainPage::cancleRecord()
+{
+    m_rightView->cancleRecord();
+}
+
+void MainPage::onAddFolder()
+{
+    emit clearSearch();
+    m_rightView->OnAddAFolder();
 }

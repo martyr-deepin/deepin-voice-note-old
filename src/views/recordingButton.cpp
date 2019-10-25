@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QVBoxLayout>
+#include <DApplicationHelper>
 
 #include "dimagebutton.h"
 #include "recordingButton.h"
@@ -37,25 +38,21 @@ RecordingButton::RecordingButton(QWidget *parent) : QWidget(parent)
 
     resumeButton = new DFloatingButton(this);
     resumeButton->setFixedSize(QSize(45, 45));
-    resumeButton->setIcon(QIcon(":/image/icon/normal/record_normal.svg"));
-    resumeButton->setIconSize(QSize(45,45));
-//    resumeButton = new DImageButton(
-//        ":/image/icon/normal/record_normal.svg",
-//        ":/image/icon/hover/record_hover.svg",
-//        ":/image/icon/press/record_press.svg"
-//        );
+    resumeButton->setIcon(QIcon(":/image/icon/normal/record_small_normal.svg"));
+    resumeButton->setIconSize(QSize(28,28));
+    DPalette pb = DApplicationHelper::instance()->palette(resumeButton);
+    pb.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+    resumeButton->setPalette(pb);
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
     
 
     pauseButton = new DFloatingButton(this);
     pauseButton->setFixedSize(QSize(45, 45));
-    pauseButton->setIcon(QIcon(":/image/icon/normal/pause_red_normal.svg"));
-    pauseButton->setIconSize(QSize(45,45));
-//    pauseButton = new DImageButton(
-//        ":/image/icon/normal/pause_red_normal.svg",
-//        ":/image/icon/hover/pause_red_hover.svg",
-//        ":/image/icon/press/pause_red_press.svg"
-//        );
+    pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
+    pauseButton->setIconSize(QSize(28,28));
+    DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
+    pa.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+    pauseButton->setPalette(pa);
     connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
 
     layout->addWidget(pauseButton);

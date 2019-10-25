@@ -19,6 +19,7 @@ void MyMainWindow::initUI() {
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
+    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
     initTitleBar();
     initCentralWidget();
 }
@@ -28,9 +29,12 @@ void MyMainWindow::initConnection()
 {
     //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
+    QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
-    connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::handleSearchKey);
+    connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
+    connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleDelDialogClicked);
+    connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseDialogClicked);
 
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
@@ -185,6 +189,7 @@ void MyMainWindow::showListPage()
 void MyMainWindow::handleSearchKey()
 {
     QString searchKey = m_searchEdit->text();
+
     if (0 == m_stackedWidget->currentIndex())
     {
         Intancer::get_Intancer()->setRenameRepeatFlag(false);
@@ -196,6 +201,49 @@ void MyMainWindow::handleSearchKey()
     }
 }
 
+void MyMainWindow::tryToSearch()
+{
+    if(Intancer::get_Intancer()->getRecodingFlag())
+    {
+        m_SearchDialog->show();
+    }
+    else
+    {
+        handleSearchKey();
+    }
+}
 
+void MyMainWindow::handleDelDialogClicked(int index, const QString &text)
+{
+    if (index == 1)
+    {
+        handleSearchKey();
+    }
+    else
+    {
+        m_searchEdit->clear();
+    }
+}
+
+void MyMainWindow::handleCloseDialogClicked()
+{
+    m_searchEdit->clear();
+}
+
+void MyMainWindow::clearSearchLine()
+{
+    m_searchEdit->clear();
+}
+
+void MyMainWindow::keyPressEvent(QKeyEvent *event)
+{
+    switch(event->key())
+    {
+        case Qt::Key_Escape:
+        m_mainPage->cancleRecord();
+        break;
+    }
+    return QWidget::keyPressEvent(event);
+}
 
 

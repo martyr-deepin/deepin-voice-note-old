@@ -57,7 +57,7 @@ void MySlider::initUI()
     m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
     m_sliderHandler->setFixedSize(50, 141);
     QPalette pal;
-    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/slider.svg")));
+    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/icon/normal/slider.svg")));
     pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);

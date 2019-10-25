@@ -49,12 +49,16 @@ public:
     void addWidgetItem(bool isAddByButton ,NOTE note, QString searchKey);
     void addAddTextBtn();
     void delAddTextBtn();
+    void listAddTextShow();
+    void listAddTextHide();
 
 signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();
     void sigBoardPress();
     void sigBoardPressToLeft();
+    void sig_TextEditEmpty();
+    void sig_TextEditNotEmpty();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

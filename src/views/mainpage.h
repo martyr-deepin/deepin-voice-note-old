@@ -27,9 +27,14 @@ public:
     void updateNoteList();
     void searchFolder(QString searchKey);
     void updateFromDetal(int id);
+    void cancleRecord();
 
 signals:
     void textEditClicked(NOTE textNote);
+    void clearSearch();
+
+public slots:
+    void onAddFolder();
 
 private:
      DFMSplitter *m_splitter;

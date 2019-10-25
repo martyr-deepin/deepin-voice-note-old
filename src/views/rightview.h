@@ -13,6 +13,7 @@
 //#include <DImageButton>
 #include <QObject>
 #include <DFloatingButton>
+#include <DBlurEffectWidget>
 
 DWIDGET_USE_NAMESPACE
 //右侧文字语音记录View
@@ -46,6 +47,10 @@ public slots:
     void OnCurrentRowChanged(int curRow);
     void OnAllFolderGone();
     void OnAddAFolder();
+    void onDisableAddBtn();
+    void onAbleAddBtn();
+    void onViewAddTextShow();
+    void onViewAddTextHide();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -57,6 +62,7 @@ private:
     void initRecordStackedWidget();
 
     int m_currFolderId;
+    AddTextBtn *m_AddButtonLocked;
     DLabel *m_NoSearchResault;
     QStackedWidget *m_stackedWidget;
     QLayout *m_stackedWidgetLayout;
@@ -70,6 +76,7 @@ private:
     NoteController *m_noteController;
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;
+    DBlurEffectWidget *m_BottomBoard;
 };
 
 #endif // RIGHTVIEW_H

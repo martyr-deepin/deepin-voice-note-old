@@ -37,6 +37,8 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <DHiDPIHelper>
+#include <DApplicationHelper>
+
 #include <uiutil.h>
 //#include <QTimer>
 
@@ -191,7 +193,10 @@ void RecordPage::initUI()
     m_finishButton = new DFloatingButton(this);
     m_finishButton->setFixedSize(QSize(45, 45));
     m_finishButton->setIcon(QIcon(":/image/icon/normal/finish_normal.svg"));
-    m_finishButton->setIconSize(QSize(45,45));
+    m_finishButton->setIconSize(QSize(28,28));
+    DPalette pa = DApplicationHelper::instance()->palette(m_finishButton);
+    pa.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+    m_finishButton->setPalette(pa);
 //    m_finishButton = new DImageButton(
 //        ":/image/icon/normal/finish_normal.svg",
 //        ":/image/icon/hover/finish_hover.svg",
@@ -290,6 +295,7 @@ void RecordPage::stopRecord()
 
 void RecordPage::exitRecord()
 {
+    m_recordingButton->handleResume();
     m_audioRecorder->stop();
     m_tickerTimer->stop();
     m_recordTimeLabel->setText("00:00");
@@ -350,13 +356,13 @@ void RecordPage::renderLevel(const QAudioBuffer &buffer)
 //    return false;
 //}
 
-void RecordPage::keyPressEvent(QKeyEvent *event)
-{
-    switch(event->key())
-    {
-        case Qt::Key_Escape:
-            exitRecord();
-        break;
-    }
-    return QWidget::keyPressEvent(event);
-}
+//void RecordPage::keyPressEvent(QKeyEvent *event)
+//{
+//    switch(event->key())
+//    {
+//        case Qt::Key_Escape:
+//            exitRecord();
+//        break;
+//    }
+//    return QWidget::keyPressEvent(event);
+//}

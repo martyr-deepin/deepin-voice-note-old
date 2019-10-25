@@ -3,6 +3,7 @@
 #include <DPalette>
 #include <folderoper.h>
 #include <QTime>
+#include <DApplicationHelper>
 LeftView::LeftView()
 {
     initController();
@@ -23,6 +24,10 @@ void LeftView::initUI()
     //this->setStyleSheet("background: red");
     m_leftViewLayout = new QVBoxLayout;
     m_leftViewLayout->setContentsMargins(0, 0, 0, 0);
+
+//    m_LeftListBoard = new DWidget(this);
+//    m_LeftListBoard->resize(this->width(),this->height() - 150);
+//    m_LeftListBoard->move(0,0);
 
 
     m_leftFolderView = new LeftFolderList(m_folderCtr);
@@ -56,21 +61,12 @@ void LeftView::initUI()
 
     m_addFolderBtn = new DFloatingButton(this);
     m_addFolderBtn->setFixedSize(QSize(58,58));
-    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add 2.svg"));
-    m_addFolderBtn->setIconSize(QSize(58,58));
+    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
+    m_addFolderBtn->setIconSize(QSize(34,34));
 
-//    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add.svg"));
-//    m_addFolderBtn->setNormalPic(":/image/icon/normal/circlebutton_add 2.svg");
-//    m_addFolderBtn->setHoverPic(":/image/icon/hover/circlebutton_add _hover.svg");
-//    m_addFolderBtn->setPressPic(":/image/icon/press/circlebutton_add_press.svg");
-    //
-
-//    DPalette palette;
-
-//    palette.setColor(DPalette::Background, QColor(255, 255, 255));
-
-//    this->setAutoFillBackground(true);
-//    this->setPalette(palette);
+    DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
+    pa.setBrush(DPalette::Highlight, QColor(0x000081FF));
+    m_addFolderBtn->setPalette(pa);
 
 }
 

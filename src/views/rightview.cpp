@@ -1,6 +1,6 @@
 #include "rightview.h"
 #include "textnoteitem.h"
-
+#include "intancer.h"
 //#include <QVBoxLayout>
 #include "consts.h"
 #include <DArrowRectangle>
@@ -8,11 +8,13 @@
 #include <QPalette>
 #include <QTableWidgetItem>
 #include <QScrollBar>
+#include <DApplicationHelper>
 
 
 RightView::RightView()
 {
     m_currFolderId = -1;
+    Intancer::get_Intancer()->initHeightForRight();
     initUI();
     initConnection();
 }
@@ -24,6 +26,10 @@ RightView::~RightView()
 
 void RightView::initUI()
 {
+
+
+//    pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
+
     initNoteList();
     this->resize(548,this->height());
 
@@ -33,6 +39,7 @@ void RightView::initUI()
     m_NoSearchResault->setAlignment(Qt::AlignCenter);
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);
+
 }
 
 
@@ -43,6 +50,10 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
+    connect(m_noteListWidget, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+    connect(m_noteListWidget, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
+    //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
+
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
     connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
@@ -50,6 +61,8 @@ void RightView::initConnection()
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
     connect(m_recordPage, &RecordPage::cancelRecord, this, &RightView::handlecancelRecord);
 
+    connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
+    connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 }
 
 
@@ -57,37 +70,20 @@ void RightView::initNoteList()
 {
     m_noteController = new NoteController();
     m_noteListPage = new QWidget();
-    //m_noteListPage->resize(500,m_noteListPage->height());
     m_noteListPage->resize(548,m_noteListPage->height());
-    //m_noteListPage->setStyleSheet("background: blue");
+
+    DPalette pb = DApplicationHelper::instance()->palette(m_noteListPage);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+    m_noteListPage->setPalette(pb);
+
     m_noteListLayout = new QVBoxLayout();
     m_noteListLayout->setContentsMargins(0, 0, 0, 0);
 
-
-
     m_noteListWidget = new RightNoteList(m_noteController);
-    //m_noteListWidget.set
 
     m_noteListWidget->setFocusPolicy(Qt::NoFocus);
-    //qDebug()<<"m_noteListWidget width7:"<<m_noteListWidget->width();
     m_noteListLayout->addWidget(m_noteListWidget);
-    //m_noteListWidget->setResizeMode(QListWidget::Adjust);
-    //qDebug()<<"m_noteListWidget width8:"<<m_noteListWidget->width();
-    //m_noteListWidget->setObjectName("LeftSideBar");
-    //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
-    //m_noteListWidget->addWidget(m_leftFolderView);
-
-//    m_addTextBtn = new DImageButton();
-//    m_addTextBtn->setNormalPic(":/image/add_text_btn.png");
-//    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
-//    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
-
-    //m_noteListLayout->addWidget(m_addTextBtn);
-
-    //initRecordStackedWidget();
-
-    //m_noteListLayout->addWidget(m_recordStackedWidget);
-    m_noteListLayout->addSpacing(1);
+    //m_noteListLayout->addSpacing(1);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
     sp.setVerticalStretch(1);
@@ -99,24 +95,29 @@ void RightView::initNoteList()
     QVBoxLayout *rightViewLayout = new QVBoxLayout();
     rightViewLayout->setContentsMargins(0, 0, 0, 0);
     rightViewLayout->addWidget(m_noteListPage);
-    //qDebug()<<"m_noteListWidget width3:"<<m_noteListWidget->width();
+
+    Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+
+    m_BottomBoard = new DBlurEffectWidget(this);
+    DPalette pa = DApplicationHelper::instance()->palette(m_BottomBoard);
+    pa.setBrush(DPalette::Base, pa.color(DPalette::Base));
+    m_BottomBoard->setFixedHeight(150);
+    m_BottomBoard->setFixedWidth(this->width());
+    m_BottomBoard->setPalette(pa);
+    rightViewLayout->setSpacing(0);
+    rightViewLayout->addWidget(m_BottomBoard);
     this->setLayout(rightViewLayout);
-    //qDebug()<<"m_noteListWidget width4:"<<m_noteListWidget->width();
-    //m_noteListPage->setFixedWidth(pare);
 
     initRecordStackedWidget();
 
-    //test
-    //m_noteListPage->move(0,m_noteListPage->y());
-//    QWidget *ptm = new QWidget(this);
-//    ptm->setFixedSize(this->width(),this->height());
-//    ptm->move(0,0);
-//    QPalette p;
-//    //p.setBrush(m_BackGround->backgroundRole(),QBrush(QColor(255,245,245,100)));
-//    p.setBrush(ptm->backgroundRole(),QBrush(QColor(QRgb(0x00000000))));
-//    ptm->setPalette(p);
-//    ptm->setAutoFillBackground(true);
-    //ptm->show();
+    m_AddButtonLocked = new AddTextBtn(this);
+    m_AddButtonLocked->init();
+    m_AddButtonLocked->setFixedWidth(548);
+    m_AddButtonLocked->move(10,this->height() - 78);
+    connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
+    connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
+    m_AddButtonLocked->setVisible(false);
+
 }
 
 void RightView::initRecordStackedWidget()
@@ -127,17 +128,11 @@ void RightView::initRecordStackedWidget()
     m_addVoiceBtn = new DFloatingButton(this);
     m_addVoiceBtn->setFixedSize(QSize(58,58));
     m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
-    m_addVoiceBtn->setIconSize(QSize(58,58));
-//    m_addVoiceBtn->setNormalPic(":/image/icon/normal/circlebutton_voice.svg");
-//    m_addVoiceBtn->setHoverPic(":/image/icon/hover/circlebutton_voice_hover.svg");
-//    m_addVoiceBtn->setPressPic(":/image/icon/press/circlebutton_voice_press.svg");
+    m_addVoiceBtn->setIconSize(QSize(34,34));
 
-
-//    QHBoxLayout *HLayout = new QHBoxLayout(HBoard);
-//    HLayout->addWidget(m_addVoiceBtn);
-//    DWidget *VBoard = new DWidget;
-//    QVBoxLayout *VLayout = new QVBoxLayout(VBoard);
-//    VLayout->addWidget(HBoard);
+    DPalette pb = DApplicationHelper::instance()->palette(m_addVoiceBtn);
+    pb.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+    m_addVoiceBtn->setPalette(pb);
 
     m_recordPage = new RecordPage();
 
@@ -199,7 +194,6 @@ void RightView::addTextNote()
     note.createTime = QDateTime::currentDateTime();
     note.contentText = "";
 
-
     m_noteController->addNote(note);
     addNoteToNoteList(note);
     //updateNoteList();
@@ -215,28 +209,39 @@ void RightView::addNoteToNoteList(NOTE note)
 {
     m_NoSearchResault->setVisible(false);
     m_noteListWidget->addWidgetItem(true,note, "");
+    if(VOICE == note.noteType)
+    {
+        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
+    }
+    else if(TEXT == note.noteType)
+    {
+        Intancer::get_Intancer()->addHeightForRightList(TEXTNOTE_HEIGHT);
+    }
+    qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
+    qDebug()<<"rightViewheight:"<<this->height();
     m_noteListWidget->scrollToBottom();
-
-//    if (m_currFolderId > 0)
+//    if(m_noteListWidget->verticalScrollBar()->isVisible())
 //    {
-//        QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
-//        for (int i = noteList.size() - 1; i < noteList.size(); i++)
-//        {
-//            m_noteListWidget->addWidgetItem(noteList.at(i), "");
-//        }
-//        m_noteListWidget->scrollToBottom();
+//        onViewAddTextShow();
+//    }
+//    else
+//    {
+//        onViewAddTextHide();
 //    }
 }
 
 void RightView::updateNoteList()
 {
     //qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
+    //onViewAddTextHide();
+    Intancer::get_Intancer()->clearHeightForRightList();
     m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     //qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
     if (m_currFolderId > 0)
     {
         m_noteListWidget->addAddTextBtn();
+        Intancer::get_Intancer()->addHeightForRightList(ADDBUTTON_HEIGHT_HEIGHT);
         m_noteController->checkCleanDataBaseForVoiceByForderId(m_currFolderId);
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         if(noteList.size() > 0)
@@ -252,15 +257,34 @@ void RightView::updateNoteList()
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(false, noteList.at(i), "");
+
+            if(VOICE == noteList.at(i).noteType)
+            {
+                Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
+            }
+            else if(TEXT == noteList.at(i).noteType)
+            {
+                Intancer::get_Intancer()->addHeightForRightList(TEXTNOTE_HEIGHT);
+            }
         }
 
         m_noteListWidget->setCurrentRow(noteList.size());
         //m_noteListWidget->scrollToBottom();
     }
+
+//    if(m_noteListWidget->verticalScrollBar()->isVisible())
+//    {
+//        if(!Intancer::get_Intancer()->getViewAddTextButtonShowFlag())
+//        {
+//            onViewAddTextShow();
+//        }
+//    }
 }
 
 void RightView::searchNoteList(QString searchKey)
 {
+    //onViewAddTextHide();
+    Intancer::get_Intancer()->clearHeightForRightList();
     m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     if (m_currFolderId > 0)
@@ -286,6 +310,14 @@ void RightView::searchNoteList(QString searchKey)
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(false, noteList.at(i), searchKey);
+            if(VOICE == noteList.at(i).noteType)
+            {
+                Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
+            }
+            else if(TEXT == noteList.at(i).noteType)
+            {
+                Intancer::get_Intancer()->addHeightForRightList(TEXTNOTE_HEIGHT);
+            }
         }
         m_noteListWidget->scrollToBottom();
     }
@@ -368,6 +400,8 @@ void RightView::handlecancelRecord()
 
 void RightView::handleClearNote()
 {
+    //onViewAddTextHide();
+    Intancer::get_Intancer()->clearHeightForRightList();
     m_noteListWidget->delAddTextBtn();
     m_noteListWidget->clear();
     m_currFolderId = -1;
@@ -384,11 +418,47 @@ void RightView::OnAllFolderGone()
 {
     //cancleRecord();
     m_recordStackedWidget->setVisible(false);
+    m_AddButtonLocked->setVisible(false);
 }
 
 void RightView::OnAddAFolder()
 {
     m_recordStackedWidget->setVisible(true);
+    m_NoSearchResault->setVisible(false);
+}
+
+void RightView::onDisableAddBtn()
+{
+    if(nullptr != m_AddButtonLocked)
+    {
+        m_AddButtonLocked->setDisableBtn(true);
+    }
+}
+
+void RightView::onAbleAddBtn()
+{
+    if(nullptr != m_AddButtonLocked)
+    {
+        m_AddButtonLocked->setDisableBtn(false);
+    }
+}
+
+void RightView::onViewAddTextShow()
+{
+    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
+    {
+        m_AddButtonLocked->setVisible(true);
+        m_noteListWidget->listAddTextHide();
+    }
+}
+
+void RightView::onViewAddTextHide()
+{
+    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
+    {
+        m_AddButtonLocked->setVisible(false);
+        m_noteListWidget->listAddTextShow();
+    }
 }
 
 void RightView::resizeEvent(QResizeEvent * event)
@@ -400,6 +470,29 @@ void RightView::resizeEvent(QResizeEvent * event)
         m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 12 - m_recordStackedWidget->height());
         qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
         m_recordStackedWidget->show();
+
+        m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
+        m_BottomBoard->setFixedWidth(this->width());
+
+        qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
+        qDebug()<<"rightViewheight:"<<this->height();
+
+        Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+
+//        if(m_noteListWidget->verticalScrollBar()->isVisible())
+//        {
+//            if(!Intancer::get_Intancer()->getViewAddTextButtonShowFlag())
+//            {
+//                onViewAddTextShow();
+//            }
+//        }
+//        else
+//        {
+//            if(Intancer::get_Intancer()->getViewAddTextButtonShowFlag())
+//            {
+//                onViewAddTextHide();
+//            }
+//        }
     }
 
     if(nullptr != m_NoSearchResault)
@@ -413,4 +506,5 @@ void RightView::resizeEvent(QResizeEvent * event)
         qDebug()<<"RightView width:"<<this->width();
         qDebug()<<"m_noteListWidget width:"<<this->m_noteListWidget->width();
     }
+
 }

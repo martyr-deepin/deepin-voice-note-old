@@ -66,7 +66,7 @@ public:
                                   
 protected:
     //bool eventFilter(QObject *object, QEvent *event);
-    void keyPressEvent(QKeyEvent *event);
+    //void keyPressEvent(QKeyEvent *event);
     
 signals:
     void finishRecord(VOICE_INFO voiceInfo);

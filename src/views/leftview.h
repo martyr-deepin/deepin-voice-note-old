@@ -53,6 +53,7 @@ private:
     //QListWidget *folderList;
     LeftFolderList *m_leftFolderView;
     DFloatingButton *m_addFolderBtn;
+    //DWidget *m_LeftListBoard;
 
     FolderController *m_folderCtr;
     QString m_currSearchKey;
