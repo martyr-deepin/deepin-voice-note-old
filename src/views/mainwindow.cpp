@@ -105,6 +105,7 @@ void MyMainWindow::initTitleFrame()
     m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
 
     this->titlebar()->setCustomWidget(m_titleFrame, false);
+
 }
 
 void MyMainWindow::initCentralWidget()
@@ -154,6 +155,7 @@ void MyMainWindow::initStackedWidget()
     QPalette pl = m_textNoteEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     m_textNoteEdit->setPalette(pl);
+
 
 //    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
 //    //    self.detailPage = QtWidgets.QWidget()
@@ -245,5 +247,20 @@ void MyMainWindow::keyPressEvent(QKeyEvent *event)
     }
     return QWidget::keyPressEvent(event);
 }
+
+void MyMainWindow::changeEvent(QEvent * event)
+{
+    if(event->type()!=QEvent::WindowStateChange)
+    {
+        return;
+    }
+
+    if(this->windowState()==Qt::WindowMaximized || this->windowState()==Qt::WindowNoState)
+    {
+        //m_mainPage->selectCurFolder();
+    }
+
+}
+
 
 

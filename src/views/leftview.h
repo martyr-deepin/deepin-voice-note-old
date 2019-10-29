@@ -27,6 +27,7 @@ public:
     LeftView();
     ~LeftView();
 
+    void sendSelectCurFolder();
     int getCurrSelectFolderId();
     void searchFolder(QString searchKey);
     void selectTheFirstFolderByCode();
@@ -46,6 +47,8 @@ protected:
 public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);
+    void viewDisabled();
+    void viewEnabled();
     //void handlePressFolderChg(QListWidgetItem *item);
 
 private:
@@ -57,6 +60,7 @@ private:
 
     FolderController *m_folderCtr;
     QString m_currSearchKey;
+    DWidget *m_greyboard;
 
     void initUI();
     void initController();

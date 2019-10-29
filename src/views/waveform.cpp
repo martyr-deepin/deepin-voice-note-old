@@ -43,7 +43,7 @@ const int Waveform::WAVE_DURATION = 4;
 Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")//m_greyColor("#848484")
 {
     //setFixedSize(350, 50);
-
+    m_wantEmpty = false;
     if(PART_SAMPLE == m_currDisplayType)
     {
         m_Slider = new QLabel(this);
@@ -66,6 +66,12 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 
 void Waveform::paintEvent(QPaintEvent *)
 {
+
+    if(m_wantEmpty)
+    {
+        return;
+    }
+
     //qDebug()<<"Waveform::paintEvent:";
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
@@ -161,6 +167,12 @@ QString Waveform::getColor(int xPos)
 void Waveform::setWavePosition(int pos)
 {
     m_currWavePos = pos;
+}
+
+void Waveform::emptyWave()
+{
+    m_wantEmpty = true;
+    this->update();
 }
 
 void Waveform::updateWave(float sample)

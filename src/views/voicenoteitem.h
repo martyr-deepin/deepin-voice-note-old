@@ -24,6 +24,9 @@ public:
     void init();
     bool getwaveformPoint(QRect &rect);
     int getNoteID();
+    void clearWaveformContent();
+    void onlySetResumeNoSig();
+    void setPlayDiseable();
     NOTE m_note;
 
     DLabel *m_timeLabel;

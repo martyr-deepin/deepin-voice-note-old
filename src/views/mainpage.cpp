@@ -41,6 +41,8 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(searchNote(int, QString)), m_rightView, SLOT(handleSearchNote(int, QString)));
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
+    QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
+    QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
     //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
     QObject::connect(m_leftView, SIGNAL(sigAddFolder()), this, SLOT(onAddFolder()));
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
@@ -72,6 +74,46 @@ void MainPage::initSplitter(){
 //    handle->setFixedWidth(100);
     qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
     //m_leftView->selectTheFirstFolderByCode();
+
+
+//    pList = new DListWidget(this);
+//    //pList->setFixedSize(QSize(500,500));
+//    pList->move(0,0);
+
+//    pList->addItem(QString("1"));
+//    count = 0;
+//    pList->setFixedWidth(200);
+
+//    QSizePolicy sp = pList->sizePolicy();
+//    sp.setVerticalStretch(1);
+//    //sp.setVerticalPolicy(QSizePolicy::Expanding);
+//    pList->setSizePolicy(sp);
+
+//    QVBoxLayout *pnoteListLayout = new QVBoxLayout();
+//    pnoteListLayout->setContentsMargins(0, 0, 0, 0);
+//    pnoteListLayout->addWidget(pList);
+
+//    QWidget *pnoteListPage = new QWidget();
+//    pnoteListPage->resize(100,pnoteListPage->height());
+//    pnoteListPage->setLayout(pnoteListLayout);
+
+//    QVBoxLayout *rightViewLayout = new QVBoxLayout();
+//    rightViewLayout->setContentsMargins(0, 0, 0, 0);
+//    rightViewLayout->addWidget(pnoteListPage);
+
+
+
+//    QFrame *pView = new QFrame();
+//    pView->resize(100,pView->height());
+//    pView->setLayout(rightViewLayout);
+
+
+//    m_splitter->addWidget(pView);
+//    DPushButton *pBtn = new DPushButton(this);
+//    pBtn->setFixedSize(QSize(100,50));
+//    pBtn->move(600,0);
+
+//    connect(pBtn,SIGNAL(clicked()),this,SLOT(addItemTest()));
 }
 
 void MainPage::initLeftView(){
@@ -126,8 +168,19 @@ void MainPage::cancleRecord()
     m_rightView->cancleRecord();
 }
 
+void MainPage::selectCurFolder()
+{
+    m_leftView->sendSelectCurFolder();
+}
+
 void MainPage::onAddFolder()
 {
     emit clearSearch();
     m_rightView->OnAddAFolder();
 }
+
+//void MainPage::addItemTest()
+//{
+//    count++;
+//    pList->addItem(QString::number(count));
+//}

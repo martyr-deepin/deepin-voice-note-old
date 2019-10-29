@@ -57,6 +57,7 @@ public:
     QList<float> getWholeSampleList();
     void setCurrDisplayType(DISPLAY_TYPE);
     void setWavePosition(int pos);
+    void emptyWave();
                                                                                     
 public slots:
     void renderWave();
@@ -78,6 +79,8 @@ private:
     QString m_greyColor;
     void genSampleListFromWhole();
     QString getColor(int xPos);
+
+    bool m_wantEmpty;
 };
 
 #endif

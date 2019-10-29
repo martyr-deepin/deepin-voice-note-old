@@ -26,7 +26,7 @@ class TextNoteItem : public DWidget
 {
     Q_OBJECT
 public:
-    TextNoteItem(NOTE m_textNote, NoteController *noteCtr, QString searchKey);
+    TextNoteItem(NOTE m_textNote, NoteController *noteCtr, QString searchKey,QWidget *parent = nullptr);
     ~TextNoteItem();
 
     NOTE m_textNote;
@@ -56,6 +56,7 @@ signals:
     void sig_fouceOutAndEditEmpty(NOTE m_textNote);
     void sig_TextEditEmpty();
     void sig_TextEditNotEmpty();
+    void sig_ItemTimeChanged(NOTE noteID);
 
 public slots:
     void textAreaChanged();

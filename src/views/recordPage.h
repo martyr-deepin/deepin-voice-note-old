@@ -53,7 +53,7 @@ class RecordPage : public DBlurEffectWidget
 public:
     RecordPage(DWidget *parent = 0);
     //RecordPage(QWidget *parent = 0);
-
+    void getAudioStates(QMultimedia::AvailabilityStatus &audioinputs);
 
     //QLabel *m_voiceTimeLabel;
 
@@ -106,6 +106,8 @@ private:
     //QWidget *m_voiceShape;
     VOICE_INFO voiceInfo;
     Waveform *m_waveform;
+    QStringList m_audioInputs;
+    QMultimedia::AvailabilityStatus m_audioStatus;
 
     void initUI();
     void initConnection();

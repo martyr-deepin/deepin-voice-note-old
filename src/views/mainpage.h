@@ -28,6 +28,7 @@ public:
     void searchFolder(QString searchKey);
     void updateFromDetal(int id);
     void cancleRecord();
+    void selectCurFolder();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -36,11 +37,16 @@ signals:
 public slots:
     void onAddFolder();
 
+    //void addItemTest();
+
 private:
      DFMSplitter *m_splitter;
      LeftView *m_leftView;
 
      RightView *m_rightView;
+
+     //DListWidget *pList;
+     //int count;
 
     void initUI();
 

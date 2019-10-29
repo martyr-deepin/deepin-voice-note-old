@@ -15,6 +15,8 @@ class PlayingButton : public QWidget
 
 public:
     PlayingButton(QWidget *parent = 0);
+    void onlySetResumeForButton();
+    void setPlayDiseable();
 
 signals:
     void pause();

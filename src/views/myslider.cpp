@@ -86,6 +86,7 @@ void MySlider::setSliderPostion(int sliderPos)
 {
     qDebug() << "setSliderPostion: " << sliderPos << ", max:" << m_mySliderBar->maximum();
     m_mySliderBar->setSliderPosition(sliderPos);
+    //m_mySliderBar->setValue(sliderPos);
 }
 
 void MySlider::setPageStep(int ti)

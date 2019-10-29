@@ -248,10 +248,12 @@ void FolerWidgetItem::checkNameValid()
         {
             m_lineEdit->setAlert(true);
             m_lineEdit->showAlertMessage("目录名重复！");
-            Intancer::get_Intancer()->setRenameRepeatFlag(true);
+            m_folder.folderName = m_BakDefaultName;
+            m_lineEdit->setText(m_BakDefaultName);
+            //Intancer::get_Intancer()->setRenameRepeatFlag(false);
         }
-        else
-        {
+//        else
+//        {
             if(!m_folderCtr->updateFolder(m_folder))
             {
                 m_lineEdit->setAlert(true);
@@ -264,13 +266,8 @@ void FolerWidgetItem::checkNameValid()
             labelFont.setFamily("SourceHanSansSC");
             labelFont.setPointSize(11);
 
-            //m_nameLabel->setText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), m_nameLabel->width(), isConverted));
-
-            //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
             m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
 
-            //m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(m_nameLabel->font(), m_lineEdit->text(), FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
-            //m_stackedWidget->setCurrentIndex(0);
             m_nameLabel->setVisible(true);
             m_lineEdit->setVisible(false);
             m_createTimeLabel->setVisible(true);
@@ -278,7 +275,7 @@ void FolerWidgetItem::checkNameValid()
             m_BakDefaultName.clear();
             Intancer::get_Intancer()->setRenameRepeatFlag(false);
 
-        }
+//        }
         //m_createTimeLabel->setVisible(true);
     } else {
         //警告用户输入不能为空

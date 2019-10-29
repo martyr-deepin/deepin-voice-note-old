@@ -45,6 +45,23 @@ int VoiceNoteItem::getNoteID()
     return m_note.id;
 }
 
+void VoiceNoteItem::clearWaveformContent()
+{
+    m_waveform->clearWave();
+    m_waveform->emptyWave();
+}
+
+void VoiceNoteItem::onlySetResumeNoSig()
+{
+    m_playingButton->onlySetResumeForButton();
+}
+
+void VoiceNoteItem::setPlayDiseable()
+{
+    m_playingButton->setPlayDiseable();
+}
+
+
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(VOICENOTE_HEIGHT);
@@ -107,6 +124,8 @@ void VoiceNoteItem::initUI()
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);
+
+
     m_menuBtn = new DFloatingButton(DStyle::SP_SelectElement,m_bgWidget);
     //m_menuBtn->setFlat(true);
     //m_menuBtn->setStyleSheet("border:none;");

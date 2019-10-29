@@ -6,7 +6,7 @@
 #include <QGraphicsOpacityEffect>
 #include <DApplicationHelper>
 
-TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey) : m_isTextConverted(false)
+TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey, QWidget *parent) :DWidget(parent), m_isTextConverted(false)
 {
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
@@ -318,10 +318,12 @@ void TextNoteItem::handleTextEditFocusOut()
 {
     qDebug()<<"-------------------------------handleTextEditFocusOut()";
     m_textNote.contentText = m_textEdit->toPlainText();
-    if(m_bakContent != m_textNote.contentText)
-    {
-        m_textNote.createTime = QDateTime::currentDateTime();
-    }
+    bool timechanged = false;
+//    if(m_bakContent != m_textNote.contentText)
+//    {
+//        m_textNote.createTime = QDateTime::currentDateTime();
+//        timechanged = true;
+//    }
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
     m_noteCtr->updateNote(m_textNote);
     if(m_textNote.contentText.isEmpty())
@@ -353,7 +355,12 @@ void TextNoteItem::handleTextEditFocusOut()
         m_textEdit->setText(txt);
         m_isEdited = false;
         //m_textEdit->setHtml(txt);
+        if(timechanged)
+        {
+            //emit sig_ItemTimeChanged(m_textNote);
+        }
     }
+
 }
 
 void TextNoteItem::handleMenuBtnStateChanged()

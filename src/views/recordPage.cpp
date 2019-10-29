@@ -170,6 +170,14 @@ RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
 //        buttonAreaWidget->setLayout(expandAnimationButtonLayout);
 //        expandAnimationButton->startAnimation();
 //    }
+
+     //m_audioInputs = m_audioRecorder->audioInputs();
+     m_audioStatus = m_audioRecorder->availability();
+}
+
+void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
+{
+    audiostatus = m_audioStatus;
 }
 
 void RecordPage::initUI()

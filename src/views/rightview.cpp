@@ -1,6 +1,7 @@
 #include "rightview.h"
 #include "textnoteitem.h"
 #include "intancer.h"
+#include "uiutil.h"
 //#include <QVBoxLayout>
 #include "consts.h"
 #include <DArrowRectangle>
@@ -40,6 +41,8 @@ void RightView::initUI()
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);
 
+    m_noticeNoAudioInputs = UiUtil::createConfirmDialog(QString(""), QString(tr("未检测到录音设备")), this);
+
 }
 
 
@@ -55,7 +58,7 @@ void RightView::initConnection()
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
-    connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
+    //connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
@@ -345,15 +348,30 @@ void RightView::stopAllPlayback()
 void RightView::cancleRecord()
 {
     m_recordPage->exitRecord();
+    emit stopRecoiding();
 }
 
 void RightView::handleStartRecord()
 {
-    m_recordStackedWidget->setCurrentIndex(1);
-    m_recordStackedWidget->setFixedSize(QSize(548,m_recordStackedWidget->height()));
-    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
-    //m_recordStackedWidget->move(0,this->height() - m_recordStackedWidget->height());
-    m_recordPage->startRecord();
+    QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
+
+    QMultimedia::AvailabilityStatus audioinputs;
+    m_recordPage->getAudioStates(audioinputs);
+    if(QMultimedia::AvailabilityStatus::Available == audioinputs)
+    {
+        m_noteListWidget->handleClickRecordButton();
+        m_recordStackedWidget->setCurrentIndex(1);
+        m_recordStackedWidget->setFixedSize(QSize(548,m_recordStackedWidget->height()));
+        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+        //m_recordStackedWidget->move(0,this->height() - m_recordStackedWidget->height());
+        m_recordPage->startRecord();
+
+        emit startRecoding();
+    }
+    else
+    {
+        m_noticeNoAudioInputs->show();
+    }
 }
 //typedef struct
 //{
@@ -388,6 +406,7 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
     m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
     m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
     addNoteToNoteList(voiceNote);
+    emit stopRecoiding();
     //updateNoteList();
 }
 
@@ -396,6 +415,7 @@ void RightView::handlecancelRecord()
     m_recordStackedWidget->setCurrentIndex(0);
     m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
     m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+    emit stopRecoiding();
 }
 
 void RightView::handleClearNote()

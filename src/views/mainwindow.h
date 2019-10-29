@@ -36,9 +36,11 @@ public slots:
     void handleCloseDialogClicked();
     void clearSearchLine();
 
+
 protected:
     //bool eventFilter(QObject *object, QEvent *event);
     void keyPressEvent(QKeyEvent *event);
+    void changeEvent(QEvent * event);
 private:
      QFrame *m_centralWidget;
 //     DFMSplitter *m_splitter;
@@ -58,6 +60,8 @@ private:
     QFrame *m_titleFrame;
     DSearchEdit *m_searchEdit;
     DDialog *m_SearchDialog;
+
+
 
     void initUI();
     void initConnection();

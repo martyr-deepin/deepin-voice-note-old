@@ -89,6 +89,7 @@ public slots:
     void onDisableAddBtn();
     void onAbleAddBtn();
     void onCallDelDialog(NOTE textNote);
+    void onSortItemByTime(NOTE note);
 private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
@@ -98,6 +99,7 @@ private:
     QListWidgetItem *m_currSelItem;
     NOTE m_currSelNote;
     DDialog *m_delConfirmDialog;
+    DDialog *m_noticeNotExistDialog;
     VoiceNoteItem *m_currPlayingItem;
     QMediaPlayer *audioPlayer;
     MySlider *m_myslider;

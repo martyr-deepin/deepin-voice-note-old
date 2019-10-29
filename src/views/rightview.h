@@ -14,6 +14,7 @@
 #include <QObject>
 #include <DFloatingButton>
 #include <DBlurEffectWidget>
+#include <QAudioDeviceInfo>
 
 DWIDGET_USE_NAMESPACE
 //右侧文字语音记录View
@@ -34,6 +35,8 @@ public:
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();
+    void startRecoding();
+    void stopRecoiding();
 
 public slots:
     void onShowNoResult();
@@ -77,6 +80,8 @@ private:
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;
     DBlurEffectWidget *m_BottomBoard;
+    DDialog *m_noticeNoAudioInputs;
+
 };
 
 #endif // RIGHTVIEW_H

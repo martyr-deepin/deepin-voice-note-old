@@ -155,6 +155,12 @@ void LeftView::addFolder()
     emit sigAddFolder();
 }
 
+void LeftView::sendSelectCurFolder()
+{
+    int curfolderID = getCurrSelectFolderId();
+    emit selFolderIdChg(curfolderID);
+}
+
 int LeftView::getCurrSelectFolderId()
 {
     if (m_leftFolderView->count() > 0) {
@@ -208,6 +214,18 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
     }
 }
 
+void LeftView::viewDisabled()
+{
+    m_leftFolderView->setDisabled(true);
+    m_addFolderBtn->setDisabled(true);
+}
+
+void LeftView::viewEnabled()
+{
+    m_leftFolderView->setDisabled(false);
+    m_addFolderBtn->setDisabled(false);
+}
+
 //void LeftView::handlePressFolderChg(QListWidgetItem *item)
 //{
 ////    int count = m_leftFolderView->count();
@@ -233,4 +251,5 @@ void LeftView::clearNoteList()
 void LeftView::resizeEvent(QResizeEvent * event)
 {
     m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 18);
+    //m_greyboard->setFixedSize(this->size());
 }

@@ -54,27 +54,52 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
 
     layout->addWidget(resumeButton);
+    layout->addWidget(pauseButton);
+    pauseButton->setVisible(false);
     //this->setStyleSheet("background: red");
 }
 
+void PlayingButton::onlySetResumeForButton()
+{
+    pauseButton->setVisible(false);
+    resumeButton->setVisible(true);
+//    layout->removeWidget(pauseButton);
+//    pauseButton->setParent(NULL);
+//    layout->addWidget(resumeButton);
+
+}
+void PlayingButton::setPlayDiseable()
+{
+   if(nullptr != resumeButton)
+   {
+       resumeButton->setDisabled(true);
+   }
+}
+
 void PlayingButton::handlePause() {
-    layout->removeWidget(pauseButton);
-    pauseButton->setParent(NULL);
-    layout->addWidget(resumeButton);
+//    layout->removeWidget(pauseButton);
+//    pauseButton->setParent(NULL);
+//    layout->addWidget(resumeButton);
+    pauseButton->setVisible(false);
+    resumeButton->setVisible(true);
     emit pause();
 }
 
 void PlayingButton::handleResume() {
-    layout->removeWidget(resumeButton);
-    resumeButton->setParent(NULL);
-    layout->addWidget(pauseButton);
+//    layout->removeWidget(resumeButton);
+//    resumeButton->setParent(NULL);
+//    layout->addWidget(pauseButton);
+    pauseButton->setVisible(true);
+    resumeButton->setVisible(false);
     emit resume();
 }
 
 void PlayingButton::handleStop() {
-    layout->removeWidget(pauseButton);
-    pauseButton->setParent(NULL);
-    layout->addWidget(resumeButton);
+//    layout->removeWidget(pauseButton);
+//    pauseButton->setParent(NULL);
+//    layout->addWidget(resumeButton);
+    pauseButton->setVisible(false);
+    resumeButton->setVisible(true);
     emit stop();
 }
 
