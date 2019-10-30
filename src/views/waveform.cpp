@@ -118,14 +118,14 @@ void Waveform::paintEvent(QPaintEvent *)
 //            qDebug()<<"sampleRect.x:"<<sampleRect.x();
 //            qDebug()<<"rect.x:"<<rect().x();
             //QLinearGradient 不渐变色
-           QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
-            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
-            gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
+//           QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
+//            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
+//            gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
             //QLinearGradient 可以做渐变色
 //            //QLinearGradient gradient(rect().topLeft(), rect().topRight());
-//            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
-//            gradient.setColorAt(0, QColor("#03D0D6"));
-//            gradient.setColorAt(1, QColor("#0079FF"));
+            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
+            gradient.setColorAt(0, QColor("#03D0D6"));
+            gradient.setColorAt(1, QColor("#0079FF"));
 
 
             painter.fillRect(sampleRect, gradient);

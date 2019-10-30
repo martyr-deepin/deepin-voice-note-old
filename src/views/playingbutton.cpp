@@ -56,7 +56,6 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     layout->addWidget(resumeButton);
     layout->addWidget(pauseButton);
     pauseButton->setVisible(false);
-    //this->setStyleSheet("background: red");
 }
 
 void PlayingButton::onlySetResumeForButton()

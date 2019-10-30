@@ -198,7 +198,6 @@ void RightNoteList::initUI()
 //    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
 
     qApp->installEventFilter(this);
-    //this->setStyleSheet("background: red");
 
 }
 void RightNoteList::initConnection()
@@ -235,6 +234,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
     {
         TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
+        connect(textItem, SIGNAL(textEditTrueClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
+        connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
         connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
@@ -246,7 +247,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
         connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
         connect(textItem, SIGNAL(sig_ItemTimeChanged(NOTE)), this, SLOT(onSortItemByTime(NOTE)));
-        connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
+        connect(textItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
+        //connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
 
 
@@ -265,6 +267,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         {
             textItem->changeToEditMode();
         }
+
         //textItem->changeToEditMode();
         //qDebug()<<"textItem width3:"<<textItem->width();
     }
@@ -277,6 +280,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
 
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
+        connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
+
         QListWidgetItem *item=new QListWidgetItem();
         item->setSizeHint(QSize(this->width(), 98));
         this->insertItem(this->count() - 1,item);
@@ -336,6 +341,19 @@ void RightNoteList::listAddTextHide()
     }
 }
 
+void RightNoteList::fouceOutAllTextItem()
+{
+    int count = this->count();
+    for(int i = 0; i < count - 1; i++)
+    {
+        TextNoteItem *pTextItem = (TextNoteItem *)this->itemWidget(this->item(i));
+        if(TEXT == pTextItem->getType())
+        {
+            pTextItem->tryToFouceout();
+        }
+    }
+}
+
 bool RightNoteList::eventFilter(QObject *o, QEvent *e)
 {
     if(0 == o->objectName().compare(QString("QMainWindowClassWindow")))
@@ -368,6 +386,7 @@ void RightNoteList::paintEvent(QPaintEvent *event)
 
 void RightNoteList::resizeEvent(QResizeEvent * event)
 {
+    DListWidget::resizeEvent(event);
     QListWidgetItem *ptmp = nullptr;
     for(int i = 0; i < this->count(); i++)
     {
@@ -375,6 +394,7 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
         QWidget* ptmpWidget = this->itemWidget(ptmp);
         ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
     }
+
 ////    this->scrollToItem(ptmp);
 ////    int height = this->height();
 ////    qDebug()<<"rightlist height:"<<height;
@@ -475,65 +495,80 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
     }
 }
 
-void RightNoteList::onSortItemByTime(NOTE note)
+//void RightNoteList::onSortItemByTime(NOTE note)
+//{
+//    int moveRow = -1;
+//    getRowByID(note.id,TEXT,moveRow);
+//    if((this->count() > 2) && (moveRow != this->count() - 2))
+//    {
+//        QString searchKey;
+//        TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
+//        connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
+//        connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
+//        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
+//        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
+//        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
+//        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
+//        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+//        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SIGNAL(sig_TextEditNotEmpty()));
+//        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
+//        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
+//        connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
+//        connect(textItem, SIGNAL(sig_ItemTimeChanged(int,QDateTime)), this, SLOT(onSortItemByTime(int,QDateTime)));
+//        connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
+
+//        QListWidgetItem* pmoveItem = this->takeItem(moveRow);
+//        this->removeItemWidget(pmoveItem);
+//        pmoveItem->setSizeHint(QSize(this->width(),123));  //orig
+//        int count = this->count();
+//        this->insertItem(count - 1,pmoveItem);
+//        this->setItemWidget(pmoveItem, textItem);
+
+//        //    bool move = false;
+//        //    int moveMovment = 0;
+//        //    if(nullptr != m_currPlayingItem)
+//        //    {
+//        //        int playRow = -1;
+//        //        NOTE_TYPE playType = VOICE;
+//        //        getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
+
+//        //        if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
+//        //        {
+//        //            audioPlayer->stop();
+//        //        }
+
+//        //        if(moveRow < playRow)
+//        //        {
+//        //            move = true;
+//        //            moveMovment = this->itemWidget(m_currSelItem)->height();
+//        //            qDebug()<<"moveMovment: "<<moveMovment;
+//        //        }
+
+//        //    }
+
+//        //    if(move)
+//        //    {
+//        //        changeSliderPosByHand(moveMovment);
+//        //    }
+//    }
+//}
+
+void RightNoteList::onCheckEditState(NOTE note)
 {
-    int moveRow = -1;
-    getRowByID(note.id,TEXT,moveRow);
-    if((this->count() > 2) && (moveRow != this->count() - 2))
+    int count = this->count();
+    for(int i = 0; i < count - 1; i++)
     {
-        QString searchKey;
-        TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
-        connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
-        connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
-        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
-        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
-        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
-        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
-        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
-        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SIGNAL(sig_TextEditNotEmpty()));
-        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
-        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
-        connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
-        connect(textItem, SIGNAL(sig_ItemTimeChanged(int,QDateTime)), this, SLOT(onSortItemByTime(int,QDateTime)));
-        connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
-
-        QListWidgetItem* pmoveItem = this->takeItem(moveRow);
-        this->removeItemWidget(pmoveItem);
-        pmoveItem->setSizeHint(QSize(this->width(),123));  //orig
-        int count = this->count();
-        this->insertItem(count - 1,pmoveItem);
-        this->setItemWidget(pmoveItem, textItem);
-
-        //    bool move = false;
-        //    int moveMovment = 0;
-        //    if(nullptr != m_currPlayingItem)
-        //    {
-        //        int playRow = -1;
-        //        NOTE_TYPE playType = VOICE;
-        //        getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
-
-        //        if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
-        //        {
-        //            audioPlayer->stop();
-        //        }
-
-        //        if(moveRow < playRow)
-        //        {
-        //            move = true;
-        //            moveMovment = this->itemWidget(m_currSelItem)->height();
-        //            qDebug()<<"moveMovment: "<<moveMovment;
-        //        }
-
-        //    }
-
-        //    if(move)
-        //    {
-        //        changeSliderPosByHand(moveMovment);
-        //    }
+        TextNoteItem *pTextItem = (TextNoteItem *)this->itemWidget(this->item(i));
+        if((note.id != pTextItem->getId()) && (note.noteType == pTextItem->getType()))
+        {
+            pTextItem->tryToFouceout();
+        }
     }
+}
 
-
-
+void RightNoteList::onfouceOutAllTextItem()
+{
+    this->fouceOutAllTextItem();
 }
 
 void RightNoteList::handleSaveAsItem(bool)

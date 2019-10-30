@@ -48,7 +48,9 @@ public:
     void readFromDatabase();
     void init();
     int getId();
+    NOTE_TYPE getType();
 signals:
+    void textEditTrueClicked(NOTE m_textNote);
     void textEditClicked(NOTE m_textNote);
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void sig_menuBtnPressed();
@@ -57,6 +59,7 @@ signals:
     void sig_TextEditEmpty();
     void sig_TextEditNotEmpty();
     void sig_ItemTimeChanged(NOTE noteID);
+    void buttonClicled();
 
 public slots:
     void textAreaChanged();

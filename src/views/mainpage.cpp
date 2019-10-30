@@ -69,8 +69,6 @@ void MainPage::initSplitter(){
 //    //pa.setBrush(DPalette::AlternateBase, pa.brush(DPalette::AlternateBase));
 //    pa.setBrush(DPalette::AlternateBase, QBrush(QColor(255,0,0,254)));
 //    handle->setPalette(pa);
-
-//    handle->setStyleSheet("QSplitter::handle { background-color: black }");
 //    handle->setFixedWidth(100);
     qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
     //m_leftView->selectTheFirstFolderByCode();

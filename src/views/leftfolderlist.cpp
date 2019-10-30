@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QDebug>
 #include <DPalette>
+#include <DApplicationHelper>
 
 
 LeftFolderList::LeftFolderList(FolderController *folderCtr)
@@ -11,6 +12,11 @@ LeftFolderList::LeftFolderList(FolderController *folderCtr)
     this->m_folderCtr = folderCtr;
     initUI();
     initConnection();
+    setFocusPolicy(Qt::NoFocus);
+    setSpacing(5);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setResizeMode(QListWidget::Adjust);
+    setViewMode(QListView::ListMode);
 }
 LeftFolderList::~LeftFolderList()
 {
@@ -38,10 +44,15 @@ void LeftFolderList::initUI()
     m_boader->setFixedWidth(8);
     m_boader->setFixedHeight(1000);
     m_boader->move(0,0);
+    m_boader->setVisible(false);
 
     m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除记事本吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
 
     m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("录音中禁止删除记事本")), nullptr);
+
+//    DPalette pb = DApplicationHelper::instance()->palette(this);
+//    pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
+//    this->setPalette(pb);
 }
 
 void LeftFolderList::initConnection()
@@ -54,27 +65,15 @@ void LeftFolderList::initConnection()
 
 void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     QListWidgetItem *item=new QListWidgetItem(this);
+    item->setSizeHint(QSize(230,64));
+    item->setData(Qt::UserRole, 10);
 
-    //QListWidgetItem *item=new QListWidgetItem();
-//    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
-    //item->setSizeHint(QSize(230,64));
-    item->setSizeHint(QSize(250,74));
-    //item->setBackgroundColor(QColor(QRgb(0x00f5f5f5)));
-//    DPalette palette;
-//    palette.setColor(DPalette::Background, QColor(247, 247, 247));
-//    item->setAutoFillBackground(true);
-//    item->setPalette(palette);
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
-    //item->setData(Qt::BackgroundRole,QBrush(QColor(QRgb(0x00000000))));
+
     connect(this, SIGNAL(sigBoardPress()), folderItem, SLOT(tryToFouceout()));
 
     this->addItem(item);
     this->setItemWidget(item, folderItem);
-    //folderItem->Init();
-
-//    QWidget *pNewWidget = new QWidget;
-//    pNewWidget->setFixedSize(QSize(230,64));
-//    this->setItemWidget(item, pNewWidget);
 
 }
 

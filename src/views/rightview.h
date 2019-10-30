@@ -44,6 +44,7 @@ public slots:
     void handleSearchNote(int folderId, QString searchKey);
     void addTextNote();
     void handleStartRecord();
+    void TryToDisEditAllText();
     void handleStopRecord(VOICE_INFO voiceInfo);
     void handlecancelRecord();
     void handleClearNote();

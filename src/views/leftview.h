@@ -47,6 +47,7 @@ protected:
 public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);
+    void itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void viewDisabled();
     void viewEnabled();
     //void handlePressFolderChg(QListWidgetItem *item);

@@ -19,6 +19,7 @@ FolerWidgetItem::FolerWidgetItem(FOLDER folder, FolderController *folderCtr, QSt
     this->m_folder = folder;
     this->m_folderCtr = folderCtr;
     this->m_searchKey = searchKey;
+    m_clicked = false;
     this->Init();
 }
 
@@ -47,6 +48,7 @@ void FolerWidgetItem::setNormalBackground()
 
 void FolerWidgetItem::changeToEditMode()
 {
+
     m_nameLabel->setVisible(false);
     m_lineEdit->setVisible(true);
 //    m_stackedWidget->setCurrentIndex(1);
@@ -71,13 +73,25 @@ void FolerWidgetItem::changeToEditMode()
 
 void FolerWidgetItem::changeToClickMode()
 {
-    if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
+    if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel))
+    //if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
     {
-        QPalette pb;
-        //pb.setColor(QPalette::Background,QColor(00,00,00));
-        pb.setColor(QPalette::Background,QColor(00,129,255));
-        m_BackGround->setPalette(pb);
-        m_BackGround->setMaskAlpha(255);
+        //this->setBlurEnabled(false);
+
+//        DPalette pb = DApplicationHelper::instance()->palette(this);
+//        pb.setBrush(DPalette::Background, QColor(0,0,0,0));
+//        this->setPalette(pb);
+
+//        QPalette pb;
+//        //pb.setColor(QPalette::Background,QColor(00,00,00));
+//        pb.setColor(QPalette::Background,QColor(00,129,255));
+////        m_BackGround->setPalette(pb);
+////        m_BackGround->setMaskAlpha(255);
+////        m_BackGround->setMaskAlpha(0);
+        m_clicked = true;
+         m_BackGround->setVisible(false);
+
+        //m_BackGround->setVisible(false);
 
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::white);
@@ -97,13 +111,29 @@ void FolerWidgetItem::changeToClickMode()
 
 void FolerWidgetItem::changeToUnClickMode()
 {
-    if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
+    if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel))
+    //if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
     {
-        QPalette pb;
-        pb.setColor(QPalette::Background,QColor(00,00,00));
-        //pe.setColor(QPalette::Background,QColor(00,129,255));
-        m_BackGround->setPalette(pb);
-        m_BackGround->setMaskAlpha(7);
+//        //m_BackGround->setVisible(true);
+//        QPalette pb;
+//        pb.setColor(QPalette::Background,QColor(00,00,00));
+//        //pe.setColor(QPalette::Background,QColor(00,129,255));
+//        //DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//        //pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
+////        m_BackGround->setPalette(pb);
+////        m_BackGround->setMaskAlpha(0);
+//        //m_BackGround->setMaskAlpha(7);
+
+//        DPalette pb = DApplicationHelper::instance()->palette(this);
+//        pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
+//        this->setPalette(pb);
+
+
+        if(m_clicked)
+        {
+            m_BackGround->setVisible(true);
+            m_clicked = false;
+        }
 
         QPalette pe;
         pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
@@ -123,26 +153,48 @@ void FolerWidgetItem::changeToUnClickMode()
 
 void FolerWidgetItem::Init()
 {
-    this->setFixedSize(QSize(250, 74));
+    this->setFixedSize(QSize(230, 64));
+    //this->setFixedSize(QSize(250, 74));
     this->setBlurEnabled(false);
+    this->setBlurRectXRadius(8);
+    this->setBlurRectYRadius(8);
 
-    m_BackBorad = new DBlurEffectWidget(this);
-    m_BackBorad->setFixedSize(this->size());
-    m_BackBorad->setMaskAlpha(255);
+
+//    m_BackBorad = new DBlurEffectWidget(this);
+//    m_BackBorad->setFixedSize(this->size());
+//    m_BackBorad->setMaskAlpha(0);
+//    m_BackBorad->setVisible(true);
 
 
     m_BackGround = new DBlurEffectWidget(this);
-    m_BackGround->move(0,5);
+    m_BackGround->move(0,0);
     m_BackGround->setFixedSize(230, 64);
     m_BackGround->setVisible(true);
-
     m_BackGround->setBlurRectXRadius(8);
     m_BackGround->setBlurRectYRadius(8);
 
-    m_FolderImage = new FolderImage(m_BackGround);
+
+    DPalette pb = DApplicationHelper::instance()->palette(this);
+    pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
+    m_BackGround->setPalette(pb);
+//    DPalette pc = DApplicationHelper::instance()->palette(this);
+//    pc.setBrush(DPalette::Background, pc.color(DPalette::ItemBackground));
+//    this->setPalette(pc);
+
+
+
+    //m_BackGround->setMaskAlpha(0);
+
+//    m_BackGround->setBlurRectXRadius(8);
+//    m_BackGround->setBlurRectYRadius(8);
+
+
+    m_FolderImage = new FolderImage(this);
+    //m_FolderImage = new FolderImage(m_BackGround);
     m_FolderImage->move(6,12);
 
-    m_nameLabel = new DLabel(m_BackGround);
+    m_nameLabel = new DLabel(this);
+    //m_nameLabel = new DLabel(m_BackGround);
     m_nameLabel->setFixedSize(QSize(110,21));
     m_nameLabel->move(53,13);
     //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
@@ -170,9 +222,11 @@ void FolerWidgetItem::Init()
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
-    m_lineEdit = new RenameEdit(m_BackGround);
+    m_lineEdit = new RenameEdit(this);
+    //m_lineEdit = new RenameEdit(m_BackGround);
     m_lineEdit->setFixedSize(QSize(160,36));
-    m_lineEdit->move(57,(m_BackGround->height() - m_lineEdit->height())/2);
+    m_lineEdit->move(57,(this->height() - m_lineEdit->height())/2);
+    //m_lineEdit->move(57,(m_BackGround->height() - m_lineEdit->height())/2);
     //m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
 
@@ -207,8 +261,8 @@ void FolerWidgetItem::Init()
 //    m_stackedWidget->setCurrentIndex(0);
 
 
-
-    m_createTimeLabel = new QLabel(m_BackGround);
+    m_createTimeLabel = new QLabel(this);
+    //m_createTimeLabel = new QLabel(m_BackGround);
     m_createTimeLabel->setFixedSize(QSize(110,18));
     m_createTimeLabel->move(53,32);
     //m_createTimeLabel->setGeometry(QRect(53, 36, 110, 18));

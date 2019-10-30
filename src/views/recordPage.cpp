@@ -38,6 +38,7 @@
 #include <QApplication>
 #include <DHiDPIHelper>
 #include <DApplicationHelper>
+#include <QAudioDeviceInfo>
 
 #include <uiutil.h>
 //#include <QTimer>
@@ -50,7 +51,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
+RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 //RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
     this->setFocusPolicy(Qt::StrongFocus);
@@ -159,6 +160,11 @@ RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
     connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
     connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
     connect(m_recordingButton, SIGNAL(resume()), this, SLOT(resumeRecord()));
+    connect(m_finishButton, SIGNAL(clicked()), this, SIGNAL(buttonClicled()));
+    connect(m_recordingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
+    connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
+
+
 
 //    QFileInfoList fileInfoList = Utils::getRecordingFileinfos();
 //    if (fileInfoList.count() == 0) {
@@ -172,7 +178,8 @@ RecordPage::RecordPage(DWidget *parent) : DBlurEffectWidget(parent)
 //    }
 
      //m_audioInputs = m_audioRecorder->audioInputs();
-     m_audioStatus = m_audioRecorder->availability();
+//     m_audioStatus = m_audioRecorder->availability();
+
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
@@ -184,12 +191,9 @@ void RecordPage::initUI()
 {
     //this->setBackgroundRole();
     //this->setAutoFillBackground(true);
-    QPalette palette = this->palette();
-    palette.setColor(palette.Background,QColor(255, 255, 255));
-    //palette.setColor(palette.Background, QColor(0, 0, 0));
-    this->setPalette(palette);
-    this->setBlurRectXRadius(8);
-    this->setBlurRectYRadius(8);
+
+//    this->setBlurRectXRadius(8);
+//    this->setBlurRectYRadius(8);
 
     m_hBoxLayout = new QHBoxLayout(this);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);

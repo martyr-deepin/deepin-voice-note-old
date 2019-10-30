@@ -51,6 +51,7 @@ public:
     void delAddTextBtn();
     void listAddTextShow();
     void listAddTextHide();
+    void fouceOutAllTextItem();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -89,7 +90,9 @@ public slots:
     void onDisableAddBtn();
     void onAbleAddBtn();
     void onCallDelDialog(NOTE textNote);
-    void onSortItemByTime(NOTE note);
+    //void onSortItemByTime(NOTE note);
+    void onCheckEditState(NOTE note);
+    void onfouceOutAllTextItem();
 private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;

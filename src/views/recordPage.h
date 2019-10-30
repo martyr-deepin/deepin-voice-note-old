@@ -39,13 +39,14 @@
 #include <QTimer>
 #include <DWidget>
 #include "consts.h"
-#include <DBlurEffectWidget>
+#include <DFloatingWidget>
 #include <DFloatingButton>
+#include <DBlurEffectWidget>
 
 DWIDGET_USE_NAMESPACE
 
 //录音按钮Page
-class RecordPage : public DBlurEffectWidget
+class RecordPage : public DFloatingWidget
 //class RecordPage : public QWidget
 {
     Q_OBJECT
@@ -71,6 +72,7 @@ protected:
 signals:
     void finishRecord(VOICE_INFO voiceInfo);
     void cancelRecord();
+    void buttonClicled();
     
 public slots:
     void exitRecord();

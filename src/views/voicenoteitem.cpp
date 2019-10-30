@@ -45,6 +45,11 @@ int VoiceNoteItem::getNoteID()
     return m_note.id;
 }
 
+NOTE_TYPE VoiceNoteItem::getType()
+{
+    return m_note.noteType;
+}
+
 void VoiceNoteItem::clearWaveformContent()
 {
     m_waveform->clearWave();
@@ -126,9 +131,8 @@ void VoiceNoteItem::initUI()
     m_waveform->setSizePolicy(spShape);
 
 
-    m_menuBtn = new DFloatingButton(DStyle::SP_SelectElement,m_bgWidget);
+    m_menuBtn = new MenuButton(m_bgWidget);
     //m_menuBtn->setFlat(true);
-    //m_menuBtn->setStyleSheet("border:none;");
     //m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
     m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
@@ -136,6 +140,7 @@ void VoiceNoteItem::initUI()
     DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
     pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
     m_menuBtn->setPalette(pa);
+    //m_menuBtn->setBtnPalette();
 //    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
 //    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
 //    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
@@ -173,6 +178,11 @@ void VoiceNoteItem::initConnection()
     //connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
     connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
+
+    connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
+    connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
+    connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
+
 
 }
 

@@ -6,7 +6,7 @@
 
 QT       += core gui sql dtkcore
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets dbus
 
 TARGET = deepin-voice-note
 TEMPLATE = app
@@ -65,7 +65,8 @@ SOURCES += \
     src/views/folderimage.cpp \
     src/views/renameedit.cpp \
     src/views/sliderhandle.cpp \
-    src/views/intancer.cpp
+    src/views/intancer.cpp \
+    src/views/menubutton.cpp
 
 HEADERS += \
     src/app \
@@ -100,7 +101,8 @@ HEADERS += \
     src/views/folderimage.h \
     src/views/renameedit.h \
     src/views/sliderhandle.h \
-    src/views/intancer.h
+    src/views/intancer.h \
+    src/views/menubutton.h
 
 INCLUDEPATH += \
     src/app \

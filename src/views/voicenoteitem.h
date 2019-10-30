@@ -12,6 +12,7 @@
 #include "notecontroller.h"
 #include "playingbutton.h"
 #include "waveform.h"
+#include "menubutton.h"
 
 DWIDGET_USE_NAMESPACE
 //右侧语音记录Item
@@ -24,6 +25,7 @@ public:
     void init();
     bool getwaveformPoint(QRect &rect);
     int getNoteID();
+    NOTE_TYPE getType();
     void clearWaveformContent();
     void onlySetResumeNoSig();
     void setPlayDiseable();
@@ -34,7 +36,7 @@ public:
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
     //DImageButton *m_ctrlBtn;
-    DFloatingButton *m_menuBtn;
+    MenuButton *m_menuBtn;
     //DIconButton *m_menuBtn;
     //DImageButton *m_menuBtn;
     QLabel *m_voiceTimeLabel;
@@ -47,6 +49,7 @@ signals:
     void pausePlayingSignal();
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
+    void buttonClicled();
 
 public slots:
     void handleStopPlay();

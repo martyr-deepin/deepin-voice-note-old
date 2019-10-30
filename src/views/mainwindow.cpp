@@ -7,7 +7,7 @@
 #include <DMenu>
 #include <uiutil.h>
 #include "intancer.h"
-
+#include <DApplicationHelper>
 
 MyMainWindow::MyMainWindow()
 {
@@ -70,6 +70,9 @@ void MyMainWindow::initTitleFrame()
     QSizePolicy sp = m_searchEdit->sizePolicy();
     sp.setHorizontalStretch(1);
     m_searchEdit->setSizePolicy(sp);
+//    DPalette pe = DApplicationHelper::instance()->palette(m_searchEdit);
+//    pe.setBrush(DPalette::Highlight, pe.color(DPalette::Base));
+//    m_searchEdit->setPalette(pe);
 
     m_titleFrame = new QFrame;
     m_titleFrame->setObjectName("TitleBar");
@@ -81,7 +84,6 @@ void MyMainWindow::initTitleFrame()
 //    m_titleFrame->setAutoFillBackground(true);
 //    m_titleFrame->setPalette(pal);
 //    m_titleFrame->show();
-//    m_titleFrame->setStyleSheet("background: blue");
     //no use
 
     QHBoxLayout *titleLayout = new QHBoxLayout;
@@ -133,7 +135,6 @@ void MyMainWindow::initStackedWidget()
 //    this->setLayout(m_stackedWidgetLayout);
     m_stackedWidget = new QStackedWidget();
     //m_stackedWidgetLayout->addWidget(m_stackedWidget);
-    //m_stackedWidget->setStyleSheet("background: blue");
     //m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
     m_stackedWidget->setObjectName("stackedWidget");
 
@@ -148,7 +149,6 @@ void MyMainWindow::initStackedWidget()
     m_textNoteEdit = new TextNoteEdit();
     m_detailPageLayout->addWidget(m_textNoteEdit);
     m_stackedWidget->addWidget(m_detailPage);
-    //m_textNoteEdit->setStyleSheet("border: none;");
     m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
     m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
 

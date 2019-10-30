@@ -2,6 +2,7 @@
 #define INTANCER_H
 
 #include <QObject>
+//#include <QDBus>
 
 class Intancer : public QObject
 {

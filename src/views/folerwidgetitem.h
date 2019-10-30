@@ -30,7 +30,7 @@ public:
     ~FolerWidgetItem();
     RenameEdit *m_lineEdit;
     DBlurEffectWidget *m_BackGround;
-    DBlurEffectWidget *m_BackBorad;
+//    DBlurEffectWidget *m_BackBorad;
     //QLabel *m_imageLabel;
     DLabel *m_nameLabel;
     QLabel *m_createTimeLabel;
@@ -38,6 +38,7 @@ public:
     FolderImage *m_FolderImage;
     QString m_BakLineContent;
     QString m_BakDefaultName;
+    bool m_clicked;
 
     void changeToEditMode();
     void changeToClickMode();

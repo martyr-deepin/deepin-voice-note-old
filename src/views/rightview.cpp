@@ -58,11 +58,13 @@ void RightView::initConnection()
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
+    connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::TryToDisEditAllText);
     //connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
     connect(m_recordPage, &RecordPage::finishRecord, this, &RightView::handleStopRecord);
     connect(m_recordPage, &RecordPage::cancelRecord, this, &RightView::handlecancelRecord);
+    connect(m_recordPage, &RecordPage::buttonClicled, this, &RightView::TryToDisEditAllText);
 
     connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
     connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
@@ -138,7 +140,10 @@ void RightView::initRecordStackedWidget()
     m_addVoiceBtn->setPalette(pb);
 
     m_recordPage = new RecordPage();
-
+    DPalette palette = DApplicationHelper::instance()->palette(m_recordPage);
+    palette.setBrush(DPalette::Background, palette.color(DPalette::Base));
+    //palette.setColor(palette.Background, QColor(0, 0, 0));
+    m_recordPage->setPalette(palette);
     m_recordStackedWidget->addWidget(m_addVoiceBtn);
     m_recordStackedWidget->addWidget(m_recordPage);
     m_recordStackedWidget->setCurrentIndex(0);
@@ -211,6 +216,12 @@ void RightView::addTextNote()
 void RightView::addNoteToNoteList(NOTE note)
 {
     m_NoSearchResault->setVisible(false);
+
+    if(TEXT == note.noteType)
+    {
+        m_noteListWidget->fouceOutAllTextItem();
+    }
+
     m_noteListWidget->addWidgetItem(true,note, "");
     if(VOICE == note.noteType)
     {
@@ -219,6 +230,7 @@ void RightView::addNoteToNoteList(NOTE note)
     else if(TEXT == note.noteType)
     {
         Intancer::get_Intancer()->addHeightForRightList(TEXTNOTE_HEIGHT);
+
     }
     qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
     qDebug()<<"rightViewheight:"<<this->height();
@@ -357,8 +369,8 @@ void RightView::handleStartRecord()
 
     QMultimedia::AvailabilityStatus audioinputs;
     m_recordPage->getAudioStates(audioinputs);
-    if(QMultimedia::AvailabilityStatus::Available == audioinputs)
-    {
+//    if(QMultimedia::AvailabilityStatus::Available == audioinputs)
+//    {
         m_noteListWidget->handleClickRecordButton();
         m_recordStackedWidget->setCurrentIndex(1);
         m_recordStackedWidget->setFixedSize(QSize(548,m_recordStackedWidget->height()));
@@ -367,12 +379,18 @@ void RightView::handleStartRecord()
         m_recordPage->startRecord();
 
         emit startRecoding();
-    }
-    else
-    {
-        m_noticeNoAudioInputs->show();
-    }
+//    }
+//    else
+//    {
+//        m_noticeNoAudioInputs->show();
+//    }
 }
+
+void RightView::TryToDisEditAllText()
+{
+    m_noteListWidget->fouceOutAllTextItem();
+}
+
 //typedef struct
 //{
 //    int id;

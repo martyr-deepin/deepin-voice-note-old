@@ -72,7 +72,6 @@ void MySlider::initUI()
     //m_sliderHandler = new SliderHandler(this);
     m_mySliderBar->setRange(0,100);
     m_mySliderBar->setPageStep(1);
-    //this->setStyleSheet("background: green");
 }
 
 void MySlider::initConnection()

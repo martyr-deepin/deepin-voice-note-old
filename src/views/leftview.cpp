@@ -21,7 +21,6 @@ LeftView::~LeftView()
 void LeftView::initUI()
 {
     this->setFixedWidth(250);
-    //this->setStyleSheet("background: red");
     m_leftViewLayout = new QVBoxLayout;
     m_leftViewLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -78,6 +77,8 @@ void LeftView::initConnection()
 {
     connect(m_addFolderBtn, &DFloatingButton::clicked, this, &LeftView::addFolder);
     connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
+    connect(m_leftFolderView, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(itemSelectedChanged(QListWidgetItem *, QListWidgetItem *)));
+
     //connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
 
@@ -184,12 +185,12 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
     if(!Intancer::get_Intancer()->getRenameRepeatFlag())
     {
         int count = m_leftFolderView->count();
-        for(int i = 0; i < count; i++)
-        {
-            QListWidgetItem *tmpItem = m_leftFolderView->item(i);
-            FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
-            tmpfolderItem->changeToUnClickMode();
-        }
+//        for(int i = 0; i < count; i++)
+//        {
+//            QListWidgetItem *tmpItem = m_leftFolderView->item(i);
+//            FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
+//            tmpfolderItem->changeToUnClickMode();
+//        }
 
         if (nullptr != item)
         {
@@ -210,6 +211,21 @@ void LeftView::handleSelFolderChg(QListWidgetItem *item)
         else
         {
             emit searchNote(folderId, m_currSearchKey);
+        }
+    }
+}
+
+void LeftView::itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if(nullptr != m_leftFolderView)
+    {
+        if((nullptr != current) && (nullptr != previous))
+        {
+            FolerWidgetItem* pCurFolder = (FolerWidgetItem*)m_leftFolderView->itemWidget(current);
+            pCurFolder->changeToClickMode();
+
+            FolerWidgetItem* pPrevious = (FolerWidgetItem*)m_leftFolderView->itemWidget(previous);
+            pPrevious->changeToUnClickMode();
         }
     }
 }

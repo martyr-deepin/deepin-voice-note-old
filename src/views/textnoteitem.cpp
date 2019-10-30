@@ -44,6 +44,11 @@ int TextNoteItem::getId()
     return m_textNote.id;
 }
 
+NOTE_TYPE TextNoteItem::getType()
+{
+    return m_textNote.noteType;
+}
+
 void TextNoteItem::initUI()
 {
 
@@ -90,7 +95,6 @@ void TextNoteItem::initUI()
 //    pal.setColor(QPalette::Background,Qt::red);
 //    m_bgWidget->setAutoFillBackground(true);
 //    m_bgWidget->setPalette(pal);
-//    m_bgWidget->setStyleSheet("background: #f5f5f5");
 
     m_bgWidget->setBlurRectXRadius(8);
     m_bgWidget->setBlurRectYRadius(8);
@@ -181,6 +185,7 @@ void TextNoteItem::initUI()
    m_menuBtn->setFixedSize(QSize(40, 40));
    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
    m_menuBtn->setIconSize(QSize(20,20));
+
    DPalette pe = DApplicationHelper::instance()->palette(m_menuBtn);
    pe.setBrush(DPalette::Highlight, pe.color(DPalette::Base));
    m_menuBtn->setPalette(pe);
@@ -207,11 +212,14 @@ void TextNoteItem::initConnection()
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
-    connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOut);
+    //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
+    connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
+
+
 //    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
@@ -297,6 +305,7 @@ void TextNoteItem::handleTextEditClicked()
         {
             m_textEdit->setReadOnly(false);
             m_isEdited = true;
+            emit textEditTrueClicked(m_textNote);
         }
     }
 }
@@ -385,12 +394,12 @@ void TextNoteItem::handleMenuBtnStateChanged()
 
 void TextNoteItem::tryToFouceout()
 {
-    if(m_isEdited && !m_mouseIsIn)
-    {
+//    if(m_isEdited && !m_mouseIsIn)
+//    {
         qDebug()<<"tryToFouceout";
         //m_textEdit->focusOutSignal();
         handleTextEditFocusOut();
-    }
+//    }
 }
 
 void TextNoteItem::resizeEvent(QResizeEvent * event)

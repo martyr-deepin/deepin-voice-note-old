@@ -29,6 +29,9 @@
 //#include <DMainWindow>
 
 #include <DWidgetUtil>
+#include <QtDBus>
+#include <QDBusConnection>
+#include <QDBusError>
 
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Core;
@@ -39,9 +42,35 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
     DApplication a(argc, argv);
 
+
     if (!a.setSingleInstance("deepin-voice-note"))
     {
         return 0;
     }
+
+    // 创建QDBusInterface接口
+    //QDBusConnection::sessionBus().connectToBus(QDBusConnection::SessionBus,"com.deepin.daemon.Audio");
+
+//    QDBusConnection connect = QDBusConnection::sessionBus();
+//    QDBusInterface interface("com.deepin.daemon.Audio", "com/deepin/daemon/Audio",
+//                            "com.deepin.daemon.Audio.DefaultSource",
+//                            QDBusConnection::sessionBus());
+//    if (!interface.isValid())
+//    {
+//       qDebug() << qPrintable(QDBusConnection::sessionBus().lastError().message());
+//    }
+//    else {
+//        //调用远程的value方法
+//        QDBusReply<int> reply = interface.call("DefaultSource");
+//        if (reply.isValid())
+//        {
+//           int value = reply.value();
+//           qDebug() << QString("value =  %1").arg(value);
+//        }
+//        else
+//        {
+//           qDebug() << "value method called failed!";
+//        }
+//    }
     VoiceNotebookApp app(a);
 }
