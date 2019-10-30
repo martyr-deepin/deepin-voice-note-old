@@ -66,7 +66,8 @@ SOURCES += \
     src/views/renameedit.cpp \
     src/views/sliderhandle.cpp \
     src/views/intancer.cpp \
-    src/views/menubutton.cpp
+    src/views/menubutton.cpp \
+    src/views/addfolderbutton.cpp
 
 HEADERS += \
     src/app \
@@ -102,7 +103,8 @@ HEADERS += \
     src/views/renameedit.h \
     src/views/sliderhandle.h \
     src/views/intancer.h \
-    src/views/menubutton.h
+    src/views/menubutton.h \
+    src/views/addfolderbutton.h
 
 INCLUDEPATH += \
     src/app \

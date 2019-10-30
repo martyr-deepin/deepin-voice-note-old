@@ -180,22 +180,17 @@ void TextNoteItem::initUI()
    m_MenuBtnBackground = new DWidget(m_bgWidget);
    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
 
-   m_menuBtn = new DFloatingButton(m_MenuBtnBackground);
+   m_menuBtn = new MenuButton(m_MenuBtnBackground);
+//   QPalette pa; //= DApplicationHelper::instance()->palette(m_menuBtn);
+//   pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
+//   m_menuBtn->setBtnPalette(pa);
    //m_menuBtn = new DImageButton(m_MenuBtnBackground);
    m_menuBtn->setFixedSize(QSize(40, 40));
    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
    m_menuBtn->setIconSize(QSize(20,20));
-
-   DPalette pe = DApplicationHelper::instance()->palette(m_menuBtn);
-   pe.setBrush(DPalette::Highlight, pe.color(DPalette::Base));
-   m_menuBtn->setPalette(pe);
-//   m_menuBtn->setFixedSize(QSize(40, 40));
-//   m_menuBtn->move(0,7);
-//   //m_menuBtn->setIcon();
-//   m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
-//   m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
-//   m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
    m_menuBtn->setDisabled(true);
+
+
 
    m_hBoxLayout->addWidget(m_MenuBtnBackground);
    m_hBoxLayout->addSpacing(8);

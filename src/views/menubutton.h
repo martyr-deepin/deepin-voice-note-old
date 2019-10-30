@@ -11,15 +11,9 @@ class MenuButton : public DFloatingButton
     Q_OBJECT
 public:
     explicit MenuButton(QWidget *parent = nullptr);
-    void setBtnPalette();
 
-//protected:
-//    DStyleOptionButton baseStyleOption() const;
-//    void initStyleOption(DStyleOptionButton *option) const;
-
-signals:
-
-public slots:
+protected:
+    void initStyleOption(DStyleOptionButton *option)const;
 };
 
 #endif // MENUBUTTON_H

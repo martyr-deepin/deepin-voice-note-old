@@ -14,6 +14,7 @@
 #include <QTextEdit>
 #include <QObject>
 #include "textnoteedit.h"
+#include "menubutton.h"
 //#include <darrowrectangle.h>
 #include <QMenu>
 #include <QAction>
@@ -39,7 +40,7 @@ public:
     QLabel *m_textLabel;
     QPlainTextEdit *m_plainTextEdit;
     //DImageButton *m_menuBtn;
-    DFloatingButton *m_menuBtn;
+    MenuButton *m_menuBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;

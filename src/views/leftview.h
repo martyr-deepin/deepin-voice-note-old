@@ -14,6 +14,7 @@
 #include <QVBoxLayout>
 #include <DBlurEffectWidget>
 #include <DFloatingButton>
+#include "addfolderbutton.h"
 
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
@@ -56,7 +57,7 @@ private:
     QVBoxLayout *m_leftViewLayout;
     //QListWidget *folderList;
     LeftFolderList *m_leftFolderView;
-    DFloatingButton *m_addFolderBtn;
+    AddFolderButton *m_addFolderBtn;
     //DWidget *m_LeftListBoard;
 
     FolderController *m_folderCtr;
