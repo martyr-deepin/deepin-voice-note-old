@@ -1,25 +1,4 @@
-/* -*- Mode: C++; indent-tabs-mode: nil; tab-width: 4 -*-
- * -*- coding: utf-8 -*-
- *
- * Copyright (C) 2011 ~ 2018 Deepin, Inc.
- *               2011 ~ 2018 Wang Yong
- *
- * Author:     Wang Yong <wangyong@deepin.com>
- * Maintainer: Wang Yong <wangyong@deepin.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */ 
+
 
 #include <QDateTime>
 #include <QDebug>
@@ -33,14 +12,14 @@
 #include <DWidget>
 
 
-#include "waveform.h"
+#include "waveformreplay.h"
 
-const int Waveform::SAMPLE_DURATION = 30;
-const int Waveform::WAVE_WIDTH = 2;
-const int Waveform::WAVE_DURATION = 4;
+const int WaveFormReplay::SAMPLE_DURATION = 30;
+const int WaveFormReplay::WAVE_WIDTH = 2;
+const int WaveFormReplay::WAVE_DURATION = 4;
 
 
-Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(-1), m_blueColor("#0079FF"), m_greyColor("#848484")//m_greyColor("#848484")
+WaveFormReplay::WaveFormReplay(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SAMPLE), m_currWavePos(0), m_blueColor("#0079FF"), m_greyColor("#848484")//m_greyColor("#848484")
 {
     //setFixedSize(350, 50);
     m_wantEmpty = false;
@@ -64,7 +43,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
     renderTimer->start(SAMPLE_DURATION);
 }
 
-void Waveform::paintEvent(QPaintEvent *)
+void WaveFormReplay::paintEvent(QPaintEvent *)
 {
 
     if(m_wantEmpty)
@@ -72,7 +51,7 @@ void Waveform::paintEvent(QPaintEvent *)
         return;
     }
 
-    //qDebug()<<"Waveform::paintEvent:";
+    //qDebug()<<"WaveFormReplay::paintEvent:";
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     if (WHOLE == m_currDisplayType)
@@ -100,13 +79,11 @@ void Waveform::paintEvent(QPaintEvent *)
     if(PART_SAMPLE == m_currDisplayType)
     {
         m_Slider->move(rect().x() + rect().width(),m_Slider->y());
-        m_currWavePos = m_Slider->x();
     }
 
-        
+
     int volume = 0;
     //qDebug()<<"sampleList.size():"<<sampleList.size();
-    //录音和回放波形的描画
     for (int i = 0; i < sampleList.size(); i++) {
         volume = sampleList[i] * rect().height() * 2;
 
@@ -119,32 +96,15 @@ void Waveform::paintEvent(QPaintEvent *)
 
 //            qDebug()<<"sampleRect.x:"<<sampleRect.x();
 //            qDebug()<<"rect.x:"<<rect().x();
-            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
             //QLinearGradient 不渐变色
+//           QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
 //            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
 //            gradient.setColorAt(1, QColor(getColor(rect().x() + i * WAVE_DURATION)));
             //QLinearGradient 可以做渐变色
-            if(WHOLE == m_currDisplayType)
-            {
-                if(sampleRect.x() < m_currWavePos)
-                {
-                    gradient.setColorAt(0, QColor("#03D0D6"));
-                    gradient.setColorAt(1, QColor("#0079FF"));
-                }
-                else
-                {
-                    gradient.setColorAt(0, QColor("#848484"));
-                    gradient.setColorAt(1, QColor("#848484"));
-                }
-
-            }
-            else
-            {
-                gradient.setColorAt(0, QColor("#03D0D6"));
-                gradient.setColorAt(1, QColor("#0079FF"));
-            }
-
-
+//            //QLinearGradient gradient(rect().topLeft(), rect().topRight());
+            QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
+            gradient.setColorAt(0, QColor("#03D0D6"));
+            gradient.setColorAt(1, QColor("#0079FF"));
 
 
             painter.fillRect(sampleRect, gradient);
@@ -152,12 +112,10 @@ void Waveform::paintEvent(QPaintEvent *)
         if((PART_SAMPLE == m_currDisplayType)&&(i == sampleList.size() - 1))
         {
             m_Slider->move(rect().x() + i * WAVE_DURATION,m_Slider->y());
-            m_currWavePos = m_Slider->x();
         }
     }
 
     //qDebug()<<"sampleList.size():"<<sampleList.size();
-    //录音时中间默认的黑线
     if (sampleList.size() < rect().width() / WAVE_DURATION) {
         QPainterPath path;
         path.addRect(QRectF(rect().x() + sampleList.size() * WAVE_DURATION,
@@ -169,14 +127,13 @@ void Waveform::paintEvent(QPaintEvent *)
 
 }
 
-QString Waveform::getColor(int xPos)
+QString WaveFormReplay::getColor(int xPos)
 {
     if (-1 == m_currWavePos)
     {
-        return m_greyColor;
-        //return m_blueColor;
+        return m_blueColor;
     }
-    else if ((xPos >= 0) && (xPos <= m_currWavePos))
+    else if ((xPos > 0) && (xPos <= m_currWavePos))
     {
         return m_blueColor;
     }
@@ -186,18 +143,18 @@ QString Waveform::getColor(int xPos)
     }
 }
 
-void Waveform::setWavePosition(int pos)
+void WaveFormReplay::setWavePosition(int pos)
 {
     m_currWavePos = pos;
 }
 
-void Waveform::emptyWave()
+void WaveFormReplay::emptyWave()
 {
     m_wantEmpty = true;
     this->update();
 }
 
-void Waveform::updateWave(float sample)
+void WaveFormReplay::updateWave(float sample)
 {
     //sample = 4.0;
     QDateTime currentTime = QDateTime::currentDateTime();
@@ -207,13 +164,13 @@ void Waveform::updateWave(float sample)
         //if (sampleList.size() > rect().width() / WAVE_DURATION) {
             sampleList.pop_front();
         }
-        sampleList << sample;       
+        sampleList << sample;
         lastSampleTime = currentTime;
     }
     wholeSampleList << sample;
 }
 
-void Waveform::setWholeSampleList(QList<float> wholeList)
+void WaveFormReplay::setWholeSampleList(QList<float> wholeList)
 {
     wholeSampleList.clear();
     //sampleList.clear();
@@ -258,23 +215,23 @@ void Waveform::setWholeSampleList(QList<float> wholeList)
 
 }
 
-QList<float> Waveform::getWholeSampleList()
+QList<float> WaveFormReplay::getWholeSampleList()
 {
     return wholeSampleList;
 }
 
-void Waveform::renderWave()
+void WaveFormReplay::renderWave()
 {
     repaint();
 }
 
-void Waveform::clearWave()
+void WaveFormReplay::clearWave()
 {
     sampleList.clear();
 }
 
 // returns the audio level for each channel
-QVector<qreal> Waveform::getBufferLevels(const QAudioBuffer& buffer)
+QVector<qreal> WaveFormReplay::getBufferLevels(const QAudioBuffer& buffer)
 {
     QVector<qreal> values;
 
@@ -286,7 +243,7 @@ QVector<qreal> Waveform::getBufferLevels(const QAudioBuffer& buffer)
 
     int channelCount = buffer.format().channelCount();
     values.fill(0, channelCount);
-    qreal peak_value = Waveform::getPeakValue(buffer.format());
+    qreal peak_value = WaveFormReplay::getPeakValue(buffer.format());
     if (qFuzzyCompare(peak_value, qreal(0)))
         return values;
 
@@ -294,28 +251,28 @@ QVector<qreal> Waveform::getBufferLevels(const QAudioBuffer& buffer)
     case QAudioFormat::Unknown:
     case QAudioFormat::UnSignedInt:
         if (buffer.format().sampleSize() == 32)
-            values = Waveform::getBufferLevels(buffer.constData<quint32>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<quint32>(), buffer.frameCount(), channelCount);
         if (buffer.format().sampleSize() == 16)
-            values = Waveform::getBufferLevels(buffer.constData<quint16>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<quint16>(), buffer.frameCount(), channelCount);
         if (buffer.format().sampleSize() == 8)
-            values = Waveform::getBufferLevels(buffer.constData<quint8>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<quint8>(), buffer.frameCount(), channelCount);
         for (int i = 0; i < values.size(); ++i)
             values[i] = qAbs(values.at(i) - peak_value / 2) / (peak_value / 2);
         break;
     case QAudioFormat::Float:
         if (buffer.format().sampleSize() == 32) {
-            values = Waveform::getBufferLevels(buffer.constData<float>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<float>(), buffer.frameCount(), channelCount);
             for (int i = 0; i < values.size(); ++i)
                 values[i] /= peak_value;
         }
         break;
     case QAudioFormat::SignedInt:
         if (buffer.format().sampleSize() == 32)
-            values = Waveform::getBufferLevels(buffer.constData<qint32>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<qint32>(), buffer.frameCount(), channelCount);
         if (buffer.format().sampleSize() == 16)
-            values = Waveform::getBufferLevels(buffer.constData<qint16>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<qint16>(), buffer.frameCount(), channelCount);
         if (buffer.format().sampleSize() == 8)
-            values = Waveform::getBufferLevels(buffer.constData<qint8>(), buffer.frameCount(), channelCount);
+            values = WaveFormReplay::getBufferLevels(buffer.constData<qint8>(), buffer.frameCount(), channelCount);
         for (int i = 0; i < values.size(); ++i)
             values[i] /= peak_value;
         break;
@@ -325,7 +282,7 @@ QVector<qreal> Waveform::getBufferLevels(const QAudioBuffer& buffer)
 }
 
 template <class T>
-QVector<qreal> Waveform::getBufferLevels(const T *buffer, int frames, int channels)
+QVector<qreal> WaveFormReplay::getBufferLevels(const T *buffer, int frames, int channels)
 {
     QVector<qreal> max_values;
     max_values.fill(0, channels);
@@ -342,7 +299,7 @@ QVector<qreal> Waveform::getBufferLevels(const T *buffer, int frames, int channe
 }
 
 // This function returns the maximum possible sample value for a given audio format
-qreal Waveform::getPeakValue(const QAudioFormat& format)
+qreal WaveFormReplay::getPeakValue(const QAudioFormat& format)
 {
     // Note: Only the most common sample formats are supported
     if (!format.isValid())
@@ -379,7 +336,7 @@ qreal Waveform::getPeakValue(const QAudioFormat& format)
     return qreal(0);
 }
 
-void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
+void WaveFormReplay::setCurrDisplayType(DISPLAY_TYPE type)
 {
     m_currDisplayType = type;
     if(PART_SAMPLE != type)
@@ -388,7 +345,7 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
     }
 }
 
-void Waveform::genSampleListFromWhole()
+void WaveFormReplay::genSampleListFromWhole()
 {
     sampleList.clear();
     int pointNum = rect().width() / WAVE_DURATION;

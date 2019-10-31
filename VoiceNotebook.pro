@@ -67,7 +67,8 @@ SOURCES += \
     src/views/sliderhandle.cpp \
     src/views/intancer.cpp \
     src/views/menubutton.cpp \
-    src/views/addfolderbutton.cpp
+    src/views/addfolderbutton.cpp \
+    src/views/waveformreplay.cpp
 
 HEADERS += \
     src/app \
@@ -104,7 +105,8 @@ HEADERS += \
     src/views/sliderhandle.h \
     src/views/intancer.h \
     src/views/menubutton.h \
-    src/views/addfolderbutton.h
+    src/views/addfolderbutton.h \
+    src/views/waveformreplay.h
 
 INCLUDEPATH += \
     src/app \

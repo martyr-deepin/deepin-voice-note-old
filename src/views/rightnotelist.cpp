@@ -960,7 +960,7 @@ void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
 {
     if (QMediaPlayer::StoppedState == state)
     {
-        m_currPlayingItem->m_waveform->setWavePosition(0);
+        m_currPlayingItem->m_waveform->setWavePosition(-1);
         m_currPlayingItem->handleStopPlay();
         m_currPlayingItem = nullptr;
         m_myslider->hide();
