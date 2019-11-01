@@ -13,6 +13,7 @@ MyMainWindow::MyMainWindow()
 {
     initUI();
     initConnection();
+//    qDebug()<<"1111111111111111111111"<<UiUtil::canMicrophoneInput();
 }
 
 void MyMainWindow::initUI() {

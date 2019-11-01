@@ -35,6 +35,8 @@ public:
     static QString getRecordingVoiceFullPath(QString fileName);
     static QPixmap PixmapToRound(QPixmap &src, int radius);
     static QString getDefaultAvatarByRand();
+    static bool canMicrophoneInput();
+    static QVariant redDBusProperty(const QString &service, const QString &path, const QString &interface, const char *propert);
 };
 
 #endif // UIUTIL_H

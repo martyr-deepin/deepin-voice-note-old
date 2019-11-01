@@ -6,6 +6,9 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QDebug>
+#include <QDBusObjectPath>
+#include <QDBusInterface>
+#include <QDBusReply>
 
 //extern "C"
 //{
@@ -357,6 +360,57 @@ QString UiUtil::getDefaultAvatarByRand()
     int rand = qrand()%MAX_FOLDERIMG_NUM;
     ImgPath = default_folder_imgpath.at(rand);
     return ImgPath;
+}
+
+QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, const QString &interface, const char *propert)
+{
+    // 创建QDBusInterface接口
+    QDBusInterface ainterface(service, path,
+                              interface,
+                              QDBusConnection::sessionBus());
+    if (!ainterface.isValid())
+    {
+        qDebug() << qPrintable(QDBusConnection::sessionBus().lastError().message());
+        QVariant v(0) ;
+        return  v;
+    }
+    //调用远程的value方法
+    QVariant v = ainterface.property(propert);
+    return  v;
+}
+
+bool UiUtil::canMicrophoneInput()
+{
+    QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
+                                            "com.deepin.daemon.Audio", "DefaultSource");
+    if (v.isValid()) {
+        QDBusObjectPath path = v.value<QDBusObjectPath>();
+        qDebug() <<"path: "<<path.path();
+        QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
+                                  "com.deepin.daemon.Audio.Source",
+                                  QDBusConnection::sessionBus());
+        if (!ainterface.isValid())
+        {
+            return false;
+        }
+        //调用远程的value方法
+        QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
+        if (reply.isValid()){
+            path = reply.value();
+            qDebug()<<"path1" << path.path();
+            QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
+                                                    "com.deepin.daemon.Audio.Meter", "Volume");
+            if (v.isValid()) {
+                double volume = v.toDouble();
+                qDebug()<<"volume" <<volume;
+                return volume != 0.0;
+            }
+        } else {
+           return  false;
+        }
+    }
+    return false;
+
 }
 
 
