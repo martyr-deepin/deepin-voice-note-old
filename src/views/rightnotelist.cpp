@@ -57,6 +57,7 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
   , m_arrowButtonPressed(false)
   , m_actionHoverd(false)
 {
+    m_addTextBtn = nullptr;
     m_arrowMenu = nullptr;
     m_contextMenu = nullptr;
     m_saveAsAction = nullptr;
@@ -246,7 +247,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
         connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
-        connect(textItem, SIGNAL(sig_ItemTimeChanged(NOTE)), this, SLOT(onSortItemByTime(NOTE)));
+        //connect(textItem, SIGNAL(sig_ItemTimeChanged(NOTE)), this, SLOT(onSortItemByTime(NOTE)));
         connect(textItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         //connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
@@ -325,7 +326,17 @@ void RightNoteList::listAddTextShow()
 {
     if(nullptr != m_addTextBtn)
     {
+        //addAddTextBtn();
         m_addTextBtn->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
+//        if(this->count() > 0)
+//        {
+//            QListWidgetItem* pItem = item(this->count());
+//            if(nullptr != pItem)
+//            {
+//                pItem->setHidden(false);
+//                update();
+//            }
+//        }
         //m_addTextBtn->show();
         //m_addTextBtn->setVisible(true);
     }
@@ -335,7 +346,19 @@ void RightNoteList::listAddTextHide()
 {
     if(nullptr != m_addTextBtn)
     {
+        //delAddTextBtn();
+
         m_addTextBtn->setFixedHeight(0);
+
+//        if(this->count() > 0)
+//        {
+//            QListWidgetItem* pItem = item(this->count());
+//            if(nullptr != pItem)
+//            {
+//                pItem->setHidden(true);
+//                update();
+//            }
+//        }
         //m_addTextBtn->hide();
         //m_addTextBtn->setVisible(false);
     }
@@ -395,9 +418,6 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
         ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
     }
 
-////    this->scrollToItem(ptmp);
-////    int height = this->height();
-////    qDebug()<<"rightlist height:"<<height;
 }
 
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)

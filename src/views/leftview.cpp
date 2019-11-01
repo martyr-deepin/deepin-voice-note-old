@@ -82,7 +82,8 @@ void LeftView::initController()
 void LeftView::initConnection()
 {
     connect(m_addFolderBtn, &DFloatingButton::clicked, this, &LeftView::addFolder);
-    connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
+    //connect(m_leftFolderView, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
+    //connect(m_leftFolderView, SIGNAL(currentItemChanged(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(itemSelectedChanged(QListWidgetItem *, QListWidgetItem *)));
 
     //connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
@@ -232,6 +233,10 @@ void LeftView::itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *pr
 
             FolerWidgetItem* pPrevious = (FolerWidgetItem*)m_leftFolderView->itemWidget(previous);
             pPrevious->changeToUnClickMode();
+        }
+        if(nullptr != current)
+        {
+            handleSelFolderChg(current);
         }
     }
 }

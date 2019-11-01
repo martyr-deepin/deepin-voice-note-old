@@ -81,6 +81,7 @@ private:
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;
     DBlurEffectWidget *m_BottomBoard;
+    DBlurEffectWidget *m_AddBtnBoard;
     DDialog *m_noticeNoAudioInputs;
 
 };

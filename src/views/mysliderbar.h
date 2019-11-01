@@ -2,7 +2,7 @@
 #define MY_SLIDER_BAR_H
 
 #include <QSlider>
-
+#include <DSlider>
 #include "dtkwidget_global.h"
 #include "sliderhandler.h"
 

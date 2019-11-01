@@ -3,6 +3,7 @@
 
 #include "mysliderbar.h"
 #include "sliderhandle.h"
+#include "replaysliderbar.h"
 
 #include <QWidget>
 #include <DLabel>
@@ -46,6 +47,7 @@ protected:
 
 
 private:
+    ReplaySliderBar *m_replaySliderBar;
     MySliderBar *m_mySliderBar;
     SliderHandle *m_sliderHandler;
     //SliderHandler *m_sliderHandler;

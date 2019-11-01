@@ -11,6 +11,7 @@ MySlider::MySlider(Qt::Orientation orientation, QWidget *parent) : QWidget(paren
 {
     initUI();
     initConnection();
+
     m_mySliderBar->setOrientation(orientation);
 }
 MySlider::~MySlider()
@@ -29,22 +30,31 @@ void MySlider::paintEvent(QPaintEvent *event)
     m_sliderHandler->setGeometry(sliderPos, 0, m_sliderHandler->width(), m_sliderHandler->height());
     m_mySliderBar->setGeometry(m_sliderHandler->width()/ 2, 0, this->width() - m_sliderHandler->width(), this->height());
     //m_mySliderBar->setGeometry(m_sliderHandler->width()/ 2, 0, this->width() - m_sliderHandler->width(), 116);
+
+    m_replaySliderBar->setGeometry(m_sliderHandler->width()/ 2, 0, this->width() - m_sliderHandler->width(), this->height());
 }
 
 void MySlider::mousePressEvent(QMouseEvent *event)
 {
-    m_mySliderBar->mousePressEvent(event);
+    qDebug()<<"slider press x:"<<event->x();
+    if((116 > event->y()) && (event->x() > 13))
+    {
+       m_mySliderBar->mousePressEvent(event);
+    }
 }
 void MySlider::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(116 > event->y())
+    if((116 > event->y()) && (event->x() > 13))
     {
         m_mySliderBar->mouseReleaseEvent(event);
     }
 }
 void MySlider::mouseMoveEvent(QMouseEvent *event)
 {
-    m_mySliderBar->mouseMoveEvent(event);
+    if((116 > event->y()) && (event->x() > 13))
+    {
+        m_mySliderBar->mouseMoveEvent(event);
+    }
 }
 
 int MySlider::getHandlerWidth()
@@ -61,6 +71,7 @@ void MySlider::initUI()
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
+
     QFont labelFont;
     labelFont.setFamily("SourceHanSansSC");
     //labelFont.setPointSize(12);
@@ -71,6 +82,9 @@ void MySlider::initUI()
     //m_sliderHandler = new SliderHandler(this);
     m_mySliderBar->setRange(0,100);
     m_mySliderBar->setPageStep(1);
+
+    m_replaySliderBar = new ReplaySliderBar(Qt::Horizontal,this);
+
 }
 
 void MySlider::initConnection()
@@ -85,20 +99,25 @@ void MySlider::setSliderPostion(int sliderPos)
     qDebug() << "setSliderPostion: " << sliderPos << ", max:" << m_mySliderBar->maximum();
     m_mySliderBar->setSliderPosition(sliderPos);
     //m_mySliderBar->setValue(sliderPos);
+    m_replaySliderBar->setValue(sliderPos);
 }
 
 void MySlider::setPageStep(int ti)
 {
     m_mySliderBar->setPageStep(ti);
+    m_replaySliderBar->setPageStep(ti);
 }
 
 void MySlider::setRange(int min, int max)
 {
     m_mySliderBar->setRange(min, max);
+    m_replaySliderBar->setMinimum(min);
+    m_replaySliderBar->setMaximum(max);
 }
 
 int MySlider::sliderPosition()
 {
+    int pos = m_replaySliderBar->slider()->sliderPosition();
     return m_mySliderBar->sliderPosition();
 }
 

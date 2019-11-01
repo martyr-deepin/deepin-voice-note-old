@@ -72,7 +72,6 @@ void Intancer::setViewHeightForRightList(int viewHeight)
             emit sigHideViewAddTextButton();
             isViewAddTextButtonShow = false;
         }
-
     }
     else
     {

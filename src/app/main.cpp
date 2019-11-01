@@ -40,6 +40,7 @@ using namespace Dtk::Core;
 int main(int argc, char *argv[])
 {
     DApplication::loadDXcbPlugin();
+    DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     DApplication a(argc, argv);
 
 

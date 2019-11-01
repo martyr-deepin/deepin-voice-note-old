@@ -161,6 +161,7 @@ void VoiceNoteItem::initUI()
 
     m_hBoxLayout->addSpacing(6);
     m_hBoxLayout->addWidget(m_playingButton);
+    m_hBoxLayout->addSpacing(12);
     m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addSpacing(20);
     m_hBoxLayout->addWidget(m_voiceTimeLabel);

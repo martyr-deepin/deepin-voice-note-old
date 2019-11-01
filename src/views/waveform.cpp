@@ -144,9 +144,6 @@ void Waveform::paintEvent(QPaintEvent *)
                 gradient.setColorAt(1, QColor("#0079FF"));
             }
 
-
-
-
             painter.fillRect(sampleRect, gradient);
         }
         if((PART_SAMPLE == m_currDisplayType)&&(i == sampleList.size() - 1))
@@ -158,14 +155,14 @@ void Waveform::paintEvent(QPaintEvent *)
 
     //qDebug()<<"sampleList.size():"<<sampleList.size();
     //录音时中间默认的黑线
-    if (sampleList.size() < rect().width() / WAVE_DURATION) {
-        QPainterPath path;
-        path.addRect(QRectF(rect().x() + sampleList.size() * WAVE_DURATION,
-                            rect().y() + (rect().height() - 1) / 2,
-                            rect().width() - (rect().x() + sampleList.size() * WAVE_DURATION),
-                            1));
-        painter.fillPath(path, QColor(rect().x() + sampleList.size() * WAVE_DURATION));
-    }
+//    if (sampleList.size() < rect().width() / WAVE_DURATION) {
+//        QPainterPath path;
+//        path.addRect(QRectF(rect().x() + sampleList.size() * WAVE_DURATION,
+//                            rect().y() + (rect().height() - 1) / 2,
+//                            rect().width() - (rect().x() + sampleList.size() * WAVE_DURATION),
+//                            1));
+//        painter.fillPath(path, QColor(rect().x() + sampleList.size() * WAVE_DURATION));
+//    }
 
 }
 
