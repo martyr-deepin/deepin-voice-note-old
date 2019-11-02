@@ -55,6 +55,8 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
     connect(m_noteListWidget, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
     connect(m_noteListWidget, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
+    connect(m_noteListWidget, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
+
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
@@ -181,6 +183,7 @@ void RightView::handleSelFolderChg(int folderId)
     //stopAllNeedStop
     m_noteListWidget->stop();
 
+    m_noteListWidget->delAllEmptyText();
     m_currFolderId = folderId;
     updateNoteList();
     if(-1 != folderId)
@@ -375,6 +378,11 @@ void RightView::cancleRecord()
     emit stopRecoiding();
 }
 
+void RightView::checkAndDeleteEmptyTextNoteFromDatabase()
+{
+    m_noteListWidget->delAllEmptyText();
+}
+
 void RightView::handleStartRecord()
 {
     QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
@@ -467,6 +475,7 @@ void RightView::OnCurrentRowChanged(int curRow)
 void RightView::OnAllFolderGone()
 {
     //cancleRecord();
+    handleClearNote();
     m_recordStackedWidget->setVisible(false);
     m_AddButtonLocked->setVisible(false);
     m_AddBtnBoard->setVisible(false);

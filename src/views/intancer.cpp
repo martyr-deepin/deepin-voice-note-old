@@ -8,6 +8,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     recording = false;
     isRenameRepeat = false;
     isViewAddTextButtonShow = false;
+    isSearching = false;
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
@@ -123,4 +124,14 @@ bool Intancer::setViewAddTextButtonShowFlag(bool value)
 bool Intancer::getViewAddTextButtonShowFlag()
 {
     return isViewAddTextButtonShow;
+}
+
+void Intancer::setSearchingFlag(bool value)
+{
+    isSearching = value;
+}
+
+bool Intancer::getSearchingFlag()
+{
+    return isSearching;
 }

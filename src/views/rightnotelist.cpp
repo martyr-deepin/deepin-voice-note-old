@@ -377,6 +377,16 @@ void RightNoteList::fouceOutAllTextItem()
     }
 }
 
+void RightNoteList::delAllEmptyText()
+{
+    this->fouceOutAllTextItem();
+//    for(int i = 0; i < this->count(); i++)
+//    {
+
+//    }
+//m_noteController->deleteNote(m_currSelNote)
+}
+
 bool RightNoteList::eventFilter(QObject *o, QEvent *e)
 {
     if(0 == o->objectName().compare(QString("QMainWindowClassWindow")))
@@ -432,6 +442,25 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
             QPoint itemGlobalPoint = textNoteItem->mapTo(this, menuArrowPointToItem);
             m_currSelItem= this->itemAt(itemGlobalPoint);
             m_currSelNote = note;
+
+            //如果音频文件不存在
+            if(VOICE == note.noteType)
+            {
+                if(!UiUtil::checkFileExist(note.contentPath))
+                {
+                    if(nullptr != m_contextMenu)
+                    {
+                        m_saveAsAction->setDisabled(true);
+                    }
+                }
+                else {
+                    m_saveAsAction->setDisabled(false);
+                }
+            }
+            else {
+                m_saveAsAction->setDisabled(false);
+            }
+
             showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
             qDebug()<<"handleMenuBtnClicked show";
         }
@@ -796,6 +825,12 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             else if(TEXT == m_currSelNote.noteType)
             {
                 Intancer::get_Intancer()->delHeightForRightList(TEXTNOTE_HEIGHT);
+            }
+
+            //删除成功并且处于搜索状态下的话，再次出发搜索
+            if(Intancer::get_Intancer()->getSearchingFlag())
+            {
+                emit sig_research();
             }
 
         }

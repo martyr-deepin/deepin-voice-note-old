@@ -41,6 +41,7 @@ protected:
     //bool eventFilter(QObject *object, QEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
+    void closeEvent(QCloseEvent* event);
 private:
      QFrame *m_centralWidget;
 //     DFMSplitter *m_splitter;

@@ -13,10 +13,11 @@
 #include "playingbutton.h"
 #include "waveform.h"
 #include "menubutton.h"
+#include <DFrame>
 
 DWIDGET_USE_NAMESPACE
 //右侧语音记录Item
-class VoiceNoteItem : public DBlurEffectWidget
+class VoiceNoteItem : public QWidget
 {
     Q_OBJECT
 public:
@@ -32,7 +33,7 @@ public:
     NOTE m_note;
 
     DLabel *m_timeLabel;
-    DBlurEffectWidget *m_bgWidget;
+    DFrame *m_bgWidget;
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
     //DImageButton *m_ctrlBtn;

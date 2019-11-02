@@ -52,6 +52,7 @@ public:
     void listAddTextShow();
     void listAddTextHide();
     void fouceOutAllTextItem();
+    void delAllEmptyText();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -60,6 +61,7 @@ signals:
     void sigBoardPressToLeft();
     void sig_TextEditEmpty();
     void sig_TextEditNotEmpty();
+    void sig_research();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

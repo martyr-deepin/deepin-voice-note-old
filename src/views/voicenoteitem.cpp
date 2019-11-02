@@ -3,6 +3,7 @@
 #include <DLabel>
 #include <QGraphicsOpacityEffect>
 #include <DApplicationHelper>
+#include <QAction>
 
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
@@ -70,11 +71,12 @@ void VoiceNoteItem::setPlayDiseable()
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(VOICENOTE_HEIGHT);
-    this->setBlurEnabled(false);
+    //this->setBlurEnabled(false);
 
     m_timeLabel = new DLabel();
 
-    m_bgWidget = new DBlurEffectWidget();
+    m_bgWidget = new DFrame(this);
+    m_bgWidget->setBackgroundRole(QPalette::Light);
     m_bgWidget->setFixedHeight(68);
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
@@ -101,13 +103,13 @@ void VoiceNoteItem::initUI()
 
     //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-    m_bgWidget->setBlurRectXRadius(8);
-    m_bgWidget->setBlurRectYRadius(8);
+//    m_bgWidget->setBlurRectXRadius(8);
+//    m_bgWidget->setBlurRectYRadius(8);
 
-    QPalette pb;
-    pb.setColor(QPalette::Background,QColor(00,00,00));
-    m_bgWidget->setPalette(pb);
-    m_bgWidget->setMaskAlpha(14);
+//    QPalette pb;
+//    pb.setColor(QPalette::Background,QColor(00,00,00));
+//    m_bgWidget->setPalette(pb);
+//    m_bgWidget->setMaskAlpha(14);
 
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);

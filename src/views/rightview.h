@@ -31,12 +31,14 @@ public:
     void updateFromDetal(int ID);
     void stopAllPlayback();
     void cancleRecord();
+    void checkAndDeleteEmptyTextNoteFromDatabase();
 
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();
     void startRecoding();
     void stopRecoiding();
+    void sig_research();
 
 public slots:
     void onShowNoResult();

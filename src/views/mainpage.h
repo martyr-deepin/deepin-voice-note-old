@@ -29,10 +29,12 @@ public:
     void updateFromDetal(int id);
     void cancleRecord();
     void selectCurFolder();
+    void checkAndDeleteEmptyTextNoteFromDatabase();
 
 signals:
     void textEditClicked(NOTE textNote);
     void clearSearch();
+    void sig_research();
 
 public slots:
     void onAddFolder();

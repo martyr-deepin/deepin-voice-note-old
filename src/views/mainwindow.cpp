@@ -31,11 +31,14 @@ void MyMainWindow::initConnection()
     //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
+    QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
     connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleDelDialogClicked);
     connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseDialogClicked);
+
+
 
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
@@ -193,6 +196,15 @@ void MyMainWindow::handleSearchKey()
 {
     QString searchKey = m_searchEdit->text();
 
+   if(!searchKey.isEmpty())
+    {
+        Intancer::get_Intancer()->setSearchingFlag(true);
+    }
+    else
+    {
+        Intancer::get_Intancer()->setSearchingFlag(false);
+    }
+
     if (0 == m_stackedWidget->currentIndex())
     {
         Intancer::get_Intancer()->setRenameRepeatFlag(false);
@@ -209,6 +221,7 @@ void MyMainWindow::tryToSearch()
     if(Intancer::get_Intancer()->getRecodingFlag())
     {
         m_SearchDialog->show();
+        Intancer::get_Intancer()->setSearchingFlag(false);
     }
     else
     {
@@ -225,6 +238,7 @@ void MyMainWindow::handleDelDialogClicked(int index, const QString &text)
     else
     {
         m_searchEdit->clear();
+        Intancer::get_Intancer()->setSearchingFlag(false);
     }
 }
 
@@ -263,5 +277,20 @@ void MyMainWindow::changeEvent(QEvent * event)
 
 }
 
+void MyMainWindow::closeEvent(QCloseEvent* event)
+{
+    m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
+//    if(4 == m_pCenterWidget->currentIndex())
+//    {
+//        emit dApp->signalM->hideImageView();
+//        //不关闭
+//        event->ignore();
+//    }
+//    else {
+//        //关闭
+//        event->accept();
+//    }
+    DMainWindow::closeEvent(event);
+}
 
 

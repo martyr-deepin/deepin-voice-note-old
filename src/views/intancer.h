@@ -38,6 +38,10 @@ public:
     bool setViewAddTextButtonShowFlag(bool value);
     bool getViewAddTextButtonShowFlag();
 
+    void setSearchingFlag(bool value);
+    bool getSearchingFlag();
+
+
 signals:
     void sigShowViewAddTextButton();
     void sigHideViewAddTextButton();
@@ -48,6 +52,7 @@ private:
      bool recording;
      bool isRenameRepeat;
      bool isViewAddTextButtonShow;
+     bool isSearching;
 
      int m_RightListHeight;
      int m_RightViewHeight;

@@ -44,8 +44,10 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 {
     //setFixedSize(350, 50);
     m_wantEmpty = false;
+
     if(PART_SAMPLE == m_currDisplayType)
     {
+
         m_Slider = new QLabel(this);
         m_Slider->setFixedSize(5, 52);
         QPalette pal;
@@ -54,6 +56,11 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
         m_Slider->setPalette(pal);
         m_Slider->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
         m_Slider->move(0,0);
+    }
+    else
+    {
+        setBackgroundRole(QPalette::Light);
+        setAutoFillBackground(true);
     }
 
 
@@ -262,7 +269,8 @@ QList<float> Waveform::getWholeSampleList()
 
 void Waveform::renderWave()
 {
-    repaint();
+    update();
+    //repaint();
 }
 
 void Waveform::clearWave()

@@ -7,8 +7,8 @@ SliderHandle::SliderHandle(QString imgpath, QWidget *parent) : DLabel(parent)
     m_imgpath = imgpath;
     m_timelabel = new DLabel(this);
     m_timelabel->setFixedSize(QSize(30,18));
-    m_timelabel->move(10,10);
-
+    m_timelabel->move(10,12);
+    //m_timelabel->move(10,50);
 
 
     QPalette pal;

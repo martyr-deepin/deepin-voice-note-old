@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     DApplication a(argc, argv);
 
-
     if (!a.setSingleInstance("deepin-voice-note"))
     {
         return 0;

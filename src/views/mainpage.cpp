@@ -47,6 +47,8 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(sigAddFolder()), this, SLOT(onAddFolder()));
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
+    QObject::connect(m_rightView, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
+
 
 
     //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
@@ -169,6 +171,11 @@ void MainPage::cancleRecord()
 void MainPage::selectCurFolder()
 {
     m_leftView->sendSelectCurFolder();
+}
+
+void MainPage::checkAndDeleteEmptyTextNoteFromDatabase()
+{
+    m_rightView->checkAndDeleteEmptyTextNoteFromDatabase();
 }
 
 void MainPage::onAddFolder()
