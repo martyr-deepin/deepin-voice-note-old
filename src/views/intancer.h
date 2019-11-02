@@ -45,6 +45,8 @@ public:
 signals:
     void sigShowViewAddTextButton();
     void sigHideViewAddTextButton();
+    void sigDisAbleReplay();
+    void sigEnAbleReplay();
 
 private:
      static Intancer *instance_;

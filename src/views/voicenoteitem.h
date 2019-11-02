@@ -29,7 +29,7 @@ public:
     NOTE_TYPE getType();
     void clearWaveformContent();
     void onlySetResumeNoSig();
-    void setPlayDiseable();
+
     NOTE m_note;
 
     DLabel *m_timeLabel;
@@ -56,6 +56,8 @@ public slots:
     void handleStopPlay();
     void handlePausePlay();
     void handleResumePlaying();
+    void setPlayDiseable();
+    void setPlayEnable();
     //void handle
 
 private:

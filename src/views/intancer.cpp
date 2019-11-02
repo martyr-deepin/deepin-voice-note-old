@@ -99,6 +99,14 @@ bool Intancer::getTryToDelEmptyTextNote()
 void Intancer::setRecodingFlag(bool value)
 {
     recording = value;
+    if(value == true)
+    {
+        emit sigDisAbleReplay();
+    }
+    else
+    {
+        emit sigEnAbleReplay();
+    }
 }
 
 bool Intancer::getRecodingFlag()

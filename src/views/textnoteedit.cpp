@@ -98,6 +98,7 @@ void TextNoteEdit::updateNote()
     else
     {
         m_textNote.contentText = this->toPlainText();
+        emit sigTextChanged(m_textNote.contentText);
     }
 }
 

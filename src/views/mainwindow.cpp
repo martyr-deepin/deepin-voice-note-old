@@ -147,7 +147,7 @@ void MyMainWindow::initStackedWidget()
     m_stackedWidget->setCurrentIndex(0);
 
 
-    m_detailPage = new QWidget();
+    m_detailPage = new DFrame();
     m_detailPageLayout = new QVBoxLayout();
     m_detailPage->setLayout(m_detailPageLayout);
     m_textNoteEdit = new TextNoteEdit();
@@ -159,6 +159,32 @@ void MyMainWindow::initStackedWidget()
     QPalette pl = m_textNoteEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
     m_textNoteEdit->setPalette(pl);
+
+    DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
+    //pb.setBrush(DPalette::Base, QColor(255,255,255,255));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+//    pb.setBrush(DPalette::Background, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Button, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Light, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Midlight, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Dark, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Mid, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Text, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::BrightText, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::ButtonText, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Base, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Window, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Shadow, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Highlight, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::HighlightedText, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Link, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::LinkVisited, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::AlternateBase, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::ToolTipBase, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::ToolTipText, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Foreground, QColor(255,255,0,255));
+//    pb.setBrush(DPalette::Background, QColor(255,255,0,255));
+    m_detailPage->setPalette(pb);
 
 
 //    m_plainTextEdit = new QPlainTextEdit(m_detailPage);

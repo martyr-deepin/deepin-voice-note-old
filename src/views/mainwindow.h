@@ -51,7 +51,7 @@ private:
     MainPage * m_mainPage;
     QStackedWidget * m_stackedWidget;
     TextNoteEdit * m_textNoteEdit;
-    QWidget *m_detailPage;
+    DFrame *m_detailPage;
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;
     DIconButton *m_returnBtn;

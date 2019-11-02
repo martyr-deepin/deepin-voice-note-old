@@ -404,6 +404,8 @@ void Waveform::genSampleListFromWhole()
 //    {
 //        qDebug() << t << ":" << wholeList.at(t);
 //    }
+
+
     for (int i = 0; i < pointNum; i++)
     {
         if (i == 0)
@@ -414,7 +416,7 @@ void Waveform::genSampleListFromWhole()
         else
         {
             float pointPos = i * sample;
-            if (pointPos > wholeSampleList.size() - 1)
+            if (pointPos >= wholeSampleList.size() - 1)
             {
                 sampleList << wholeSampleList[wholeSampleList.size() - 1];
             }

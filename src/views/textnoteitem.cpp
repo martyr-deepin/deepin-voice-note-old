@@ -64,8 +64,10 @@ void TextNoteItem::initUI()
     m_timeLabel->setFont(timeLabelFont);
     m_timeLabel->setFixedHeight(16);
 
-    m_bgWidget = new DBlurEffectWidget(this);
-
+    m_bgWidget = new DFrame(this);
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_bgWidget->setPalette(pb);
 
 //    m_bgWidget->setFixedHeight(124);//orig
     m_bgWidget->setFixedHeight(93);
@@ -96,13 +98,13 @@ void TextNoteItem::initUI()
 //    m_bgWidget->setAutoFillBackground(true);
 //    m_bgWidget->setPalette(pal);
 
-    m_bgWidget->setBlurRectXRadius(8);
-    m_bgWidget->setBlurRectYRadius(8);
+//    m_bgWidget->setBlurRectXRadius(8);
+//    m_bgWidget->setBlurRectYRadius(8);
 
-    QPalette pb;
-    pb.setColor(QPalette::Background,QColor(00,00,00));
-    m_bgWidget->setPalette(pb);
-    m_bgWidget->setMaskAlpha(14);
+//    QPalette pb;
+//    pb.setColor(QPalette::Background,QColor(00,00,00));
+//    m_bgWidget->setPalette(pb);
+//    m_bgWidget->setMaskAlpha(14);
 
     //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
 //   self.horizontalLayoutWidget = QtWidgets.QWidget(self.widget)
@@ -209,6 +211,7 @@ void TextNoteItem::initConnection()
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
+    connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
@@ -397,6 +400,11 @@ void TextNoteItem::tryToFouceout()
 //    }
 }
 
+void TextNoteItem::textEditChanged(QString str)
+{
+    m_textNote.contentText = str;
+}
+
 void TextNoteItem::resizeEvent(QResizeEvent * event)
 {
     int maxwidth = event->size().width();
@@ -421,6 +429,9 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         }
 
         m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+        QTextCursor cursor = m_textEdit->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        m_textEdit->setTextCursor(cursor);
         m_isEdited = false;
     }
 

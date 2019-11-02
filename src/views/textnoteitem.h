@@ -21,6 +21,8 @@
 #include <DBlurEffectWidget>
 #include <DIconButton>
 #include <DFloatingButton>
+#include <DFrame>
+
 DWIDGET_USE_NAMESPACE
 //右侧文字记录Item
 class TextNoteItem : public DWidget
@@ -33,7 +35,7 @@ public:
     NOTE m_textNote;
     QString m_bakContent;
     DLabel *m_timeLabel;
-    DBlurEffectWidget *m_bgWidget;
+    DFrame *m_bgWidget;
     DWidget *m_MenuBtnBackground;
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
@@ -69,6 +71,7 @@ public slots:
     void handleTextEditFocusOut();
     void handleMenuBtnStateChanged();
     void tryToFouceout();
+    void textEditChanged(QString str);
 
 protected:
     void resizeEvent(QResizeEvent * event);

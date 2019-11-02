@@ -67,6 +67,10 @@ void VoiceNoteItem::setPlayDiseable()
     m_playingButton->setPlayDiseable();
 }
 
+void VoiceNoteItem::setPlayEnable()
+{
+    m_playingButton->setPlayEnable();
+}
 
 void VoiceNoteItem::initUI()
 {
@@ -76,7 +80,10 @@ void VoiceNoteItem::initUI()
     m_timeLabel = new DLabel();
 
     m_bgWidget = new DFrame(this);
-    m_bgWidget->setBackgroundRole(QPalette::Light);
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+
+    m_bgWidget->setPalette(pb);
     m_bgWidget->setFixedHeight(68);
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);

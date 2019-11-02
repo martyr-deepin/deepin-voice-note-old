@@ -273,6 +273,14 @@ void RecordPage::renderRecordingTime()
         QString time = UiUtil::formatMillisecond(m_recordingTime);
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
+        qDebug()<<"recode time:"<<time;
+        if(0 == time.compare("1:00:00"))
+        {
+            if(nullptr != m_finishButton)
+            {
+                m_finishButton->clicked();
+            }
+        }
     }
 }
 
@@ -287,7 +295,7 @@ void RecordPage::startRecord()
 
     QDateTime currentTime = QDateTime::currentDateTime();
     lastUpdateTime = currentTime;
-    voiceInfo.voicePath = fileName;
+    voiceInfo.voicePath = recordPath;
     m_audioRecorder->record();
 
     Intancer::get_Intancer()->setRecodingFlag(true);

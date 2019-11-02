@@ -24,6 +24,7 @@ public:
 signals:
     void clicked();
     void focusOutSignal();
+    void sigTextChanged(QString str);
 
 public slots:
     void updateNote();
