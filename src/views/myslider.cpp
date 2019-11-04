@@ -84,39 +84,13 @@ int MySlider::getHandlerWidth()
     return m_sliderHandler->width();
 }
 
-//void MySlider::initUI()
-//{
-//    m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
-//    QPalette pal;
-//    pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/icon/normal/slider.svg")));
-//    pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
-//    m_sliderHandler->setAutoFillBackground(true);
-//    m_sliderHandler->setPalette(pal);
-//    m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
-
-//    QFont labelFont;
-//    labelFont.setFamily("SourceHanSansSC");
-//    //labelFont.setPointSize(12);
-//    labelFont.setPixelSize(12);
-//    m_sliderHandler->setFont(labelFont);
-//    m_sliderHandler->setContentsMargins(0, 8, 0, 0);
-//    m_mySliderBar = new MySliderBar(this);
-//    //m_sliderHandler = new SliderHandler(this);
-//    m_mySliderBar->setRange(0,100);
-//    m_mySliderBar->setPageStep(1);
-
-//    m_replaySliderBar = new ReplaySliderBar(Qt::Horizontal,this);
-
-//}
 
 void MySlider::initUI()
 {
     m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
     QPalette pal;
 
-    //这个为测试，所以直接条用了render。最好吧render放回bitmap保存，QSize根据需要调整
     pal.setBrush(QPalette::Background, QBrush(renderSVG(":/image/icon/normal/slider.svg", QSize(m_sliderHandler->width(), m_sliderHandler->height()))));
-    pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);

@@ -18,11 +18,7 @@
 
 MMenu::MMenu(QWidget *parent)
 {
-//    setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
-//    setAttribute(Qt::WA_TranslucentBackground);//设置背景透明
-//    QPalette pal = palette();
-//    pal.setColor(QPalette::Background, QColor(255,0,0,0));
-//    setPalette(pal);
+
     this->setFixedSize(QSize(162,100));
 }
 
@@ -38,13 +34,6 @@ void MMenu::leaveEvent(QEvent* event)
 }
 void MMenu::paintEvent(QPaintEvent *event)
 {
-    QPainter pianter(this);
-    QBrush brush(QColor(0,0,0,20));
-    QPalette pal = palette();
-    pal.setColor(QPalette::Background, QColor(255,255,255,20));
-    setPalette(pal);
-    pianter.fillRect(this->rect(),brush);
-
     QMenu::paintEvent(event);
 }
 
@@ -83,22 +72,7 @@ void RightNoteList::createDArrowMenu()
         m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
         m_contextMenu->addAction(m_saveAsAction);
         m_contextMenu->addAction(m_delAction);
-
-//        QPalette pal = palette();
-//        pal.setColor(QPalette::Background, QColor(255,255,255,20));
-//        m_contextMenu->setPalette(pal);
         m_contextMenu->setFixedSize(QSize(162,89));
-//        m_arrowMenu = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow,this);
-//        m_arrowMenu->setArrowHeight(29);
-//        m_arrowMenu->setArrowWidth(58);
-//        m_arrowMenu->setRadius(10);
-//        m_arrowMenu->setHeight(89);
-//        m_arrowMenu->setWidth(162);
-
-//        m_arrowMenu->setContent(m_contextMenu);
-
-//        m_arrowMenu->setBackgroundColor(QColor(255,255,255,20));
-//        m_arrowMenu->setVisible(false);
         m_contextMenu->setVisible(false);
 
         connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));

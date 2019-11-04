@@ -3,6 +3,8 @@
 
 #include <DWidget>
 #include <DLabel>
+#include <DPalette>
+
 DWIDGET_USE_NAMESPACE
 
 //回放 slider handle

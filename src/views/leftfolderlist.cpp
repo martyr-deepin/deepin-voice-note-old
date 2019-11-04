@@ -50,9 +50,6 @@ void LeftFolderList::initUI()
 
     m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("录音中禁止删除记事本")), nullptr);
 
-//    DPalette pb = DApplicationHelper::instance()->palette(this);
-//    pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
-//    this->setPalette(pb);
 }
 
 void LeftFolderList::initConnection()

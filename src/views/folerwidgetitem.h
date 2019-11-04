@@ -8,8 +8,10 @@
 #include "consts.h"
 #include <DLineEdit>
 #include <QStackedWidget>
+#include <DStackedWidget>
 #include <DBlurEffectWidget>
 #include <DLabel>
+#include <DFrame>
 #include "folderimage.h"
 #include "renameedit.h"
 
@@ -29,11 +31,11 @@ public:
     FolerWidgetItem(FOLDER m_folder, FolderController *m_folderCtr, QString searchKey);
     ~FolerWidgetItem();
     RenameEdit *m_lineEdit;
-    DBlurEffectWidget *m_BackGround;
+    DFrame *m_BackGround;
 //    DBlurEffectWidget *m_BackBorad;
     //QLabel *m_imageLabel;
     DLabel *m_nameLabel;
-    QLabel *m_createTimeLabel;
+    DLabel *m_createTimeLabel;
     FOLDER m_folder;
     FolderImage *m_FolderImage;
     QString m_BakLineContent;

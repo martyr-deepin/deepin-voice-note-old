@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include <DLabel>
+#include <DPalette>
 
 #define SLIDER_DEFAULT_HEIGHT 141
 #define SLIDER_HANDLE_TEXT_HEIGHT 33

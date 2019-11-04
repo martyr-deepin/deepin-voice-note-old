@@ -63,14 +63,9 @@ void LeftView::initUI()
     m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
     m_addFolderBtn->setIconSize(QSize(34,34));
 
-//    DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
-//    pa.setBrush(DPalette::Highlight, pa.color(DPalette::LightLively));
-//    m_addFolderBtn->setPalette(pa);
-    //m_addFolderBtn->setBtnPalette(pa);
 
     DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
-    pa.setBrush(DPalette::Highlight, QColor(0x000081FF));
-    //pa.setBrush(DPalette::Highlight, pa.color(DPalette::LightLively));
+    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
     m_addFolderBtn->setPalette(pa);
 
 }

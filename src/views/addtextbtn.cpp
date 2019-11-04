@@ -1,5 +1,6 @@
 #include "addtextbtn.h"
 #include "consts.h"
+#include <DApplicationHelper>
 
 AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 {
@@ -43,12 +44,10 @@ void AddTextBtn::init()
         m_addBtn->setFont(Font);
         m_addBtn->setText(tr("点击添加文字记事项"));
 
-        QPalette pe;
-        //pe.setColor(QPalette::Text,QColor(82,106,127,00));
-        pe.setColor(QPalette::ButtonText,QColor(82,106,127,255));
-        pe.setColor(QPalette::Button,QColor(00,00,00,10));
-        //pe.setColor(QPalette::Text,QColor(00,82,106,127));
-        //pe.setColor(QPalette::Text,QColor(QRgb(0x526A7F)));
+        DPalette pe = DApplicationHelper::instance()->palette(m_addBtn);
+        pe.setBrush(DPalette::ButtonText, pe.color(DPalette::TextTips));
+        pe.setBrush(DPalette::Button, pe.color(DPalette::FrameBorder));
+        //pe.setBrush(DPalette::Button, pe.color(DPalette::ItemBackground));
         m_addBtn->setPalette(pe);
     }
 }

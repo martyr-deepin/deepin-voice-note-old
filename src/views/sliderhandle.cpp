@@ -1,6 +1,9 @@
 #include "sliderhandle.h"
 #include <QPainter>
 
+
+
+
 SliderHandle::SliderHandle(QString imgpath, QWidget *parent) : DLabel(parent)
 {
     setFixedSize(50, 141);
@@ -10,9 +13,9 @@ SliderHandle::SliderHandle(QString imgpath, QWidget *parent) : DLabel(parent)
     m_timelabel->move(10,12);
     //m_timelabel->move(10,50);
 
-
     QPalette pal;
-    pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
+    pal.setColor(QPalette::WindowText,QColor(Qt::white));
+    //pal.setColor(QPalette::WindowText,QColor(QRgb(0xFFFFFF)));
     m_timelabel->setAutoFillBackground(true);
     m_timelabel->setPalette(pal);
     m_timelabel->setAlignment(Qt::AlignCenter);

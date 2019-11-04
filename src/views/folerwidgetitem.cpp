@@ -63,40 +63,29 @@ void FolerWidgetItem::changeToEditMode()
 
     m_createTimeLabel->setVisible(false);
     m_BakDefaultName = m_lineEdit->text();
-
-//    DPalette pa = DApplicationHelper::instance()->palette(m_lineEdit->lineEdit());
-//    pa.setBrush(DPalette::Text, pa.color(DPalette::TextWarning));
-//    pa.setBrush(DPalette::Base, pa.color(DPalette::TextWarning));
-//    m_lineEdit->lineEdit()->setPalette(pa);
-
 }
 
 void FolerWidgetItem::changeToClickMode()
 {
     if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel))
-    //if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
     {
-        //this->setBlurEnabled(false);
 
-//        DPalette pb = DApplicationHelper::instance()->palette(this);
-//        pb.setBrush(DPalette::Background, QColor(0,0,0,0));
-//        this->setPalette(pb);
-
-//        QPalette pb;
-//        //pb.setColor(QPalette::Background,QColor(00,00,00));
-//        pb.setColor(QPalette::Background,QColor(00,129,255));
-////        m_BackGround->setPalette(pb);
-////        m_BackGround->setMaskAlpha(255);
-////        m_BackGround->setMaskAlpha(0);
         m_clicked = true;
          m_BackGround->setVisible(false);
 
         //m_BackGround->setVisible(false);
 
-        QPalette pe;
-        pe.setColor(QPalette::WindowText,Qt::white);
+        DPalette pe = DApplicationHelper::instance()->palette(m_nameLabel);
+        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextLively));
+        pe.setBrush(DPalette::WindowText, QColor(Qt::white));
         m_nameLabel->setPalette(pe);
-        m_createTimeLabel->setPalette(pe);
+
+
+        DPalette pc = DApplicationHelper::instance()->palette(m_createTimeLabel);
+        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::TextLively));
+        pc.setBrush(DPalette::WindowText, QColor(Qt::white));
+        m_createTimeLabel->setPalette(pc);
+
 
         bool isConverted = false;
         QFont labelFontForWidth;
@@ -112,34 +101,24 @@ void FolerWidgetItem::changeToClickMode()
 void FolerWidgetItem::changeToUnClickMode()
 {
     if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel))
-    //if((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel) && (nullptr != m_BackGround))
     {
-//        //m_BackGround->setVisible(true);
-//        QPalette pb;
-//        pb.setColor(QPalette::Background,QColor(00,00,00));
-//        //pe.setColor(QPalette::Background,QColor(00,129,255));
-//        //DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-//        //pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
-////        m_BackGround->setPalette(pb);
-////        m_BackGround->setMaskAlpha(0);
-//        //m_BackGround->setMaskAlpha(7);
-
-//        DPalette pb = DApplicationHelper::instance()->palette(this);
-//        pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
-//        this->setPalette(pb);
-
-
         if(m_clicked)
         {
             m_BackGround->setVisible(true);
             m_clicked = false;
         }
 
-        QPalette pe;
-        pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
-        m_nameLabel->setPalette(pe);
-        pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
+        DPalette pe;
+        //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
+        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextTips));
+        pe.setColor(DPalette::WindowText,pe.color(DPalette::WindowText));
         m_createTimeLabel->setPalette(pe);
+
+        DPalette pc;
+        //DPalette pc = DApplicationHelper::instance()->palette(m_nameLabel);
+        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::WindowText));
+        pc.setColor(DPalette::WindowText,pc.color(DPalette::TextTips));
+        m_nameLabel->setPalette(pc);
         //m_BackGround->setVisible(true);
 
         bool isConverted = false;
@@ -154,6 +133,12 @@ void FolerWidgetItem::changeToUnClickMode()
 void FolerWidgetItem::Init()
 {
     this->setFixedSize(QSize(230, 64));
+
+
+//    DPalette pa = DApplicationHelper::instance()->palette(this);
+//    pa.setBrush(DPalette::Background, pa.color(DPalette::ItemBackground));
+//    this->setPalette(pa);
+
     //this->setFixedSize(QSize(250, 74));
     this->setBlurEnabled(false);
     this->setBlurRectXRadius(8);
@@ -166,27 +151,20 @@ void FolerWidgetItem::Init()
 //    m_BackBorad->setVisible(true);
 
 
-    m_BackGround = new DBlurEffectWidget(this);
+    m_BackGround = new DFrame(this);
     m_BackGround->move(0,0);
     m_BackGround->setFixedSize(230, 64);
     m_BackGround->setVisible(true);
-    m_BackGround->setBlurRectXRadius(8);
-    m_BackGround->setBlurRectYRadius(8);
-
-
-    DPalette pb = DApplicationHelper::instance()->palette(this);
-    pb.setBrush(DPalette::Background, pb.color(DPalette::ItemBackground));
-    m_BackGround->setPalette(pb);
-//    DPalette pc = DApplicationHelper::instance()->palette(this);
-//    pc.setBrush(DPalette::Background, pc.color(DPalette::ItemBackground));
-//    this->setPalette(pc);
-
-
-
-    //m_BackGround->setMaskAlpha(0);
-
 //    m_BackGround->setBlurRectXRadius(8);
 //    m_BackGround->setBlurRectYRadius(8);
+
+
+    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+    //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    m_BackGround->setPalette(pb);
+
+
 
 
     m_FolderImage = new FolderImage(this);
@@ -206,8 +184,8 @@ void FolerWidgetItem::Init()
     labelFont.setPointSize(14);
     m_nameLabel->setFont(labelFont);
 
-    QPalette pe;
-    pe.setColor(QPalette::WindowText,QColor(QRgb(0x001A2E)));
+    DPalette pe;
+    pe.setColor(DPalette::WindowText,pe.color(DPalette::TextTips));
     m_nameLabel->setPalette(pe);
 
 
@@ -274,8 +252,13 @@ void FolerWidgetItem::Init()
 
     labelFont.setPointSize(9);
     m_createTimeLabel->setFont(labelFont);
-    pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
-    m_createTimeLabel->setPalette(pe);
+    //pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
+    //DPalette pe;
+    //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
+    //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextTips));
+    DPalette pc;
+    pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
+    m_createTimeLabel->setPalette(pc);
     //m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
     //m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
     m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));

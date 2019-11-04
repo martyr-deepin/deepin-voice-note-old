@@ -41,7 +41,7 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
     pauseButton->setIconSize(QSize(28,28));
     DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
-    pa.setBrush(DPalette::Highlight, QColor(0x000081FF));
+    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
     pauseButton->setPalette(pa);
     connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
     resumeButton = new DFloatingButton(this);
@@ -49,7 +49,7 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
     resumeButton->setIconSize(QSize(28,28));
     DPalette pe = DApplicationHelper::instance()->palette(resumeButton);
-    pe.setBrush(DPalette::Highlight, QColor(0x000081FF));
+    pe.setBrush(DPalette::Highlight, pe.color(DPalette::DarkLively));
     resumeButton->setPalette(pe);
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
 

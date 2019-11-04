@@ -65,55 +65,8 @@ void MainPage::initSplitter(){
     m_splitter->addWidget(pLine);
     m_splitter->addWidget(m_rightView);
     m_splitter->setChildrenCollapsible(false);
-    //m_splitter->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    //QSplitterHandle *handle = m_splitter->handle(1);
-//    DPalette pa = DApplicationHelper::instance()->palette(handle);
-//    //pa.setBrush(DPalette::AlternateBase, pa.brush(DPalette::AlternateBase));
-//    pa.setBrush(DPalette::AlternateBase, QBrush(QColor(255,0,0,254)));
-//    handle->setPalette(pa);
-//    handle->setFixedWidth(100);
+
     qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
-    //m_leftView->selectTheFirstFolderByCode();
-
-
-//    pList = new DListWidget(this);
-//    //pList->setFixedSize(QSize(500,500));
-//    pList->move(0,0);
-
-//    pList->addItem(QString("1"));
-//    count = 0;
-//    pList->setFixedWidth(200);
-
-//    QSizePolicy sp = pList->sizePolicy();
-//    sp.setVerticalStretch(1);
-//    //sp.setVerticalPolicy(QSizePolicy::Expanding);
-//    pList->setSizePolicy(sp);
-
-//    QVBoxLayout *pnoteListLayout = new QVBoxLayout();
-//    pnoteListLayout->setContentsMargins(0, 0, 0, 0);
-//    pnoteListLayout->addWidget(pList);
-
-//    QWidget *pnoteListPage = new QWidget();
-//    pnoteListPage->resize(100,pnoteListPage->height());
-//    pnoteListPage->setLayout(pnoteListLayout);
-
-//    QVBoxLayout *rightViewLayout = new QVBoxLayout();
-//    rightViewLayout->setContentsMargins(0, 0, 0, 0);
-//    rightViewLayout->addWidget(pnoteListPage);
-
-
-
-//    QFrame *pView = new QFrame();
-//    pView->resize(100,pView->height());
-//    pView->setLayout(rightViewLayout);
-
-
-//    m_splitter->addWidget(pView);
-//    DPushButton *pBtn = new DPushButton(this);
-//    pBtn->setFixedSize(QSize(100,50));
-//    pBtn->move(600,0);
-
-//    connect(pBtn,SIGNAL(clicked()),this,SLOT(addItemTest()));
 }
 
 void MainPage::initLeftView(){
