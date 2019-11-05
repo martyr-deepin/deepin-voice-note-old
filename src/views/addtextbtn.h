@@ -20,6 +20,9 @@ signals:
 public slots:
     void setDisableBtn(bool flag);
 
+protected:
+    void resizeEvent(QResizeEvent * event);
+
 private:
     DPushButton *m_addBtn;
     QHBoxLayout *m_itemLayout;

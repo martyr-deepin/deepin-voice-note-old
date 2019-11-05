@@ -70,7 +70,8 @@ void TextNoteItem::initUI()
     m_bgWidget->setPalette(pb);
 
 //    m_bgWidget->setFixedHeight(124);//orig
-    m_bgWidget->setFixedHeight(93);
+//    m_bgWidget->setFixedHeight(93);
+    m_bgWidget->setFixedHeight(105);
 //    QSizePolicy sp1 = m_bgWidget->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_bgWidget->setSizePolicy(sp1);
@@ -91,75 +92,24 @@ void TextNoteItem::initUI()
     m_timeLabel->setObjectName("timeLabel");
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
 
-    //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-//    QPalette pal;
-//    pal.setColor(QPalette::Background,Qt::red);
-//    m_bgWidget->setAutoFillBackground(true);
-//    m_bgWidget->setPalette(pal);
-
-//    m_bgWidget->setBlurRectXRadius(8);
-//    m_bgWidget->setBlurRectYRadius(8);
-
-//    QPalette pb;
-//    pb.setColor(QPalette::Background,QColor(00,00,00));
-//    m_bgWidget->setPalette(pb);
-//    m_bgWidget->setMaskAlpha(14);
-
-    //UiUtil::setWidgetBackground(m_bgWidget, ":/image/text_bg.png");
-//   self.horizontalLayoutWidget = QtWidgets.QWidget(self.widget)
-//   self.horizontalLayoutWidget.setGeometry(QtCore.QRect(0, 0, 691, 91))
-//   self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
-
-//    m_stackedWidget = new QStackedWidget(m_bgWidget);
-//    QSizePolicy sizePolicy = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-//    sizePolicy.setHorizontalStretch(0);
-//    sizePolicy.setVerticalStretch(0);
-//    sizePolicy.setHeightForWidth(m_stackedWidget->sizePolicy().hasHeightForWidth());
-//    m_stackedWidget->setSizePolicy(sizePolicy);
-//    m_stackedWidget->setObjectName("stackedWidget");
-//    m_page1Widget = new QWidget();
-//    m_page1Widget->setObjectName("page1");
-//    m_textLabel = new QLabel(m_page1Widget);
-//    m_textLabel->setGeometry(QRect(10, 10, 581, 71));
-//    m_textLabel->setObjectName("label");
-//    m_textLabel->setText(m_textNote.contentText);
-//    m_stackedWidget->addWidget(m_page1Widget);
-//    m_page2Widget = new QWidget();
-////    QSizePolicy sizePolicy1 = QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-////    sizePolicy1.setHorizontalStretch(0);
-////    sizePolicy1.setVerticalStretch(0);
-////    sizePolicy1.setHeightForWidth(m_stackedWidget->sizePolicy().hasHeightForWidth());
-
-////    sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding);
-////    sizePolicy.setHorizontalStretch(0);
-////    sizePolicy.setVerticalStretch(0);
-////    sizePolicy.setHeightForWidth(self.page_2.sizePolicy().hasHeightForWidth());
-//    m_page2Widget->setSizePolicy(sizePolicy);
-//    m_page2Widget->setObjectName("page2");
-//    m_plainTextEdit = new QPlainTextEdit(m_page2Widget);
-//    m_plainTextEdit->setGeometry(QRect(10, 0, 591, 91));
-////    self.plainTextEdit.setObjectName("plainTextEdit");
-//    m_plainTextEdit->setPlainText(m_textNote.contentText);
-//    m_stackedWidget->addWidget(m_page2Widget);
-//    m_hBoxLayout->addWidget(m_stackedWidget);
-//    m_stackedWidget->setCurrentIndex(1);
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
     QFont labelFont;
     labelFont.setFamily("PingFangSC-Regular");
     labelFont.setPointSize(9);
     m_textEdit->setFont(labelFont);
+    m_textEdit->setFixedHeight(97);
 
     m_hBoxLayout->addSpacing(16);
     m_hBoxLayout->addWidget(m_textEdit);
     m_hBoxLayout->addSpacing(10);
     QPalette pl = m_textEdit->palette();
-    pl.setBrush(QPalette::Base,QBrush(QColor(255,0,0,0)));
+    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
 
     QFont labelFontForWidth;
@@ -178,26 +128,27 @@ void TextNoteItem::initUI()
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    m_MenuBtnBackground = new DWidget(m_bgWidget);
+    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
 
-   m_MenuBtnBackground = new DWidget(m_bgWidget);
-   m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
+    m_menuBtn = new MenuButton(m_MenuBtnBackground);
+    //m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_MenuBtnBackground);
 
-   m_menuBtn = new MenuButton(m_MenuBtnBackground);
 //   QPalette pa; //= DApplicationHelper::instance()->palette(m_menuBtn);
 //   pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
 //   m_menuBtn->setBtnPalette(pa);
-   //m_menuBtn = new DImageButton(m_MenuBtnBackground);
-   m_menuBtn->setFixedSize(QSize(40, 40));
-   m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-   m_menuBtn->setIconSize(QSize(20,20));
-   m_menuBtn->setDisabled(true);
+    //m_menuBtn = new DImageButton(m_MenuBtnBackground);
+    m_menuBtn->setFixedSize(QSize(40, 40));
+    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+    m_menuBtn->setIconSize(QSize(20,20));
+    m_menuBtn->setDisabled(true);
 
 
 
-   m_hBoxLayout->addWidget(m_MenuBtnBackground);
-   m_hBoxLayout->addSpacing(8);
+    m_hBoxLayout->addWidget(m_MenuBtnBackground);
+    m_hBoxLayout->addSpacing(8);
 
-   textAreaChanged();
+    textAreaChanged();
 
 //   QTextEdit *textEdit = new QTextEdit(this);
 //   textEdit->setFixedSize(QSize(100,100));
@@ -324,6 +275,7 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     qDebug()<<"-------------------------------handleTextEditFocusOut()";
+    this->m_textEdit->readFromDatabase();   //2567
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;
 //    if(m_bakContent != m_textNote.contentText)
@@ -430,8 +382,8 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
 
         m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
         QTextCursor cursor = m_textEdit->textCursor();
-        cursor.movePosition(QTextCursor::End);
-        m_textEdit->setTextCursor(cursor);
+//        cursor.movePosition(QTextCursor::End);
+//        m_textEdit->setTextCursor(cursor);
         m_isEdited = false;
     }
 

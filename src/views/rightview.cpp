@@ -105,9 +105,13 @@ void RightView::initNoteList()
 
     Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
 
-    m_BottomBoard = new DBlurEffectWidget(this);
+    m_BottomBoard = new DWidget(this);
+    //m_BottomBoard->setFrameRounded(false);
     DPalette pa = DApplicationHelper::instance()->palette(m_BottomBoard);
-    pa.setBrush(DPalette::Base, pa.color(DPalette::Base));
+    pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
+    m_BottomBoard->setAutoFillBackground(true);
+    //pa.setBrush(DPalette::Base, QColor(0,0,0,0));
+
     //m_BottomBoard->setFixedHeight(150);
     m_BottomBoard->setFixedHeight(76);
     m_BottomBoard->setFixedWidth(this->width());
@@ -118,19 +122,21 @@ void RightView::initNoteList()
 
     initRecordStackedWidget();
 
-    m_AddBtnBoard = new DBlurEffectWidget(this);
+    m_AddBtnBoard = new DWidget(this);
     DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
-    pc.setBrush(DPalette::Base, pa.color(DPalette::Base));
+    //pc.setBrush(DPalette::Base, pc.color(DPalette::Base));
+    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
+    m_AddBtnBoard->setAutoFillBackground(true);
+
     m_AddBtnBoard->setFixedHeight(75);
     m_AddBtnBoard->setFixedWidth(this->width() - 10);
     m_AddBtnBoard->setPalette(pc);
     m_AddBtnBoard->move(0,this->height());
-    m_AddBtnBoard->setMaskAlpha(255);
 
     m_AddButtonLocked = new AddTextBtn(this);
     m_AddButtonLocked->init();
-    m_AddButtonLocked->setFixedWidth(548);
-    m_AddButtonLocked->move(10,this->height() - 78);
+    //m_AddButtonLocked->setFixedWidth(548);
+    m_AddButtonLocked->move(6,this->height() - 78);
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
     m_AddButtonLocked->setVisible(false);
@@ -535,8 +541,12 @@ void RightView::resizeEvent(QResizeEvent * event)
         m_recordStackedWidget->show();
 
 
+        m_AddButtonLocked->move(6,this->height() - 78 - m_AddButtonLocked->height());
+        //m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
 
-        m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
+        m_AddButtonLocked->resize(this->width() - 20,m_AddButtonLocked->height());
+        qDebug()<<"m_AddButtonLocked width:"<<m_AddButtonLocked->width();
+        qDebug()<<"rightView width:"<<this->width();
         m_AddBtnBoard->setFixedWidth(this->width() - 10);
         m_AddBtnBoard->move(0,m_AddButtonLocked->y() + 11);
         m_BottomBoard->setFixedWidth(this->width());

@@ -156,6 +156,7 @@ void RightNoteList::initUI()
     m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     audioPlayer = new QMediaPlayer(this);
+    audioPlayer->setNotifyInterval(1000);
     connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
 
     m_myslider = new MySlider(Qt::Horizontal, this);
@@ -232,7 +233,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         //qDebug() << "text item height: " << textItem->height();
         //item->setSizeHint(QSize(this->width(),92));
         //qDebug()<<"textItem width1:"<<textItem->width();
-        item->setSizeHint(QSize(this->width(),123));  //orig
+        //item->setSizeHint(QSize(this->width(),123));  //orig
+        item->setSizeHint(QSize(this->width(),TEXTNOTE_HEIGHT));  //orig
         //qDebug()<<"textItem width2:"<<textItem->width();
         int count = this->count();
         this->insertItem(count - 1,item);
@@ -402,6 +404,7 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
         ptmp = this->item(i);
         QWidget* ptmpWidget = this->itemWidget(ptmp);
         ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
+
     }
 
 }
@@ -1006,7 +1009,7 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
         //int audioLength = audioPlayer->duration();
         int audioLength = m_currPlayingItem->m_note.voiceTime;
         int sliderPos = 0;
-        //qDebug()<<"position:"<<position;
+        qDebug()<<"position:"<<position;
         if (audioLength > 0)
         {
             sliderPos = position * ( m_myslider->width()) / audioLength;
@@ -1015,7 +1018,10 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
         qDebug() << "handleAudioPositionChanged:" << position;
         qDebug() << "sliderPos:" <<sliderPos;
         m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
-        m_myslider->setTimeText(UiUtil::formatMillisecond(position));
+        QTime curTime(0, position / 60000, qRound((position % 60000) / 1000.0));
+        QString curTimeStr = curTime.toString(tr("mm:ss"));
+        m_myslider->setTimeText(curTimeStr);
+        //m_myslider->setTimeText(UiUtil::formatMillisecond(position));
         m_myslider->setSliderPostion(sliderPos);
 
     }

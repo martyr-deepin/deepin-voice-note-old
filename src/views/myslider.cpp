@@ -24,7 +24,7 @@ QPixmap MySlider::renderSVG(const QString &filePath, const QSize &size)
     return pixmap;
 }
 
-MySlider::MySlider(QWidget *parent) : QWidget(parent), m_defaultHeight(SLIDER_DEFAULT_HEIGHT), m_handleTextHeight(SLIDER_HANDLE_TEXT_HEIGHT)
+MySlider::MySlider(QWidget *parent) : DWidget(parent), m_defaultHeight(SLIDER_DEFAULT_HEIGHT), m_handleTextHeight(SLIDER_HANDLE_TEXT_HEIGHT)
 {
     initUI();
     initConnection();
@@ -89,7 +89,6 @@ void MySlider::initUI()
 {
     m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
     QPalette pal;
-
     pal.setBrush(QPalette::Background, QBrush(renderSVG(":/image/icon/normal/slider.svg", QSize(m_sliderHandler->width(), m_sliderHandler->height()))));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);

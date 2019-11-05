@@ -211,8 +211,12 @@ void FolerWidgetItem::Init()
 
     DPalette pa = DApplicationHelper::instance()->palette(m_lineEdit->lineEdit());
     pa.setBrush(DPalette::Text, pa.color(DPalette::Base));
-    pa.setBrush(DPalette::Button, QColor(0,0,0,20));
-    pa.setBrush(DPalette::Base, QColor(0,0,0,20));
+//    pa.setBrush(DPalette::Button, QColor(0,0,0,20));
+//    pa.setBrush(DPalette::Base, QColor(0,0,0,20));
+    pa.setBrush(DPalette::Button, pa.color(DPalette::FrameBorder));
+    pa.setBrush(DPalette::Base, pa.color(DPalette::FrameBorder));
+    //pa.setBrush(DPalette::Highlight, QColor(255,255,0,255));
+    pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
     m_lineEdit->lineEdit()->setPalette(pa);
 
 //    QLineEdit * lineed = new QLineEdit(this);

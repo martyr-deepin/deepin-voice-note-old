@@ -9,6 +9,21 @@ MenuButton::MenuButton(QWidget *parent) : DFloatingButton(parent)
 
 }
 
+MenuButton::MenuButton(QStyle::StandardPixmap iconType , QWidget *parent): DFloatingButton(iconType , parent)
+{
+
+}
+
+MenuButton::MenuButton(DStyle::StandardPixmap iconType, QWidget *parent ):DFloatingButton(iconType , parent)
+{
+
+}
+
+MenuButton::MenuButton(const QString &text, QWidget *parent):DFloatingButton(text , parent)
+{
+
+}
+
 void MenuButton::initStyleOption(DStyleOptionButton *option) const
 {
     DFloatingButton::initStyleOption(option);

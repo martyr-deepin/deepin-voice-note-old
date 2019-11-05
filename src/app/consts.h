@@ -8,7 +8,8 @@
 #define TABLE_FOLDER "folder"
 #define TABLE_NOTE "note"
 #define MAX_FOLDERIMG_NUM (10)
-#define TEXTNOTE_HEIGHT (123)
+//#define TEXTNOTE_HEIGHT (123)
+#define TEXTNOTE_HEIGHT (135)
 #define VOICENOTE_HEIGHT (98)
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
 static QString DB_PATH = "./voiceNoteDB.db";

@@ -66,7 +66,7 @@ void LeftView::initUI()
 
     DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
     pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
-    m_addFolderBtn->setPalette(pa);
+    //m_addFolderBtn->setPalette(pa);
 
 }
 

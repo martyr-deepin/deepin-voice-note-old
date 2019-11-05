@@ -42,7 +42,7 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     pauseButton->setIconSize(QSize(28,28));
     DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
     pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
-    pauseButton->setPalette(pa);
+    //pauseButton->setPalette(pa);
     connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
     resumeButton = new DFloatingButton(this);
     resumeButton->setFixedSize(QSize(45, 45));
@@ -50,7 +50,7 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     resumeButton->setIconSize(QSize(28,28));
     DPalette pe = DApplicationHelper::instance()->palette(resumeButton);
     pe.setBrush(DPalette::Highlight, pe.color(DPalette::DarkLively));
-    resumeButton->setPalette(pe);
+    //resumeButton->setPalette(pe);
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
 
     layout->addWidget(resumeButton);

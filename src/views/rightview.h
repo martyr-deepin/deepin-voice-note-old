@@ -18,7 +18,8 @@
 
 DWIDGET_USE_NAMESPACE
 //右侧文字语音记录View
-class RightView : public QFrame
+class RightView : public DWidget
+//class RightView : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
@@ -82,8 +83,10 @@ private:
     NoteController *m_noteController;
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;
-    DBlurEffectWidget *m_BottomBoard;
-    DBlurEffectWidget *m_AddBtnBoard;
+//    DBlurEffectWidget *m_BottomBoard;
+//    DBlurEffectWidget *m_AddBtnBoard;
+    DWidget *m_BottomBoard;
+    DWidget *m_AddBtnBoard;
     DDialog *m_noticeNoAudioInputs;
 
 };
