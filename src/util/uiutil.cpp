@@ -413,4 +413,84 @@ bool UiUtil::canMicrophoneInput()
 
 }
 
+QPixmap UiUtil::renderSVG(const QString &filePath, const QSize &size,DApplication *pApp)
+{
+    QImageReader reader;
+    QPixmap pixmap;
 
+    reader.setFileName(filePath);
+
+    if (reader.canRead()) {
+
+        //const qreal ratio = qApp->devicePixelRatio();
+        const qreal ratio = pApp->devicePixelRatio();
+        reader.setScaledSize(size * ratio);
+        pixmap = QPixmap::fromImage(reader.read());
+        pixmap.setDevicePixelRatio(ratio);
+    } else {
+        pixmap.load(filePath);
+    }
+
+    return pixmap;
+}
+
+//====start add 20191105  bug2162
+bool UiUtil::DeleteFileOrFolder( const QString& strPath )
+{
+    if( strPath.isEmpty() || !QDir().exists( strPath ) )
+        return false;
+
+    QFileInfo fileInfo( strPath );
+
+    if( fileInfo.isFile() )
+        QFile::remove( strPath );
+    else if( fileInfo.isDir() )
+    {
+        QDir qDir( strPath );
+        qDir.setFilter( QDir::AllEntries | QDir::NoDotAndDotDot );
+        QFileInfoList fileInfoLst = qDir.entryInfoList();
+        foreach( QFileInfo qFileInfo, fileInfoLst )
+        {
+            if( qFileInfo.isFile() )
+                qDir.remove( qFileInfo.absoluteFilePath() );
+            else
+            {
+                DeleteFileOrFolder( qFileInfo.absoluteFilePath() );
+                qDir.rmdir( qFileInfo.absoluteFilePath() );
+            }
+        }
+        qDir.rmdir( fileInfo.absoluteFilePath() );
+    }
+
+    return true;
+}
+
+QString UiUtil::getRecordingTxtFullPath(QString fileName)
+{
+    return QDir(getRecordingSaveDirectory()).filePath(fileName);
+}
+
+bool UiUtil::autoAddEditTxt(const NOTE &noteInfo)
+{
+   QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+   QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
+   QString path = UiUtil::getRecordingTxtFullPath(fileName);
+   if (!UiUtil::saveTxt(path, noteInfo.contentText))
+   {
+       return false;
+   }
+   return true;
+}
+
+bool UiUtil::autoDeleteTxt(const NOTE &noteInfo)
+{
+    QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+    QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
+    QString path = UiUtil::getRecordingTxtFullPath(fileName);
+    if (!UiUtil::DeleteFileOrFolder(path))
+    {
+        return false;
+    }
+    return true;
+}
+//====end add 20191105  bug2162

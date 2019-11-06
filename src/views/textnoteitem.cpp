@@ -168,6 +168,7 @@ void TextNoteItem::initConnection()
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
 
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &TextNoteItem::changeTheme);
 
 //    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
@@ -355,6 +356,13 @@ void TextNoteItem::tryToFouceout()
 void TextNoteItem::textEditChanged(QString str)
 {
     m_textNote.contentText = str;
+}
+
+void TextNoteItem::changeTheme()
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_bgWidget->setPalette(pb);
 }
 
 void TextNoteItem::resizeEvent(QResizeEvent * event)

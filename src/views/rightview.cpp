@@ -70,26 +70,28 @@ void RightView::initConnection()
 
     connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
     connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &RightView::changeTheme);
 }
 
 
 void RightView::initNoteList()
 {
+    m_FolderController = new FolderController();
     m_noteController = new NoteController();
-    m_noteListPage = new QWidget();
-    m_noteListPage->resize(548,m_noteListPage->height());
+//    m_noteListPage = new QWidget();
+//    m_noteListPage->resize(548,m_noteListPage->height());
 
-    DPalette pb = DApplicationHelper::instance()->palette(m_noteListPage);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
-    m_noteListPage->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_noteListPage);
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+//    m_noteListPage->setPalette(pb);
 
-    m_noteListLayout = new QVBoxLayout();
-    m_noteListLayout->setContentsMargins(0, 0, 0, 0);
+//    m_noteListLayout = new QVBoxLayout();
+//    m_noteListLayout->setContentsMargins(0, 0, 0, 0);
 
     m_noteListWidget = new RightNoteList(m_noteController);
 
     m_noteListWidget->setFocusPolicy(Qt::NoFocus);
-    m_noteListLayout->addWidget(m_noteListWidget);
+    //m_noteListLayout->addWidget(m_noteListWidget);
     //m_noteListLayout->addSpacing(1);
 
     QSizePolicy sp = m_noteListWidget->sizePolicy();
@@ -97,13 +99,16 @@ void RightView::initNoteList()
     //sp.setVerticalPolicy(QSizePolicy::Expanding);
     m_noteListWidget->setSizePolicy(sp);
     //qDebug()<<"m_noteListWidget width1:"<<m_noteListWidget->width();
-    m_noteListPage->setLayout(m_noteListLayout);
+    //m_noteListPage->setLayout(m_noteListLayout);
     //qDebug()<<"m_noteListWidget width2:"<<m_noteListWidget->width();
     QVBoxLayout *rightViewLayout = new QVBoxLayout();
     rightViewLayout->setContentsMargins(0, 0, 0, 0);
-    rightViewLayout->addWidget(m_noteListPage);
+    //rightViewLayout->addWidget(m_noteListPage);
+    rightViewLayout->addWidget(m_noteListWidget);
 
-    Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+    //Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+    Intancer::get_Intancer()->setViewHeightForRightList(m_noteListWidget->height());
+
 
     m_BottomBoard = new DWidget(this);
     //m_BottomBoard->setFrameRounded(false);
@@ -224,6 +229,13 @@ void RightView::addTextNote()
     note.contentText = "";
 
     m_noteController->addNote(note);
+    //==== start add 20191105  bug2162
+    if (!UiUtil::autoAddEditTxt(note))
+    {
+        qDebug() << "error: add file error";
+    }
+    //==== end add 20191105  bug2162
+
     addNoteToNoteList(note);
     //updateNoteList();
 
@@ -389,6 +401,30 @@ void RightView::checkAndDeleteEmptyTextNoteFromDatabase()
     m_noteListWidget->delAllEmptyText();
 }
 
+int RightView::getFolderCount()
+{
+    return m_noteListWidget->count();
+}
+
+void RightView::initTxtFilesForDir()
+{
+    if((nullptr != m_FolderController) && (nullptr != m_noteController))
+    {
+        QList<FOLDER> folderlist = m_FolderController->getFolderList();
+        for(int i = 0; i < folderlist.count(); i++)
+        {
+            QList<NOTE> noteList = m_noteController->getNoteListByFolderId(folderlist.at(i).id);
+            for(int j = 0; j < noteList.count(); j++)
+            {
+                if(noteList.at(j).noteType == TEXT)
+                {
+                    UiUtil::autoAddEditTxt(noteList.at(j));
+                }
+            }
+        }
+    }
+}
+
 void RightView::handleStartRecord()
 {
     QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
@@ -530,6 +566,24 @@ void RightView::onViewAddTextHide()
     }
 }
 
+void RightView::changeTheme()
+{
+    DPalette pa = DApplicationHelper::instance()->palette(m_BottomBoard);
+    pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
+    //m_BottomBoard->setAutoFillBackground(true);
+    m_BottomBoard->setPalette(pa);
+
+    DPalette palette = DApplicationHelper::instance()->palette(m_recordPage);
+    palette.setBrush(DPalette::Background, palette.color(DPalette::Base));
+    //palette.setColor(palette.Background, QColor(0, 0, 0));
+    m_recordPage->setPalette(palette);
+
+    DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
+    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
+    m_AddBtnBoard->setPalette(pc);
+
+}
+
 void RightView::resizeEvent(QResizeEvent * event)
 {
     if(nullptr != m_recordStackedWidget)
@@ -554,7 +608,8 @@ void RightView::resizeEvent(QResizeEvent * event)
         qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
         qDebug()<<"rightViewheight:"<<this->height();
 
-        Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+        //Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
+        Intancer::get_Intancer()->setViewHeightForRightList(m_noteListWidget->height());
 
 //        if(m_noteListWidget->verticalScrollBar()->isVisible())
 //        {

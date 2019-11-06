@@ -72,6 +72,7 @@ public slots:
     void handleMenuBtnStateChanged();
     void tryToFouceout();
     void textEditChanged(QString str);
+    void changeTheme();
 
 protected:
     void resizeEvent(QResizeEvent * event);

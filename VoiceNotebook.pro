@@ -69,7 +69,10 @@ SOURCES += \
     src/views/menubutton.cpp \
     src/views/addfolderbutton.cpp \
     src/views/waveformreplay.cpp \
-    src/views/replaysliderbar.cpp
+    src/views/replaysliderbar.cpp \
+    src/views/initemptypage.cpp \
+    src/views/theadmngintancer.cpp \
+    src/Controllers/notewatchercontroller.cpp
 
 HEADERS += \
     src/app \
@@ -108,7 +111,10 @@ HEADERS += \
     src/views/menubutton.h \
     src/views/addfolderbutton.h \
     src/views/waveformreplay.h \
-    src/views/replaysliderbar.h
+    src/views/replaysliderbar.h \
+    src/views/initemptypage.h \
+    src/views/theadmngintancer.h \
+    src/Controllers/notewatchercontroller.h
 
 INCLUDEPATH += \
     src/app \

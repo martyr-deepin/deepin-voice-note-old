@@ -72,6 +72,13 @@ void VoiceNoteItem::setPlayEnable()
     m_playingButton->setPlayEnable();
 }
 
+void VoiceNoteItem::changeTheme()
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_bgWidget->setPalette(pb);
+}
+
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(VOICENOTE_HEIGHT);
@@ -180,7 +187,7 @@ void VoiceNoteItem::initUI()
 
     //m_hBoxLayout->addWidget(m_menuBtn);
 
-
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
 }
 
 void VoiceNoteItem::initConnection()

@@ -3,7 +3,7 @@
 
 #include "recordPage.h"
 #include "rightnotelist.h"
-
+#include "foldercontroller.h"
 #include <QListWidget>
 #include <QPlainTextEdit>
 #include <QStackedWidget>
@@ -33,6 +33,8 @@ public:
     void stopAllPlayback();
     void cancleRecord();
     void checkAndDeleteEmptyTextNoteFromDatabase();
+    int getFolderCount();
+    void initTxtFilesForDir();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -58,6 +60,7 @@ public slots:
     void onAbleAddBtn();
     void onViewAddTextShow();
     void onViewAddTextHide();
+    void changeTheme();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -81,6 +84,7 @@ private:
     //DImageButton *m_addVoiceBtn;
     DFloatingButton *m_addVoiceBtn;
     NoteController *m_noteController;
+    FolderController *m_FolderController;
     RecordPage *m_recordPage;
     QStackedWidget *m_recordStackedWidget;
 //    DBlurEffectWidget *m_BottomBoard;

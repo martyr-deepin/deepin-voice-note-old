@@ -32,11 +32,14 @@ void MyMainWindow::initConnection()
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
     QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
+    connect(m_mainPage,SIGNAL(sigAllFolderDeleted()),this,SLOT(onAllFolderDeleted()));
+
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
     connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleDelDialogClicked);
     connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseDialogClicked);
+    connect(m_InitEmptyPage,SIGNAL(sigAddFolderByInitPage()),this,SLOT(onAddFolderByInitPage()));
 
 
 
@@ -132,7 +135,7 @@ void MyMainWindow::initStackedWidget()
 
     m_mainPage = new MainPage();
     m_stackedWidget->addWidget(m_mainPage);
-    m_stackedWidget->setCurrentIndex(0);
+    //m_stackedWidget->setCurrentIndex(0);
 
 
     m_detailPage = new DFrame();
@@ -150,13 +153,17 @@ void MyMainWindow::initStackedWidget()
     m_detailPage->setPalette(pb);
 
 
-//    m_plainTextEdit = new QPlainTextEdit(m_detailPage);
-//    //    self.detailPage = QtWidgets.QWidget()
-//    //    self.detailPage.setObjectName("detailPage")
-//    //    self.plainTextEdit = QtWidgets.QPlainTextEdit(self.detailPage)
-//    //    self.plainTextEdit.setGeometry(QtCore.QRect(10, 40, 1071, 821))
-//    //    self.plainTextEdit.setObjectName("plainTextEdit")
-//    m_stackedWidget->addWidget(m_detailPage);
+    m_InitEmptyPage = new  InitEmptyPage();
+    m_stackedWidget->addWidget(m_InitEmptyPage);
+
+    if(0 < m_mainPage->getFolderCount())
+    {
+        m_stackedWidget->setCurrentIndex(0);
+    }
+    else
+    {
+        m_stackedWidget->setCurrentIndex(2);
+    }
 }
 
 void MyMainWindow::showNoteDetail(NOTE note)
@@ -239,6 +246,17 @@ void MyMainWindow::handleCloseDialogClicked()
 void MyMainWindow::clearSearchLine()
 {
     m_searchEdit->clear();
+}
+
+void MyMainWindow::onAddFolderByInitPage()
+{
+    m_stackedWidget->setCurrentIndex(0);
+    m_mainPage->trueAddFolder();
+}
+
+void MyMainWindow::onAllFolderDeleted()
+{
+    m_stackedWidget->setCurrentIndex(2);
 }
 
 void MyMainWindow::keyPressEvent(QKeyEvent *event)

@@ -30,11 +30,14 @@ public:
     void cancleRecord();
     void selectCurFolder();
     void checkAndDeleteEmptyTextNoteFromDatabase();
+    int getFolderCount();
+    void trueAddFolder();
 
 signals:
     void textEditClicked(NOTE textNote);
     void clearSearch();
     void sig_research();
+    void sigAllFolderDeleted();
 
 public slots:
     void onAddFolder();

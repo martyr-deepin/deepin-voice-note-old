@@ -3,7 +3,7 @@
 
 #include "mainpage.h"
 #include "textnoteedit.h"
-
+#include "initemptypage.h"
 
 #include <DMainWindow>
 #include <QFrame>
@@ -35,7 +35,8 @@ public slots:
     void handleDelDialogClicked(int index, const QString &text);
     void handleCloseDialogClicked();
     void clearSearchLine();
-
+    void onAddFolderByInitPage();
+    void onAllFolderDeleted();
 
 protected:
     //bool eventFilter(QObject *object, QEvent *event);
@@ -61,7 +62,7 @@ private:
     QFrame *m_titleFrame;
     DSearchEdit *m_searchEdit;
     DDialog *m_SearchDialog;
-
+    InitEmptyPage *m_InitEmptyPage;
 
 
     void initUI();

@@ -41,6 +41,7 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(searchNote(int, QString)), m_rightView, SLOT(handleSearchNote(int, QString)));
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
+    QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
     QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
     //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
@@ -86,6 +87,7 @@ void MainPage::initRightView(){
     sp.setHorizontalStretch(1);
     m_rightView->setSizePolicy(sp);
     m_rightView->setObjectName("rightView");
+    m_rightView->initTxtFilesForDir();
     m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }
@@ -129,6 +131,16 @@ void MainPage::selectCurFolder()
 void MainPage::checkAndDeleteEmptyTextNoteFromDatabase()
 {
     m_rightView->checkAndDeleteEmptyTextNoteFromDatabase();
+}
+
+int MainPage::getFolderCount()
+{
+    return m_rightView->getFolderCount();
+}
+
+void MainPage::trueAddFolder()
+{
+    m_leftView->addFolder();
 }
 
 void MainPage::onAddFolder()

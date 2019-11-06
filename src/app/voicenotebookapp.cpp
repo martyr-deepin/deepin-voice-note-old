@@ -1,5 +1,6 @@
 #include "voicenotebookapp.h"
 #include "intancer.h"
+#include "theadmngintancer.h"
 #include <DApplication>
 #include <DWidgetUtil>
 #include <DApplicationSettings>
@@ -15,6 +16,7 @@ DCORE_USE_NAMESPACE
 VoiceNotebookApp::VoiceNotebookApp(DApplication &a)
 {
     m_app = &a;
+    Intancer::get_Intancer()->setApp(m_app);
     initApp();
 }
 
@@ -25,6 +27,7 @@ VoiceNotebookApp::~VoiceNotebookApp()
             m_mainWindow = nullptr;
         }
     Intancer::get_Intancer()->destroyIntance();
+    //TheadMngIntancer::get_Intancer()->destroyIntance();
 }
 
 //initI18n();

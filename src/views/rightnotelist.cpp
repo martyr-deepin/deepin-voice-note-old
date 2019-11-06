@@ -759,6 +759,17 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
+        //==== start add 20191105  bug2162
+        NOTE_TYPE delType2 = m_currSelNote.noteType;
+        if(TEXT == delType2)
+        {
+            if (!UiUtil::autoDeleteTxt(m_currSelNote))
+            {
+                qDebug() << "error: delete file error";
+            }
+        }
+
+        //==== start add 20191105  bug2162
         if (m_noteController->deleteNote(m_currSelNote))
         {
             bool move = false;
@@ -791,6 +802,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             delete m_currSelItem;
             m_currSelItem = nullptr;
             m_addTextBtn->setDisableBtn(false);
+            emit sig_TextEditNotEmpty();
 
             if(move)
             {
@@ -1018,8 +1030,11 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
         qDebug() << "handleAudioPositionChanged:" << position;
         qDebug() << "sliderPos:" <<sliderPos;
         m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
+        //QTime curTime(0,0,0);
         QTime curTime(0, position / 60000, qRound((position % 60000) / 1000.0));
+        //QTime curTime(0, position / 60000, (position % 60000) / 1000.0);
         QString curTimeStr = curTime.toString(tr("mm:ss"));
+        qDebug()<<"curTime:"<<curTime;
         m_myslider->setTimeText(curTimeStr);
         //m_myslider->setTimeText(UiUtil::formatMillisecond(position));
         m_myslider->setSliderPostion(sliderPos);

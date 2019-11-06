@@ -2,7 +2,10 @@
 #define INTANCER_H
 
 #include <QObject>
+#include <DApplication>
+
 //#include <QDBus>
+DWIDGET_USE_NAMESPACE
 
 class Intancer : public QObject
 {
@@ -22,6 +25,9 @@ public:
             delete instance_;
         }
     }    
+
+    void setApp(DApplication *pApp);
+    DApplication * getApp();
 
     void initHeightForRight();
     void clearHeightForRightList();
@@ -58,6 +64,9 @@ private:
 
      int m_RightListHeight;
      int m_RightViewHeight;
+     DApplication *m_app;
+
+
 };
 
 #endif // INTANCER_H

@@ -4,6 +4,7 @@ Intancer * Intancer::instance_ = nullptr;
 
 Intancer::Intancer(QObject *parent) : QObject(parent)
 {
+    m_app = nullptr;
     tryToDelEmptyTextNote = false;
     recording = false;
     isRenameRepeat = false;
@@ -17,6 +18,16 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
 Intancer::~Intancer()
 {
 
+}
+
+void Intancer::setApp(DApplication *pApp)
+{
+    m_app = pApp;
+}
+
+DApplication * Intancer::getApp()
+{
+    return m_app;
 }
 
 void Intancer::initHeightForRight()

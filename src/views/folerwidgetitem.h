@@ -51,6 +51,8 @@ public slots:
     void checkNameValid();
     void checkNameLenth();
     void tryToFouceout();
+    void changeTheme();
+
 private:
 
 

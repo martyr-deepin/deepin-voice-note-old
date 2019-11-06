@@ -17,6 +17,7 @@ public:
 
 protected:
     void initStyleOption(DStyleOptionButton *option)const;
+
 };
 
 #endif // MENUBUTTON_H

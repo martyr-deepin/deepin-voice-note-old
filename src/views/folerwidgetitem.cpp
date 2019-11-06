@@ -31,6 +31,7 @@ void FolerWidgetItem::initConnection()
 {
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
     connect(m_lineEdit, &DLineEdit::textChanged, this, &FolerWidgetItem::checkNameLenth);
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &FolerWidgetItem::changeTheme);
 }
 
 
@@ -211,12 +212,13 @@ void FolerWidgetItem::Init()
 
     DPalette pa = DApplicationHelper::instance()->palette(m_lineEdit->lineEdit());
     pa.setBrush(DPalette::Text, pa.color(DPalette::Base));
-//    pa.setBrush(DPalette::Button, QColor(0,0,0,20));
-//    pa.setBrush(DPalette::Base, QColor(0,0,0,20));
     pa.setBrush(DPalette::Button, pa.color(DPalette::FrameBorder));
     pa.setBrush(DPalette::Base, pa.color(DPalette::FrameBorder));
-    //pa.setBrush(DPalette::Highlight, QColor(255,255,0,255));
-    pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
+//    pa.setBrush(DPalette::Button, QColor(255,0,0,255));
+//    pa.setBrush(DPalette::Base, QColor(0,255,0,255));
+    //pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
+    //pa.setBrush(DPalette::Highlight, QColor(0,0,255,255));
+    //pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
     m_lineEdit->lineEdit()->setPalette(pa);
 
 //    QLineEdit * lineed = new QLineEdit(this);
@@ -369,4 +371,12 @@ void FolerWidgetItem::checkNameLenth()
 void FolerWidgetItem::tryToFouceout()
 {
     m_lineEdit->tryToFouceout();
+}
+
+void FolerWidgetItem::changeTheme()
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+    //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    m_BackGround->setPalette(pb);
 }

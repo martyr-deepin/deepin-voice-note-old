@@ -90,6 +90,12 @@ void TextNoteEdit::updateNote()
     qDebug() << "TextNoteEdit::updateNote" << "exec";
     NOTE note = m_textNote;
     note.contentText = this->toPlainText();
+    //==== start add 20191105  bug2162
+    if (!UiUtil::autoAddEditTxt(note))
+    {
+        qDebug() << "error: edit file error";
+    }
+    //==== end add 20191105  bug2162
     if(!m_noteCtr->updateNote(note))
     {
         //todo：弹出popup，保存失败

@@ -37,7 +37,7 @@ public:
     int m_handleTextHeight;
     int sliderPosition();
     void setTimeText(QString time);
-    QPixmap renderSVG(const QString &filePath, const QSize &size);
+    //QPixmap renderSVG(const QString &filePath, const QSize &size);
 
 signals:
     void sliderMoved(int value);
