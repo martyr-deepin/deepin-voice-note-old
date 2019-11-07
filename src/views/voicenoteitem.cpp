@@ -147,12 +147,13 @@ void VoiceNoteItem::initUI()
     m_waveform->setSizePolicy(spShape);
 
 
-    m_menuBtn = new MenuButton(m_bgWidget);
+    //m_menuBtn = new MenuButton(m_bgWidget);
+    m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_bgWidget);
     //m_menuBtn->setFlat(true);
     //m_menuBtn = new DImageButton(m_bgWidget);
     m_menuBtn->setFixedSize(QSize(40, 40));
-    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-    m_menuBtn->setIconSize(QSize(20,20));
+    //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+    //m_menuBtn->setIconSize(QSize(20,20));
 
 //    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
 //    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));

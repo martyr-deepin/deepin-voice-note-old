@@ -131,16 +131,18 @@ void TextNoteItem::initUI()
     m_MenuBtnBackground = new DWidget(m_bgWidget);
     m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
 
-    m_menuBtn = new MenuButton(m_MenuBtnBackground);
-    //m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_MenuBtnBackground);
+    //m_menuBtn = new MenuButton(m_MenuBtnBackground);
+    m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_MenuBtnBackground);
 
 //   QPalette pa; //= DApplicationHelper::instance()->palette(m_menuBtn);
 //   pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
 //   m_menuBtn->setBtnPalette(pa);
     //m_menuBtn = new DImageButton(m_MenuBtnBackground);
     m_menuBtn->setFixedSize(QSize(40, 40));
-    m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-    m_menuBtn->setIconSize(QSize(20,20));
+    //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+    //m_menuBtn->setIconSize(QSize(20,20));
+    //m_menuBtn->setIconSize(QSize(40,18));
+    //m_menuBtn->setIconSize(QSize(10,18));
     m_menuBtn->setDisabled(true);
 
 
@@ -389,6 +391,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         }
 
         m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+        //m_textEdit->setReadOnly(true);
         QTextCursor cursor = m_textEdit->textCursor();
 //        cursor.movePosition(QTextCursor::End);
 //        m_textEdit->setTextCursor(cursor);

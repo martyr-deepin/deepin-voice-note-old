@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QImageReader>
 #include <DApplication>
+//#include <DFrameWorkDBus>
 
 //#include <ddialog.h>
 #include "consts.h"

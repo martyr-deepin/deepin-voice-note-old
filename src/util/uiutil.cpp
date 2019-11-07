@@ -379,6 +379,49 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
     return  v;
 }
 
+//bool UiUtil::canMicrophoneInput()
+//{
+//    QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
+//                                            "com.deepin.daemon.Audio", "DefaultSource");
+//    if (v.isValid()) {
+//        QDBusObjectPath path = v.value<QDBusObjectPath>();
+//        qDebug() <<"path: "<<path.path();
+//        QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
+//                                  "com.deepin.daemon.Audio.Source",
+//                                  QDBusConnection::sessionBus());
+//        if (!ainterface.isValid())
+//        {
+//            return false;
+//        }
+//        //调用远程的value方法
+//        QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
+//        if (reply.isValid()){
+//            path = reply.value();
+//            qDebug()<<"path1" << path.path();
+//            QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
+//                                                    "com.deepin.daemon.Audio.Meter", "Volume");
+//            if (v.isValid()) {
+//                double volume = v.toDouble();
+//                qDebug()<<"volume" <<volume;
+//                return volume != 0.0;
+//            }
+//        } else {
+//           return  false;
+//        }
+//    }
+//    return false;
+
+//}
+
+struct MyStruct
+{
+    std::string s1;
+    std::string s2;
+    char b;
+};
+
+Q_DECLARE_METATYPE(MyStruct)
+
 bool UiUtil::canMicrophoneInput()
 {
     QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
@@ -399,10 +442,16 @@ bool UiUtil::canMicrophoneInput()
             path = reply.value();
             qDebug()<<"path1" << path.path();
             QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
-                                                    "com.deepin.daemon.Audio.Meter", "Volume");
+                                     //    "com.deepin.daemon.Audio.Meter", "ActivePort");
+                                         "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-                qDebug()<<"volume" <<volume;
+
+//                MyStruct stru = v.value<MyStruct>();
+//                qDebug()<<"s1:" <<s.s1;
+//                qDebug()<<"s2:" <<s.s2;
+//                qDebug()<<"b:" <<s.b;
+//                return stru.b != 0;
                 return volume != 0.0;
             }
         } else {

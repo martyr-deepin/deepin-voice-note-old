@@ -401,9 +401,20 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
     QListWidgetItem *ptmp = nullptr;
     for(int i = 0; i < this->count(); i++)
     {
+
         ptmp = this->item(i);
+
         QWidget* ptmpWidget = this->itemWidget(ptmp);
-        ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
+        int listWidth = this->width();
+        int newWidth = this->width() - 23;
+        int maxwidth = event->size().width();
+        ptmpWidget->setFixedSize(QSize(newWidth,ptmpWidget->height()));
+
+        if(i != this->count() - 1)
+        {
+            this->item(i)->setSizeHint(QSize(listWidth,ptmpWidget->height()));
+        }
+        //ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
 
     }
 
