@@ -119,6 +119,13 @@ void RecordingButton::handleResume() {
     emit resume();
 }
 
+void RecordingButton::onlyhandleResume()
+{
+    layout->removeWidget(resumeButton);
+    resumeButton->setParent(NULL);
+    layout->addWidget(pauseButton);
+}
+
 void RecordingButton::changeTheme()
 {
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();

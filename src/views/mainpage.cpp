@@ -109,6 +109,7 @@ void MainPage::updateNoteList()
 void MainPage::searchFolder(QString searchKey)
 {
     m_rightView->stopAllPlayback();
+
     m_rightView->cancleRecord();
     ((LeftView*)m_leftView)->searchFolder(searchKey);
 }

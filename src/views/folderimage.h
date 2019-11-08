@@ -18,6 +18,7 @@ protected:
 private:
     DLabel *m_imageLabel;
     QString m_PicPath;
+    QPixmap m_Picmap;
 };
 
 #endif // FOLDERIMAGE_H

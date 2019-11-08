@@ -269,6 +269,7 @@ void FolerWidgetItem::Init()
         m_folder.imgPath = UiUtil::getDefaultAvatarByRand();
     }
 
+
     m_FolderImage->loadPic(m_folder.imgPath);
 }
 
@@ -277,6 +278,7 @@ void FolerWidgetItem::checkNameValid()
     //if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
     if ((m_lineEdit->text().length() >= 0) && (m_lineEdit->text().length() <= 64)) {
         //todo:更新数据库
+        qDebug()<<"m_lineEdit->text().length():"<<m_lineEdit->text().length();
         if(m_lineEdit->text().length() == 0)
         {
             m_folder.folderName = m_BakDefaultName;

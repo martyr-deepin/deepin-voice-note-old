@@ -47,6 +47,7 @@ signals:
 public slots:
     void handlePause();
     void handleResume();
+    void onlyhandleResume();
     void changeTheme();
     
 private:

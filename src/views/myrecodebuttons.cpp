@@ -50,25 +50,25 @@ void MyRecodeButtons::paintEvent(QPaintEvent *event)
     {
         //disable
         painter.drawPixmap(rect(), m_disable);
-        qDebug()<<"disable disable disable disable disable disable";
+        //qDebug()<<"disable disable disable disable disable disable";
     }
     else if(!m_isIn && !m_isDisabled)
     {
         //Normal
         painter.drawPixmap(rect(), m_normal);
-        qDebug()<<"Normal Normal Normal Normal Normal Normal";
+        //qDebug()<<"Normal Normal Normal Normal Normal Normal";
     }
     else if(!m_isPressed && m_isIn)
     {
         //hover
         painter.drawPixmap(rect(), m_hover);
-        qDebug()<<"hover hover hover hover hover hover";
+        //qDebug()<<"hover hover hover hover hover hover";
     }
     else if(m_isPressed && m_isIn)
     {
         //press
         painter.drawPixmap(rect(), m_press);
-        qDebug()<<"press press press press press press";
+        //qDebug()<<"press press press press press press";
     }
 
 }

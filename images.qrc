@@ -110,5 +110,13 @@
         <file>image/icon_dark/slider_dark.svg</file>
         <file>image/icon/DefaultAvatar/3.svg</file>
         <file>image/icon/DefaultAvatar/4.svg</file>
+        <file>image/icon/DefaultAvatar/10.svg</file>
+        <file>image/icon/DefaultAvatar/7.svg</file>
+        <file>image/icon/DefaultAvatar/1.svg</file>
+        <file>image/icon/DefaultAvatar/5.svg</file>
+        <file>image/icon/DefaultAvatar/2.svg</file>
+        <file>image/icon/DefaultAvatar/9.svg</file>
+        <file>image/icon/DefaultAvatar/8.svg</file>
+        <file>image/icon/DefaultAvatar/6.svg</file>
     </qresource>
 </RCC>

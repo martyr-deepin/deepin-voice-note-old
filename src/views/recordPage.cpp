@@ -375,11 +375,11 @@ void RecordPage::stopRecord()
 
 void RecordPage::exitRecord()
 {
-    m_recordingButton->handleResume();
+    m_recordingButton->onlyhandleResume();
     m_audioRecorder->stop();
     m_tickerTimer->stop();
     m_recordTimeLabel->setText("00:00");
-
+    recordPath.clear();
     QFile(getRecordingFilepath()).remove();
 
     emit cancelRecord();
