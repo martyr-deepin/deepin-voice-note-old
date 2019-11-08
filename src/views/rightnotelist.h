@@ -62,6 +62,7 @@ signals:
     void sig_TextEditEmpty();
     void sig_TextEditNotEmpty();
     void sig_research();
+    void sig_checkCurPageVoiceForDelete();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);

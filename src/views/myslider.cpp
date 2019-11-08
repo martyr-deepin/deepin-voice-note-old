@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QImageReader>
+#include <DFontSizeManager>
 
 
 
@@ -70,17 +71,15 @@ int MySlider::getHandlerWidth()
 
 void MySlider::initUI()
 {
-    m_sliderHandler = new SliderHandle(":/image/slider.svg",this);
+    m_sliderHandler = new SliderHandle(this);
     QPalette pal;
 
     pal.setBrush(QPalette::Background, QBrush(UiUtil::renderSVG(":/image/icon/normal/slider.svg", QSize(m_sliderHandler->width(), m_sliderHandler->height()),Intancer::get_Intancer()->getApp())));
     m_sliderHandler->setAutoFillBackground(true);
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
-    QFont labelFont;
-    labelFont.setFamily("SourceHanSansSC");
-    //labelFont.setPointSize(12);
-    labelFont.setPixelSize(12);
+
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     m_sliderHandler->setFont(labelFont);
     m_sliderHandler->setContentsMargins(0, 8, 0, 0);
     m_mySliderBar = new MySliderBar(this);

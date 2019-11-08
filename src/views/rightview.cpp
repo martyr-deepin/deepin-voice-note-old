@@ -51,11 +51,12 @@ void RightView::initConnection()
     //&RightView::addTextNote
     connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
-    connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
+    //connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
     connect(m_noteListWidget, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
     connect(m_noteListWidget, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
     connect(m_noteListWidget, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
+    connect(m_noteListWidget, SIGNAL(sig_checkCurPageVoiceForDelete()), this, SLOT(oncheckCurPageVoiceForDelete()));
 
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
@@ -151,16 +152,40 @@ void RightView::initNoteList()
 void RightView::initRecordStackedWidget()
 {
     m_recordStackedWidget = new QStackedWidget(this);
-    m_recordStackedWidget->setFixedSize(QSize(548,64));
+    //m_recordStackedWidget->setFixedSize(QSize(548,64));
+    m_recordStackedWidget->setFixedSize(QSize(548,76));
 
-    m_addVoiceBtn = new DFloatingButton(this);
-    m_addVoiceBtn->setFixedSize(QSize(58,58));
-    m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
-    m_addVoiceBtn->setIconSize(QSize(34,34));
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_addVoiceBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/circlebutton_voice.svg",
+                    ":/image/icon/press/circlebutton_voice_press.svg",
+                    ":/image/icon/hover/circlebutton_voice_hover.svg",
+                    ":/image/icon/disabled/circlebutton_voice_disabled.svg",
+                    ":/image/icon/focus/circlebutton_voice_focus.svg",
+                    QSize(68,68),
+                    this);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_addVoiceBtn = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/voice_normal_dark.svg",
+                    ":/image/icon_dark/press/voice_press_dark.svg",
+                    ":/image/icon_dark/hover/voice_hover_dark.svg",
+                    ":/image/icon_dark/disabled/voice_disabled_dark.svg",
+                    ":/image/icon_dark/focus/voice_focus_dark.svg",
+                    QSize(68,68),
+                    this);
+    }
+//    m_addVoiceBtn = new DFloatingButton(this);
+//    m_addVoiceBtn->setFixedSize(QSize(58,58));
+//    m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
+//    m_addVoiceBtn->setIconSize(QSize(34,34));
 
-    DPalette pb = DApplicationHelper::instance()->palette(m_addVoiceBtn);
-    pb.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
-    m_addVoiceBtn->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_addVoiceBtn);
+//    pb.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+//    m_addVoiceBtn->setPalette(pb);
 
     m_recordPage = new RecordPage();
     DPalette palette = DApplicationHelper::instance()->palette(m_recordPage);
@@ -584,13 +609,18 @@ void RightView::changeTheme()
 
 }
 
+void RightView::oncheckCurPageVoiceForDelete()
+{
+    updateNoteList();
+}
+
 void RightView::resizeEvent(QResizeEvent * event)
 {
     if(nullptr != m_recordStackedWidget)
     {
         qDebug()<<"RightView width:"<<this->width();
         qDebug()<<"m_recordStackedWidget width:"<<m_recordStackedWidget->width();
-        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 12 - m_recordStackedWidget->height());
+        m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - m_recordStackedWidget->height() - 5);
         qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
         m_recordStackedWidget->show();
 

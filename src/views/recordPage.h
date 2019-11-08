@@ -33,8 +33,8 @@
 //#include "expand_animation_button.h"
 #include "recordingButton.h"
 #include "waveform.h"
-//#include "shrank_animation_button.h"
-//#include "waveform.h"
+#include "myrecodebuttons.h"
+
 #include <QDateTime>
 #include <QTimer>
 #include <DWidget>
@@ -58,7 +58,8 @@ public:
 
     //QLabel *m_voiceTimeLabel;
 
-    DFloatingButton *m_finishButton;
+    MyRecodeButtons *m_finishButton;
+    //DFloatingButton *m_finishButton;
     //QVBoxLayout *layout;
     RecordingButton *m_recordingButton;
     
@@ -85,6 +86,7 @@ public slots:
     void resumeRecord();
     void startRecord();
     void stopRecord();
+    void changeTheme();
     
 private:
     //ExpandAnimationButton *expandAnimationButton;

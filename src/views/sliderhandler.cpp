@@ -1,6 +1,6 @@
 #include "sliderhandler.h"
-
-#include <uiutil.h>
+#include "uiutil.h"
+#include <DFontSizeManager>
 
 SliderHandler::SliderHandler(QWidget *parent) : QWidget(parent)
 {
@@ -26,9 +26,8 @@ void SliderHandler::initUI()
     m_timeLabel->setAutoFillBackground(true);
     m_timeLabel->setPalette(pal);
     m_timeLabel->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
-    QFont labelFont;
-    labelFont.setFamily("SourceHanSansSC");
-    labelFont.setPointSize(12);
+
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     m_timeLabel->setFont(labelFont);
 
     m_line = new QLabel(this);

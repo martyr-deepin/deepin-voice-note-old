@@ -7,36 +7,36 @@
 
 #define TABLE_FOLDER "folder"
 #define TABLE_NOTE "note"
-#define MAX_FOLDERIMG_NUM (10)
+#define MAX_FOLDERIMG_NUM (2)
 //#define TEXTNOTE_HEIGHT (123)
 #define TEXTNOTE_HEIGHT (135)
 #define VOICENOTE_HEIGHT (98)
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
-static QString DB_PATH = "./voiceNoteDB.db";
+//static QString DB_PATH = "./voiceNoteDB.db";
 //static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
 static QString DEFAULT_FOLDER_IMG_PATH = ":/image/default_folder_img.png";
-static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.png";
-static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.png";
-static QString DEFAULT_FOLDER_IMG_PATH_3 = ":/image/icon/DefaultAvatar/3.png";
-static QString DEFAULT_FOLDER_IMG_PATH_4 = ":/image/icon/DefaultAvatar/4.png";
-static QString DEFAULT_FOLDER_IMG_PATH_5 = ":/image/icon/DefaultAvatar/5.png";
-static QString DEFAULT_FOLDER_IMG_PATH_6 = ":/image/icon/DefaultAvatar/6.png";
-static QString DEFAULT_FOLDER_IMG_PATH_7 = ":/image/icon/DefaultAvatar/7.png";
-static QString DEFAULT_FOLDER_IMG_PATH_8 = ":/image/icon/DefaultAvatar/8.png";
-static QString DEFAULT_FOLDER_IMG_PATH_9 = ":/image/icon/DefaultAvatar/9.png";
-static QString DEFAULT_FOLDER_IMG_PATH_10 = ":/image/icon/DefaultAvatar/10.png";
+//static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.svg";
+//static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.svg";
+static QString DEFAULT_FOLDER_IMG_PATH_3 = ":/image/icon/DefaultAvatar/3.svg";
+static QString DEFAULT_FOLDER_IMG_PATH_4 = ":/image/icon/DefaultAvatar/4.svg";
+//static QString DEFAULT_sFOLDER_IMG_PATH_5 = ":/image/icon/DefaultAvatar/5.svg";
+//static QString DEFAULT_FOLDER_IMG_PATH_6 = ":/image/icon/DefaultAvatar/6.svg";
+//static QString DEFAULT_FOLDER_IMG_PATH_7 = ":/image/icon/DefaultAvatar/7.svg";
+//static QString DEFAULT_FOLDER_IMG_PATH_8 = ":/image/icon/DefaultAvatar/8.png";
+//static QString DEFAULT_FOLDER_IMG_PATH_9 = ":/image/icon/DefaultAvatar/9.png";
+//static QString DEFAULT_FOLDER_IMG_PATH_10 = ":/image/icon/DefaultAvatar/10.png";
 static QStringList default_folder_imgpath=
 {
-    DEFAULT_FOLDER_IMG_PATH_1,
-    DEFAULT_FOLDER_IMG_PATH_2,
+//    DEFAULT_FOLDER_IMG_PATH_1,
+//    DEFAULT_FOLDER_IMG_PATH_2,
     DEFAULT_FOLDER_IMG_PATH_3,
     DEFAULT_FOLDER_IMG_PATH_4,
-    DEFAULT_FOLDER_IMG_PATH_5,
-    DEFAULT_FOLDER_IMG_PATH_6,
-    DEFAULT_FOLDER_IMG_PATH_7,
-    DEFAULT_FOLDER_IMG_PATH_8,
-    DEFAULT_FOLDER_IMG_PATH_9,
-    DEFAULT_FOLDER_IMG_PATH_10
+//    DEFAULT_FOLDER_IMG_PATH_5,
+//    DEFAULT_FOLDER_IMG_PATH_6,
+//    DEFAULT_FOLDER_IMG_PATH_7,
+//    DEFAULT_FOLDER_IMG_PATH_8,
+//    DEFAULT_FOLDER_IMG_PATH_9,
+//    DEFAULT_FOLDER_IMG_PATH_10
 };
 static const char * DEFAULT_FOLDER_NAME = "新记事";
 static const char * FOLDER_MENU_RENAME = "重命名";

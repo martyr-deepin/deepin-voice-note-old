@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <DApplicationHelper>
-
+#include "uiutil.h"
 #include "dimagebutton.h"
 
 DWIDGET_USE_NAMESPACE
@@ -38,7 +38,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
 
     pauseButton = new DFloatingButton(this);
     pauseButton->setFixedSize(QSize(45, 45));
-    pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
+    //pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
+    pauseButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/pause_blue_normal.svg", QSize(28,28),qApp)));
     pauseButton->setIconSize(QSize(28,28));
     DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
     pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
@@ -46,7 +47,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
     resumeButton = new DFloatingButton(this);
     resumeButton->setFixedSize(QSize(45, 45));
-    resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
+    //resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
+    resumeButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/play_normal.svg", QSize(28,28),qApp)));
     resumeButton->setIconSize(QSize(28,28));
     DPalette pe = DApplicationHelper::instance()->palette(resumeButton);
     pe.setBrush(DPalette::Highlight, pe.color(DPalette::DarkLively));

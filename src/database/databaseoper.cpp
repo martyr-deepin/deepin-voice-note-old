@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QStandardPaths>
 
 #include "src/app/consts.h"
 
@@ -34,7 +35,8 @@ void DatabaseOper::initDatabase()
     m_createSqlMap[TABLE_NOTE] = "create table note (id INTEGER PRIMARY KEY AUTOINCREMENT, note_type INTEGER, content_text TEXT, content_path TEXT, voice_time INTEGER, voice_sample_data TEXT, folder_id INTEGER, create_time DATE)";
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     //设置数据库的名称
-     db.setDatabaseName(DB_PATH);
+    const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+     db.setDatabaseName(DATABASE_PATH);
     //打开数据库
      if (!db.open()){
         //return false;

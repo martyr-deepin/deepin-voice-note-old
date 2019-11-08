@@ -31,7 +31,7 @@
 #include <QTimer>
 #include <QWidget>
 #include <DWidget>
-
+#include "uiutil.h"
 
 #include "waveform.h"
 
@@ -51,7 +51,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
         m_Slider = new QLabel(this);
         m_Slider->setFixedSize(5, 52);
         QPalette pal;
-        pal.setBrush(QPalette::Background, QBrush(QPixmap(":/image/icon/normal/cursor.svg")));
+        pal.setBrush(QPalette::Background, QBrush(UiUtil::renderSVG(":/image/icon/normal/cursor.svg", QSize(m_Slider->width(), m_Slider->height()),qApp)));
         m_Slider->setAutoFillBackground(true);
         m_Slider->setPalette(pal);
         m_Slider->setAlignment(Qt::AlignHCenter| Qt::AlignTop);

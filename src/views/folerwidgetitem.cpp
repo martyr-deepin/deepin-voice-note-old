@@ -10,6 +10,7 @@
 #include <DWidget>
 #include <QDebug>
 #include <DApplicationHelper>
+#include <DFontSizeManager>
 
 #include "intancer.h"
 
@@ -89,9 +90,7 @@ void FolerWidgetItem::changeToClickMode()
 
 
         bool isConverted = false;
-        QFont labelFontForWidth;
-        labelFontForWidth.setFamily("SourceHanSansSC");
-        labelFontForWidth.setPointSize(11);
+        QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
         //m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
         m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
@@ -123,9 +122,7 @@ void FolerWidgetItem::changeToUnClickMode()
         //m_BackGround->setVisible(true);
 
         bool isConverted = false;
-        QFont labelFontForWidth;
-        labelFontForWidth.setFamily("SourceHanSansSC");
-        labelFontForWidth.setPointSize(11);
+        QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
         m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
     }
@@ -180,9 +177,8 @@ void FolerWidgetItem::Init()
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
 
-    QFont labelFont;
-    labelFont.setFamily("SourceHanSansSC");
-    labelFont.setPointSize(14);
+
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
     m_nameLabel->setFont(labelFont);
 
     DPalette pe;
@@ -191,9 +187,7 @@ void FolerWidgetItem::Init()
 
 
     bool isConverted = false;
-    QFont labelFontForWidth;
-    labelFontForWidth.setFamily("SourceHanSansSC");
-    labelFontForWidth.setPointSize(11);
+    QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
     //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
     //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, m_nameLabel->width(), isConverted);
     QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
@@ -255,9 +249,8 @@ void FolerWidgetItem::Init()
     m_createTimeLabel->setObjectName("createTimeLabel");
 
 
-
-    labelFont.setPointSize(9);
-    m_createTimeLabel->setFont(labelFont);
+    QFont createTimeFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    m_createTimeLabel->setFont(createTimeFont);
     //pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
     //DPalette pe;
     //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
@@ -269,6 +262,13 @@ void FolerWidgetItem::Init()
     //m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
     m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));
     initConnection();
+
+    QPixmap pix(m_folder.imgPath);
+    if(pix.isNull())
+    {
+        m_folder.imgPath = UiUtil::getDefaultAvatarByRand();
+    }
+
     m_FolderImage->loadPic(m_folder.imgPath);
 }
 
@@ -305,10 +305,8 @@ void FolerWidgetItem::checkNameValid()
             }
             bool isConverted = false;
 
-            QFont labelFont;
-            labelFont.setFamily("SourceHanSansSC");
-            labelFont.setPointSize(11);
 
+            QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
 
             m_nameLabel->setVisible(true);

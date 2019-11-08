@@ -49,12 +49,17 @@ void VoiceNotebookApp::initApp()
     //m_app->loadTranslator();
     m_app->setOrganizationName("deepin");
     m_app->setApplicationName("deepin-voice-note");
-    m_app->setApplicationVersion(DApplication::buildVersion("20191022"));
+
+
+    m_app->setApplicationVersion(DApplication::buildVersion("20191108"));
     //installEventFilter(new GlobalEventFilter());
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
-    m_app->setProductIcon(QIcon(":/images/logo.svg"));
-    m_app->setProductName("Voice note Application");
-    m_app->setApplicationDescription("This is a dtk voice notebook application.");
+    //m_app->setProductIcon(QIcon(":/images/logo.svg"));
+    QIcon icon = QIcon::fromTheme("deepin-voice-note");
+    m_app->setProductIcon(icon);
+    //m_app->setProductName("Voice note Application");
+
+
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
 

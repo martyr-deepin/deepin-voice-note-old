@@ -72,7 +72,8 @@ SOURCES += \
     src/views/replaysliderbar.cpp \
     src/views/initemptypage.cpp \
     src/views/theadmngintancer.cpp \
-    src/Controllers/notewatchercontroller.cpp
+    src/Controllers/notewatchercontroller.cpp \
+    src/views/myrecodebuttons.cpp
 
 HEADERS += \
     src/app \
@@ -114,7 +115,8 @@ HEADERS += \
     src/views/replaysliderbar.h \
     src/views/initemptypage.h \
     src/views/theadmngintancer.h \
-    src/Controllers/notewatchercontroller.h
+    src/Controllers/notewatchercontroller.h \
+    src/views/myrecodebuttons.h
 
 INCLUDEPATH += \
     src/app \

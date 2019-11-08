@@ -4,6 +4,7 @@
 #include <QGraphicsOpacityEffect>
 #include <DApplicationHelper>
 #include <QAction>
+#include <DFontSizeManager>
 
 VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m_noteCtr(noteCtr)
 {
@@ -108,9 +109,10 @@ void VoiceNoteItem::initUI()
 
     m_timeLabel->setObjectName("timeLabel");
 
-    QFont timeLabelFont;
-    timeLabelFont.setFamily("PingFangSC-Regular");
-    timeLabelFont.setPointSize(8);
+//    QFont timeLabelFont;
+//    timeLabelFont.setFamily("PingFangSC-Regular");
+//    timeLabelFont.setPointSize(8);
+    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
     m_timeLabel->setFont(timeLabelFont);
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_note.createTime));
     m_timeLabel->setFixedHeight(16);
@@ -170,9 +172,10 @@ void VoiceNoteItem::initUI()
     QPalette pe;
     pe.setColor(QPalette::WindowText,QColor(00,26,46));
     m_voiceTimeLabel->setPalette(pe);
-    QFont font;
-    font.setFamily("Avenir-Book");
-    font.setPixelSize(15);
+//    QFont font;
+//    font.setFamily("Avenir-Book");
+//    font.setPixelSize(15);
+    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
     m_voiceTimeLabel->setFont(font);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 

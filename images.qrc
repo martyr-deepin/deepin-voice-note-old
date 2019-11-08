@@ -40,16 +40,6 @@
         <file>image/icon/press/back_press.svg</file>
         <file>image/slider.svg</file>
         <file>image/voice-note-32px 2.svg</file>
-        <file>image/icon/DefaultAvatar/1.png</file>
-        <file>image/icon/DefaultAvatar/10.png</file>
-        <file>image/icon/DefaultAvatar/2.png</file>
-        <file>image/icon/DefaultAvatar/3.png</file>
-        <file>image/icon/DefaultAvatar/4.png</file>
-        <file>image/icon/DefaultAvatar/5.png</file>
-        <file>image/icon/DefaultAvatar/6.png</file>
-        <file>image/icon/DefaultAvatar/7.png</file>
-        <file>image/icon/DefaultAvatar/8.png</file>
-        <file>image/icon/DefaultAvatar/9.png</file>
         <file>image/icon/normal/circlebutton_add .svg</file>
         <file>image/icon/disabled/circlebutton_voice_disabled.svg</file>
         <file>image/icon/normal/slider.svg</file>
@@ -118,5 +108,7 @@
         <file>image/icon_dark/cursor _dark.svg</file>
         <file>image/icon_dark/icon_import_note.svg</file>
         <file>image/icon_dark/slider_dark.svg</file>
+        <file>image/icon/DefaultAvatar/3.svg</file>
+        <file>image/icon/DefaultAvatar/4.svg</file>
     </qresource>
 </RCC>

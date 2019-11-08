@@ -4,10 +4,10 @@
 
 
 
-SliderHandle::SliderHandle(QString imgpath, QWidget *parent) : DLabel(parent)
+SliderHandle::SliderHandle(QWidget *parent) : DLabel(parent)
 {
     setFixedSize(50, 141);
-    m_imgpath = imgpath;
+    //m_imgpath = imgpath;
     m_timelabel = new DLabel(this);
     m_timelabel->setFixedSize(QSize(30,18));
     m_timelabel->move(10,12);

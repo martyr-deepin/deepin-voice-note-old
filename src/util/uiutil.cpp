@@ -74,7 +74,8 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
+    //dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
     dialog->addButton(okStr, false, DDialog::ButtonWarning);
 
@@ -341,7 +342,8 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
+    //dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
     dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);

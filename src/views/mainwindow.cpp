@@ -55,18 +55,11 @@ void MyMainWindow::initTitleFrame()
     m_logo->setFixedSize(QSize(32, 32));
     m_logo->setPixmap(icon.pixmap(QSize(32, 32)));
 
-
-//    m_returnBtn = new DImageButton();
-//    m_returnBtn->setFixedSize(QSize(24, 24));
-//    m_returnBtn->setNormalPic(":/image/icon/normal/back_normal.svg");
-//    m_returnBtn->setHoverPic(":/image/add_hover.svg");
-//    m_returnBtn->setPressPic(":/image/icon/press/back_press.svg");
-//    QString returnIcon = "";
-//    QString text = "<";
-//    m_returnBtn = new DIconButton(returnIcon, text);
     m_returnBtn = new DIconButton(this);
     m_returnBtn->setFixedSize(QSize(36,36));
-    m_returnBtn->setIcon(QIcon(":/image/icon/normal/back_normal.svg"));
+
+    //m_returnBtn->setIcon(QIcon(":/image/icon/normal/back_normal.svg"));
+    m_returnBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/back_normal.svg", QSize(27,27),qApp)));
     m_returnBtn->setIconSize(QSize(27,27));
     m_returnBtn->setVisible(false);
     m_replaceForReturn = new DWidget;

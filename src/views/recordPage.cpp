@@ -194,21 +194,46 @@ void RecordPage::initUI()
 
 //    this->setBlurRectXRadius(8);
 //    this->setBlurRectYRadius(8);
+//    this->setFixedHeight(64);
 
     m_hBoxLayout = new QHBoxLayout(this);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
     m_recordingButton = new RecordingButton();
-    m_recordingButton->setFixedSize(QSize(45,45));
+    m_recordingButton->setFixedSize(QSize(60,60));
 
-    m_finishButton = new DFloatingButton(this);
-    m_finishButton->setFixedSize(QSize(45, 45));
-    m_finishButton->setIcon(QIcon(":/image/icon/normal/finish_normal.svg"));
-    m_finishButton->setIconSize(QSize(28,28));
-    DPalette pa = DApplicationHelper::instance()->palette(m_finishButton);
-    pa.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
-    m_finishButton->setPalette(pa);
+
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_finishButton = new MyRecodeButtons(
+                    ":/image/icon/normal/finish_normal.svg",
+                    ":/image/icon/press/finish_press.svg",
+                    ":/image/icon/hover/finish_hover.svg",
+                    "",
+                    ":/image/icon/focus/finish_focus.svg",
+                    QSize(60,60),
+                    this);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_finishButton = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/finish_normal_dark.svg",
+                    ":/image/icon_dark/press/finish_press_dark.svg",
+                    ":/image/icon_dark/hover/finish_hover_dark.svg",
+                    "",
+                    ":/image/icon_dark/focus/finish_focus_dark.svg",
+                    QSize(60,60),
+                    this);
+    }
+//    m_finishButton = new DFloatingButton(this);
+//    m_finishButton->setFixedSize(QSize(45, 45));
+//    m_finishButton->setIcon(QIcon(":/image/icon/normal/finish_normal.svg"));
+//    m_finishButton->setIconSize(QSize(28,28));
+//    DPalette pa = DApplicationHelper::instance()->palette(m_finishButton);
+//    pa.setBrush(DPalette::Highlight, QColor(0x00FD5E5E));
+//    m_finishButton->setPalette(pa);
 //    m_finishButton = new DImageButton(
 //        ":/image/icon/normal/finish_normal.svg",
 //        ":/image/icon/hover/finish_hover.svg",
@@ -236,6 +261,8 @@ void RecordPage::initUI()
     m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addWidget(m_recordTimeLabel);
     m_hBoxLayout->addWidget(m_finishButton);
+
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &RecordPage::changeTheme);
 }
 void RecordPage::initConnection()
 {
@@ -273,7 +300,7 @@ void RecordPage::renderRecordingTime()
         QString time = UiUtil::formatMillisecond(m_recordingTime);
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
-        qDebug()<<"recode time:"<<time;
+        //qDebug()<<"recode time:"<<time;
         if(0 == time.compare("1:00:00"))
         {
             if(nullptr != m_finishButton)
@@ -299,6 +326,39 @@ void RecordPage::startRecord()
     m_audioRecorder->record();
 
     Intancer::get_Intancer()->setRecodingFlag(true);
+}
+
+void RecordPage::changeTheme()
+{
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != m_finishButton)
+        {
+            m_finishButton->setPicChange(
+                        ":/image/icon/normal/finish_normal.svg",
+                        ":/image/icon/press/finish_press.svg",
+                        ":/image/icon/hover/finish_hover.svg",
+                        "",
+                        ":/image/icon/focus/finish_focus.svg"
+                        );
+        }
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != m_finishButton)
+        {
+            m_finishButton->setPicChange(
+                    ":/image/icon_dark/normal/finish_normal_dark.svg",
+                    ":/image/icon_dark/press/finish_press_dark.svg",
+                    ":/image/icon_dark/hover/finish_hover_dark.svg",
+                    "",
+                    ":/image/icon_dark/focus/finish_focus_dark.svg"
+                    );
+        }
+
+    }
 }
 
 void RecordPage::stopRecord()

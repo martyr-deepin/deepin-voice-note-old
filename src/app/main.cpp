@@ -43,34 +43,12 @@ int main(int argc, char *argv[])
     DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     DApplication a(argc, argv);
 
+    a.setApplicationDisplayName(QObject::tr("语音记事本"));
+    a.setApplicationDescription(QObject::tr("语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。"));
     if (!a.setSingleInstance("deepin-voice-note"))
     {
         return 0;
     }
 
-    // 创建QDBusInterface接口
-    //QDBusConnection::sessionBus().connectToBus(QDBusConnection::SessionBus,"com.deepin.daemon.Audio");
-
-//    QDBusConnection connect = QDBusConnection::sessionBus();
-//    QDBusInterface interface("com.deepin.daemon.Audio", "com/deepin/daemon/Audio",
-//                            "com.deepin.daemon.Audio.DefaultSource",
-//                            QDBusConnection::sessionBus());
-//    if (!interface.isValid())
-//    {
-//       qDebug() << qPrintable(QDBusConnection::sessionBus().lastError().message());
-//    }
-//    else {
-//        //调用远程的value方法
-//        QDBusReply<int> reply = interface.call("DefaultSource");
-//        if (reply.isValid())
-//        {
-//           int value = reply.value();
-//           qDebug() << QString("value =  %1").arg(value);
-//        }
-//        else
-//        {
-//           qDebug() << "value method called failed!";
-//        }
-//    }
     VoiceNotebookApp app(a);
 }

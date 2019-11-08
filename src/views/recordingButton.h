@@ -24,6 +24,8 @@
 #ifndef RECORDINGBUTTON_H
 #define RECORDINGBUTTON_H
 
+#include "myrecodebuttons.h"
+
 #include <QVBoxLayout>
 
 #include <DImageButton>
@@ -45,10 +47,14 @@ signals:
 public slots:
     void handlePause();
     void handleResume();
+    void changeTheme();
     
 private:
-    DFloatingButton *pauseButton;
-    DFloatingButton *resumeButton;
+    MyRecodeButtons *pauseButton;
+    MyRecodeButtons *resumeButton;
+
+//    DFloatingButton *pauseButton;
+//    DFloatingButton *resumeButton;
     QVBoxLayout *layout;
 };
 

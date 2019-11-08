@@ -1,6 +1,8 @@
 #include "addtextbtn.h"
 #include "consts.h"
 #include <DApplicationHelper>
+#include <DFontSizeManager>
+
 #include <QDebug>
 
 AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
@@ -52,10 +54,7 @@ void AddTextBtn::init()
 {
     if(nullptr != m_addBtn)
     {
-        QFont Font;
-        Font.setFamily("SourceHanSansSC-Normal");
-        Font.setPointSize(13);
-        m_addBtn->setFont(Font);
+        m_addBtn->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T5));
         m_addBtn->setText(tr("点击添加文字记事项"));
 
         DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);

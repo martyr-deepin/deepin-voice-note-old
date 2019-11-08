@@ -4,6 +4,7 @@
 #include "recordPage.h"
 #include "rightnotelist.h"
 #include "foldercontroller.h"
+#include "myrecodebuttons.h"
 #include <QListWidget>
 #include <QPlainTextEdit>
 #include <QStackedWidget>
@@ -61,6 +62,7 @@ public slots:
     void onViewAddTextShow();
     void onViewAddTextHide();
     void changeTheme();
+    void oncheckCurPageVoiceForDelete();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -82,7 +84,8 @@ private:
     QVBoxLayout *m_noteListLayout;
     RightNoteList *m_noteListWidget;
     //DImageButton *m_addVoiceBtn;
-    DFloatingButton *m_addVoiceBtn;
+    MyRecodeButtons *m_addVoiceBtn;
+    //DFloatingButton *m_addVoiceBtn;
     NoteController *m_noteController;
     FolderController *m_FolderController;
     RecordPage *m_recordPage;

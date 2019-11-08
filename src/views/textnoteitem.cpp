@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QGraphicsOpacityEffect>
 #include <DApplicationHelper>
+#include <DFontSizeManager>
 
 TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey, QWidget *parent) :DWidget(parent), m_isTextConverted(false)
 {
@@ -58,9 +59,10 @@ void TextNoteItem::initUI()
     //this->resize(500, this->height());
     m_timeLabel = new DLabel(this);
 
-    QFont timeLabelFont;
-    timeLabelFont.setFamily("PingFangSC-Regular");
-    timeLabelFont.setPointSize(8);
+//    QFont timeLabelFont;
+//    timeLabelFont.setFamily("PingFangSC-Regular");
+//    timeLabelFont.setPointSize(8);
+    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
     m_timeLabel->setFont(timeLabelFont);
     m_timeLabel->setFixedHeight(16);
 
@@ -99,9 +101,10 @@ void TextNoteItem::initUI()
 
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
-    QFont labelFont;
-    labelFont.setFamily("PingFangSC-Regular");
-    labelFont.setPointSize(9);
+//    QFont labelFont;
+//    labelFont.setFamily("PingFangSC-Regular");
+//    labelFont.setPointSize(9);
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     m_textEdit->setFont(labelFont);
     m_textEdit->setFixedHeight(97);
 
@@ -112,9 +115,10 @@ void TextNoteItem::initUI()
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
 
-    QFont labelFontForWidth;
-    labelFontForWidth.setFamily("PingFangSC-Regular");
-    labelFontForWidth.setPointSize(10);
+//    QFont labelFontForWidth;
+//    labelFontForWidth.setFamily("PingFangSC-Regular");
+//    labelFontForWidth.setPointSize(10);
+    QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (m_textEdit->width() + 26) * 5, m_isTextConverted);
     QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 536 * 5, m_isTextConverted);
     qDebug() << "m_isTextConverted: " << m_isTextConverted;
@@ -294,9 +298,10 @@ void TextNoteItem::handleTextEditFocusOut()
     }
     else
     {
-        QFont labelFontForWidth;
-        labelFontForWidth.setFamily("PingFangSC-Regular");
-        labelFontForWidth.setPointSize(10);
+//        QFont labelFontForWidth;
+//        labelFontForWidth.setFamily("PingFangSC-Regular");
+//        labelFontForWidth.setPointSize(10);
+        QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, m_textEdit->width() * 5, m_isTextConverted);
         QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
 
@@ -373,9 +378,10 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
     qDebug()<<"TextNoteItem width:"<<maxwidth;
     if(nullptr != m_textEdit)
     {
-        QFont labelFontForWidth;
-        labelFontForWidth.setFamily("PingFangSC-Regular");
-        labelFontForWidth.setPointSize(10);
+//        QFont labelFontForWidth;
+//        labelFontForWidth.setFamily("PingFangSC-Regular");
+//        labelFontForWidth.setPointSize(10);
+        QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (maxwidth - 21) * 5, m_isTextConverted);
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
         qDebug() << "m_isTextConverted: " << m_isTextConverted;

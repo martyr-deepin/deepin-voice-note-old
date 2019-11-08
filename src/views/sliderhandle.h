@@ -12,7 +12,7 @@ class SliderHandle : public DLabel
 {
     Q_OBJECT
 public:
-    explicit SliderHandle(QString imgpath,QWidget *parent = nullptr);
+    explicit SliderHandle(QWidget *parent = nullptr);
     void setTime(QString time);
 protected:
     //void paintEvent(QPaintEvent *event);
@@ -22,7 +22,7 @@ signals:
 public slots:
 
 private:
-    QString m_imgpath;
+    //QString m_imgpath;
     DLabel* m_timelabel;
 };
 

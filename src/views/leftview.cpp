@@ -60,7 +60,9 @@ void LeftView::initUI()
 
     m_addFolderBtn = new AddFolderButton(this);
     m_addFolderBtn->setFixedSize(QSize(58,58));
-    m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
+
+    //m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
+    m_addFolderBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/circlebutton_add .svg", QSize(34,34),qApp)));
     m_addFolderBtn->setIconSize(QSize(34,34));
 
 
