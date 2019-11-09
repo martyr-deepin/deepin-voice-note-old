@@ -76,9 +76,6 @@ void VoiceNotebookApp::initApp()
 //    FolderOper::addFolder(folder1);
 
     m_app->exec();
-
-
-
 }
 
 void VoiceNotebookApp::initMainWindow()

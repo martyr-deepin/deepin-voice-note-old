@@ -14,7 +14,6 @@
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
 //static QString DB_PATH = "./voiceNoteDB.db";
 //static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
-static QString DEFAULT_FOLDER_IMG_PATH = ":/image/default_folder_img.png";
 static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_3 = ":/image/icon/DefaultAvatar/3.svg";
@@ -22,9 +21,9 @@ static QString DEFAULT_FOLDER_IMG_PATH_4 = ":/image/icon/DefaultAvatar/4.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_5 = ":/image/icon/DefaultAvatar/5.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_6 = ":/image/icon/DefaultAvatar/6.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_7 = ":/image/icon/DefaultAvatar/7.svg";
-static QString DEFAULT_FOLDER_IMG_PATH_8 = ":/image/icon/DefaultAvatar/8.png";
-static QString DEFAULT_FOLDER_IMG_PATH_9 = ":/image/icon/DefaultAvatar/9.png";
-static QString DEFAULT_FOLDER_IMG_PATH_10 = ":/image/icon/DefaultAvatar/10.png";
+static QString DEFAULT_FOLDER_IMG_PATH_8 = ":/image/icon/DefaultAvatar/8.svg";
+static QString DEFAULT_FOLDER_IMG_PATH_9 = ":/image/icon/DefaultAvatar/9.svg";
+static QString DEFAULT_FOLDER_IMG_PATH_10 = ":/image/icon/DefaultAvatar/10.svg";
 static QStringList default_folder_imgpath=
 {
     DEFAULT_FOLDER_IMG_PATH_1,

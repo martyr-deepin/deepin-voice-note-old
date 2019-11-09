@@ -269,7 +269,6 @@ void FolerWidgetItem::Init()
         m_folder.imgPath = UiUtil::getDefaultAvatarByRand();
     }
 
-
     m_FolderImage->loadPic(m_folder.imgPath);
 }
 
