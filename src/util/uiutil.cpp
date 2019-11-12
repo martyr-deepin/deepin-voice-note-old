@@ -157,6 +157,8 @@ QList<float> UiUtil::convertStringToFloatList(QString str)
 
 QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color)
 {
+
+
     QString richText = "<p  style=\"font-size:%1px\">%2</p>";
     QString searchStr = "<font color=#349ae8>%1</font>";
     if(BLUE == color)
@@ -171,6 +173,10 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     }
     QString destSrc = src;
 
+    QString leftArrow = "<";
+    QString leftArrowRich = "&lt";
+    destSrc = destSrc.replace(leftArrow,leftArrowRich);
+
     QString n = "\n";
     QString br = "<br/>";
     destSrc = destSrc.replace(n,br);
@@ -181,7 +187,7 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     destSrc = destSrc.replace(space,RichSpace);
 
     QString tab = "\t";
-    QString Richtab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    QString Richtab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     destSrc = destSrc.replace(tab,Richtab);
 
     if (!searchKey.isEmpty())
@@ -381,49 +387,6 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
     return  v;
 }
 
-//bool UiUtil::canMicrophoneInput()
-//{
-//    QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
-//                                            "com.deepin.daemon.Audio", "DefaultSource");
-//    if (v.isValid()) {
-//        QDBusObjectPath path = v.value<QDBusObjectPath>();
-//        qDebug() <<"path: "<<path.path();
-//        QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
-//                                  "com.deepin.daemon.Audio.Source",
-//                                  QDBusConnection::sessionBus());
-//        if (!ainterface.isValid())
-//        {
-//            return false;
-//        }
-//        //调用远程的value方法
-//        QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
-//        if (reply.isValid()){
-//            path = reply.value();
-//            qDebug()<<"path1" << path.path();
-//            QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
-//                                                    "com.deepin.daemon.Audio.Meter", "Volume");
-//            if (v.isValid()) {
-//                double volume = v.toDouble();
-//                qDebug()<<"volume" <<volume;
-//                return volume != 0.0;
-//            }
-//        } else {
-//           return  false;
-//        }
-//    }
-//    return false;
-
-//}
-
-struct MyStruct
-{
-    std::string s1;
-    std::string s2;
-    char b;
-};
-
-Q_DECLARE_METATYPE(MyStruct)
-
 bool UiUtil::canMicrophoneInput()
 {
     QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
@@ -444,17 +407,19 @@ bool UiUtil::canMicrophoneInput()
             path = reply.value();
             qDebug()<<"path1" << path.path();
             QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
-                                     //    "com.deepin.daemon.Audio.Meter", "ActivePort");
-                                         "com.deepin.daemon.Audio.Meter", "Volume");
+                                                    "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-
-//                MyStruct stru = v.value<MyStruct>();
-//                qDebug()<<"s1:" <<s.s1;
-//                qDebug()<<"s2:" <<s.s2;
-//                qDebug()<<"b:" <<s.b;
-//                return stru.b != 0;
-                return volume != 0.0;
+                qDebug()<<"volume:" <<volume;
+                if(0.0001 < volume)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                //return volume != 0.0;
             }
         } else {
            return  false;
@@ -463,6 +428,55 @@ bool UiUtil::canMicrophoneInput()
     return false;
 
 }
+
+//struct MyStruct
+//{
+//    std::string s1;
+//    std::string s2;
+//    char b;
+//};
+
+//Q_DECLARE_METATYPE(MyStruct)
+
+//bool UiUtil::canMicrophoneInput()
+//{
+//    QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
+//                                            "com.deepin.daemon.Audio", "DefaultSource");
+//    if (v.isValid()) {
+//        QDBusObjectPath path = v.value<QDBusObjectPath>();
+//        qDebug() <<"path: "<<path.path();
+//        QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
+//                                  "com.deepin.daemon.Audio.Source",
+//                                  QDBusConnection::sessionBus());
+//        if (!ainterface.isValid())
+//        {
+//            return false;
+//        }
+//        //调用远程的value方法
+//        QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
+//        if (reply.isValid()){
+//            path = reply.value();
+//            qDebug()<<"path1" << path.path();
+//            QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
+//                                     //    "com.deepin.daemon.Audio.Meter", "ActivePort");
+//                                         "com.deepin.daemon.Audio.Meter", "Volume");
+//            if (v.isValid()) {
+//                double volume = v.toDouble();
+
+////                MyStruct stru = v.value<MyStruct>();
+////                qDebug()<<"s1:" <<s.s1;
+////                qDebug()<<"s2:" <<s.s2;
+////                qDebug()<<"b:" <<s.b;
+////                return stru.b != 0;
+//                return volume != 0.0;
+//            }
+//        } else {
+//           return  false;
+//        }
+//    }
+//    return false;
+
+//}
 
 QPixmap UiUtil::renderSVG(const QString &filePath, const QSize &size,DApplication *pApp)
 {

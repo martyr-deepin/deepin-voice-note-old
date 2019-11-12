@@ -144,6 +144,11 @@ void MainPage::trueAddFolder()
     m_leftView->addFolder();
 }
 
+void MainPage::saveRecorde()
+{
+    m_rightView->OnlySaveRecord();
+}
+
 void MainPage::onAddFolder()
 {
     emit clearSearch();

@@ -32,6 +32,7 @@ public:
     void checkAndDeleteEmptyTextNoteFromDatabase();
     int getFolderCount();
     void trueAddFolder();
+    void saveRecorde();
 
 signals:
     void textEditClicked(NOTE textNote);

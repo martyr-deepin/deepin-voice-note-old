@@ -11,16 +11,18 @@
 
 MyMainWindow::MyMainWindow()
 {
+    //qDebug()<<"2222222222222222222"<<UiUtil::canMicrophoneInput();
     initUI();
     initConnection();
-//    qDebug()<<"1111111111111111111111"<<UiUtil::canMicrophoneInput();
 }
 
 void MyMainWindow::initUI() {
+
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
+    m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
     initTitleBar();
     initCentralWidget();
 }
@@ -37,12 +39,14 @@ void MyMainWindow::initConnection()
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
-    connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleDelDialogClicked);
-    connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseDialogClicked);
+    connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleSearchDialogClicked);
+    connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseSearchDialog);
     connect(m_InitEmptyPage,SIGNAL(sigAddFolderByInitPage()),this,SLOT(onAddFolderByInitPage()));
 
+    connect(m_exitDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleCloseExitDialogClicked);
+    connect(m_exitDialog, &DDialog::closed, this, &MyMainWindow::handleCloseExitDialog);
 
-
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &MyMainWindow::changeTheme);
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
 }
@@ -131,18 +135,21 @@ void MyMainWindow::initStackedWidget()
     //m_stackedWidget->setCurrentIndex(0);
 
 
-    m_detailPage = new DFrame();
+    m_detailPage = new DWidget(this);
     m_detailPageLayout = new QVBoxLayout();
     m_detailPage->setLayout(m_detailPageLayout);
     m_textNoteEdit = new TextNoteEdit();
     m_detailPageLayout->addWidget(m_textNoteEdit);
     m_stackedWidget->addWidget(m_detailPage);
+    //m_stackedWidget->addWidget(m_textNoteEdit);
     m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
     m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
+    QPalette pl = m_textNoteEdit->palette();
+    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
+    m_textNoteEdit->setPalette(pl);
 
     DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
-    //pb.setBrush(DPalette::Base, QColor(255,255,255,255));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+    pb.setBrush(DPalette::Background, pb.color(DPalette::Base));
     m_detailPage->setPalette(pb);
 
 
@@ -218,7 +225,7 @@ void MyMainWindow::tryToSearch()
     }
 }
 
-void MyMainWindow::handleDelDialogClicked(int index, const QString &text)
+void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
@@ -231,7 +238,7 @@ void MyMainWindow::handleDelDialogClicked(int index, const QString &text)
     }
 }
 
-void MyMainWindow::handleCloseDialogClicked()
+void MyMainWindow::handleCloseSearchDialog()
 {
     m_searchEdit->clear();
 }
@@ -250,6 +257,33 @@ void MyMainWindow::onAddFolderByInitPage()
 void MyMainWindow::onAllFolderDeleted()
 {
     m_stackedWidget->setCurrentIndex(2);
+}
+
+void MyMainWindow::handleCloseExitDialog()
+{
+
+}
+
+void MyMainWindow::handleCloseExitDialogClicked(int index, const QString &text)
+{
+    if (index == 1)
+    {
+        //保存录音
+        m_mainPage->saveRecorde();
+        qApp->quit();
+
+    }
+    else
+    {
+        //取消退出
+    }
+}
+
+void MyMainWindow::changeTheme()
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
+    pb.setBrush(DPalette::Background, pb.color(DPalette::Base));
+    m_detailPage->setPalette(pb);
 }
 
 void MyMainWindow::keyPressEvent(QKeyEvent *event)
@@ -280,17 +314,16 @@ void MyMainWindow::changeEvent(QEvent * event)
 void MyMainWindow::closeEvent(QCloseEvent* event)
 {
     m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
-//    if(4 == m_pCenterWidget->currentIndex())
-//    {
-//        emit dApp->signalM->hideImageView();
-//        //不关闭
-//        event->ignore();
-//    }
-//    else {
-//        //关闭
-//        event->accept();
-//    }
-    DMainWindow::closeEvent(event);
+    if(Intancer::get_Intancer()->getRecodingFlag())
+    {
+        event->ignore();
+        m_exitDialog->show();
+    }
+    else
+    {
+        event->accept();
+    }
+    //DMainWindow::closeEvent(event);
 }
 
 

@@ -12,8 +12,7 @@
 #define TEXTNOTE_HEIGHT (135)
 #define VOICENOTE_HEIGHT (98)
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
-//static QString DB_PATH = "./voiceNoteDB.db";
-//static QString DB_PATH = "/mnt/hgfs/D/voiceNoteDB1.db";
+
 static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_3 = ":/image/icon/DefaultAvatar/3.svg";

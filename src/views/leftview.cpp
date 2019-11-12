@@ -1,5 +1,6 @@
 #include "leftview.h"
 #include "intancer.h"
+#include <QThread>
 #include <DPalette>
 #include <folderoper.h>
 #include <QTime>

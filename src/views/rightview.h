@@ -5,6 +5,8 @@
 #include "rightnotelist.h"
 #include "foldercontroller.h"
 #include "myrecodebuttons.h"
+#include "voiceaudiodevicewatcher.h"
+#include "voicevolumewatcher.h"
 #include <QListWidget>
 #include <QPlainTextEdit>
 #include <QStackedWidget>
@@ -16,6 +18,7 @@
 #include <DFloatingButton>
 #include <DBlurEffectWidget>
 #include <QAudioDeviceInfo>
+#include <DToolTip>
 
 DWIDGET_USE_NAMESPACE
 //右侧文字语音记录View
@@ -36,6 +39,7 @@ public:
     void checkAndDeleteEmptyTextNoteFromDatabase();
     int getFolderCount();
     void initTxtFilesForDir();
+    void OnlySaveRecord();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -43,6 +47,7 @@ signals:
     void startRecoding();
     void stopRecoiding();
     void sig_research();
+    void sigStartWatchVolume();
 
 public slots:
     void onShowNoResult();
@@ -63,6 +68,8 @@ public slots:
     void onViewAddTextHide();
     void changeTheme();
     void oncheckCurPageVoiceForDelete();
+    void on_CheckRecodeCouldUse(bool coulduse);
+    void ShowRecodeTip();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -95,7 +102,10 @@ private:
     DWidget *m_BottomBoard;
     DWidget *m_AddBtnBoard;
     DDialog *m_noticeNoAudioInputs;
-
+    VoiceAudioDeviceWatcher* m_pVoiceAudioDeviceWatcher;
+    voiceVolumeWatcher* m_pVoiceVolumeWatcher;
+    QThread *m_pVoiceVolumethread;
+    DToolTip *m_pNotRecordToolTip;
 };
 
 #endif // RIGHTVIEW_H

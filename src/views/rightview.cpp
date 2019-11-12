@@ -10,19 +10,33 @@
 #include <QTableWidgetItem>
 #include <QScrollBar>
 #include <DApplicationHelper>
+#include <DFontSizeManager>
 
 
 RightView::RightView()
 {
+    //m_pVoiceAudioDeviceWatcher = new VoiceAudioDeviceWatcher(this);
     m_currFolderId = -1;
     Intancer::get_Intancer()->initHeightForRight();
     initUI();
     initConnection();
+    m_pVoiceVolumeWatcher = new voiceVolumeWatcher(this);
+
+    m_pVoiceVolumeWatcher->start();
+    connect(m_pVoiceVolumeWatcher, SIGNAL(sigRecodeState(bool)), this, SLOT(on_CheckRecodeCouldUse(bool)));
+
 }
 
 RightView::~RightView()
 {
+    m_pVoiceVolumeWatcher->stopWatch();
+    QThread::currentThread()->msleep(500);
+//    if(nullptr != m_pVoiceVolumethread)
+//    {
+//        m_pVoiceVolumethread->terminate();
+//        //delete m_pVoiceVolumethread;
 
+//    }
 }
 
 void RightView::initUI()
@@ -41,7 +55,7 @@ void RightView::initUI()
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);
 
-    m_noticeNoAudioInputs = UiUtil::createConfirmDialog(QString(""), QString(tr("未检测到录音设备")), this);
+    //m_noticeNoAudioInputs = UiUtil::createConfirmDialog(QString(""), QString(tr("未检测到录音设备")), this);
 
 }
 
@@ -62,6 +76,8 @@ void RightView::initConnection()
 
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::TryToDisEditAllText);
+    connect(m_addVoiceBtn, SIGNAL(sigHoverd()), this, SLOT(ShowRecodeTip()));
+
     //connect(m_addVoiceBtn, &DFloatingButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, this, &RightView::handleStartRecord);
 //    connect(m_addVoiceBtn, &DImageButton::clicked, m_noteListWidget, &RightNoteList::handleClickRecordButton);
@@ -178,6 +194,17 @@ void RightView::initRecordStackedWidget()
                     QSize(68,68),
                     this);
     }
+    else {
+        m_addVoiceBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/circlebutton_voice.svg",
+                    ":/image/icon/press/circlebutton_voice_press.svg",
+                    ":/image/icon/hover/circlebutton_voice_hover.svg",
+                    ":/image/icon/disabled/circlebutton_voice_disabled.svg",
+                    ":/image/icon/focus/circlebutton_voice_focus.svg",
+                    QSize(68,68),
+                    this);
+    }
+    m_addVoiceBtn->DisableBtn();
 //    m_addVoiceBtn = new DFloatingButton(this);
 //    m_addVoiceBtn->setFixedSize(QSize(58,58));
 //    m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
@@ -450,9 +477,14 @@ void RightView::initTxtFilesForDir()
     }
 }
 
+void RightView::OnlySaveRecord()
+{
+    m_recordPage->stopRecord();
+}
+
 void RightView::handleStartRecord()
 {
-    QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
+    //QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
 
     QMultimedia::AvailabilityStatus audioinputs;
     m_recordPage->getAudioStates(audioinputs);
@@ -612,6 +644,36 @@ void RightView::changeTheme()
 void RightView::oncheckCurPageVoiceForDelete()
 {
     updateNoteList();
+}
+
+void RightView::on_CheckRecodeCouldUse(bool coulduse)
+{
+    if(coulduse)
+    {
+        //m_pVoiceVolumeWatcher->stopWatch();
+        m_addVoiceBtn->EnAbleBtn();
+    }
+    else
+    {
+        m_addVoiceBtn->DisableBtn();
+    }
+}
+
+void RightView::ShowRecodeTip()
+{
+    m_pNotRecordToolTip = new DToolTip(QString(tr("未检测到录音设备")));
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    m_pNotRecordToolTip->setFont(labelFont);
+    DPalette pb = DApplicationHelper::instance()->palette(m_pNotRecordToolTip);
+    pb.setBrush(DPalette::Text, pb.color(DPalette::ToolTipText));
+    pb.setBrush(DPalette::ToolTipText, pb.color(DPalette::ToolTipText));
+    pb.setBrush(DPalette::ToolTipBase, pb.color(DPalette::ToolTipBase));
+    m_pNotRecordToolTip->setPalette(pb);
+
+    //m_pNotRecordToolTip->show(QPoint(m_addVoiceBtn->x() + m_addVoiceBtn->width() * 3/4,m_addVoiceBtn->y()),1000);
+    QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
+    m_pNotRecordToolTip->show(QPoint(pGlobal.x() + + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8),1500);
+
 }
 
 void RightView::resizeEvent(QResizeEvent * event)

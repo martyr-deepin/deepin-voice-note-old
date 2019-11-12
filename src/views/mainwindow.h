@@ -4,7 +4,6 @@
 #include "mainpage.h"
 #include "textnoteedit.h"
 #include "initemptypage.h"
-
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
@@ -13,6 +12,7 @@
 #include <QPushButton>
 #include <DSearchEdit>
 #include <DIconButton>
+
 #define DEFAULT_WINDOWS_WIDTH 820
 #define DEFAULT_WINDOWS_HEIGHT 634
 #define TITLE_FIXED_HEIGHT 50
@@ -32,11 +32,14 @@ public slots:
     void showListPage();
     void handleSearchKey();
     void tryToSearch();
-    void handleDelDialogClicked(int index, const QString &text);
-    void handleCloseDialogClicked();
+    void handleSearchDialogClicked(int index, const QString &text);
+    void handleCloseSearchDialog();
     void clearSearchLine();
     void onAddFolderByInitPage();
     void onAllFolderDeleted();
+    void handleCloseExitDialog();
+    void handleCloseExitDialogClicked(int index, const QString &text);
+    void changeTheme();
 
 protected:
     //bool eventFilter(QObject *object, QEvent *event);
@@ -52,7 +55,7 @@ private:
     MainPage * m_mainPage;
     QStackedWidget * m_stackedWidget;
     TextNoteEdit * m_textNoteEdit;
-    DFrame *m_detailPage;
+    DWidget *m_detailPage;
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;
     DIconButton *m_returnBtn;
@@ -64,6 +67,7 @@ private:
     DDialog *m_SearchDialog;
     InitEmptyPage *m_InitEmptyPage;
 
+    DDialog *m_exitDialog;
 
     void initUI();
     void initConnection();

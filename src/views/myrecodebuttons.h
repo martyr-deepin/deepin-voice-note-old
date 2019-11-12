@@ -15,9 +15,11 @@ public:
     ~MyRecodeButtons();
     void setPicChange(QString normal, QString press, QString hover, QString disable, QString foucs);
     void DisableBtn();
-    void EnAbkeBtn();
+    void EnAbleBtn();
 
 signals:
+    void sigHoverd();
+    //void sigLeave();
 
 public slots:
 

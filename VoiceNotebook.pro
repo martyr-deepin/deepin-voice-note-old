@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets dbus
 
 TARGET = deepin-voice-note
 TEMPLATE = app
-PKGCONFIG += dtkwidget
+PKGCONFIG += dtkwidget dframeworkdbus
 QT += multimedia
 
 
@@ -73,7 +73,9 @@ SOURCES += \
     src/views/initemptypage.cpp \
     src/views/theadmngintancer.cpp \
     src/Controllers/notewatchercontroller.cpp \
-    src/views/myrecodebuttons.cpp
+    src/views/myrecodebuttons.cpp \
+    src/Controllers/voiceaudiodevicewatcher.cpp \
+    src/Controllers/voicevolumewatcher.cpp
 
 HEADERS += \
     src/app \
@@ -116,7 +118,9 @@ HEADERS += \
     src/views/initemptypage.h \
     src/views/theadmngintancer.h \
     src/Controllers/notewatchercontroller.h \
-    src/views/myrecodebuttons.h
+    src/views/myrecodebuttons.h \
+    src/Controllers/voiceaudiodevicewatcher.h \
+    src/Controllers/voicevolumewatcher.h
 
 INCLUDEPATH += \
     src/app \

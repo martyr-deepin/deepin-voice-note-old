@@ -33,7 +33,7 @@ void MyRecodeButtons::DisableBtn()
     m_isDisabled = true;
 }
 
-void MyRecodeButtons::EnAbkeBtn()
+void MyRecodeButtons::EnAbleBtn()
 {
     this->setDisabled(false);
     m_isDisabled = false;
@@ -91,6 +91,10 @@ void MyRecodeButtons::enterEvent(QEvent *event)
 {
     DPushButton::enterEvent(event);
     m_isIn = true;
+    if(m_isDisabled)
+    {
+        emit sigHoverd();
+    }
     qDebug()<<"enterEvent m_isIn:"<<m_isIn;
 }
 void MyRecodeButtons::leaveEvent(QEvent *event)
@@ -98,6 +102,7 @@ void MyRecodeButtons::leaveEvent(QEvent *event)
     DPushButton::leaveEvent(event);
     m_isIn = false;
     m_isPressed = false;
+    //emit sigLeave();
     qDebug()<<"leaveEvent m_isIn:"<<m_isIn;
 }
 

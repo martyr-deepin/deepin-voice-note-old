@@ -19,7 +19,7 @@
 MMenu::MMenu(QWidget *parent)
 {
 
-    this->setFixedSize(QSize(162,100));
+    //this->setFixedSize(QSize(162,100));
 }
 
 MMenu::~MMenu()
@@ -72,7 +72,7 @@ void RightNoteList::createDArrowMenu()
         m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
         m_contextMenu->addAction(m_saveAsAction);
         m_contextMenu->addAction(m_delAction);
-        m_contextMenu->setFixedSize(QSize(162,89));
+        //m_contextMenu->setFixedSize(QSize(162,89));
         m_contextMenu->setVisible(false);
 
         connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
