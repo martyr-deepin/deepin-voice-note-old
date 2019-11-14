@@ -73,7 +73,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 
 void Waveform::paintEvent(QPaintEvent *)
 {
-
+    //qDebug()<<"Waveform::paintEvent m_currWavePos:"<<m_currWavePos;
     if(m_wantEmpty)
     {
         return;
@@ -215,6 +215,12 @@ void Waveform::updateWave(float sample)
         lastSampleTime = currentTime;
     }
     wholeSampleList << sample;
+}
+
+void Waveform::OnSetWavePos(int pos)
+{
+    m_currWavePos = pos;
+    qDebug()<<"m_currWavePos:"<<m_currWavePos;
 }
 
 void Waveform::setWholeSampleList(QList<float> wholeList)

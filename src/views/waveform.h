@@ -62,6 +62,7 @@ public:
 public slots:
     void renderWave();
     void updateWave(float sample);
+    void OnSetWavePos(int pos);
 
 protected:
     void paintEvent(QPaintEvent *event);

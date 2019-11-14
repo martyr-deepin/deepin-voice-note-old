@@ -152,6 +152,7 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 
     int birrate = m_audioRecorder->audioSettings().bitRate();
     m_tickerTimer = new QTimer(this);
+    m_tickerTimer->setInterval(200);
     connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
 
 
@@ -301,7 +302,7 @@ void RecordPage::renderRecordingTime()
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
         //qDebug()<<"recode time:"<<time;
-        if(0 == time.compare("1:00:00"))
+        if(0 == time.compare("01:00:00"))
         {
             if(nullptr != m_finishButton)
             {
@@ -318,7 +319,7 @@ void RecordPage::startRecord()
     m_audioRecorder->setOutputLocation(recordPath);
     m_waveform->clearWave();
     m_recordingTime = 0;
-    m_tickerTimer->start(1000);
+    m_tickerTimer->start(200);
 
     QDateTime currentTime = QDateTime::currentDateTime();
     lastUpdateTime = currentTime;

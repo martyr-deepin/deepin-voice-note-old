@@ -36,28 +36,101 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     layout->setContentsMargins(0, 0, 0, 0);
     setLayout(layout);
 
-    pauseButton = new DFloatingButton(this);
-    pauseButton->setFixedSize(QSize(45, 45));
-    //pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
-    pauseButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/pause_blue_normal.svg", QSize(28,28),qApp)));
-    pauseButton->setIconSize(QSize(28,28));
-    DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
-    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
-    //pauseButton->setPalette(pa);
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        pauseButton = new MyRecodeButtons(
+                    ":/image/icon/normal/pause_blue_normal.svg",
+                    ":/image/icon/press/pause_blue_press.svg",
+                    ":/image/icon/hover/pause_blue_hover.svg",
+                    "",
+                    ":/image/icon/focus/pause_blue_focus.svg",
+                    QSize(60,60),
+                    this);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        pauseButton = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/pause_blue_normal_dark.svg",
+                    ":/image/icon_dark/press/pause_blue_press_dark.svg",
+                    ":/image/icon_dark/hover/pause_blue_hover_dark.svg",
+                    "",
+                    ":/image/icon_dark/focus/pause_blue_focus_dark.svg",
+                    QSize(60,60),
+                    this);
+    }
+    else
+    {
+        pauseButton = new MyRecodeButtons(
+                    ":/image/icon/normal/pause_blue_normal.svg",
+                    ":/image/icon/press/pause_blue_press.svg",
+                    ":/image/icon/hover/pause_blue_hover.svg",
+                    "",
+                    ":/image/icon/focus/pause_blue_focus.svg",
+                    QSize(60,60),
+                    this);
+    }
+
+//    pauseButton = new DFloatingButton(this);
+//    pauseButton->setFixedSize(QSize(45, 45));
+//    //pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
+//    pauseButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/pause_blue_normal.svg", QSize(28,28),qApp)));
+//    pauseButton->setIconSize(QSize(28,28));
+//    DPalette pa = DApplicationHelper::instance()->palette(pauseButton);
+//    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
+//    //pauseButton->setPalette(pa);
     connect(pauseButton, SIGNAL(clicked()), this, SLOT(handlePause()));
-    resumeButton = new DFloatingButton(this);
-    resumeButton->setFixedSize(QSize(45, 45));
-    //resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
-    resumeButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/play_normal.svg", QSize(28,28),qApp)));
-    resumeButton->setIconSize(QSize(28,28));
-    DPalette pe = DApplicationHelper::instance()->palette(resumeButton);
-    pe.setBrush(DPalette::Highlight, pe.color(DPalette::DarkLively));
-    //resumeButton->setPalette(pe);
+
+
+
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        resumeButton = new MyRecodeButtons(
+                    ":/image/icon/normal/play_normal.svg",
+                    ":/image/icon/press/play_press.svg",
+                    ":/image/icon/hover/play_hover.svg",
+                    ":/image/icon/disabled/play_disabled.svg",
+                    ":/image/icon/focus/play_focus.svg",
+                    QSize(60,60),
+                    this);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        resumeButton = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/play_normal_dark.svg",
+                    ":/image/icon_dark/press/play_press_dark.svg",
+                    ":/image/icon_dark/hover/play_hover_dark.svg",
+                    ":/image/icon_dark/disabled/play_disabled_dark.svg",
+                    ":/image/icon_dark/focus/play_focus_dark.svg",
+                    QSize(60,60),
+                    this);
+    }
+    else
+    {
+        resumeButton = new MyRecodeButtons(
+                    ":/image/icon/normal/play_normal.svg",
+                    ":/image/icon/press/play_press.svg",
+                    ":/image/icon/hover/play_hover.svg",
+                    ":/image/icon/disabled/play_disabled.svg",
+                    ":/image/icon/focus/play_focus.svg",
+                    QSize(60,60),
+                    this);
+    }
+//    resumeButton = new DFloatingButton(this);
+//    resumeButton->setFixedSize(QSize(45, 45));
+//    //resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
+//    resumeButton->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/play_normal.svg", QSize(28,28),qApp)));
+//    resumeButton->setIconSize(QSize(28,28));
+//    DPalette pe = DApplicationHelper::instance()->palette(resumeButton);
+//    pe.setBrush(DPalette::Highlight, pe.color(DPalette::DarkLively));
+//    //resumeButton->setPalette(pe);
     connect(resumeButton, SIGNAL(clicked()), this, SLOT(handleResume()));
 
     layout->addWidget(resumeButton);
     layout->addWidget(pauseButton);
     pauseButton->setVisible(false);
+
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &PlayingButton::changeTheme);
 }
 
 void PlayingButton::onlySetResumeForButton()
@@ -114,3 +187,56 @@ void PlayingButton::handleStop() {
     emit stop();
 }
 
+void PlayingButton::changeTheme()
+{
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != pauseButton)
+        {
+            pauseButton->setPicChange(
+                        ":/image/icon/normal/pause_blue_normal.svg",
+                        ":/image/icon/press/pause_blue_press.svg",
+                        ":/image/icon/hover/pause_blue_hover.svg",
+                        "",
+                        ":/image/icon/focus/pause_blue_focus.svg"
+                        );
+        }
+
+        if(nullptr != resumeButton)
+        {
+            resumeButton->setPicChange(
+                        ":/image/icon/normal/play_normal.svg",
+                        ":/image/icon/press/play_press.svg",
+                        ":/image/icon/hover/play_hover.svg",
+                        ":/image/icon/disabled/play_disabled.svg",
+                        ":/image/icon/focus/play_focus.svg"
+                        );
+        }
+
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != pauseButton)
+        {
+            pauseButton->setPicChange(
+                        ":/image/icon_dark/normal/pause_blue_normal_dark.svg",
+                        ":/image/icon_dark/press/pause_blue_press_dark.svg",
+                        ":/image/icon_dark/hover/pause_blue_hover_dark.svg",
+                        "",
+                        ":/image/icon_dark/focus/pause_blue_focus_dark.svg"
+                        );
+        }
+        if(nullptr != resumeButton)
+        {
+            resumeButton->setPicChange(
+                        ":/image/icon_dark/normal/play_normal_dark.svg",
+                        ":/image/icon_dark/press/play_press_dark.svg",
+                        ":/image/icon_dark/hover/play_hover_dark.svg",
+                        ":/image/icon_dark/disabled/play_disabled_dark.svg",
+                        ":/image/icon_dark/focus/play_focus_dark.svg"
+                        );
+        }
+    }
+}

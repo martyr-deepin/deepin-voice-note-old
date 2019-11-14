@@ -88,6 +88,7 @@ void RightView::initConnection()
     connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
     connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &RightView::changeTheme);
+    connect(m_noteListWidget, &RightNoteList::positionByfinishRecord, this, &RightView::handleStopRecord2); //ynb 20191109
 }
 
 
@@ -528,24 +529,28 @@ void RightView::TryToDisEditAllText()
 //}VOICE_INFO;
 void RightView::handleStopRecord(VOICE_INFO voiceInfo)
 {
-    NOTE voiceNote;
-    voiceNote.noteType = NOTE_TYPE::VOICE;
-    voiceNote.contentPath = voiceInfo.voicePath;
-    voiceNote.voiceTime = voiceInfo.voiceLength;
-    voiceNote.voiceSampleData = voiceInfo.voiceSampleData;
-    voiceNote.folderId = m_currFolderId;
-    voiceNote.createTime = QDateTime::currentDateTime();
-    if (!m_noteController->addNote(voiceNote))
-    {
-        qDebug() << "handleStopRecord： add voice note error！";
-    }
-    m_recordStackedWidget->setCurrentIndex(0);
-    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
-    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
-    addNoteToNoteList(voiceNote);
-    emit stopRecoiding();
-    //updateNoteList();
+//    NOTE voiceNote;
+//    voiceNote.noteType = NOTE_TYPE::VOICE;
+//    voiceNote.contentPath = voiceInfo.voicePath;
+//    voiceNote.voiceTime = voiceInfo.voiceLength;
+//    voiceNote.voiceSampleData = voiceInfo.voiceSampleData;
+//    voiceNote.folderId = m_currFolderId;
+//    voiceNote.createTime = QDateTime::currentDateTime();
+//    if (!m_noteController->addNote(voiceNote))
+//    {
+//        qDebug() << "handleStopRecord： add voice note error！";
+//    }
+//    m_recordStackedWidget->setCurrentIndex(0);
+//    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
+//    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+//    addNoteToNoteList(voiceNote);
+//    emit stopRecoiding();
+//    //updateNoteList();
+
+    m_voiceinfo = voiceInfo;                                             //ynb 20191109
+    m_noteListWidget->getDurtimgByRecodefinised(voiceInfo.voicePath);    //ynb 20191109
 }
+
 
 void RightView::handlecancelRecord()
 {
@@ -639,6 +644,37 @@ void RightView::changeTheme()
     pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
     m_AddBtnBoard->setPalette(pc);
 
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != m_addVoiceBtn)
+        {
+            m_addVoiceBtn->setPicChange(
+                    ":/image/icon/normal/circlebutton_voice.svg",
+                    ":/image/icon/press/circlebutton_voice_press.svg",
+                    ":/image/icon/hover/circlebutton_voice_hover.svg",
+                    ":/image/icon/disabled/circlebutton_voice_disabled.svg",
+                    ":/image/icon/focus/circlebutton_voice_focus.svg"
+                        );
+        }
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != m_addVoiceBtn)
+        {
+            m_addVoiceBtn->setPicChange(
+                    ":/image/icon_dark/normal/voice_normal_dark.svg",
+                    ":/image/icon_dark/press/voice_press_dark.svg",
+                    ":/image/icon_dark/hover/voice_hover_dark.svg",
+                    ":/image/icon_dark/disabled/voice_disabled_dark.svg",
+                    ":/image/icon_dark/focus/voice_focus_dark.svg"
+                    );
+        }
+
+    }
+
 }
 
 void RightView::oncheckCurPageVoiceForDelete()
@@ -675,6 +711,31 @@ void RightView::ShowRecodeTip()
     m_pNotRecordToolTip->show(QPoint(pGlobal.x() + + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8),1500);
 
 }
+
+// start ynb 20191109
+void RightView::handleStopRecord2(qint64 position)
+{
+    NOTE voiceNote;
+    int voiceLength = 0;
+    voiceNote.noteType = NOTE_TYPE::VOICE;
+    voiceNote.contentPath = m_voiceinfo.voicePath;
+    //voiceNote.voiceTime = voiceInfo.voiceLength;
+    voiceNote.voiceTime = int(position);
+    voiceNote.voiceSampleData = m_voiceinfo.voiceSampleData;
+    voiceNote.folderId = m_currFolderId;
+    voiceNote.createTime = QDateTime::currentDateTime();
+    if (!m_noteController->addNote(voiceNote))
+    {
+        qDebug() << "handleStopRecord： add voice note error！";
+    }
+    m_recordStackedWidget->setCurrentIndex(0);
+    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
+    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
+    addNoteToNoteList(voiceNote);
+    emit stopRecoiding();
+    //updateNoteList();
+}
+// end ynb 20191109
 
 void RightView::resizeEvent(QResizeEvent * event)
 {

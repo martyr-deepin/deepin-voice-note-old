@@ -5,6 +5,7 @@
 #include <folderoper.h>
 #include <QTime>
 #include <DApplicationHelper>
+#include <DStyledItemDelegate>
 LeftView::LeftView()
 {
     initController();
@@ -31,6 +32,10 @@ void LeftView::initUI()
 
 
     m_leftFolderView = new LeftFolderList(m_folderCtr);
+
+
+
+
     //m_leftFolderView->setFocusPolicy(Qt::NoFocus);//会隐去DListWidget的选择背景样式，但是由于失去焦点无法通过键盘上下滚动list。
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
     for (int i = 0; i < folderList.size(); i++)
@@ -59,12 +64,46 @@ void LeftView::initUI()
         handleSelFolderChg(m_leftFolderView->currentItem());
     }
 
-    m_addFolderBtn = new AddFolderButton(this);
-    m_addFolderBtn->setFixedSize(QSize(58,58));
 
-    //m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
-    m_addFolderBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/circlebutton_add .svg", QSize(34,34),qApp)));
-    m_addFolderBtn->setIconSize(QSize(34,34));
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_addFolderBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/circlebutton_add 2.svg",
+                    ":/image/icon/press/circlebutton_add_press.svg",
+                    ":/image/icon/hover/circlebutton_add _hover.svg",
+                    ":/image/icon/disabled/circlebutton_add_disabled.svg",
+                    ":/image/icon/focus/circlebutton_add_focus.svg",
+                    QSize(68,68),
+                    this);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_addFolderBtn = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/add_normal_dark.svg",
+                    ":/image/icon_dark/press/add_press_dark.svg",
+                    ":/image/icon_dark/hover/add _hover_dark.svg",
+                    ":/image/icon_dark/disabled/add_disabled_dark.svg",
+                    ":/image/icon_dark/focus/add_focus_dark.svg",
+                    QSize(68,68),
+                    this);
+    }
+    else {
+        m_addFolderBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/circlebutton_add 2.svg",
+                    ":/image/icon/press/circlebutton_add_press.svg",
+                    ":/image/icon/hover/circlebutton_add _hover.svg",
+                    ":/image/icon/disabled/circlebutton_add_disabled.svg",
+                    ":/image/icon/focus/circlebutton_add_focus.svg",
+                    QSize(68,68),
+                    this);
+    }
+
+//    m_addFolderBtn->setFixedSize(QSize(58,58));
+
+//    //m_addFolderBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_add .svg"));
+//    m_addFolderBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/circlebutton_add .svg", QSize(34,34),qApp)));
+//    m_addFolderBtn->setIconSize(QSize(34,34));
 
 
     DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
@@ -88,6 +127,7 @@ void LeftView::initConnection()
     connect(m_leftFolderView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
 
     connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
+    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &LeftView::changeTheme);
 
 }
 
@@ -249,6 +289,44 @@ void LeftView::viewEnabled()
 {
     m_leftFolderView->setDisabled(false);
     m_addFolderBtn->setDisabled(false);
+}
+
+void LeftView::changeTheme()
+{
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != m_addFolderBtn)
+        {
+            m_addFolderBtn->setPicChange(
+                        ":/image/icon/normal/circlebutton_add 2.svg",
+                        ":/image/icon/press/circlebutton_add_press.svg",
+                        ":/image/icon/hover/circlebutton_add _hover.svg",
+                        ":/image/icon/disabled/circlebutton_add_disabled.svg",
+                        ":/image/icon/focus/circlebutton_add_focus.svg"
+                        );
+        }
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != m_addFolderBtn)
+        {
+            m_addFolderBtn->setPicChange(
+                        ":/image/icon_dark/normal/add_normal_dark.svg",
+                        ":/image/icon_dark/press/add_press_dark.svg",
+                        ":/image/icon_dark/hover/add _hover_dark.svg",
+                        ":/image/icon_dark/disabled/add_disabled_dark.svg",
+                        ":/image/icon_dark/focus/add_focus_dark.svg"
+                    );
+        }
+
+    }
+}
+
+void LeftView::OnChangeCurFolderToTop()
+{
+
 }
 
 //void LeftView::handlePressFolderChg(QListWidgetItem *item)

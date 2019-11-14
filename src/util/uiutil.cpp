@@ -126,9 +126,11 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
     QString time;
     if (millisecond / 1000 < 3600) {
         // At least need return 1 seconds.
-        time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
+        time = QDateTime::fromTime_t(std::max(1, qRound(millisecond / 1000.0))).toUTC().toString("mm:ss"); //ynb 20191109
+        //time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
-        time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
+        time = QDateTime::fromTime_t(qRound(millisecond / 1000.0)).toUTC().toString("mm:ss");   //ynb 20191109
+        //time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
     }
     time = time.replace(":", "\'").append("\'\'");
     return time;
@@ -173,9 +175,9 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     }
     QString destSrc = src;
 
-    QString leftArrow = "<";
-    QString leftArrowRich = "&lt";
-    destSrc = destSrc.replace(leftArrow,leftArrowRich);
+//    QString leftArrow = "<";
+//    QString leftArrowRich = "&lt";
+//    destSrc = destSrc.replace(leftArrow,leftArrowRich);
 
     QString n = "\n";
     QString br = "<br/>";
@@ -393,7 +395,7 @@ bool UiUtil::canMicrophoneInput()
                                             "com.deepin.daemon.Audio", "DefaultSource");
     if (v.isValid()) {
         QDBusObjectPath path = v.value<QDBusObjectPath>();
-        qDebug() <<"path: "<<path.path();
+        //qDebug() <<"path: "<<path.path();
         QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
                                   "com.deepin.daemon.Audio.Source",
                                   QDBusConnection::sessionBus());
@@ -405,12 +407,12 @@ bool UiUtil::canMicrophoneInput()
         QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
         if (reply.isValid()){
             path = reply.value();
-            qDebug()<<"path1" << path.path();
+            //qDebug()<<"path1" << path.path();
             QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
                                                     "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-                qDebug()<<"volume:" <<volume;
+                //qDebug()<<"volume:" <<volume;
                 if(0.0001 < volume)
                 {
                     return true;

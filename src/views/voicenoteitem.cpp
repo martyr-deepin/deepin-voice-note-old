@@ -47,6 +47,11 @@ int VoiceNoteItem::getNoteID()
     return m_note.id;
 }
 
+int VoiceNoteItem::getRecodeTime()
+{
+    return m_note.voiceTime;
+}
+
 NOTE_TYPE VoiceNoteItem::getType()
 {
     return m_note.noteType;
@@ -61,6 +66,11 @@ void VoiceNoteItem::clearWaveformContent()
 void VoiceNoteItem::onlySetResumeNoSig()
 {
     m_playingButton->onlySetResumeForButton();
+}
+
+QRect VoiceNoteItem::getWaveRect()
+{
+    return m_waveform->geometry();
 }
 
 void VoiceNoteItem::setPlayDiseable()
@@ -138,7 +148,7 @@ void VoiceNoteItem::initUI()
 //    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
 
     m_playingButton = new PlayingButton();
-    m_playingButton->setFixedSize(QSize(45, 45));
+    m_playingButton->setFixedSize(QSize(60, 60));
     m_waveform = new Waveform();
     m_waveform->setCurrDisplayType(WHOLE);
     m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));

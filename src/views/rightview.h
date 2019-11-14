@@ -48,6 +48,7 @@ signals:
     void stopRecoiding();
     void sig_research();
     void sigStartWatchVolume();
+    void sigChangeCurFolderToTop();
 
 public slots:
     void onShowNoResult();
@@ -70,6 +71,7 @@ public slots:
     void oncheckCurPageVoiceForDelete();
     void on_CheckRecodeCouldUse(bool coulduse);
     void ShowRecodeTip();
+    void handleStopRecord2(qint64 position); //ynb  20191109
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -106,6 +108,7 @@ private:
     voiceVolumeWatcher* m_pVoiceVolumeWatcher;
     QThread *m_pVoiceVolumethread;
     DToolTip *m_pNotRecordToolTip;
+    VOICE_INFO m_voiceinfo; //ynb  20191109
 };
 
 #endif // RIGHTVIEW_H

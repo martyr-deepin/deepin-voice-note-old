@@ -5,6 +5,7 @@
 #include <DImageButton>
 #include <QVBoxLayout>
 #include <DFloatingButton>
+#include "myrecodebuttons.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -28,10 +29,11 @@ public slots:
     void handlePause();
     void handleResume();
     void handleStop();
+    void changeTheme();
 
 private:
-    DFloatingButton *pauseButton;
-    DFloatingButton *resumeButton;
+    MyRecodeButtons *pauseButton;
+    MyRecodeButtons *resumeButton;
     QVBoxLayout *layout;
 };
 

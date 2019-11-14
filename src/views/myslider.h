@@ -38,11 +38,17 @@ public:
     int sliderPosition();
     void setTimeText(QString time);
     //QPixmap renderSVG(const QString &filePath, const QSize &size);
+    int getSliderHandlerWidth();
+    int gethandlePos();
 
 signals:
     void sliderMoved(int value);
     void sliderPressed();
     void sliderReleased();
+    void sigSliderPos(int pos);
+
+public:
+    void changeTheme();
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
@@ -52,6 +58,10 @@ private:
     ReplaySliderBar *m_replaySliderBar;
     MySliderBar *m_mySliderBar;
     SliderHandle *m_sliderHandler;
+    int m_sliderPos;
+    bool m_isPressed;
+    bool m_withMouse;
+    int m_mouseX;
     //SliderHandler *m_sliderHandler;
 
     void initUI();

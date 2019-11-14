@@ -201,7 +201,7 @@ void MySliderBar::removeScale(int value)
 
 void MySliderBar::mousePressEvent(QMouseEvent *event)
 {
-    if(event->y() < 116)
+    //if(event->y() < 116)//ynb 20191109
     {
         QAbstractSlider::mousePressEvent(event);
 
@@ -234,7 +234,7 @@ void MySliderBar::mousePressEvent(QMouseEvent *event)
 
 void MySliderBar::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(event->y() < 116)
+    //if(event->y() < 116)//ynb 20191109
     {
         QAbstractSlider::mouseReleaseEvent(event);
 

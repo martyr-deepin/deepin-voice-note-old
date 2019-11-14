@@ -15,6 +15,7 @@
 #include <DBlurEffectWidget>
 #include <DFloatingButton>
 #include "addfolderbutton.h"
+#include "myrecodebuttons.h"
 
 DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
@@ -51,13 +52,16 @@ public slots:
     void itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *previous);
     void viewDisabled();
     void viewEnabled();
+    void changeTheme();
+    void OnChangeCurFolderToTop();
     //void handlePressFolderChg(QListWidgetItem *item);
 
 private:
     QVBoxLayout *m_leftViewLayout;
     //QListWidget *folderList;
     LeftFolderList *m_leftFolderView;
-    AddFolderButton *m_addFolderBtn;
+    MyRecodeButtons *m_addFolderBtn;
+    //AddFolderButton *m_addFolderBtn;
     //DWidget *m_LeftListBoard;
 
     FolderController *m_folderCtr;

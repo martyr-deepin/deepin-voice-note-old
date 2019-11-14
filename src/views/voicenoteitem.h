@@ -26,9 +26,11 @@ public:
     void init();
     bool getwaveformPoint(QRect &rect);
     int getNoteID();
+    int getRecodeTime();
     NOTE_TYPE getType();
     void clearWaveformContent();
     void onlySetResumeNoSig();
+    QRect getWaveRect();
 
     NOTE m_note;
 

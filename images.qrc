@@ -118,5 +118,6 @@
         <file>image/icon/DefaultAvatar/9.svg</file>
         <file>image/icon/DefaultAvatar/8.svg</file>
         <file>image/icon/DefaultAvatar/6.svg</file>
+        <file>image/icon/focus/circlebutton_add_focus.svg</file>
     </qresource>
 </RCC>

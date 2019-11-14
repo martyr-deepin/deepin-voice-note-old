@@ -53,6 +53,7 @@ public:
     void listAddTextHide();
     void fouceOutAllTextItem();
     void delAllEmptyText();
+    void getDurtimgByRecodefinised(QString filepath);  //ynb 20191109
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -63,6 +64,7 @@ signals:
     void sig_TextEditNotEmpty();
     void sig_research();
     void sig_checkCurPageVoiceForDelete();
+    void positionByfinishRecord(qint64 position); //ynb 20191109
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
@@ -96,6 +98,7 @@ public slots:
     //void onSortItemByTime(NOTE note);
     void onCheckEditState(NOTE note);
     void onfouceOutAllTextItem();
+    void getduration(qint64 position);   //获取音频总时间  ynb 20191109
 private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
@@ -120,6 +123,10 @@ private:
     bool m_arrowButtonPressed;
     bool m_actionHoverd;
     int curWaveformPosWidth;
+    bool m_Recodefinised;  //ynb 20191109
+    bool m_IsSliderBarReleased; //ynb 20191109
+    int seconds;   //ynb 20191109
+    int duringTime;
     //MyCustomSlider *m_myslider;
     void createDArrowMenu();
     void destroyDArrowMenu();
