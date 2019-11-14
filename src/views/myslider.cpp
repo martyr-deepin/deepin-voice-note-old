@@ -96,6 +96,7 @@ void MySlider::mouseMoveEvent(QMouseEvent *event)
         {
             int curSliderPos = m_mouseX - m_sliderHandler->width()/2;
             emit sigSliderPos(curSliderPos);
+            qDebug()<<"curSliderPos:"<<curSliderPos;
         }
     }
 }
