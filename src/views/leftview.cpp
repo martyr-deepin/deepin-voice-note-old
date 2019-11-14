@@ -5,7 +5,7 @@
 #include <folderoper.h>
 #include <QTime>
 #include <DApplicationHelper>
-#include <DStyledItemDelegate>
+//#include <DStyledItemDelegate>
 LeftView::LeftView()
 {
     initController();

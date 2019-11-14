@@ -49,7 +49,7 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
     QObject::connect(m_rightView, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
-    QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop()), m_leftView, SLOT(OnChangeCurFolderToTop()));
+    //QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop()), m_leftView, SLOT(OnChangeCurFolderToTop()));
 
 
 

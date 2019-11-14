@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <DPalette>
 #include <DApplicationHelper>
-#include <DStyledItemDelegate>
+//#include <DStyledItemDelegate>
 
 LeftFolderList::LeftFolderList(FolderController *folderCtr)
 {
@@ -67,8 +67,8 @@ void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
 
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
 
-    DStyledItemDelegate *itemDelegate = new DStyledItemDelegate(this);
-    this->setItemDelegate(itemDelegate);
+//    DStyledItemDelegate *itemDelegate = new DStyledItemDelegate(this);
+//    this->setItemDelegate(itemDelegate);
 
 
     //创建编辑控件应该使用 itemDelegate 的 createEditor，不要自行创建一个 DLineEdit 来使用
