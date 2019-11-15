@@ -54,7 +54,8 @@ public:
     void fouceOutAllTextItem();
     void delAllEmptyText();
     void getDurtimgByRecodefinised(QString filepath);  //ynb 20191109
-
+private:
+    void adjustWidgetItemWidth();
 signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();

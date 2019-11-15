@@ -249,6 +249,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         if(isAddByButton)
         {
             textItem->changeToEditMode();
+            adjustWidgetItemWidth();
         }
 
         //textItem->changeToEditMode();
@@ -415,26 +416,7 @@ void RightNoteList::paintEvent(QPaintEvent *event)
 void RightNoteList::resizeEvent(QResizeEvent * event)
 {
     DListWidget::resizeEvent(event);
-    QListWidgetItem *ptmp = nullptr;
-    for(int i = 0; i < this->count(); i++)
-    {
-
-        ptmp = this->item(i);
-
-        QWidget* ptmpWidget = this->itemWidget(ptmp);
-        int listWidth = this->width();
-        int newWidth = this->width() - 23;
-        int maxwidth = event->size().width();
-        ptmpWidget->setFixedSize(QSize(newWidth,ptmpWidget->height()));
-
-        if(i != this->count() - 1)
-        {
-            this->item(i)->setSizeHint(QSize(listWidth,ptmpWidget->height()));
-        }
-        //ptmpWidget->resize(this->width() - 23 ,ptmpWidget->height());
-
-    }
-
+    adjustWidgetItemWidth();
     if(nullptr != m_currPlayingItem && nullptr != m_myslider)
     {
         QRect rect = m_currPlayingItem->getWaveRect();
@@ -1216,4 +1198,23 @@ void RightNoteList::handleMenuBtnPressed()
 void RightNoteList::handleMenuBtnReleased()
 {
     m_arrowButtonPressed = false;
+}
+void RightNoteList::adjustWidgetItemWidth()
+{
+    QListWidgetItem *ptmp = nullptr;
+    for(int i = 0; i < this->count(); i++)
+    {
+
+        ptmp = this->item(i);
+
+        QWidget* ptmpWidget = this->itemWidget(ptmp);
+        int listWidth = this->width();
+        int newWidth = this->width() - 23;
+        ptmpWidget->setFixedSize(QSize(newWidth,ptmpWidget->height()));
+
+        if(i != this->count() - 1)
+        {
+            this->item(i)->setSizeHint(QSize(listWidth,ptmpWidget->height()));
+        }
+    }
 }

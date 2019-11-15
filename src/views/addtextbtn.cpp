@@ -13,8 +13,9 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 //    this->setAutoFillBackground(true);
 //    this->setPalette(pe);
     m_addBtn = new DPushButton(this);
+    m_addBtn->setFixedHeight(64);
     //m_addBtn->setFixedSize(QSize(548,64));
-    m_addBtn->setFixedSize(QSize(539,64));
+    //m_addBtn->setFixedSize(QSize(539,64));
     //m_addBtn->move(0,0);
     //m_addBtn->setFixedHeight(64);
 
@@ -91,7 +92,7 @@ void AddTextBtn::changeTheme()
 void AddTextBtn::resizeEvent(QResizeEvent * event)
 {
     DWidget::resizeEvent(event);
-    m_addBtn->setFixedWidth(this->width() - 2);
+    //m_addBtn->setFixedWidth(this->width() - 2);
 
     qDebug()<<"addBtnWidth:"<<this->width();
     qDebug()<<"btnwidth:"<<m_addBtn->width();
