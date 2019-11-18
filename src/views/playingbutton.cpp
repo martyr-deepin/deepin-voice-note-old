@@ -45,8 +45,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon/hover/pause_blue_hover.svg",
                     "",
                     ":/image/icon/focus/pause_blue_focus.svg",
-                    QSize(60,60),
-                    this);
+                    QSize(60,60)
+                    );
     }
     else if(themeType == DGuiApplicationHelper::DarkType)
     {
@@ -56,8 +56,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon_dark/hover/pause_blue_hover_dark.svg",
                     "",
                     ":/image/icon_dark/focus/pause_blue_focus_dark.svg",
-                    QSize(60,60),
-                    this);
+                    QSize(60,60)
+                    );
     }
     else
     {
@@ -67,10 +67,11 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon/hover/pause_blue_hover.svg",
                     "",
                     ":/image/icon/focus/pause_blue_focus.svg",
-                    QSize(60,60),
-                    this);
+                    QSize(60,60)
+                    );
     }
 
+    pauseButton->setFocusPolicy(Qt::NoFocus);
 //    pauseButton = new DFloatingButton(this);
 //    pauseButton->setFixedSize(QSize(45, 45));
 //    //pauseButton->setIcon(QIcon(":/image/icon/normal/pause_blue_normal.svg"));
@@ -92,7 +93,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon/disabled/play_disabled.svg",
                     ":/image/icon/focus/play_focus.svg",
                     QSize(60,60),
-                    this);
+                    this
+                    );
     }
     else if(themeType == DGuiApplicationHelper::DarkType)
     {
@@ -103,7 +105,8 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon_dark/disabled/play_disabled_dark.svg",
                     ":/image/icon_dark/focus/play_focus_dark.svg",
                     QSize(60,60),
-                    this);
+                    this
+                    );
     }
     else
     {
@@ -114,8 +117,10 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
                     ":/image/icon/disabled/play_disabled.svg",
                     ":/image/icon/focus/play_focus.svg",
                     QSize(60,60),
-                    this);
+                    this
+                    );
     }
+    resumeButton->setFocusPolicy(Qt::NoFocus);
 //    resumeButton = new DFloatingButton(this);
 //    resumeButton->setFixedSize(QSize(45, 45));
 //    //resumeButton->setIcon(QIcon(":/image/icon/normal/play_normal.svg"));
@@ -129,6 +134,7 @@ PlayingButton::PlayingButton(QWidget *parent) : QWidget(parent)
     layout->addWidget(resumeButton);
     layout->addWidget(pauseButton);
     pauseButton->setVisible(false);
+    //pauseButton->setFixedSize(QSize(0,0));
 
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &PlayingButton::changeTheme);
 }
@@ -137,6 +143,9 @@ void PlayingButton::onlySetResumeForButton()
 {
     pauseButton->setVisible(false);
     resumeButton->setVisible(true);
+//    pauseButton->setFixedSize(QSize(0,0));
+//    pauseButton->setFixedSize(QSize(60,60));
+
 //    layout->removeWidget(pauseButton);
 //    pauseButton->setParent(NULL);
 //    layout->addWidget(resumeButton);
@@ -164,8 +173,11 @@ void PlayingButton::handlePause() {
 //    layout->removeWidget(pauseButton);
 //    pauseButton->setParent(NULL);
 //    layout->addWidget(resumeButton);
-    pauseButton->setVisible(false);
+//    pauseButton->setFixedSize(QSize(0,0));
+//    resumeButton->setFixedSize(QSize(60,60));
+
     resumeButton->setVisible(true);
+    pauseButton->setVisible(false);
     emit pause();
 }
 
@@ -173,8 +185,11 @@ void PlayingButton::handleResume() {
 //    layout->removeWidget(resumeButton);
 //    resumeButton->setParent(NULL);
 //    layout->addWidget(pauseButton);
+//    pauseButton->setFixedSize(QSize(60,60));
+//    resumeButton->setFixedSize(QSize(0,0));
     pauseButton->setVisible(true);
     resumeButton->setVisible(false);
+
     emit resume();
 }
 
@@ -182,8 +197,11 @@ void PlayingButton::handleStop() {
 //    layout->removeWidget(pauseButton);
 //    pauseButton->setParent(NULL);
 //    layout->addWidget(resumeButton);
-    pauseButton->setVisible(false);
+//    pauseButton->setFixedSize(QSize(0,0));
+//    resumeButton->setFixedSize(QSize(60,60));
+
     resumeButton->setVisible(true);
+    pauseButton->setVisible(false);
     emit stop();
 }
 

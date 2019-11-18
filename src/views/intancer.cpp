@@ -10,6 +10,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     isRenameRepeat = false;
     isViewAddTextButtonShow = false;
     isSearching = false;
+    isMoveFolder_count = 0;
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
@@ -153,4 +154,19 @@ void Intancer::setSearchingFlag(bool value)
 bool Intancer::getSearchingFlag()
 {
     return isSearching;
+}
+
+void Intancer::initMoveFolderCount()
+{
+    isMoveFolder_count = 2;
+}
+
+void Intancer::CountMoveFolderCount()
+{
+    isMoveFolder_count--;
+}
+
+int Intancer::getMoveFolderFlag()
+{
+    return isMoveFolder_count;
 }

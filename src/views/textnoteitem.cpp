@@ -199,7 +199,9 @@ void TextNoteItem::changeToEditMode()
 
 void TextNoteItem::readFromDatabase()
 {
-    m_textEdit->readFromDatabase();
+    //m_textEdit->readFromDatabase();
+    m_bakContent = m_textEdit->onlyreadFromDatabase();
+    m_textEdit->setText(m_bakContent);
     handleTextEditFocusOut();
 }
 
@@ -239,7 +241,13 @@ void TextNoteItem::textAreaChanged()
         //m_textNote.contentText = m_textEdit->toPlainText();
         m_menuBtn->setDisabled(false);
         qDebug()<<"text: "<<m_textEdit->toPlainText();
-        emit sig_TextEditNotEmpty();
+        bool changed = false;
+        QString tmp = m_textEdit->toPlainText();
+        if(m_bakContent != tmp)
+        {
+            changed = true;
+        }
+        emit sig_TextEditNotEmpty(changed);
     }
     else {
         m_menuBtn->setDisabled(true);
@@ -282,7 +290,9 @@ void TextNoteItem::handleMenuBtnClicked()
 void TextNoteItem::handleTextEditFocusOut()
 {
     qDebug()<<"-------------------------------handleTextEditFocusOut()";
-    this->m_textEdit->readFromDatabase();   //2567
+    //this->m_textEdit->readFromDatabase();   //2567
+    m_bakContent = m_textEdit->onlyreadFromDatabase();
+    m_textEdit->setText(m_bakContent);
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;
 //    if(m_bakContent != m_textNote.contentText)
@@ -320,6 +330,7 @@ void TextNoteItem::handleTextEditFocusOut()
 
         QString txt = UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE);
         m_textEdit->setText(txt);
+        m_bakContent = m_textEdit->toPlainText();
         m_isEdited = false;
         //m_textEdit->setHtml(txt);
         if(timechanged)
@@ -396,6 +407,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
+        //m_bakContent = elidedText;
         m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
         //m_textEdit->setReadOnly(true);
         QTextCursor cursor = m_textEdit->textCursor();

@@ -25,7 +25,7 @@ public:
 
 public:
     void updateNoteList();
-    void searchFolder(QString searchKey);
+    bool searchFolder(QString searchKey);
     void updateFromDetal(int id);
     void cancleRecord();
     void selectCurFolder();
@@ -33,12 +33,14 @@ public:
     int getFolderCount();
     void trueAddFolder();
     void saveRecorde();
+    void ChangeCurFolderToTop();
 
 signals:
     void textEditClicked(NOTE textNote);
     void clearSearch();
     void sig_research();
     void sigAllFolderDeleted();
+    void sigNoSearchResult();
 
 public slots:
     void onAddFolder();

@@ -41,6 +41,17 @@ bool FolderOper::updateFolderName(FOLDER folderInfo)
 
 }
 
+bool FolderOper::updateFolderTime(FOLDER folderInfo)
+{
+    //todo:檢查folder name是否重複
+    QString updateSql = "update %s set create_time = :create_time where id = :id";
+    updateSql.sprintf(updateSql.toLatin1().constData(), TABLE_FOLDER);
+    QMap<QString, QVariant> valuesMap;
+    valuesMap[":create_time"] = folderInfo.createTime;
+    valuesMap[":id"] = folderInfo.id;
+    return DatabaseOper::getInstance()->updateData(updateSql, valuesMap);
+}
+
 QList<FOLDER> FolderOper::getFolderList()
 {
     QString queryStr = "select id, name, image_path, create_time from %s order by create_time desc";

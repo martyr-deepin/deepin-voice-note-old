@@ -62,15 +62,17 @@ signals:
     void sigBoardPress();
     void sigBoardPressToLeft();
     void sig_TextEditEmpty();
-    void sig_TextEditNotEmpty();
+    void sig_TextEditNotEmpty(bool changed);
     void sig_research();
     void sig_checkCurPageVoiceForDelete();
     void positionByfinishRecord(qint64 position); //ynb 20191109
+    void sigChangeCurFolderToTop();
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent * event);
+    void keyPressEvent(QKeyEvent *k);
 
 public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
@@ -94,7 +96,8 @@ public slots:
     void OnLeaveContentMenu();
     void handleVScrollBarChanged(int value);
     void onDisableAddBtn();
-    void onAbleAddBtn();
+    void onAbleAddBtn(bool changed);
+    void onTextChangedFlagChange(bool changed);
     void onCallDelDialog(NOTE textNote);
     //void onSortItemByTime(NOTE note);
     void onCheckEditState(NOTE note);
@@ -113,6 +116,7 @@ private:
     VoiceNoteItem *m_currPlayingItem;
     QMediaPlayer *audioPlayer;
     MySlider *m_myslider;
+    DSlider *m_TestSlider;
     FileExistsDialog *m_fileExistsDialog;
     DDialog *m_saveFileEndDialog;
     AddTextBtn *m_addTextBtn;
@@ -121,6 +125,7 @@ private:
     QString m_defaultTxtPath;
     QString m_defaultAudioName;
     QString m_defaultAudioPath;
+    QString m_defaultEditText;
     bool m_arrowButtonPressed;
     bool m_actionHoverd;
     int curWaveformPosWidth;
@@ -128,6 +133,8 @@ private:
     bool m_IsSliderBarReleased; //ynb 20191109
     int seconds;   //ynb 20191109
     int duringTime;
+    bool m_textClicked;
+    bool m_textChanged;
     //MyCustomSlider *m_myslider;
     void createDArrowMenu();
     void destroyDArrowMenu();

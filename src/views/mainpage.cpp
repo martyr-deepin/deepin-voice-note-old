@@ -36,7 +36,8 @@ void MainPage::initConnection()
 {
     //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
 
-    QObject::connect(m_leftView, SIGNAL(noResult()), m_rightView, SLOT(onShowNoResult()));
+    //QObject::connect(m_leftView, SIGNAL(noResult()), m_rightView, SLOT(onShowNoResult()));
+    QObject::connect(m_leftView, SIGNAL(noResult()), this, SIGNAL(sigNoSearchResult()));
     QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_leftView, SIGNAL(searchNote(int, QString)), m_rightView, SLOT(handleSearchNote(int, QString)));
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
@@ -49,7 +50,7 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
     QObject::connect(m_rightView, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
-    //QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop()), m_leftView, SLOT(OnChangeCurFolderToTop()));
+    QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop()), m_leftView, SLOT(OnChangeCurFolderToTop()));
 
 
 
@@ -107,12 +108,14 @@ void MainPage::updateNoteList()
     m_rightView->updateNoteList();
 }
 
-void MainPage::searchFolder(QString searchKey)
+bool MainPage::searchFolder(QString searchKey)
 {
+    bool result = false;
     m_rightView->stopAllPlayback();
 
     m_rightView->cancleRecord();
-    ((LeftView*)m_leftView)->searchFolder(searchKey);
+    result = ((LeftView*)m_leftView)->searchFolder(searchKey);
+    return result;
 }
 
 void MainPage::updateFromDetal(int id)
@@ -148,6 +151,11 @@ void MainPage::trueAddFolder()
 void MainPage::saveRecorde()
 {
     m_rightView->OnlySaveRecord();
+}
+
+void MainPage::ChangeCurFolderToTop()
+{
+    m_leftView->OnChangeCurFolderToTop();
 }
 
 void MainPage::onAddFolder()

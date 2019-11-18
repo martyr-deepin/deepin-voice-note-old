@@ -40,9 +40,14 @@ bool FolderController::checkFolderNameExist(FOLDER folderInfo)
     return false;
 }
 
-bool FolderController::updateFolder(FOLDER folderInfo)
+bool FolderController::updateFolderName(FOLDER folderInfo)
 {
     return FolderOper::updateFolderName(folderInfo);
+}
+
+bool FolderController::updateFolderCreateTime(FOLDER folderInfo)
+{
+    return FolderOper::updateFolderTime(folderInfo);
 }
 
 QString FolderController::getNextFolderName()

@@ -60,7 +60,7 @@ signals:
     void sig_menuBtnReleased();
     void sig_fouceOutAndEditEmpty(NOTE m_textNote);
     void sig_TextEditEmpty();
-    void sig_TextEditNotEmpty();
+    void sig_TextEditNotEmpty(bool changed);
     void sig_ItemTimeChanged(NOTE noteID);
     void buttonClicled();
 

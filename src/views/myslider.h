@@ -25,7 +25,6 @@ public:
     ~MySlider();
 
 
-
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
@@ -40,6 +39,7 @@ public:
     //QPixmap renderSVG(const QString &filePath, const QSize &size);
     int getSliderHandlerWidth();
     int gethandlePos();
+    void showSlider();
 
 signals:
     void sliderMoved(int value);
@@ -47,15 +47,17 @@ signals:
     void sliderReleased();
     void sigSliderPos(int pos);
 
-public:
+public slots:
     void changeTheme();
+    void OnSliderMoved(int newTime);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 
 private:
-    ReplaySliderBar *m_replaySliderBar;
+    //DSlider *m_replaySliderBar;
+    //ReplaySliderBar *m_replaySliderBar;
     MySliderBar *m_mySliderBar;
     SliderHandle *m_sliderHandler;
     int m_sliderPos;

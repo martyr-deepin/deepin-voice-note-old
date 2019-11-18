@@ -31,7 +31,7 @@ public:
 
     void sendSelectCurFolder();
     int getCurrSelectFolderId();
-    void searchFolder(QString searchKey);
+    bool searchFolder(QString searchKey);
     void selectTheFirstFolderByCode();
 
 signals:

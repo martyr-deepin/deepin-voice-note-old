@@ -64,7 +64,7 @@ public slots:
     void OnAllFolderGone();
     void OnAddAFolder();
     void onDisableAddBtn();
-    void onAbleAddBtn();
+    void onAbleAddBtn(bool changed);
     void onViewAddTextShow();
     void onViewAddTextHide();
     void changeTheme();

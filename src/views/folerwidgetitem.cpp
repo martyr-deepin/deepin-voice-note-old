@@ -132,33 +132,18 @@ void FolerWidgetItem::Init()
 {
     this->setFixedSize(QSize(230, 64));
 
-
-//    DPalette pa = DApplicationHelper::instance()->palette(this);
-//    pa.setBrush(DPalette::Background, pa.color(DPalette::ItemBackground));
-//    this->setPalette(pa);
-
-    //this->setFixedSize(QSize(250, 74));
     this->setBlurEnabled(false);
     this->setBlurRectXRadius(8);
     this->setBlurRectYRadius(8);
-
-
-//    m_BackBorad = new DBlurEffectWidget(this);
-//    m_BackBorad->setFixedSize(this->size());
-//    m_BackBorad->setMaskAlpha(0);
-//    m_BackBorad->setVisible(true);
 
 
     m_BackGround = new DFrame(this);
     m_BackGround->move(0,0);
     m_BackGround->setFixedSize(230, 64);
     m_BackGround->setVisible(true);
-//    m_BackGround->setBlurRectXRadius(8);
-//    m_BackGround->setBlurRectYRadius(8);
 
 
     DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-    //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
     pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_BackGround->setPalette(pb);
 
@@ -166,14 +151,11 @@ void FolerWidgetItem::Init()
 
 
     m_FolderImage = new FolderImage(this);
-    //m_FolderImage = new FolderImage(m_BackGround);
     m_FolderImage->move(6,12);
 
     m_nameLabel = new DLabel(this);
-    //m_nameLabel = new DLabel(m_BackGround);
     m_nameLabel->setFixedSize(QSize(110,21));
     m_nameLabel->move(53,13);
-    //m_nameLabel->setGeometry(QRect(70, 10, 110, 21));
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
 
@@ -188,19 +170,14 @@ void FolerWidgetItem::Init()
 
     bool isConverted = false;
     QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-    //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-    //QString folderNameElided = UiUtil::getElidedText(m_nameLabel->font(), m_folder.folderName, m_nameLabel->width(), isConverted);
     QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
     m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
     m_lineEdit = new RenameEdit(this);
-    //m_lineEdit = new RenameEdit(m_BackGround);
     m_lineEdit->setFixedSize(QSize(160,36));
     m_lineEdit->move(57,(this->height() - m_lineEdit->height())/2);
-    //m_lineEdit->move(57,(m_BackGround->height() - m_lineEdit->height())/2);
-    //m_lineEdit->setGeometry(QRect(70, 10, 110, 21));
     m_lineEdit->setObjectName("nameEdit");
 
 
@@ -208,58 +185,23 @@ void FolerWidgetItem::Init()
     pa.setBrush(DPalette::Text, pa.color(DPalette::Base));
     pa.setBrush(DPalette::Button, pa.color(DPalette::FrameBorder));
     pa.setBrush(DPalette::Base, pa.color(DPalette::FrameBorder));
-//    pa.setBrush(DPalette::Button, QColor(255,0,0,255));
-//    pa.setBrush(DPalette::Base, QColor(0,255,0,255));
-    //pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
-    //pa.setBrush(DPalette::Highlight, QColor(0,0,255,255));
-    //pa.setBrush(DPalette::Highlight, pa.color(DPalette::FrameBorder));
     m_lineEdit->lineEdit()->setPalette(pa);
-
-//    QLineEdit * lineed = new QLineEdit(this);
-//    lineed->setFixedSize(QSize(200,50));
-//    lineed->move(0,0);
-//    QPalette Palette = lineed->palette();
-//   Palette.setBrush(QPalette::Text,QBrush(QColor(255,255,255,255)));//绿色
-//   Palette.setBrush(QPalette::Button,QBrush(QColor(0,0,0,20)));//绿色
-//       lineed->setPalette(Palette);//label2刷成绿色
-
-
-
     m_lineEdit->setClearButtonEnabled(false);
     m_lineEdit->setText(m_folder.folderName);
     m_lineEdit->setVisible(false);
 
-//    m_stackedWidget = new QStackedWidget(m_BackGround);
-//    m_stackedWidget->setFixedSize(QSize(110,21));
-//    m_stackedWidget->move(53,13);
-//    m_stackedWidget->setObjectName("stackedWidget");
-
-//    m_stackedWidget->addWidget(m_nameLabel);
-//    m_stackedWidget->addWidget(m_lineEdit);
-//    m_stackedWidget->setCurrentIndex(0);
-
 
     m_createTimeLabel = new QLabel(this);
-    //m_createTimeLabel = new QLabel(m_BackGround);
     m_createTimeLabel->setFixedSize(QSize(110,18));
     m_createTimeLabel->move(53,32);
-    //m_createTimeLabel->setGeometry(QRect(53, 36, 110, 18));
-    //m_createTimeLabel->setGeometry(QRect(70, 40, 110, 16));
-    //m_createTimeLabel->setLineWidth(150);
     m_createTimeLabel->setObjectName("createTimeLabel");
 
 
     QFont createTimeFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     m_createTimeLabel->setFont(createTimeFont);
-    //pe.setColor(QPalette::WindowText,QColor(QRgb(0x526A7F)));
-    //DPalette pe;
-    //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
-    //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextTips));
     DPalette pc;
     pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
     m_createTimeLabel->setPalette(pc);
-    //m_createTimeLabel->setText(getCreateTimeLabel(m_folder.createTime));
-    //m_createTimeLabel->setText(UiUtil::convertFolderDate(m_folder.createTime));
     m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));
     initConnection();
 
@@ -270,6 +212,25 @@ void FolerWidgetItem::Init()
     }
 
     m_FolderImage->loadPic(m_folder.imgPath);
+}
+
+void FolerWidgetItem::copy(FolerWidgetItem *pSourceFolder)
+{
+//    DLabel *m_nameLabel;
+//    DLabel *m_createTimeLabel;
+//    m_folder;
+//    m_FolderImage;
+//    m_BakLineContent;
+//    m_BakDefaultName;
+//    m_clicked;
+//    m_searchKey;
+
+//    pSourceFolder->
+}
+
+QString FolerWidgetItem::getSearchText()
+{
+    return m_searchKey;
 }
 
 void FolerWidgetItem::checkNameValid()
@@ -298,7 +259,7 @@ void FolerWidgetItem::checkNameValid()
         }
 //        else
 //        {
-            if(!m_folderCtr->updateFolder(m_folder))
+            if(!m_folderCtr->updateFolderName(m_folder))
             {
                 m_lineEdit->setAlert(true);
                 m_lineEdit->showAlertMessage("修改目录名失败");

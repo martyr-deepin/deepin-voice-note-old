@@ -56,6 +56,10 @@ public:
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
+signals:
+    void sigRelease(int time);
+    void sigMove(int time);
+
 public Q_SLOTS:
     void setHoverShowValue(bool hoverShowValue);
     void setHoverValueColor(QColor hoverValueColor);

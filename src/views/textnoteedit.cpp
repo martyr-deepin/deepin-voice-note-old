@@ -39,6 +39,11 @@ TextNoteEdit::~TextNoteEdit()
 
 }
 
+QString TextNoteEdit::getText()
+{
+    return toPlainText();
+}
+
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
     m_searchKey = searchKey;
@@ -118,5 +123,10 @@ void TextNoteEdit::readFromDatabase()
 {
     m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
     this->setText(m_textNote.contentText);
+}
+
+QString TextNoteEdit::onlyreadFromDatabase()
+{
+    return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
 }
 

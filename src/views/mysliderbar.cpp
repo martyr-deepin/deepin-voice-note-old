@@ -212,7 +212,20 @@ void MySliderBar::mousePressEvent(QMouseEvent *event)
                 // FIXME
                 // the value 10 is specified in MySliderBar.theme, it's ugly here, but I don't have any
                 // good idea for now, maybe someone can help.
-                setValue(minimum() + ((maximum() - minimum()) * (event->x() - 10)) / (width() - 10 - 10)) ;
+//                int value = this->sliderPosition();
+//                setValue(value) ;
+                //setValue(minimum() + ((maximum() - minimum()) * (event->x() - 10)) / (width() - 10 - 10)) ;
+                qDebug()<<"width:"<<width();
+                qDebug()<<"minimum:"<<minimum();
+                qDebug()<<"maximum - minimum:"<<maximum() - minimum();
+                qDebug()<<"event->x():"<<event->x();
+                int fixPosX = event->x() - 25;
+                qDebug()<<"fixPosX:"<<fixPosX;
+                int value = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
+                qDebug()<<"value:"<<value;
+                //value = value - 1;
+                qDebug()<<"value1:"<<value;
+                setValue(value) ;
             }
 
             event->accept();
@@ -238,9 +251,23 @@ void MySliderBar::mouseReleaseEvent(QMouseEvent *event)
     {
         QAbstractSlider::mouseReleaseEvent(event);
 
+        Q_D(MySliderBar);
         if(event->button() == Qt::LeftButton) {
-            d_func()->mousePressed = false;
+            //d_func()->mousePressed = false;
+            d->mousePressed = false;
+//            QPoint eventPoint;
+//            eventPoint.setX(event->pos().x() - 25);
+//            eventPoint.setX(event->pos().y());
+//            int newPosition = d->pixelPosToRangeValue(d->pick(eventPoint) - d->clickOffset);
+            int fixPosX = event->x() - 25;
+            qDebug()<<"fixPosX:"<<fixPosX;
+            int newPosition = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
+            setValue(newPosition) ;
+            //int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
+            qDebug()<<"newPosition:"<<newPosition;
+            setSliderPosition(newPosition);
 
+            emit sigRelease(newPosition);
             Q_EMIT sliderReleased();
         }
     }
@@ -306,9 +333,19 @@ void MySliderBar::mouseMoveEvent(QMouseEvent *event)
     Q_D(MySliderBar);
 
     if(d->mousePressed) {
-        int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
-        setSliderPosition(newPosition);
+//        QPoint eventPoint;
+//        eventPoint.setX(event->pos().x() - 25);
+//        eventPoint.setX(event->pos().y());
+//        int newPosition = d->pixelPosToRangeValue(d->pick(eventPoint) - d->clickOffset);
+        int fixPosX = event->x() - 25;
+        qDebug()<<"fixPosX:"<<fixPosX;
+        int newPosition = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
+        setValue(newPosition) ;
+        //int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
+        qDebug()<<"newPosition:"<<newPosition;
+        //setSliderPosition(newPosition);
 
+        emit sigMove(newPosition);
         Q_EMIT sliderMoved(newPosition);
     }
 

@@ -54,6 +54,8 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_contextMenu = nullptr;
     m_saveAsAction = nullptr;
     m_delAction = nullptr;
+    m_textClicked = false;
+    m_textChanged = false;
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     Intancer::get_Intancer()->clearHeightForRightList();
     initUI();
@@ -163,6 +165,8 @@ void RightNoteList::initUI()
     connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
 
     m_myslider = new MySlider(Qt::Horizontal, this);
+    //m_TestSlider = new DSlider(Qt::Horizontal, this);
+    //m_TestSlider->setVisible(false);
     //m_myslider = new MyCustomSlider(Qt::Horizontal, this);
 
     //m_myslider->setFixedSize(350, 70);
@@ -181,11 +185,6 @@ void RightNoteList::initUI()
 }
 void RightNoteList::initConnection()
 {
-//    connect(m_contextMenu, SIGNAL(sigMMenu()), this, SLOT(OnLeaveContentMenu()));
-//    connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
-//    connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
-//    connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
-//    connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_delConfirmDialog, &DDialog::closed, this, &RightNoteList::handleCloseDialogClicked);
@@ -194,21 +193,9 @@ void RightNoteList::initConnection()
 
     connect(audioPlayer,SIGNAL(durationChanged(qint64)),this,SLOT(getduration(qint64))); //ynb 20191109
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
-
-//    connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));
-//    connect(m_myslider, SIGNAL(sliderMoved(int)), this, SLOT(handleSliderMove(int)));
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
-    //connect(m_fileExistsDialog, SIGNAL(saveFileEnd(bool)), this, SLOT(handleSaveFileEnd(bool)));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
-
-//void LeftFolderList::addWidgetItem(FOLDER folder) {
-//    QListWidgetItem *item=new QListWidgetItem(this);
-//    item->setBackground(QBrush(QPixmap(":/image/folder_normal.png")));
-//    item->setSizeHint(QSize(200,60));
-//    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr);
-//    this->setItemWidget(item, folderItem);
-//}
 
 void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
 {
@@ -223,14 +210,16 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
         connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
-        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
-        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SIGNAL(sig_TextEditNotEmpty()));
+        connect(textItem, SIGNAL(sig_TextEditNotEmpty(bool)), this, SLOT(onTextChangedFlagChange(bool)));
+        connect(textItem, SIGNAL(sig_TextEditNotEmpty(bool)), this, SLOT(onAbleAddBtn(bool)));
+        connect(textItem, SIGNAL(sig_TextEditNotEmpty(bool)), this, SIGNAL(sig_TextEditNotEmpty(bool)));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
         connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
         //connect(textItem, SIGNAL(sig_ItemTimeChanged(NOTE)), this, SLOT(onSortItemByTime(NOTE)));
         connect(textItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         //connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
+
 
 
 
@@ -249,7 +238,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         if(isAddByButton)
         {
             textItem->changeToEditMode();
-            adjustWidgetItemWidth();
+			adjustWidgetItemWidth();
         }
 
         //textItem->changeToEditMode();
@@ -360,6 +349,13 @@ void RightNoteList::fouceOutAllTextItem()
             pTextItem->tryToFouceout();
         }
     }
+
+//    if(m_textChanged && m_textClicked)
+//    {
+//        emit sigChangeCurFolderToTop();
+//    }
+//    m_textChanged = false;
+//    m_textClicked = false;
 }
 
 void RightNoteList::delAllEmptyText()
@@ -422,6 +418,15 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
         QRect rect = m_currPlayingItem->getWaveRect();
         QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
         m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, rect.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
+        //m_TestSlider->setGeometry( waveformPoint.x(), waveformPoint.y() - 27, rect.width(), m_myslider->m_defaultHeight);
+    }
+}
+
+void RightNoteList::keyPressEvent(QKeyEvent *k)
+{
+    if(k->key() == Qt::Key_Space)
+    {
+        qDebug()<<"Key_Space";
     }
 }
 
@@ -518,13 +523,22 @@ void RightNoteList::onDisableAddBtn()
     }
 }
 
-void RightNoteList::onAbleAddBtn()
+void RightNoteList::onAbleAddBtn(bool changed)
 {
     if(nullptr != m_addTextBtn)
     {
         qDebug()<<"m_addTextBtn->setDisableBtn(false);";
         m_addTextBtn->setDisableBtn(false);
     }
+}
+
+void RightNoteList::onTextChangedFlagChange(bool changed)
+{
+//    if(m_textClicked)
+//    {
+//        m_textChanged = changed;
+//        //emit sigChangeCurFolderToTop();
+//    }
 }
 
 void RightNoteList::onCallDelDialog(NOTE textNote)
@@ -539,64 +553,6 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
     }
 }
 
-//void RightNoteList::onSortItemByTime(NOTE note)
-//{
-//    int moveRow = -1;
-//    getRowByID(note.id,TEXT,moveRow);
-//    if((this->count() > 2) && (moveRow != this->count() - 2))
-//    {
-//        QString searchKey;
-//        TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
-//        connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
-//        connect(textItem, SIGNAL(menuBtnClicked(QPoint, QPoint, QWidget *, NOTE)), this, SLOT(handleMenuBtnClicked(QPoint, QPoint, QWidget *, NOTE)));
-//        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SIGNAL(textEditClicked(NOTE)));
-//        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SIGNAL(textEditClicked(NOTE)));
-//        connect(textItem, SIGNAL(sig_menuBtnPressed()), this, SLOT(handleMenuBtnPressed()));
-//        connect(textItem, SIGNAL(sig_menuBtnReleased()), this, SLOT(handleMenuBtnReleased()));
-//        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
-//        connect(textItem, SIGNAL(sig_TextEditNotEmpty()), this, SIGNAL(sig_TextEditNotEmpty()));
-//        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
-//        connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
-//        connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
-//        connect(textItem, SIGNAL(sig_ItemTimeChanged(int,QDateTime)), this, SLOT(onSortItemByTime(int,QDateTime)));
-//        connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
-
-//        QListWidgetItem* pmoveItem = this->takeItem(moveRow);
-//        this->removeItemWidget(pmoveItem);
-//        pmoveItem->setSizeHint(QSize(this->width(),123));  //orig
-//        int count = this->count();
-//        this->insertItem(count - 1,pmoveItem);
-//        this->setItemWidget(pmoveItem, textItem);
-
-//        //    bool move = false;
-//        //    int moveMovment = 0;
-//        //    if(nullptr != m_currPlayingItem)
-//        //    {
-//        //        int playRow = -1;
-//        //        NOTE_TYPE playType = VOICE;
-//        //        getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
-
-//        //        if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
-//        //        {
-//        //            audioPlayer->stop();
-//        //        }
-
-//        //        if(moveRow < playRow)
-//        //        {
-//        //            move = true;
-//        //            moveMovment = this->itemWidget(m_currSelItem)->height();
-//        //            qDebug()<<"moveMovment: "<<moveMovment;
-//        //        }
-
-//        //    }
-
-//        //    if(move)
-//        //    {
-//        //        changeSliderPosByHand(moveMovment);
-//        //    }
-//    }
-//}
-
 void RightNoteList::onCheckEditState(NOTE note)
 {
     int count = this->count();
@@ -608,6 +564,14 @@ void RightNoteList::onCheckEditState(NOTE note)
             pTextItem->tryToFouceout();
         }
     }
+
+//    m_textClicked = true;
+//    if(m_textChanged && m_textClicked)
+//    {
+        emit sigChangeCurFolderToTop();
+//    }
+//    m_textChanged = false;
+//    //m_textClicked = false;
 }
 
 void RightNoteList::onfouceOutAllTextItem()
@@ -830,7 +794,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             delete m_currSelItem;
             m_currSelItem = nullptr;
             m_addTextBtn->setDisableBtn(false);
-            emit sig_TextEditNotEmpty();
+            emit sig_TextEditNotEmpty(false);
 
             if(move)
             {
@@ -851,6 +815,8 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             {
                 emit sig_research();
             }
+
+            emit sigChangeCurFolderToTop();
 
         }
         else {
@@ -936,7 +902,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
 //        qDebug()<<"before m_currPlayingItem->pos().y():"<<m_currPlayingItem->pos().y();
         m_myslider->setTimeText(QString(tr("00:00")));
         m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
-
+        m_myslider->showSlider();
         curWaveformPosWidth = waveformPos.width() + m_myslider->getHandlerWidth();
         int sliderwidth = m_myslider->width() - m_myslider->getSliderHandlerWidth();
         //m_myslider->setRange(0, waveformPos.width());
@@ -945,6 +911,8 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         m_myslider->setRange(0, maxtime);
         m_myslider->setSliderPostion(0); //ynb 20191109
         m_myslider->show();
+
+        //m_TestSlider->setGeometry( waveformPoint.x(), waveformPoint.y() - 27, waveformPos.width(), m_myslider->m_defaultHeight);
     }
 }
 
@@ -1106,6 +1074,8 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
        int audioLength = int(audioPlayer->duration());
        int maxTime = audioLength/1000;
        qDebug()<<"s:"<<s;
+       qDebug()<<"audioLength:"<<audioLength;
+       qDebug()<<"maxTime:"<<maxTime;
        if ((s == seconds) || ((audioLength - position) < 1000 && position == audioLength))
        {
 //            int sliderPos = 0;
@@ -1118,7 +1088,15 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
 //            }
             QTime curTime(0, 0, 0);
             curTime = curTime.addSecs(seconds);
-            QString curTimeStr = curTime.toString(tr("mm:ss"));
+            QString curTimeStr;
+            if(curTime.hour())
+            {
+                curTimeStr = "60:00";
+            }
+            else
+            {
+                curTimeStr = curTime.toString(tr("mm:ss"));
+            }
 
             m_myslider->setTimeText(curTimeStr);
             m_myslider->setSliderPostion(s);
@@ -1153,24 +1131,26 @@ void RightNoteList::handleSliderReleased()
 
         //audioPlayer->setPosition(sliderpos);
         qint64 audioPos = sliderpos * 1000;
+        //audioPos = 3000000;
+        qDebug()<<"audioPos:"<<audioPos;
         audioPlayer->setPosition(audioPos);
     }
 }
 
 void RightNoteList::handleSliderPressed()
 {
-    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
-    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+//    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
-    audioPlayer->setPosition(audioPos);
+//    audioPlayer->setPosition(audioPos);
 }
 
 void RightNoteList::handleSliderMove(int value)
 {
-    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
-    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
+//    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
+//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
-    audioPlayer->setPosition(audioPos);
+//    audioPlayer->setPosition(audioPos);
 }
 
 void RightNoteList::handleSaveFileEnd(bool result)

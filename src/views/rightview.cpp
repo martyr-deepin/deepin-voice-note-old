@@ -49,11 +49,20 @@ void RightView::initUI()
     this->resize(548,this->height());
 
     m_NoSearchResault = new DLabel(this);
-    m_NoSearchResault->setText("无结果");
-    m_NoSearchResault->setFixedSize(QSize(200,56));
+    m_NoSearchResault->setText(QString(tr("无结果")));
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T4);
+    m_NoSearchResault->setFont(labelFont);
+//    QPalette pb = DApplicationHelper::instance()->palette(m_NoSearchResault);
+//    pb.setBrush(DPalette::Text, pb.color(QPalette::));
+//    m_NoSearchResault->setPalette(pb);
+    m_NoSearchResault->setFixedSize(QSize(60,29));
     m_NoSearchResault->setAlignment(Qt::AlignCenter);
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);
+
+//    DSlider *pslider = new DSlider(Qt::Horizontal,this);
+//    pslider->setGeometry(0, 0, 300, 50);
+
 
     //m_noticeNoAudioInputs = UiUtil::createConfirmDialog(QString(""), QString(tr("未检测到录音设备")), this);
 
@@ -67,10 +76,13 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     //connect(m_noteListWidget, SIGNAL(currentRowChanged(int)), this, SIGNAL(OnCurrentRowChanged(int)));
     connect(m_noteListWidget, SIGNAL(sigBoardPress()), this, SIGNAL(sigBoardPress()));
-    connect(m_noteListWidget, SIGNAL(sig_TextEditNotEmpty()), this, SLOT(onAbleAddBtn()));
+    connect(m_noteListWidget, SIGNAL(sig_TextEditNotEmpty(bool)), this, SLOT(onAbleAddBtn(bool)));
     connect(m_noteListWidget, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
     connect(m_noteListWidget, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
     connect(m_noteListWidget, SIGNAL(sig_checkCurPageVoiceForDelete()), this, SLOT(oncheckCurPageVoiceForDelete()));
+    connect(m_noteListWidget, SIGNAL(sigChangeCurFolderToTop()), this, SIGNAL(sigChangeCurFolderToTop()));
+
+
 
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
@@ -163,6 +175,7 @@ void RightView::initNoteList()
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
     m_AddButtonLocked->setVisible(false);
+    m_AddButtonLocked->setFocusPolicy(Qt::NoFocus);
 
 }
 
@@ -296,6 +309,8 @@ void RightView::addTextNote()
 //    item->changeToEditMode();
 
 //    m_leftFolderView->setCurrentRow(0);
+
+
 }
 
 //only for button add
@@ -329,6 +344,7 @@ void RightView::addNoteToNoteList(NOTE note)
 //    {
 //        onViewAddTextHide();
 //    }
+   emit sigChangeCurFolderToTop();
 }
 
 void RightView::updateNoteList()
@@ -599,7 +615,7 @@ void RightView::onDisableAddBtn()
     }
 }
 
-void RightView::onAbleAddBtn()
+void RightView::onAbleAddBtn(bool changed)
 {
     if(nullptr != m_AddButtonLocked)
     {

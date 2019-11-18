@@ -4,6 +4,7 @@
 #include "mainpage.h"
 #include "textnoteedit.h"
 #include "initemptypage.h"
+#include "searchnonepage.h"
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
@@ -40,6 +41,7 @@ public slots:
     void handleCloseExitDialog();
     void handleCloseExitDialogClicked(int index, const QString &text);
     void changeTheme();
+    void OnNoSearchResult();
 
 protected:
     //bool eventFilter(QObject *object, QEvent *event);
@@ -53,8 +55,10 @@ private:
 
 //     RightView *m_rightView;
     MainPage * m_mainPage;
+    SearchNonePage *m_SearchNonePage;
     QStackedWidget * m_stackedWidget;
     TextNoteEdit * m_textNoteEdit;
+    QString m_DetalTextBak;
     DWidget *m_detailPage;
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;

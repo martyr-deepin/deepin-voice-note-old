@@ -75,7 +75,8 @@ SOURCES += \
     src/Controllers/notewatchercontroller.cpp \
     src/views/myrecodebuttons.cpp \
     src/Controllers/voiceaudiodevicewatcher.cpp \
-    src/Controllers/voicevolumewatcher.cpp
+    src/Controllers/voicevolumewatcher.cpp \
+    src/views/searchnonepage.cpp
 
 HEADERS += \
     src/app \
@@ -120,7 +121,8 @@ HEADERS += \
     src/Controllers/notewatchercontroller.h \
     src/views/myrecodebuttons.h \
     src/Controllers/voiceaudiodevicewatcher.h \
-    src/Controllers/voicevolumewatcher.h
+    src/Controllers/voicevolumewatcher.h \
+    src/views/searchnonepage.h
 
 INCLUDEPATH += \
     src/app \

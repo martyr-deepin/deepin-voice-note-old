@@ -5,6 +5,8 @@
 #include <folderoper.h>
 #include <QTime>
 #include <DApplicationHelper>
+#include <QDebug>
+
 //#include <DStyledItemDelegate>
 LeftView::LeftView()
 {
@@ -151,8 +153,9 @@ void LeftView::updateFolderView()
     }
 }
 
-void LeftView::searchFolder(QString searchKey)
+bool LeftView::searchFolder(QString searchKey)
 {
+    bool hasResult = false;
     m_currSearchKey = searchKey;
     m_leftFolderView->clear();
     QList<FOLDER> folderList = m_folderCtr->searchFolder(searchKey);
@@ -168,12 +171,15 @@ void LeftView::searchFolder(QString searchKey)
         int folderId = folderItem->m_folder.id;
         emit searchNote(folderId, searchKey);
         folderItem->changeToClickMode();
+        hasResult = true;
     }
     else
     {
         emit noResult();
         clearNoteList();
     }
+
+    return hasResult;
 }
 
 void LeftView::selectTheFirstFolderByCode()
@@ -272,9 +278,16 @@ void LeftView::itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *pr
             FolerWidgetItem* pPrevious = (FolerWidgetItem*)m_leftFolderView->itemWidget(previous);
             pPrevious->changeToUnClickMode();
         }
-        if(nullptr != current)
+        if(0 == Intancer::get_Intancer()->getMoveFolderFlag())
         {
-            handleSelFolderChg(current);
+            if(nullptr != current)
+            {
+                handleSelFolderChg(current);
+            }
+        }
+        else
+        {
+            Intancer::get_Intancer()->CountMoveFolderCount();
         }
     }
 }
@@ -326,7 +339,35 @@ void LeftView::changeTheme()
 
 void LeftView::OnChangeCurFolderToTop()
 {
+    QListWidgetItem *preItem = m_leftFolderView->currentItem();
+    FolerWidgetItem *pWidget = (FolerWidgetItem*)m_leftFolderView->itemWidget(preItem);
 
+    FOLDER newFolder;
+    newFolder.id = pWidget->m_folder.id;
+    newFolder.imgPath = pWidget->m_folder.imgPath;
+    newFolder.folderName = pWidget->m_folder.folderName;
+    newFolder.createTime = pWidget->m_folder.createTime;
+    //newFolder.createTime = QDateTime::currentDateTime();
+
+    QString searchKey = pWidget->getSearchText();
+//    if(!m_folderCtr->updateFolderCreateTime(newFolder))
+//    {
+//        qDebug()<<"change Folder time failed";
+//    }
+
+    m_leftFolderView->insertWidgetItemToTop(newFolder, searchKey);
+
+    Intancer::get_Intancer()->initMoveFolderCount();
+
+    //m_leftFolderView->setCurrentRow(0);
+    //QListWidgetItem *curItem = m_leftFolderView->item(0);
+    //itemSelectedChanged(curItem,preItem);
+    //m_leftFolderView->setCurrentRow(0);
+
+    m_leftFolderView->takeItem(m_leftFolderView->currentRow());
+    delete preItem;
+
+    m_leftFolderView->setCurrentRow(0);
 }
 
 //void LeftView::handlePressFolderChg(QListWidgetItem *item)

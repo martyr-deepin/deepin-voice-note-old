@@ -17,6 +17,7 @@ public:
     LeftFolderList(FolderController *m_folderCtr);
     ~LeftFolderList();
     void addWidgetItem(FOLDER folder, QString searchKey);
+    void insertWidgetItemToTop(FOLDER folder, QString searchKey);
 
 //signals:
 //    void sigDelFolder(int delfolderID);

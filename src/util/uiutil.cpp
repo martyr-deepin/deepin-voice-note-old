@@ -127,12 +127,14 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
     if (millisecond / 1000 < 3600) {
         // At least need return 1 seconds.
         time = QDateTime::fromTime_t(std::max(1, qRound(millisecond / 1000.0))).toUTC().toString("mm:ss"); //ynb 20191109
+        time = time.replace(":", "\'").append("\'\'");
         //time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
-        time = QDateTime::fromTime_t(qRound(millisecond / 1000.0)).toUTC().toString("mm:ss");   //ynb 20191109
+        time = QString(tr("60:00"));
+        //time = QDateTime::fromTime_t(qRound(millisecond / 1000.0)).toUTC().toString("mm:ss");   //ynb 20191109
         //time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
     }
-    time = time.replace(":", "\'").append("\'\'");
+
     return time;
 }
 

@@ -46,6 +46,9 @@ public:
     void changeToClickMode();
     void changeToUnClickMode();
     void Init();
+    void copy(FolerWidgetItem *pSourceFolder);
+    QString getSearchText();
+
 
 public slots:
     void checkNameValid();

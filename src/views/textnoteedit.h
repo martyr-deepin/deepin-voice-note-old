@@ -17,10 +17,12 @@ public:
     TextNoteEdit(QWidget *parent = nullptr, NoteController *noteCtr = nullptr);
     ~TextNoteEdit();
 
+    QString getText();
     void setTextNote(NOTE textNote, QString searchKey);
     int getID();
     void searchText(QString searchKey);
     void readFromDatabase();
+    QString onlyreadFromDatabase();
 signals:
     void clicked();
     void focusOutSignal();

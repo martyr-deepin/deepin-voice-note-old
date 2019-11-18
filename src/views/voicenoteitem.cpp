@@ -147,7 +147,7 @@ void VoiceNoteItem::initUI()
 //    m_ctrlBtn->setHoverPic(":/m_waveformimage/icon/hover/play_hover.svg");
 //    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
 
-    m_playingButton = new PlayingButton();
+    m_playingButton = new PlayingButton(this);
     m_playingButton->setFixedSize(QSize(60, 60));
     m_waveform = new Waveform();
     m_waveform->setCurrDisplayType(WHOLE);
@@ -166,7 +166,7 @@ void VoiceNoteItem::initUI()
     m_menuBtn->setFixedSize(QSize(40, 40));
     //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
     //m_menuBtn->setIconSize(QSize(20,20));
-
+    //m_menuBtn->setFocusPolicy(Qt::NoFocus);
 //    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
 //    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
 //    m_menuBtn->setBtnPalette(pa);
@@ -212,11 +212,12 @@ void VoiceNoteItem::initConnection()
 
     //connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
-    connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
-
-    connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
-    connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
+    connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
+    connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
+    connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
+
+
 
 
 }

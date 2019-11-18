@@ -17,7 +17,8 @@ public:
     bool addFolder(FOLDER folderInfo);
 
     bool checkFolderNameExist(FOLDER folderInfo);
-    bool updateFolder(FOLDER folderInfo);
+    bool updateFolderName(FOLDER folderInfo);
+    bool updateFolderCreateTime(FOLDER folderInfo);
     QString getNextFolderName();
     bool deleteFolder(int folderId);
 };

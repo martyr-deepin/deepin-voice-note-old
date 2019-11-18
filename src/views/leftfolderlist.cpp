@@ -66,18 +66,25 @@ void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     item->setData(Qt::UserRole, 10);
 
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
-
-//    DStyledItemDelegate *itemDelegate = new DStyledItemDelegate(this);
-//    this->setItemDelegate(itemDelegate);
-
-
-    //创建编辑控件应该使用 itemDelegate 的 createEditor，不要自行创建一个 DLineEdit 来使用
-
     connect(this, SIGNAL(sigBoardPress()), folderItem, SLOT(tryToFouceout()));
 
     this->addItem(item);
     this->setItemWidget(item, folderItem);
 
+}
+
+void LeftFolderList::insertWidgetItemToTop(FOLDER folder, QString searchKey)
+{
+    QListWidgetItem *item=new QListWidgetItem();
+    item->setSizeHint(QSize(230,64));
+    item->setData(Qt::UserRole, 10);
+
+    FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
+    connect(this, SIGNAL(sigBoardPress()), folderItem, SLOT(tryToFouceout()));
+
+    int count = this->count();
+    this->insertItem(0,item);
+    this->setItemWidget(item, folderItem);
 }
 
 void LeftFolderList::handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)

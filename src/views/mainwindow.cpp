@@ -34,6 +34,8 @@ void MyMainWindow::initConnection()
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
     QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
+    QObject::connect(m_mainPage, SIGNAL(sigNoSearchResult()), this, SLOT(OnNoSearchResult()));
+
     connect(m_mainPage,SIGNAL(sigAllFolderDeleted()),this,SLOT(onAllFolderDeleted()));
 
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
@@ -167,6 +169,9 @@ void MyMainWindow::initStackedWidget()
     {
         m_stackedWidget->setCurrentIndex(2);
     }
+
+    m_SearchNonePage = new SearchNonePage(this);
+    m_stackedWidget->addWidget(m_SearchNonePage);
 }
 
 void MyMainWindow::showNoteDetail(NOTE note)
@@ -174,6 +179,7 @@ void MyMainWindow::showNoteDetail(NOTE note)
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
     m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
+    m_DetalTextBak = m_textNoteEdit->getText();
     m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     //m_replaceForReturn->setVisible(false);
@@ -181,14 +187,24 @@ void MyMainWindow::showNoteDetail(NOTE note)
 
 void MyMainWindow::showListPage()
 {
+    //bool ret = false;
     if(!m_searchEdit->text().isEmpty())
     {
         m_mainPage->searchFolder(m_searchEdit->text());
+//        if(ret)
+//        {
+//            m_stackedWidget->setCurrentIndex(0);
+//        }
     }
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     m_stackedWidget->setCurrentIndex(0);
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
+
+    if(m_DetalTextBak != m_textNoteEdit->getText())
+    {
+        m_mainPage->ChangeCurFolderToTop();
+    }
 }
 
 void MyMainWindow::handleSearchKey()
@@ -202,17 +218,25 @@ void MyMainWindow::handleSearchKey()
     else
     {
         Intancer::get_Intancer()->setSearchingFlag(false);
+        m_stackedWidget->setCurrentIndex(0);
     }
 
-    if (0 == m_stackedWidget->currentIndex())
+    bool ret = false;
+    if (0 == m_stackedWidget->currentIndex() || 3 == m_stackedWidget->currentIndex())
     {
         Intancer::get_Intancer()->setRenameRepeatFlag(false);
-        m_mainPage->searchFolder(searchKey);
+        ret = m_mainPage->searchFolder(searchKey);
+        if(ret)
+        {
+            m_stackedWidget->setCurrentIndex(0);
+        }
     }
     else
     {
         m_textNoteEdit->searchText(searchKey);
     }
+
+
 }
 
 void MyMainWindow::tryToSearch()
@@ -289,11 +313,22 @@ void MyMainWindow::changeTheme()
     m_detailPage->setPalette(pb);
 }
 
+void MyMainWindow::OnNoSearchResult()
+{
+    m_stackedWidget->setCurrentIndex(3);
+}
+
 void MyMainWindow::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
         case Qt::Key_Escape:
+        m_mainPage->cancleRecord();
+        break;
+        case Qt::Key_Space:
+        m_mainPage->cancleRecord();
+        break;
+        case Qt::Key_Enter:
         m_mainPage->cancleRecord();
         break;
     }
