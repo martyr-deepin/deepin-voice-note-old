@@ -50,8 +50,9 @@ void RightView::initUI()
 
     m_NoSearchResault = new DLabel(this);
     m_NoSearchResault->setText(QString(tr("无结果")));
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T4);
-    m_NoSearchResault->setFont(labelFont);
+//    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T4);
+//    m_NoSearchResault->setFont(labelFont);
+    DFontSizeManager::instance()->bind(m_NoSearchResault,DFontSizeManager::T4);
 //    QPalette pb = DApplicationHelper::instance()->palette(m_NoSearchResault);
 //    pb.setBrush(DPalette::Text, pb.color(QPalette::));
 //    m_NoSearchResault->setPalette(pb);
@@ -784,7 +785,7 @@ void RightView::resizeEvent(QResizeEvent * event)
         m_AddButtonLocked->move(6,this->height() - 78 - m_AddButtonLocked->height());
         //m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
 
-        m_AddButtonLocked->resize(this->width() - 20,m_AddButtonLocked->height());
+        m_AddButtonLocked->resize(this->width() - 15,m_AddButtonLocked->height());
         qDebug()<<"m_AddButtonLocked width:"<<m_AddButtonLocked->width();
         qDebug()<<"rightView width:"<<this->width();
         m_AddBtnBoard->setFixedWidth(this->width() - 10);

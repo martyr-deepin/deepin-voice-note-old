@@ -262,6 +262,10 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, voiceItem);
         voiceItem->init();
+        if(isAddByButton)
+        {
+            adjustWidgetItemWidth();
+        }
     }
 }
 

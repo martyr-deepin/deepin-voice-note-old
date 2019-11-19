@@ -135,8 +135,9 @@ void MySlider::initUI()
     m_sliderHandler->setPalette(pal);
     m_sliderHandler->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
 
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    m_sliderHandler->setFont(labelFont);
+//    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+//    m_sliderHandler->setFont(labelFont);
+    DFontSizeManager::instance()->bind(m_sliderHandler,DFontSizeManager::T8);
     m_sliderHandler->setContentsMargins(0, 8, 0, 0);
     m_mySliderBar = new MySliderBar(this);
     //m_sliderHandler = new SliderHandler(this);

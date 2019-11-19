@@ -55,17 +55,18 @@ void AddTextBtn::init()
 {
     if(nullptr != m_addBtn)
     {
-        m_addBtn->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T5));
+        DFontSizeManager::instance()->bind(m_addBtn,DFontSizeManager::T5);
+        //m_addBtn->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T5));
         m_addBtn->setText(tr("点击添加文字记事项"));
 
-        DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);
-        pb.setBrush(DPalette::ButtonText, pb.color(DPalette::TextTips));
+//        DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);
+//        pb.setBrush(DPalette::ButtonText, pb.color(DPalette::TextTips));
 
-        pb.setBrush(DPalette::Button, QColor(0,0,0,0));
-        pb.setBrush(DPalette::Light, QColor(0,0,0,0));
-        pb.setBrush(DPalette::Dark, QColor(0,0,0,0));
-        pb.setBrush(DPalette::Shadow, pb.color(DPalette::FrameBorder));
-        m_addBtn->setPalette(pb);
+//        pb.setBrush(DPalette::Button, QColor(0,0,0,0));
+//        pb.setBrush(DPalette::Light, QColor(0,0,0,0));
+//        pb.setBrush(DPalette::Dark, QColor(0,0,0,0));
+//        pb.setBrush(DPalette::Shadow, pb.color(DPalette::FrameBorder));
+//        m_addBtn->setPalette(pb);
     }
 }
 

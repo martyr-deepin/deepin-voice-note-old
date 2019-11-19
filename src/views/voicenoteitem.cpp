@@ -122,8 +122,9 @@ void VoiceNoteItem::initUI()
 //    QFont timeLabelFont;
 //    timeLabelFont.setFamily("PingFangSC-Regular");
 //    timeLabelFont.setPointSize(8);
-    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
-    m_timeLabel->setFont(timeLabelFont);
+//    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
+//    m_timeLabel->setFont(timeLabelFont);
+    DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_note.createTime));
     m_timeLabel->setFixedHeight(16);
 
@@ -185,8 +186,9 @@ void VoiceNoteItem::initUI()
 //    QFont font;
 //    font.setFamily("Avenir-Book");
 //    font.setPixelSize(15);
-    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-    m_voiceTimeLabel->setFont(font);
+//    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+//    m_voiceTimeLabel->setFont(font);
+    DFontSizeManager::instance()->bind(m_voiceTimeLabel,DFontSizeManager::T6);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
     m_hBoxLayout->addSpacing(6);

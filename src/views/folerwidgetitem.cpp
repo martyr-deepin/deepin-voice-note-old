@@ -92,8 +92,9 @@ void FolerWidgetItem::changeToClickMode()
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-        //m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
         m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
+        //m_nameLabel->setText(folderNameElided);
+        DFontSizeManager::instance()->bind(m_nameLabel,DFontSizeManager::T6);
         //m_BackGround->setVisible(false);
     }
 }
@@ -125,6 +126,7 @@ void FolerWidgetItem::changeToUnClickMode()
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
         m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
+        DFontSizeManager::instance()->bind(m_nameLabel,DFontSizeManager::T6);
     }
 }
 
@@ -160,8 +162,9 @@ void FolerWidgetItem::Init()
     m_nameLabel->setObjectName("nameLabel");
 
 
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-    m_nameLabel->setFont(labelFont);
+    //QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+    //m_nameLabel->setFont(labelFont);
+    DFontSizeManager::instance()->bind(m_nameLabel,DFontSizeManager::T6);
 
     DPalette pe;
     pe.setColor(DPalette::WindowText,pe.color(DPalette::TextTips));
@@ -197,8 +200,11 @@ void FolerWidgetItem::Init()
     m_createTimeLabel->setObjectName("createTimeLabel");
 
 
-    QFont createTimeFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    m_createTimeLabel->setFont(createTimeFont);
+
+//    QFont createTimeFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+//    m_createTimeLabel->setFont(createTimeFont);
+    DFontSizeManager::instance()->bind(m_createTimeLabel,DFontSizeManager::T8);
+
     DPalette pc;
     pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
     m_createTimeLabel->setPalette(pc);
@@ -270,7 +276,7 @@ void FolerWidgetItem::checkNameValid()
 
             QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
             m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
-
+            DFontSizeManager::instance()->bind(m_nameLabel,DFontSizeManager::T6);
             m_nameLabel->setVisible(true);
             m_lineEdit->setVisible(false);
             m_createTimeLabel->setVisible(true);

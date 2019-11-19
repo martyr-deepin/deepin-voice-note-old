@@ -62,8 +62,9 @@ void TextNoteItem::initUI()
 //    QFont timeLabelFont;
 //    timeLabelFont.setFamily("PingFangSC-Regular");
 //    timeLabelFont.setPointSize(8);
-    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
-    m_timeLabel->setFont(timeLabelFont);
+//    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
+//    m_timeLabel->setFont(timeLabelFont);
+    DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
     m_timeLabel->setFixedHeight(16);
 
     m_bgWidget = new DFrame(this);
@@ -104,8 +105,9 @@ void TextNoteItem::initUI()
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
 //    labelFont.setPointSize(9);
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    m_textEdit->setFont(labelFont);
+//    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+//    m_textEdit->setFont(labelFont);
+    DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
     m_textEdit->setFixedHeight(97);
 
     m_hBoxLayout->addSpacing(16);

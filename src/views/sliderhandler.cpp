@@ -27,8 +27,9 @@ void SliderHandler::initUI()
     m_timeLabel->setPalette(pal);
     m_timeLabel->setAlignment(Qt::AlignHCenter| Qt::AlignTop);
 
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    m_timeLabel->setFont(labelFont);
+//    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+//    m_timeLabel->setFont(labelFont);
+    DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T8);
 
     m_line = new QLabel(this);
     m_line->setGeometry(18, 28, 2, 64);
