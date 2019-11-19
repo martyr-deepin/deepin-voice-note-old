@@ -1,5 +1,6 @@
 #include "leftfolderlist.h"
 #include "intancer.h"
+#include "noteoper.h"   //Add bug2963
 
 #include <QFrame>
 #include <QDebug>
@@ -139,6 +140,17 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
                 {
                     emit sigAllFolderDeleted();
                 }
+                //Add start bug2963
+                //删除当前folde的所以对应文件级数据库的记录
+                QList<NOTE> listNote = NoteOper::getNoteListByFolderId(itemDel->m_folder.id);
+                for (int i=0; i<listNote.size();++i)
+                {
+                     if (!NoteOper::deleteNote(listNote.at(i)))
+                     {
+                         qDebug() << "error: delete note error";
+                     }
+                }
+                //Add end bug2963
                 //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
             }
             else {

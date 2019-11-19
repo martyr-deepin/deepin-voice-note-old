@@ -2,6 +2,8 @@
 #include <DStyleOptionButton>
 #include <DApplicationHelper>
 #include <QDebug>
+#include <DMessageManager>
+
 DWIDGET_USE_NAMESPACE
 
 AddFolderButton::AddFolderButton(QWidget *parent) : DFloatingButton(parent)

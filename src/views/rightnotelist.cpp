@@ -513,6 +513,19 @@ void RightNoteList::handleVScrollBarChanged(int value)
             }
         }
     }
+
+//    QWidget* ptmpWidget = this->itemWidget(this->item(this->count() -  1));
+//    if(ptmpWidget != nullptr)
+//    {
+//        if(value == 0)
+//        {
+//            adjustWidgetItemWidth();
+//        }
+//        else
+//        {
+//            ptmpWidget->setFixedSize(QSize(this->width() + 5,ptmpWidget->height()));
+//        }
+//    }
 }
 
 void RightNoteList::onDisableAddBtn()
@@ -752,14 +765,14 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     if (index == 1)
     {
         //==== start add 20191105  bug2162
-        NOTE_TYPE delType2 = m_currSelNote.noteType;
-        if(TEXT == delType2)
-        {
-            if (!UiUtil::autoDeleteTxt(m_currSelNote))
-            {
-                qDebug() << "error: delete file error";
-            }
-        }
+//        NOTE_TYPE delType2 = m_currSelNote.noteType;
+//        if(TEXT == delType2)
+//        {
+//            if (!UiUtil::autoDeleteTxt(m_currSelNote))
+//            {
+//                qDebug() << "error: delete file error";
+//            }
+//        }
 
         //==== start add 20191105  bug2162
         if (m_noteController->deleteNote(m_currSelNote))
@@ -1184,12 +1197,12 @@ void RightNoteList::adjustWidgetItemWidth()
     QListWidgetItem *ptmp = nullptr;
     for(int i = 0; i < this->count(); i++)
     {
-
         ptmp = this->item(i);
 
         QWidget* ptmpWidget = this->itemWidget(ptmp);
         int listWidth = this->width();
-        int newWidth = this->width() - 23;
+        //int newWidth = this->width() - 23;
+        int newWidth = this->width() - 18;
         ptmpWidget->setFixedSize(QSize(newWidth,ptmpWidget->height()));
 
         if(i != this->count() - 1)

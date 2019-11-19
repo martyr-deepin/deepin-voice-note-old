@@ -201,6 +201,11 @@ void Waveform::emptyWave()
     this->update();
 }
 
+void Waveform::startTimer()
+{
+
+}
+
 void Waveform::updateWave(float sample)
 {
     //sample = 4.0;
@@ -396,6 +401,7 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
     if(PART_SAMPLE != type)
     {
         m_Slider->hide();
+        //renderTimer->stop();
     }
 }
 

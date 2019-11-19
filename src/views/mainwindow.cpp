@@ -144,6 +144,7 @@ void MyMainWindow::initStackedWidget()
     m_detailPageLayout = new QVBoxLayout();
     m_detailPage->setLayout(m_detailPageLayout);
     m_textNoteEdit = new TextNoteEdit();
+    m_textNoteEdit->document()->setDocumentMargin(10.0);
     m_detailPageLayout->addWidget(m_textNoteEdit);
     m_stackedWidget->addWidget(m_detailPage);
     //m_stackedWidget->addWidget(m_textNoteEdit);

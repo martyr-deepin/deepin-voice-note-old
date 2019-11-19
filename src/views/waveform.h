@@ -58,6 +58,7 @@ public:
     void setCurrDisplayType(DISPLAY_TYPE);
     void setWavePosition(int pos);
     void emptyWave();
+    void startTimer();
                                                                                     
 public slots:
     void renderWave();

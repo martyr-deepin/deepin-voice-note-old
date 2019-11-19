@@ -11,7 +11,7 @@
 #include <QScrollBar>
 #include <DApplicationHelper>
 #include <DFontSizeManager>
-
+#include <QToolTip>
 
 RightView::RightView()
 {
@@ -713,18 +713,35 @@ void RightView::on_CheckRecodeCouldUse(bool coulduse)
 
 void RightView::ShowRecodeTip()
 {
-    m_pNotRecordToolTip = new DToolTip(QString(tr("未检测到录音设备")));
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-    m_pNotRecordToolTip->setFont(labelFont);
-    DPalette pb = DApplicationHelper::instance()->palette(m_pNotRecordToolTip);
-    pb.setBrush(DPalette::Text, pb.color(DPalette::ToolTipText));
-    pb.setBrush(DPalette::ToolTipText, pb.color(DPalette::ToolTipText));
-    pb.setBrush(DPalette::ToolTipBase, pb.color(DPalette::ToolTipBase));
-    m_pNotRecordToolTip->setPalette(pb);
+    //QWidget::setToolTip(QString(tr("未检测到录音设备")));
+    //QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
 
-    //m_pNotRecordToolTip->show(QPoint(m_addVoiceBtn->x() + m_addVoiceBtn->width() * 3/4,m_addVoiceBtn->y()),1000);
-    QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
-    m_pNotRecordToolTip->show(QPoint(pGlobal.x() + + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8),1500);
+    //QToolTip::setPalette() *ptips = new QToolTip(this);
+
+    DPalette pa = DApplicationHelper::instance()->palette(m_addVoiceBtn);
+    pa.setBrush(DPalette::ToolTipText, pa.color(DPalette::ToolTipText));
+//    pa.setBrush(DPalette::ToolTipText, QColor(0,0,0,255));
+
+    //QToolTip::setPalette(pa);
+    m_addVoiceBtn->setPalette(pa);
+    m_addVoiceBtn->setToolTip(QString(tr("未检测到录音设备")));
+    //QToolTip::showText(QPoint(pGlobal.x() + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8), QString(tr("未检测到录音设备")));
+
+    //m_pNotRecordToolTip->show(QPoint(pGlobal.x() + + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8),1500);
+//    m_pNotRecordToolTip = new DToolTip(QString(tr("未检测到录音设备")));
+////    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+////    m_pNotRecordToolTip->setFont(labelFont);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_pNotRecordToolTip);
+////    pb.setBrush(DPalette::Text, QColor(255,0,0,255));
+////    pb.setBrush(DPalette::Text, pb.color(DPalette::ToolTipText));
+////    pb.setBrush(DPalette::ToolTipText, QColor(255,0,0,255));
+////    pb.setBrush(DPalette::ToolTipText, pb.color(DPalette::ToolTipText));
+////    pb.setBrush(DPalette::ToolTipBase, pb.color(DPalette::ToolTipBase));
+//    m_pNotRecordToolTip->setPalette(pb);
+
+//    //m_pNotRecordToolTip->show(QPoint(m_addVoiceBtn->x() + m_addVoiceBtn->width() * 3/4,m_addVoiceBtn->y()),1000);
+//    QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
+//    m_pNotRecordToolTip->show(QPoint(pGlobal.x() + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8),1500);
 
 }
 

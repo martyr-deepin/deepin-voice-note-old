@@ -36,7 +36,7 @@ void voiceVolumeWatcher::run()
         {
             bool couldUse = false;
             couldUse = UiUtil::canMicrophoneInput();
-
+            //couldUse = true;
             if(couldUse != m_coulduse)
             {
                 //发送log信息到UI
