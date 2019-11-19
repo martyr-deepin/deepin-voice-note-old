@@ -401,7 +401,7 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
     if(PART_SAMPLE != type)
     {
         m_Slider->hide();
-        //renderTimer->stop();
+        renderTimer->stop();
     }
 }
 
