@@ -423,27 +423,3 @@ void RecordPage::renderLevel(const QAudioBuffer &buffer)
         m_waveform->updateWave(levels.at(i));
     }
 }
-
-//bool RecordPage::eventFilter(QObject *, QEvent *event)
-//{
-////    if (event->type() == QEvent::KeyPress) {
-////        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
-////        if (keyEvent == QKeySequence::Cancel) {
-////            exitRecord();
-////        }
-////    }
-
-//    return false;
-//}
-
-//void RecordPage::keyPressEvent(QKeyEvent *event)
-//{
-//    switch(event->key())
-//    {
-//        case Qt::Key_Escape:
-//            exitRecord();
-//        break;
-//    }
-//    return QWidget::keyPressEvent(event);
-//}

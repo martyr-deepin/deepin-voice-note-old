@@ -6,6 +6,7 @@
 #include <QTime>
 #include <DApplicationHelper>
 #include <QDebug>
+#include <DStyledItemDelegate>
 
 //#include <DStyledItemDelegate>
 LeftView::LeftView()
@@ -35,8 +36,9 @@ void LeftView::initUI()
 
     m_leftFolderView = new LeftFolderList(m_folderCtr);
 
-
-
+    DStyledItemDelegate* itemDelegate = new DStyledItemDelegate(m_leftFolderView);
+    itemDelegate->setBackgroundType(DStyledItemDelegate::NoBackground);
+    m_leftFolderView->setItemDelegate(itemDelegate);
 
     //m_leftFolderView->setFocusPolicy(Qt::NoFocus);//会隐去DListWidget的选择背景样式，但是由于失去焦点无法通过键盘上下滚动list。
     QList<FOLDER> folderList = m_folderCtr->getFolderList();
@@ -131,6 +133,7 @@ void LeftView::initConnection()
     connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &LeftView::changeTheme);
 
+    connect(m_leftFolderView, SIGNAL(sigNoResult()), this, SLOT(onNoResult())); //Add bug3136
 }
 
 void LeftView::updateFolderView()
@@ -153,7 +156,7 @@ void LeftView::updateFolderView()
     }
 }
 
-bool LeftView::searchFolder(QString searchKey)
+bool LeftView::searchFolder(QString searchKey, bool &hasNoFolder)
 {
     bool hasResult = false;
     m_currSearchKey = searchKey;
@@ -172,11 +175,13 @@ bool LeftView::searchFolder(QString searchKey)
         emit searchNote(folderId, searchKey);
         folderItem->changeToClickMode();
         hasResult = true;
+        hasNoFolder = false;
     }
     else
     {
         emit noResult();
         clearNoteList();
+        hasNoFolder = true;
     }
 
     return hasResult;
@@ -189,6 +194,12 @@ void LeftView::selectTheFirstFolderByCode()
         QListWidgetItem *pItem = m_leftFolderView->item(0);
         handleSelFolderChg(pItem);
     }
+}
+
+int LeftView::getAllFolderListNum()
+{
+    int num = m_folderCtr->getFolderList().count();
+    return num;
 }
 
 void LeftView::addFolder()
@@ -337,38 +348,45 @@ void LeftView::changeTheme()
     }
 }
 
-void LeftView::OnChangeCurFolderToTop()
+void LeftView::OnChangeCurFolderToTop(int folderID)
 {
-    QListWidgetItem *preItem = m_leftFolderView->currentItem();
-    FolerWidgetItem *pWidget = (FolerWidgetItem*)m_leftFolderView->itemWidget(preItem);
 
-    FOLDER newFolder;
-    newFolder.id = pWidget->m_folder.id;
-    newFolder.imgPath = pWidget->m_folder.imgPath;
-    newFolder.folderName = pWidget->m_folder.folderName;
-    newFolder.createTime = pWidget->m_folder.createTime;
-    //newFolder.createTime = QDateTime::currentDateTime();
+    QListWidgetItem* tmpItem = m_leftFolderView->item(0);
+    FolerWidgetItem *ptmpWidget = (FolerWidgetItem *)m_leftFolderView->itemWidget(tmpItem);
+    if(nullptr != ptmpWidget)
+    {
+        if(ptmpWidget->m_folder.id != folderID)
+        {
+            QListWidgetItem *preItem = m_leftFolderView->currentItem();
+            FolerWidgetItem *pWidget = (FolerWidgetItem*)m_leftFolderView->itemWidget(preItem);
 
-    QString searchKey = pWidget->getSearchText();
-//    if(!m_folderCtr->updateFolderCreateTime(newFolder))
-//    {
-//        qDebug()<<"change Folder time failed";
-//    }
+            FOLDER newFolder;
+            newFolder.id = pWidget->m_folder.id;
+            newFolder.imgPath = pWidget->m_folder.imgPath;
+            newFolder.folderName = pWidget->m_folder.folderName;
+            newFolder.createTime = pWidget->m_folder.createTime;
 
-    m_leftFolderView->insertWidgetItemToTop(newFolder, searchKey);
+            QString searchKey = pWidget->getSearchText();
 
-    Intancer::get_Intancer()->initMoveFolderCount();
+            m_leftFolderView->insertWidgetItemToTop(newFolder, searchKey);
 
-    //m_leftFolderView->setCurrentRow(0);
-    //QListWidgetItem *curItem = m_leftFolderView->item(0);
-    //itemSelectedChanged(curItem,preItem);
-    //m_leftFolderView->setCurrentRow(0);
+            Intancer::get_Intancer()->initMoveFolderCount();
 
-    m_leftFolderView->takeItem(m_leftFolderView->currentRow());
-    delete preItem;
+            m_leftFolderView->takeItem(m_leftFolderView->currentRow());
+            delete preItem;
 
-    m_leftFolderView->setCurrentRow(0);
+            m_leftFolderView->setCurrentRow(0);
+        }
+    }
 }
+
+//Add start bug3136
+void LeftView::onNoResult()
+{
+    emit noResult();
+    clearNoteList();
+}
+//Add end bug3136
 
 //void LeftView::handlePressFolderChg(QListWidgetItem *item)
 //{
@@ -394,6 +412,6 @@ void LeftView::clearNoteList()
 
 void LeftView::resizeEvent(QResizeEvent * event)
 {
-    m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 18);
+    m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 12);
     //m_greyboard->setFixedSize(this->size());
 }

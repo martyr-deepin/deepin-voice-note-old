@@ -180,6 +180,7 @@ void RightNoteList::initUI()
 //    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
 //    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
 
+    this->verticalScrollBar()->setSingleStep(10);//2260
     qApp->installEventFilter(this);
 
 }
@@ -273,7 +274,7 @@ void RightNoteList::addAddTextBtn()
 {
     if(nullptr == m_addTextBtn)
     {
-        m_addTextBtn = new AddTextBtn();
+        m_addTextBtn = new AddTextBtn(this);
         m_addTextBtn->init();
         connect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
         connect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
@@ -379,34 +380,35 @@ void RightNoteList::getDurtimgByRecodefinised(QString filepath)
     {
         m_Recodefinised = true;
         audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
+        //audioPlayer->setMedia(QUrl::fromLocalFile(""));
     }
 }
 // end ynb 20191109
 
-bool RightNoteList::eventFilter(QObject *o, QEvent *e)
-{
-    if(0 == o->objectName().compare(QString("QMainWindowClassWindow")))
-    {
-        switch (e->type())
-        {
-            case QEvent::MouseButtonRelease:
-            if((!m_arrowButtonPressed)&&(!m_actionHoverd))
-            {
-                hideDArrowMenu();
-                m_actionHoverd = false;
-                qDebug()<<"RightNoteList MouseButtonRelease hide";
-            }
-            //qDebug()<<"click filter";
-            break;
-            case QEvent::MouseButtonPress:
-                //qDebug()<<"RightNoteList::MouseButtonPress";
-                emit sigBoardPress();
-            break;
-        }
-    }
+//bool RightNoteList::eventFilter(QObject *o, QEvent *e)
+//{
+//    if(0 == o->objectName().compare(QString("QMainWindowClassWindow")))
+//    {
+//        switch (e->type())
+//        {
+//            case QEvent::MouseButtonRelease:
+//            if((!m_arrowButtonPressed)&&(!m_actionHoverd))
+//            {
+//                hideDArrowMenu();
+//                m_actionHoverd = false;
+//                qDebug()<<"RightNoteList MouseButtonRelease hide";
+//            }
+//            //qDebug()<<"click filter";
+//            break;
+//            case QEvent::MouseButtonPress:
+//                //qDebug()<<"RightNoteList::MouseButtonPress";
+//                emit sigBoardPress();
+//            break;
+//        }
+//    }
 
-    return DListWidget::eventFilter(o,e);
-}
+//    return DListWidget::eventFilter(o,e);
+//}
 
 void RightNoteList::paintEvent(QPaintEvent *event)
 {
@@ -424,6 +426,12 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
         m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, rect.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
         //m_TestSlider->setGeometry( waveformPoint.x(), waveformPoint.y() - 27, rect.width(), m_myslider->m_defaultHeight);
     }
+    //2719 fix liuyang
+    if(m_currClickTextNote.noteType == TEXT)
+    {
+        onCheckEditState(m_currClickTextNote);
+    }
+    //2719 fix liuyang
 }
 
 void RightNoteList::keyPressEvent(QKeyEvent *k)
@@ -582,10 +590,11 @@ void RightNoteList::onCheckEditState(NOTE note)
         }
     }
 
+    m_currClickTextNote = note; //2719 fix liuyang
 //    m_textClicked = true;
 //    if(m_textChanged && m_textClicked)
 //    {
-        emit sigChangeCurFolderToTop();
+        emit sigChangeCurFolderToTop(m_currClickTextNote.folderId);
 //    }
 //    m_textChanged = false;
 //    //m_textClicked = false;
@@ -833,7 +842,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                 emit sig_research();
             }
 
-            emit sigChangeCurFolderToTop();
+            emit sigChangeCurFolderToTop(m_currSelNote.folderId);
 
         }
         else {
@@ -898,6 +907,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         m_currPlayingItem = voiceNoteItem;
         if(!UiUtil::checkFileExist(filepath))
         {
+            m_noticeNotExistDialog->show();
             m_myslider->hide();
             return;
         }

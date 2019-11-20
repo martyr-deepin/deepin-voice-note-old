@@ -66,10 +66,10 @@ signals:
     void sig_research();
     void sig_checkCurPageVoiceForDelete();
     void positionByfinishRecord(qint64 position); //ynb 20191109
-    void sigChangeCurFolderToTop();
+    void sigChangeCurFolderToTop(int curFolder);
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e);
+    //bool eventFilter(QObject *o, QEvent *e);
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent * event);
     void keyPressEvent(QKeyEvent *k);
@@ -111,6 +111,7 @@ private:
     DArrowRectangle *m_arrowMenu;
     QListWidgetItem *m_currSelItem;
     NOTE m_currSelNote;
+    NOTE m_currClickTextNote; //2719 fix liuyang
     DDialog *m_delConfirmDialog;
     DDialog *m_noticeNotExistDialog;
     VoiceNoteItem *m_currPlayingItem;

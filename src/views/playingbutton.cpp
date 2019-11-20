@@ -155,7 +155,7 @@ void PlayingButton::setPlayDiseable()
 {
    if(nullptr != resumeButton)
    {
-       resumeButton->setDisabled(true);
+       resumeButton->DisableBtn();
        resumeButton->setDown(true);
    }
 }
@@ -164,7 +164,7 @@ void PlayingButton::setPlayEnable()
 {
     if(nullptr != resumeButton)
     {
-        resumeButton->setDisabled(false);
+        resumeButton->EnAbleBtn();
         resumeButton->setDown(false);
     }
 }

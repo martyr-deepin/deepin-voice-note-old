@@ -48,7 +48,7 @@ signals:
     void stopRecoiding();
     void sig_research();
     void sigStartWatchVolume();
-    void sigChangeCurFolderToTop();
+    void sigChangeCurFolderToTop(int folderID);
 
 public slots:
     void onShowNoResult();

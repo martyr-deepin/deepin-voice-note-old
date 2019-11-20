@@ -56,6 +56,11 @@ int TextNoteEdit::getID()
     return m_textNote.id;
 }
 
+int TextNoteEdit::getFolderID()
+{
+    return m_textNote.folderId;
+}
+
 void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 {
     emit clicked();
@@ -77,11 +82,17 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         return;
     }
     qDebug()<<"--------------------------------edit focusOutEvent";
-    emit focusOutSignal();
+    if(this->getText().isEmpty())
+    {
+        emit sigDelMyself();
+    }
+    //emit focusOutSignal();
+    DTextEdit::focusOutEvent(e);
 }
 void TextNoteEdit::initConnection()
 {
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);
+    connect(this->document(),SIGNAL(contentsChanged()),this,SLOT(textAreaChanged())); //Add 20191111
 }
 
 void TextNoteEdit::updateNote()
@@ -112,6 +123,26 @@ void TextNoteEdit::updateNote()
         emit sigTextChanged(m_textNote.contentText);
     }
 }
+
+//Add s 20191111
+void TextNoteEdit::textAreaChanged()
+{
+    QTextDocument *document=qobject_cast<QTextDocument*>(sender());
+    //document->adjustSize();
+    if(document){
+        QTextEdit *editor=qobject_cast<QTextEdit*>(document->parent()->parent());
+        if (editor){
+            //int newheight = document->size().rheight()+10;
+            int newheight = document->size().rheight();
+            if (newheight != editor->height()){
+                qDebug()<<"newheight:"<<newheight;
+                emit sigTextHeightChanged(newheight);
+               //editor->setFixedHeight(newheight);
+            }
+        }
+    }
+}
+//Add e 20191111
 
 void TextNoteEdit::searchText(QString searchKey)
 {

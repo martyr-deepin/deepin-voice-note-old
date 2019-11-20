@@ -168,6 +168,8 @@ void TextNoteItem::initConnection()
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
+    connect(m_textEdit, SIGNAL(sigDelMyself()), this, SLOT(tryToFouceout()));
+
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
@@ -409,8 +411,15 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
+
         //m_bakContent = elidedText;
-        m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+        //2719 fix liuyang
+        if(elidedText != m_textEdit->getText())
+        //2719 fix liuyang
+        {
+            m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+        }
+
         //m_textEdit->setReadOnly(true);
         QTextCursor cursor = m_textEdit->textCursor();
 //        cursor.movePosition(QTextCursor::End);

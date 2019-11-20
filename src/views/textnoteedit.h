@@ -20,6 +20,7 @@ public:
     QString getText();
     void setTextNote(NOTE textNote, QString searchKey);
     int getID();
+    int getFolderID();
     void searchText(QString searchKey);
     void readFromDatabase();
     QString onlyreadFromDatabase();
@@ -27,9 +28,12 @@ signals:
     void clicked();
     void focusOutSignal();
     void sigTextChanged(QString str);
+    void sigTextHeightChanged(int newHeight); //Add 20191111
+    void sigDelMyself();
 
 public slots:
     void updateNote();
+    void textAreaChanged(); //Add 20191111
 
 protected:
     void mousePressEvent(QMouseEvent *event);

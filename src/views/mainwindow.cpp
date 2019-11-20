@@ -11,6 +11,7 @@
 
 MyMainWindow::MyMainWindow()
 {
+    m_quit = false; //Add bug3470
     //qDebug()<<"2222222222222222222"<<UiUtil::canMicrophoneInput();
     initUI();
     initConnection();
@@ -48,6 +49,7 @@ void MyMainWindow::initConnection()
     connect(m_exitDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleCloseExitDialogClicked);
     connect(m_exitDialog, &DDialog::closed, this, &MyMainWindow::handleCloseExitDialog);
 
+    connect(m_mainPage, SIGNAL(stopRecoiding()), this, SLOT(stopRecoidingFunc()));  //Add bug3470
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &MyMainWindow::changeTheme);
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
@@ -102,6 +104,7 @@ void MyMainWindow::initTitleFrame()
 //    m_logo->setSizePolicy(spLogo);
     m_titleFrame->setLayout(titleLayout);
     m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
+    m_titleFrame->setFocusPolicy(Qt::ClickFocus);
 
     this->titlebar()->setCustomWidget(m_titleFrame, false);
 
@@ -165,10 +168,12 @@ void MyMainWindow::initStackedWidget()
     if(0 < m_mainPage->getFolderCount())
     {
         m_stackedWidget->setCurrentIndex(0);
+        m_searchEdit->setEnabled(true); //Add  bug3136
     }
     else
     {
         m_stackedWidget->setCurrentIndex(2);
+        m_searchEdit->setEnabled(false); //Add  bug3136
     }
 
     m_SearchNonePage = new SearchNonePage(this);
@@ -191,7 +196,8 @@ void MyMainWindow::showListPage()
     //bool ret = false;
     if(!m_searchEdit->text().isEmpty())
     {
-        m_mainPage->searchFolder(m_searchEdit->text());
+        bool hasNoFolder = false;
+        m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
 //        if(ret)
 //        {
 //            m_stackedWidget->setCurrentIndex(0);
@@ -199,12 +205,13 @@ void MyMainWindow::showListPage()
     }
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     m_stackedWidget->setCurrentIndex(0);
+    m_searchEdit->setEnabled(true); //Add  bug3136
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
 
     if(m_DetalTextBak != m_textNoteEdit->getText())
     {
-        m_mainPage->ChangeCurFolderToTop();
+        m_mainPage->ChangeCurFolderToTop(m_textNoteEdit->getFolderID());
     }
 }
 
@@ -220,17 +227,27 @@ void MyMainWindow::handleSearchKey()
     {
         Intancer::get_Intancer()->setSearchingFlag(false);
         m_stackedWidget->setCurrentIndex(0);
+        m_searchEdit->setEnabled(true); //Add  bug3136
     }
 
     bool ret = false;
     if (0 == m_stackedWidget->currentIndex() || 3 == m_stackedWidget->currentIndex())
     {
         Intancer::get_Intancer()->setRenameRepeatFlag(false);
-        ret = m_mainPage->searchFolder(searchKey);
+        bool hasNoFolder = false;
+        ret = m_mainPage->searchFolder(searchKey,hasNoFolder);
         if(ret)
         {
             m_stackedWidget->setCurrentIndex(0);
+            m_searchEdit->setEnabled(true); //Add  bug3136
         }
+//        else
+//        {
+////            if(hasNoFolder)
+////            {
+//                m_stackedWidget->setCurrentIndex(2);
+////            }
+//        }
     }
     else
     {
@@ -242,15 +259,18 @@ void MyMainWindow::handleSearchKey()
 
 void MyMainWindow::tryToSearch()
 {
-    if(Intancer::get_Intancer()->getRecodingFlag())
-    {
-        m_SearchDialog->show();
-        Intancer::get_Intancer()->setSearchingFlag(false);
-    }
-    else
-    {
-        handleSearchKey();
-    }
+//    if(0 < m_mainPage->getAllFolderListNumFromDatabase())
+//    {
+        if(Intancer::get_Intancer()->getRecodingFlag())
+        {
+            m_SearchDialog->show();
+            Intancer::get_Intancer()->setSearchingFlag(false);
+        }
+        else
+        {
+            handleSearchKey();
+        }
+//    }
 }
 
 void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
@@ -279,12 +299,15 @@ void MyMainWindow::clearSearchLine()
 void MyMainWindow::onAddFolderByInitPage()
 {
     m_stackedWidget->setCurrentIndex(0);
+    m_searchEdit->setEnabled(true); //Add  bug3136
     m_mainPage->trueAddFolder();
 }
 
 void MyMainWindow::onAllFolderDeleted()
 {
     m_stackedWidget->setCurrentIndex(2);
+    //m_searchEdit->clear(); //Add  bug3136
+    m_searchEdit->setEnabled(false); //Add  bug3136
 }
 
 void MyMainWindow::handleCloseExitDialog()
@@ -298,7 +321,8 @@ void MyMainWindow::handleCloseExitDialogClicked(int index, const QString &text)
     {
         //保存录音
         m_mainPage->saveRecorde();
-        qApp->quit();
+        m_quit = true;  //Del bug3470
+        //qApp->quit(); //Del bug3470
 
     }
     else
@@ -318,6 +342,16 @@ void MyMainWindow::OnNoSearchResult()
 {
     m_stackedWidget->setCurrentIndex(3);
 }
+
+//Add start bug3470
+void MyMainWindow::stopRecoidingFunc()
+{
+    if (m_quit)
+    {
+        qApp->quit();
+    }
+}
+//Add end bug3470
 
 void MyMainWindow::keyPressEvent(QKeyEvent *event)
 {

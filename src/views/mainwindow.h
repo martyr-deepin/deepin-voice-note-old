@@ -42,9 +42,9 @@ public slots:
     void handleCloseExitDialogClicked(int index, const QString &text);
     void changeTheme();
     void OnNoSearchResult();
+    void stopRecoidingFunc(); //Add bug3470
 
 protected:
-    //bool eventFilter(QObject *object, QEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
     void closeEvent(QCloseEvent* event);
@@ -72,6 +72,7 @@ private:
     InitEmptyPage *m_InitEmptyPage;
 
     DDialog *m_exitDialog;
+    bool m_quit;  //Add bug3470
 
     void initUI();
     void initConnection();

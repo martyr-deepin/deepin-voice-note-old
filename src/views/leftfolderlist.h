@@ -24,6 +24,7 @@ public:
 signals:
     void sigBoardPress();
     void sigAllFolderDeleted();
+    void sigNoResult(); //Add bug3136
 
 public slots:
     void handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);

@@ -25,7 +25,7 @@ public:
 
 public:
     void updateNoteList();
-    bool searchFolder(QString searchKey);
+    bool searchFolder(QString searchKey, bool &hasNoFolder);
     void updateFromDetal(int id);
     void cancleRecord();
     void selectCurFolder();
@@ -33,7 +33,8 @@ public:
     int getFolderCount();
     void trueAddFolder();
     void saveRecorde();
-    void ChangeCurFolderToTop();
+    void ChangeCurFolderToTop(int folderID);
+    int getAllFolderListNumFromDatabase();
 
 signals:
     void textEditClicked(NOTE textNote);
@@ -41,6 +42,7 @@ signals:
     void sig_research();
     void sigAllFolderDeleted();
     void sigNoSearchResult();
+    void stopRecoiding();  //Add bug3470
 
 public slots:
     void onAddFolder();

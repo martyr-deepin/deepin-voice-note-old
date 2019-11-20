@@ -13,7 +13,7 @@ LeftFolderList::LeftFolderList(FolderController *folderCtr)
     this->m_folderCtr = folderCtr;
     initUI();
     initConnection();
-    setFocusPolicy(Qt::NoFocus);
+    //setFocusPolicy(Qt::NoFocus);
     setSpacing(5);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setResizeMode(QListWidget::Adjust);
@@ -138,7 +138,17 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
 
                 if(this->count() == 0)
                 {
-                    emit sigAllFolderDeleted();
+                    //emit sigAllFolderDeleted(); //Del bug3136
+                    //Add start bug3136
+                    if (m_folderCtr->getFolderList().size() ==0)
+                    {
+                         emit sigAllFolderDeleted();
+                    }
+                    else
+                    {
+                         emit sigNoResult();
+                    }
+                    //Add end bug3163
                 }
                 //Add start bug2963
                 //删除当前folde的所以对应文件级数据库的记录

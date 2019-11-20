@@ -45,12 +45,13 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
     QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
+    QObject::connect(m_rightView, SIGNAL(stopRecoiding()), this, SIGNAL(stopRecoiding()));  //Add bug3470
     //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
     QObject::connect(m_leftView, SIGNAL(sigAddFolder()), this, SLOT(onAddFolder()));
     QObject::connect(m_rightView, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
     QObject::connect(m_rightView, SIGNAL(sigBoardPress()), m_leftView, SIGNAL(sigBoardPress()));
     QObject::connect(m_rightView, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
-    QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop()), m_leftView, SLOT(OnChangeCurFolderToTop()));
+    QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop(int)), m_leftView, SLOT(OnChangeCurFolderToTop(int)));
 
 
 
@@ -108,13 +109,13 @@ void MainPage::updateNoteList()
     m_rightView->updateNoteList();
 }
 
-bool MainPage::searchFolder(QString searchKey)
+bool MainPage::searchFolder(QString searchKey, bool &hasNoFolder)
 {
     bool result = false;
     m_rightView->stopAllPlayback();
 
     m_rightView->cancleRecord();
-    result = ((LeftView*)m_leftView)->searchFolder(searchKey);
+    result = ((LeftView*)m_leftView)->searchFolder(searchKey,hasNoFolder);
     return result;
 }
 
@@ -153,9 +154,14 @@ void MainPage::saveRecorde()
     m_rightView->OnlySaveRecord();
 }
 
-void MainPage::ChangeCurFolderToTop()
+void MainPage::ChangeCurFolderToTop(int folderID)
 {
-    m_leftView->OnChangeCurFolderToTop();
+    m_leftView->OnChangeCurFolderToTop(folderID);
+}
+
+int MainPage::getAllFolderListNumFromDatabase()
+{
+    return m_leftView->getAllFolderListNum();
 }
 
 void MainPage::onAddFolder()

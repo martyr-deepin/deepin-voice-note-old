@@ -130,7 +130,7 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
         time = time.replace(":", "\'").append("\'\'");
         //time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
-        time = QString(tr("60:00"));
+        time = QString(tr("60\'00\""));
         //time = QDateTime::fromTime_t(qRound(millisecond / 1000.0)).toUTC().toString("mm:ss");   //ynb 20191109
         //time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
     }
@@ -163,7 +163,7 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
 {
 
     src.replace("<","&#60;");
-    QString richText = "<p  style=\"font-size:%1px\">%2</p>";
+    //QString richText = "<p  style=\"font-size:%1px\">%2</p>";
     QString searchStr = "<font color=#349ae8>%1</font>";
     if(BLUE == color)
     {
@@ -198,9 +198,11 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     {
         destSrc = destSrc.replace(searchKey, searchStr.arg(searchKey));
     }
-    QString tmpText = richText.arg(fontSize).arg(destSrc);
 
-    return tmpText;
+    return destSrc;
+//    QString tmpText = richText.arg(fontSize).arg(destSrc);
+
+//    return tmpText;
 
 }
 
@@ -345,8 +347,10 @@ bool UiUtil::checkFileExtension(QString fileName, QString extension)
 bool UiUtil::checkFileExist(QString filePath)
 {
     QFile file(filePath);
-    return file.exists();
+    bool ret = file.exists();
+    return  ret;
 }
+
 
 DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &content, QWidget *parent)
 {

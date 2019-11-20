@@ -179,6 +179,7 @@ void FolerWidgetItem::Init()
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
     m_lineEdit = new RenameEdit(this);
+    //m_lineEdit->resize(QSize(160,36));
     m_lineEdit->setFixedSize(QSize(160,36));
     m_lineEdit->move(57,(this->height() - m_lineEdit->height())/2);
     m_lineEdit->setObjectName("nameEdit");
@@ -345,4 +346,11 @@ void FolerWidgetItem::changeTheme()
     //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
     pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_BackGround->setPalette(pb);
+
+    if(!m_clicked)
+    {
+        DPalette pc;
+        pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
+        m_createTimeLabel->setPalette(pc);
+    }
 }

@@ -69,6 +69,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
     renderTimer = new QTimer(this);
     connect(renderTimer, SIGNAL(timeout()), this, SLOT(renderWave()));
     renderTimer->start(SAMPLE_DURATION);
+    //renderTimer->start(SAMPLE_DURATION);
 }
 
 void Waveform::paintEvent(QPaintEvent *)

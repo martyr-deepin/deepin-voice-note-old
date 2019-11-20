@@ -370,6 +370,11 @@ void MySliderBar::mouseMoveEvent(QMouseEvent *event)
     update();
 }
 
+void MySliderBar::wheelEvent(QWheelEvent *e)
+{
+    qDebug()<<"MySliderBar::wheelEvent";
+}
+
 void MySliderBar::hoverTimout()
 {
     Q_D(MySliderBar);

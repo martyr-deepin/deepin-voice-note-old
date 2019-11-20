@@ -31,8 +31,9 @@ public:
 
     void sendSelectCurFolder();
     int getCurrSelectFolderId();
-    bool searchFolder(QString searchKey);
+    bool searchFolder(QString searchKey,bool &hasNoFolder);
     void selectTheFirstFolderByCode();
+    int getAllFolderListNum();
 
 signals:
     void selFolderIdChg(int folderId);
@@ -53,7 +54,8 @@ public slots:
     void viewDisabled();
     void viewEnabled();
     void changeTheme();
-    void OnChangeCurFolderToTop();
+    void OnChangeCurFolderToTop(int folderID);
+    void onNoResult(); //Add bug3136
     //void handlePressFolderChg(QListWidgetItem *item);
 
 private:

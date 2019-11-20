@@ -51,6 +51,20 @@ void MySlider::paintEvent(QPaintEvent *event)
     }
     else
     {
+        //start add by yuanshuai 20191119 bug 3360
+        if(m_mouseX < 25)
+        {
+            m_mouseX = 25;
+        }
+        else if(m_mouseX > (m_mySliderBar->width() + 25))
+        {
+            m_mouseX = m_mySliderBar->width() + 25;
+        }
+        else
+        {
+            //do nothing
+        }
+        //end
         m_sliderHandler->setGeometry(m_mouseX - m_sliderHandler->width()/2, 0, m_sliderHandler->width(), m_sliderHandler->height());
     }
 
@@ -106,8 +120,14 @@ void MySlider::mouseMoveEvent(QMouseEvent *event)
             int curSliderPos = m_mouseX - m_sliderHandler->width()/2;
             emit sigSliderPos(curSliderPos);
             qDebug()<<"curSliderPos:"<<curSliderPos;
+            this->update();
         }
     }
+}
+
+void MySlider::wheelEvent(QWheelEvent *e)
+{
+    qDebug()<<"MySlider::wheelEvent";
 }
 
 int MySlider::getHandlerWidth()
@@ -256,6 +276,16 @@ void MySlider::changeTheme()
 void MySlider::OnSliderMoved(int newTime)
 {
     qDebug()<<"newTime:"<<newTime;
+    //start add by yuanshuai 20191119 bug 3360
+    if(newTime < 0)
+    {
+        newTime = 0;
+    }
+    else if(newTime > m_mySliderBar->maximum())
+    {
+        newTime = m_mySliderBar->maximum();
+    }
+    //end
     QTime curTime(0, 0, 0);
     curTime = curTime.addSecs(newTime);
     QString curTimeStr;
