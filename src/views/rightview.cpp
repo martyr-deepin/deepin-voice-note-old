@@ -105,6 +105,8 @@ void RightView::initConnection()
     connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &RightView::changeTheme);
     connect(m_noteListWidget, &RightNoteList::positionByfinishRecord, this, &RightView::handleStopRecord2); //ynb 20191109
+
+    connect(m_noteListWidget, SIGNAL(sig_CheckFileExist()), this, SIGNAL(sigRvCheckFile()));    //by yuanshuai 20191120 2841
 }
 
 

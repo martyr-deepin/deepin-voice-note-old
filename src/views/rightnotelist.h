@@ -67,6 +67,7 @@ signals:
     void sig_checkCurPageVoiceForDelete();
     void positionByfinishRecord(qint64 position); //ynb 20191109
     void sigChangeCurFolderToTop(int curFolder);
+    void sig_CheckFileExist();//by yuanshuai 20191120 2841
 
 protected:
     //bool eventFilter(QObject *o, QEvent *e);
@@ -104,6 +105,8 @@ public slots:
     void onfouceOutAllTextItem();
     void getduration(qint64 position);   //获取音频总时间  ynb 20191109
 private:
+    void testQMediaPlayer();
+
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
     QAction *m_delAction;

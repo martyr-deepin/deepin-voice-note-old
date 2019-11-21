@@ -53,7 +53,9 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
     QObject::connect(m_rightView, SIGNAL(sigChangeCurFolderToTop(int)), m_leftView, SLOT(OnChangeCurFolderToTop(int)));
 
-
+    //start add by yuanshuai 20191121
+    QObject::connect(m_rightView, SIGNAL(sigRvCheckFile()), this, SIGNAL(sigMpCheckFile()));
+    //end
 
     //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
 }

@@ -8,6 +8,10 @@
 #include <uiutil.h>
 #include "intancer.h"
 #include <DApplicationHelper>
+//start add by yuanshuai 20191120 2841
+#include <DMessageManager>
+#include <DFloatingMessage>
+//end
 
 MyMainWindow::MyMainWindow()
 {
@@ -53,7 +57,9 @@ void MyMainWindow::initConnection()
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &MyMainWindow::changeTheme);
     connect(DApplicationHelper::instance(), &DApplicationHelper::newProcessInstance, this, &MyMainWindow::restoreminwindow);
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
-
+    //start add by yuanshuai 20191120 2841
+    connect(m_mainPage,SIGNAL(sigMpCheckFile()),this,SLOT(checkFileExist()));
+    //end
 }
 
 void MyMainWindow::initTitleFrame()
@@ -394,6 +400,15 @@ void MyMainWindow::restoreminwindow()
     }
 }
 
+//start add by yuanshuai 20191120 2841
+void MyMainWindow::checkFileExist()
+{
+    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::ResidentType,this);
+    pDFloatingMessage->setMessage(QString(tr("该语音记事项已删除")));
+    pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
+    DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
+}
+//end
 
 void MyMainWindow::closeEvent(QCloseEvent* event)
 {

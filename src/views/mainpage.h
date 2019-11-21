@@ -43,6 +43,9 @@ signals:
     void sigAllFolderDeleted();
     void sigNoSearchResult();
     void stopRecoiding();  //Add bug3470
+    //start add by yuanshuai 20191121
+    void sigMpCheckFile();
+    //end
 
 public slots:
     void onAddFolder();

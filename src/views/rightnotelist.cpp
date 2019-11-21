@@ -156,8 +156,9 @@ void RightNoteList::initUI()
 
     m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
-    m_noticeNotExistDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("该语音记事项已删除")), this);
-
+    //by yuanshuai 20191120 2841
+    //m_noticeNotExistDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("该语音记事项已删除")), this);
+    //end
     m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     audioPlayer = new QMediaPlayer(this);
@@ -189,9 +190,10 @@ void RightNoteList::initConnection()
     connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_delConfirmDialog, &DDialog::closed, this, &RightNoteList::handleCloseDialogClicked);
-    connect(m_noticeNotExistDialog, &DDialog::buttonClicked, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
-    connect(m_noticeNotExistDialog, &DDialog::closed, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
-
+    //start notify by yuanshuai 20191119
+    //connect(m_noticeNotExistDialog, &DDialog::buttonClicked, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
+    //connect(m_noticeNotExistDialog, &DDialog::closed, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
+    //end
     connect(audioPlayer,SIGNAL(durationChanged(qint64)),this,SLOT(getduration(qint64))); //ynb 20191109
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
@@ -570,6 +572,7 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
 {
     m_currSelNote = textNote;
     m_currSelItem = getListItemById(textNote.id);
+
     if(nullptr != m_currSelItem)
     {
         //m_delConfirmDialog->show();
@@ -616,6 +619,14 @@ void RightNoteList::getduration(qint64 position)
     }
 }
 //e ynbboy 20191109
+
+void RightNoteList::testQMediaPlayer()
+{
+    if(nullptr != audioPlayer)
+    {
+        //audioPlayer->setMedia("");
+    }
+}
 
 void RightNoteList::handleSaveAsItem(bool)
 {
@@ -839,7 +850,10 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             //删除成功并且处于搜索状态下的话，再次出发搜索
             if(Intancer::get_Intancer()->getSearchingFlag())
             {
-                emit sig_research();
+                if(this->count() == 0)//3133
+                {
+                    emit sig_research();
+                }
             }
 
             emit sigChangeCurFolderToTop(m_currSelNote.folderId);
@@ -898,7 +912,11 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
             m_currPlayingItem->onlySetResumeNoSig();
             m_currPlayingItem->setPlayDiseable();
             m_currPlayingItem->clearWaveformContent();
-            m_noticeNotExistDialog->show();
+            //by yuanshuai 20191120 2841
+            //m_noticeNotExistDialog->show();
+            emit sig_checkCurPageVoiceForDelete();
+            emit sig_CheckFileExist();
+            //end
             return;
         }
         audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
@@ -907,10 +925,15 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         m_currPlayingItem = voiceNoteItem;
         if(!UiUtil::checkFileExist(filepath))
         {
-            m_noticeNotExistDialog->show();
+            //by yuanshuai 20191120 2841
+            //m_noticeNotExistDialog->show();
+            emit sig_checkCurPageVoiceForDelete();
+            emit sig_CheckFileExist();
+            //end
             m_myslider->hide();
             return;
         }
+
     }
 
     connect(m_myslider,SIGNAL(sigSliderPos(int)),m_currPlayingItem->m_waveform,SLOT(OnSetWavePos(int)));

@@ -2,6 +2,7 @@
 #define FOLDERIMAGE_H
 
 #include <DWidget>
+#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
 class FolderImage : public DWidget

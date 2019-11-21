@@ -49,6 +49,7 @@ signals:
     void sig_research();
     void sigStartWatchVolume();
     void sigChangeCurFolderToTop(int folderID);
+    void sigRvCheckFile();//by yuanshuai 20191120 2841
 
 public slots:
     void onShowNoResult();

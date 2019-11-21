@@ -195,7 +195,7 @@ void FolerWidgetItem::Init()
     m_lineEdit->setVisible(false);
 
 
-    m_createTimeLabel = new QLabel(this);
+    m_createTimeLabel = new DLabel(this);
     m_createTimeLabel->setFixedSize(QSize(110,18));
     m_createTimeLabel->move(53,32);
     m_createTimeLabel->setObjectName("createTimeLabel");

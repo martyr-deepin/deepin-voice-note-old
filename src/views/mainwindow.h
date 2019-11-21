@@ -44,7 +44,9 @@ public slots:
     void OnNoSearchResult();
     void stopRecoidingFunc(); //Add bug3470
     void restoreminwindow();
-
+    //by yuanshuai 20191120 2841
+    void checkFileExist();
+    //end
 protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
