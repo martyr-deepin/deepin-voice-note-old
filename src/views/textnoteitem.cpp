@@ -174,7 +174,7 @@ void TextNoteItem::initConnection()
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
-    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
 
