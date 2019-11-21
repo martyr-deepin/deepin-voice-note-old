@@ -51,6 +51,7 @@ void MyMainWindow::initConnection()
 
     connect(m_mainPage, SIGNAL(stopRecoiding()), this, SLOT(stopRecoidingFunc()));  //Add bug3470
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &MyMainWindow::changeTheme);
+    connect(DApplicationHelper::instance(), &DApplicationHelper::newProcessInstance, this, &MyMainWindow::restoreminwindow);
 //    QObject::connect(m_returnBtn, &DImageButton::clicked, this, &MyMainWindow::showListPage);
 
 }
@@ -383,6 +384,16 @@ void MyMainWindow::changeEvent(QEvent * event)
     }
 
 }
+void MyMainWindow::restoreminwindow()
+{
+    Qt::WindowStates status = this->windowState();
+    if(status == Qt::WindowMinimized)
+    {
+        this->setWindowState(Qt::WindowActive);
+        this->activateWindow();
+    }
+}
+
 
 void MyMainWindow::closeEvent(QCloseEvent* event)
 {

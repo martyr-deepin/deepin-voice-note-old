@@ -27,7 +27,7 @@
 #include <DApplication>
 //#include <DApplicationSettings>
 //#include <DMainWindow>
-
+#include <DApplicationHelper>
 #include <DWidgetUtil>
 #include <QtDBus>
 #include <QDBusConnection>
@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
     a.setAttribute(Qt::AA_EnableHighDpiScaling);
     a.setApplicationDisplayName(QObject::tr("语音记事本"));
     a.setApplicationDescription(QObject::tr("语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。"));
-    if (!a.setSingleInstance("deepin-voice-note"))
+    if(!DApplicationHelper::instance()->setSingleInstance(a.applicationName(),DGuiApplicationHelper::UserScope))
     {
-        return 0;
+        return  0;
     }
 
     VoiceNotebookApp app(a);

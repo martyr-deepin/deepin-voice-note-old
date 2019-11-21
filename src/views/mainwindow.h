@@ -43,6 +43,7 @@ public slots:
     void changeTheme();
     void OnNoSearchResult();
     void stopRecoidingFunc(); //Add bug3470
+    void restoreminwindow();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
