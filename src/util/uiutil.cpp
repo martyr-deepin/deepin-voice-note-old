@@ -115,7 +115,8 @@ QString UiUtil::formatMillisecond(int millisecond)
 QString UiUtil::getRecordingSaveDirectory()
 {
     QDir musicDirectory = QDir(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first());
-    QString subDirectory = tr("voicenote");
+    QString subDirectory("voicenote");
+    //QString subDirectory = tr("voicenote");
     musicDirectory.mkdir(subDirectory);
 
     return musicDirectory.filePath(subDirectory);
@@ -130,7 +131,8 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
         time = time.replace(":", "\'").append("\'\'");
         //time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
-        time = QString(tr("60\'00\""));
+        time = QString("60\'00\"");
+        //time = QString(tr("60\'00\""));
         //time = QDateTime::fromTime_t(qRound(millisecond / 1000.0)).toUTC().toString("mm:ss");   //ynb 20191109
         //time = QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("mm:ss");
     }
@@ -359,7 +361,8 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
     //dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
     dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
-    dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
+    dialog->addButton(QString(QObject::tr("OK")), false, DDialog::ButtonNormal);
+    //dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);
 }

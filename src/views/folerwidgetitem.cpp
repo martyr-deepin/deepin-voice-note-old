@@ -61,6 +61,7 @@ void FolerWidgetItem::changeToEditMode()
     m_lineEdit->lineEdit()->setFocus();
     m_lineEdit->lineEdit()->selectAll();
     m_lineEdit->setToEdited(true);
+
     //m_lineEdit->setFocus(Qt::OtherFocusReason);
 
     m_createTimeLabel->setVisible(false);

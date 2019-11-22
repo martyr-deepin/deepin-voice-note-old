@@ -52,7 +52,8 @@ void RightView::initUI()
     this->resize(548,this->height());
 
     m_NoSearchResault = new DLabel(this);
-    m_NoSearchResault->setText(QString(tr("无结果")));
+    m_NoSearchResault->setText(QString(tr("No Result")));
+    //m_NoSearchResault->setText(QString(tr("无结果")));
 //    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T4);
 //    m_NoSearchResault->setFont(labelFont);
     DFontSizeManager::instance()->bind(m_NoSearchResault,DFontSizeManager::T4);
@@ -725,7 +726,8 @@ void RightView::ShowRecodeTip()
 //    pa.setBrush(DPalette::ToolTipText, pa.color(DPalette::ToolTipText));
 
 //    m_addVoiceBtn->setPalette(pa);
-    m_addVoiceBtn->setToolTip(QString(tr("未检测到录音设备")));
+    m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
+    //m_addVoiceBtn->setToolTip(QString(tr("未检测到录音设备")));
 //    QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
 //    QToolTip::showText(QPoint(pGlobal.x() + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8), QString(tr("未检测到录音设备")));
 

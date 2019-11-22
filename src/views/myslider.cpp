@@ -295,7 +295,8 @@ void MySlider::OnSliderMoved(int newTime)
     }
     else
     {
-        curTimeStr = curTime.toString(tr("mm:ss"));
+        curTimeStr = curTime.toString("mm:ss");
+        //curTimeStr = curTime.toString(tr("mm:ss"));
     }
 
     m_sliderHandler->setTime(curTimeStr);

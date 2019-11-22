@@ -53,14 +53,18 @@ bool FolderController::updateFolderCreateTime(FOLDER folderInfo)
 QString FolderController::getNextFolderName()
 {
     QStringList folderNameList = FolderOper::getFolderNameList();
-    QString folderName = DEFAULT_FOLDER_NAME;
+    QString folderName = QString(QObject::tr("New Folder"));
+    //QString folderName = QString(QObject::tr("新记事"));
+
+    //QString folderName = DEFAULT_FOLDER_NAME;
     int i = 1;
     bool findFlag = false;
     while (!findFlag)
     {
         if (folderNameList.contains(folderName))
         {
-            folderName = DEFAULT_FOLDER_NAME + QString::number(i);
+            folderName = folderName + QString::number(i);
+            //folderName = DEFAULT_FOLDER_NAME + QString::number(i);
             i++;
         }
         else {

@@ -17,7 +17,8 @@ FileExistsDialog::~FileExistsDialog()
 
 void FileExistsDialog::initUI()
 {
-    m_dialog = UiUtil::createChooseDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("否")), QString(tr("是")));
+    m_dialog = UiUtil::createChooseDialog(QString(""), QString(tr("The file name already exists. want overwritten?")), nullptr, QString(tr("No")), QString(tr("Yes")));
+    //m_dialog = UiUtil::createChooseDialog(QString(""), QString(tr("文件名已存在，是否覆盖？")), nullptr, QString(tr("否")), QString(tr("是")));
     m_dialog->hide();
 }
 

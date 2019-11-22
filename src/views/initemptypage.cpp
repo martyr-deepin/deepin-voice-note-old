@@ -52,7 +52,8 @@ void InitEmptyPage::resizeEvent(QResizeEvent * event)
 
 void InitEmptyPage::init()
 {
-    m_PushButton = new DSuggestButton(QString(tr("新建记事本")),this);
+    m_PushButton = new DSuggestButton(QString(tr("Create Folder")),this);
+    //m_PushButton = new DSuggestButton(QString(tr("新建记事本")),this);
     m_PushButton->setFixedSize(QSize(302,36));
 //    m_PushButton->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T6));
     DFontSizeManager::instance()->bind(m_PushButton,DFontSizeManager::T6);
@@ -64,7 +65,8 @@ void InitEmptyPage::init()
     //m_Text->resize(QSize(240,18));
     //m_Text->setFixedSize(QSize(240,18));
     m_Text->setFixedSize(QSize(500,18));
-    m_Text->setText(QString(tr("新建一个记事本后，可以开始记录语音及文字")));
+    m_Text->setText(QString(tr("After create a folder, you can start your note")));
+    //m_Text->setText(QString(tr("新建一个记事本后，可以开始记录语音及文字")));
     m_Text->setAlignment(Qt::AlignCenter);
     //m_Text->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T8));
     DFontSizeManager::instance()->bind(m_Text,DFontSizeManager::T8);

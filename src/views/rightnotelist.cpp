@@ -73,8 +73,10 @@ void RightNoteList::createDArrowMenu()
     //if(nullptr == m_arrowMenu && nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
     {
         m_contextMenu = new MMenu;
-        m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
-        m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
+        m_saveAsAction = new QAction(tr("Save As TXT"),this);
+        //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
+        m_delAction = new QAction(tr("Delete"),this);
+        //m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
         m_contextMenu->addAction(m_saveAsAction);
         m_contextMenu->addAction(m_delAction);
         //m_contextMenu->setFixedSize(QSize(162,89));
@@ -122,11 +124,13 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
         m_contextMenu->setVisible(true);
         if (type == NOTE_TYPE::TEXT)
         {
-            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
+            m_saveAsAction->setText(QString(tr("Save As TXT")));
+            //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
         }
         else
         {
-            m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+            m_saveAsAction->setText(QString(tr("Save As MP3")));
+            //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);
         //m_arrowMenu->move(x,y);
@@ -154,7 +158,8 @@ void RightNoteList::initUI()
 
     createDArrowMenu();
 
-    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this note?")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
+    //m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
     //by yuanshuai 20191120 2841
     //m_noticeNotExistDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("该语音记事项已删除")), this);
@@ -639,12 +644,14 @@ void RightNoteList::handleSaveAsItem(bool)
     saveInfo.note = m_currSelNote;
     if (TEXT == m_currSelNote.noteType)
     {
-        saveInfo.windowTitle = QString(tr("另存为TXT"));
+        saveInfo.windowTitle = QString(tr("Save as TXT"));
+        //saveInfo.windowTitle = QString(tr("另存为TXT"));
         saveInfo.fileExtension = QString(".txt");
     }
     else
     {
-        saveInfo.windowTitle = QString(tr("另存为MP3"));
+        saveInfo.windowTitle = QString(tr("Save as MP3"));
+        //saveInfo.windowTitle = QString(tr("另存为MP3"));
         saveInfo.fileExtension = QString(".mp3");
     }
     showFileDialog(saveInfo);
@@ -664,16 +671,20 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         QString newName;
         if (TEXT == m_currSelNote.noteType) {
             fileDialog.setDefaultSuffix("txt");
-            fileDialog.setNameFilter(tr("TXT(*.txt)"));
+            fileDialog.setNameFilter("TXT(*.txt)");
+            //fileDialog.setNameFilter(tr("TXT(*.txt)"));
             scanData(dir,".txt", files);
             getNewName(newName,files);
-            fileDialog.selectFile("记事本" + newName);
+            fileDialog.selectFile(tr("Note") + newName);
+            //fileDialog.selectFile("记事本" + newName);
         }else {
             fileDialog.setDefaultSuffix("mp3");
-            fileDialog.setNameFilter(tr("MP3(*.mp3)"));
+            fileDialog.setNameFilter("MP3(*.mp3)");
+            //fileDialog.setNameFilter(tr("MP3(*.mp3)"));
             scanData(dir,".mp3", files);
             getNewName(newName,files);
-            fileDialog.selectFile("记事本" + newName);
+            fileDialog.selectFile(tr("Note") + newName);
+            //fileDialog.selectFile("记事本" + newName);
         }
 
     //fileDialog->setFilter(QDir::filePath());
@@ -685,7 +696,8 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
         QString filePath = path;
         if (fileName.isEmpty())
         {
-            DMessageBox::information(this, tr(""), tr("文件名不能为空"));
+            DMessageBox::information(this, tr(""), tr("File name cannot be empty"));
+            //DMessageBox::information(this, tr(""), tr("文件名不能为空"));
 
         }
 //        else if (!UiUtil::checkFileExtension(fileName, saveInfo.fileExtension))
@@ -950,7 +962,8 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
 //        // - m_myslider->m_handleTextHeight
 //        qDebug()<<"play y:"<<waveformPoint.y() - 27;
 //        qDebug()<<"before m_currPlayingItem->pos().y():"<<m_currPlayingItem->pos().y();
-        m_myslider->setTimeText(QString(tr("00:00")));
+        m_myslider->setTimeText(QString("00:00"));
+        //m_myslider->setTimeText(QString(tr("00:00")));
         m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
         m_myslider->showSlider();
         curWaveformPosWidth = waveformPos.width() + m_myslider->getHandlerWidth();
@@ -1109,7 +1122,8 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
         if (0 == position)
         {
             QTime curTime(0, 0, 0);
-            QString curTimeStr = curTime.toString(tr("mm:ss"));
+            QString curTimeStr = curTime.toString("mm:ss");
+            //QString curTimeStr = curTime.toString(tr("mm:ss"));
             m_myslider->setTimeText(curTimeStr);
         }
 
@@ -1145,7 +1159,8 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
             }
             else
             {
-                curTimeStr = curTime.toString(tr("mm:ss"));
+                curTimeStr = curTime.toString("mm:ss");
+                //curTimeStr = curTime.toString(tr("mm:ss"));
             }
 
             m_myslider->setTimeText(curTimeStr);
@@ -1209,11 +1224,13 @@ void RightNoteList::handleSaveFileEnd(bool result)
 
     if (result)
     {
-        title = tr("保存文件成功!");
+        title = tr("Save file successfully!");
+        //title = tr("保存文件成功!");
     }
     else
     {
-        title = tr("保存文件失败!");
+        title = tr("Saving file failed!");
+        //title = tr("保存文件失败!");
     }
     m_saveFileEndDialog->setTitle(title);
     m_saveFileEndDialog->show();

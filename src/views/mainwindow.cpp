@@ -26,8 +26,10 @@ void MyMainWindow::initUI() {
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
-    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
-    m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
+    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Searching in the recording interrupts the recording. Do you want to continue?")), nullptr, QString(tr("No")), QString(tr("Yes")));
+//    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
+    m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Currently recording, is the recording terminated?")), nullptr, QString(tr("Cancel")), QString(tr("Stop")));
+    //m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
     initTitleBar();
     initCentralWidget();
 }
@@ -404,7 +406,8 @@ void MyMainWindow::restoreminwindow()
 void MyMainWindow::checkFileExist()
 {
     DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::ResidentType,this);
-    pDFloatingMessage->setMessage(QString(tr("该语音记事项已删除")));
+    pDFloatingMessage->setMessage(QString(tr("The voice memo has been deleted")));
+    //pDFloatingMessage->setMessage(QString(tr("该语音记事项已删除")));
     pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
     DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
 }

@@ -402,7 +402,8 @@ void RecordPage::resumeRecord()
 
 QString RecordPage::generateRecordingFilename()
 {
-    return QString("%1 (%2).mp3").arg(tr("New voice note")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss"));
+    return QString("%1 (%2).mp3").arg("New voice note").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss"));
+    //return QString("%1 (%2).mp3").arg(tr("New voice note")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss"));
     //return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).wav").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
     //return QDir(UiUtil::getRecordingSaveDirectory()).filePath(QString("%1 (%2).mp3").arg(tr("New recording")).arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")));
 }
