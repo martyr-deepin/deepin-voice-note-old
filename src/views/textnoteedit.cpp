@@ -17,6 +17,12 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
     }
     m_textNote = textNote;
     initConnection();
+
+//    QTextEdit *tmp = new QTextEdit(this);
+//    tmp->setFixedSize(QSize(200,200));
+//    tmp->move(200,0);
+
+    setLineHeight(24);
 }
 
 TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
@@ -31,6 +37,7 @@ TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit
     }
 
     initConnection();
+    setLineHeight(24);
 }
 
 
@@ -48,7 +55,9 @@ void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
     m_searchKey = searchKey;
     m_textNote = textNote;
-    this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
+    this->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
+    //this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
+    setLineHeight(24);
 }
 
 int TextNoteEdit::getID()
@@ -147,13 +156,16 @@ void TextNoteEdit::textAreaChanged()
 void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
-    this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
+    this->setText(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
+    //this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
+    setLineHeight(24);
 }
 
 void TextNoteEdit::readFromDatabase()
 {
     m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
     this->setText(m_textNote.contentText);
+    setLineHeight(24);
 }
 
 QString TextNoteEdit::onlyreadFromDatabase()
@@ -161,3 +173,26 @@ QString TextNoteEdit::onlyreadFromDatabase()
     return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
 }
 
+void TextNoteEdit::setLineHeight(int value)
+{
+    QTextCursor textCursor = this->textCursor();
+    QTextBlockFormat textBlockFormat;
+    textBlockFormat.setLineHeight(value, QTextBlockFormat::FixedHeight);//设置固定行高
+    textCursor.setBlockFormat(textBlockFormat);
+    this->setTextCursor(textCursor);
+}
+
+int TextNoteEdit::getLineHeight()
+{
+    int height = 0;
+    QTextDocument *document=qobject_cast<QTextDocument*>(sender());
+    //document->adjustSize();
+    if(document){
+        QTextEdit *editor=qobject_cast<QTextEdit*>(document->parent()->parent());
+        if (editor){
+            //int newheight = document->size().rheight()+10;
+            height = document->size().rheight();
+        }
+    }
+    return height;
+}

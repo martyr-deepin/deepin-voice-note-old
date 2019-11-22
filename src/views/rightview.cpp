@@ -272,6 +272,7 @@ void RightView::handleSelFolderChg(int folderId)
     m_noteListWidget->delAllEmptyText();
     m_currFolderId = folderId;
     updateNoteList();
+    m_noteListWidget->OnlyTryToFouceOutEveryText();
     if(-1 != folderId)
     {
         m_addVoiceBtn->setVisible(true);

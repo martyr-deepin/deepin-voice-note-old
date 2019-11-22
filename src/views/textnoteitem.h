@@ -43,6 +43,7 @@ public:
     QPlainTextEdit *m_plainTextEdit;
     //DImageButton *m_menuBtn;
     MenuButton *m_menuBtn;
+    MenuButton *m_detailBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
@@ -73,6 +74,8 @@ public slots:
     void tryToFouceout();
     void textEditChanged(QString str);
     void changeTheme();
+    void onTextHeightChanged(int newheight);
+    void OnToDetalPage();
 
 protected:
     void resizeEvent(QResizeEvent * event);

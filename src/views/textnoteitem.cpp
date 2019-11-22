@@ -72,9 +72,9 @@ void TextNoteItem::initUI()
     pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
     m_bgWidget->setPalette(pb);
 
-//    m_bgWidget->setFixedHeight(124);//orig
-//    m_bgWidget->setFixedHeight(93);
-    m_bgWidget->setFixedHeight(105);
+
+    //m_bgWidget->setFixedHeight(105);
+    m_bgWidget->setFixedHeight(140);
 //    QSizePolicy sp1 = m_bgWidget->sizePolicy();
 //    sp.setVerticalPolicy(QSizePolicy::Fixed);
 //    m_bgWidget->setSizePolicy(sp1);
@@ -97,7 +97,7 @@ void TextNoteItem::initUI()
 
     m_bgWidget->setObjectName("widget");
     m_hBoxLayout = new QHBoxLayout(m_bgWidget);
-    m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
+    m_hBoxLayout->setContentsMargins(14, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
 
@@ -108,11 +108,13 @@ void TextNoteItem::initUI()
 //    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
 //    m_textEdit->setFont(labelFont);
     DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
-    m_textEdit->setFixedHeight(97);
+    //m_textEdit->setFixedHeight(97);
+    //m_textEdit->setFixedHeight(124);
+    m_textEdit->setFixedHeight(133);
 
-    m_hBoxLayout->addSpacing(16);
+    //m_hBoxLayout->addSpacing(6);
     m_hBoxLayout->addWidget(m_textEdit);
-    m_hBoxLayout->addSpacing(10);
+    m_hBoxLayout->addSpacing(13);
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
@@ -122,7 +124,7 @@ void TextNoteItem::initUI()
 //    labelFontForWidth.setPointSize(10);
     QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (m_textEdit->width() + 26) * 5, m_isTextConverted);
-    QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 536 * 5, m_isTextConverted);
+    //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 536 * 5, m_isTextConverted);
     qDebug() << "m_isTextConverted: " << m_isTextConverted;
     if (m_isTextConverted)
     {
@@ -135,7 +137,8 @@ void TextNoteItem::initUI()
     m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     m_MenuBtnBackground = new DWidget(m_bgWidget);
-    m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
+    //m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
+    m_MenuBtnBackground->setFixedSize(QSize(48,m_bgWidget->height()));
 
     //m_menuBtn = new MenuButton(m_MenuBtnBackground);
     m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_MenuBtnBackground);
@@ -145,6 +148,7 @@ void TextNoteItem::initUI()
 //   m_menuBtn->setBtnPalette(pa);
     //m_menuBtn = new DImageButton(m_MenuBtnBackground);
     m_menuBtn->setFixedSize(QSize(40, 40));
+    m_menuBtn->move(0,13);
     //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
     //m_menuBtn->setIconSize(QSize(20,20));
     //m_menuBtn->setIconSize(QSize(40,18));
@@ -152,6 +156,13 @@ void TextNoteItem::initUI()
     m_menuBtn->setDisabled(true);
 
 
+    m_detailBtn = new MenuButton(m_MenuBtnBackground);
+    m_detailBtn->setFixedSize(QSize(40, 40));
+    m_detailBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/detail-normal.svg", QSize(15, 14),qApp)));
+    m_detailBtn->setIconSize(QSize(15,14));
+    m_detailBtn->move(0,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+
+    //onTextHeightChanged(m_textEdit->getLineHeight());
 
     m_hBoxLayout->addWidget(m_MenuBtnBackground);
     m_hBoxLayout->addSpacing(8);
@@ -169,6 +180,8 @@ void TextNoteItem::initConnection()
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit, SIGNAL(sigDelMyself()), this, SLOT(tryToFouceout()));
+    connect(m_textEdit, SIGNAL(sigTextHeightChanged(int)), this, SLOT(onTextHeightChanged(int)));
+
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
@@ -177,6 +190,7 @@ void TextNoteItem::initConnection()
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
+    connect(m_detailBtn, SIGNAL(clicked()), this, SLOT(OnToDetalPage()));
 
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &TextNoteItem::changeTheme);
 
@@ -206,6 +220,8 @@ void TextNoteItem::readFromDatabase()
     //m_textEdit->readFromDatabase();
     m_bakContent = m_textEdit->onlyreadFromDatabase();
     m_textEdit->setText(m_bakContent);
+    m_textEdit->setLineHeight(24);
+    //onTextHeightChanged(m_textEdit->getLineHeight());
     handleTextEditFocusOut();
 }
 
@@ -264,17 +280,25 @@ void TextNoteItem::handleTextEditClicked()
 {
     if(!Intancer::get_Intancer()->getTryToDelEmptyTextNote())
     {
-        m_bakContent = m_textEdit->toPlainText();
-        if (m_isTextConverted)
+        if(m_isTextConverted)
         {
-            emit textEditClicked(m_textNote);
+            m_textEdit->setReadOnly(true);
         }
         else
         {
             m_textEdit->setReadOnly(false);
-            m_isEdited = true;
-            emit textEditTrueClicked(m_textNote);
         }
+//        m_bakContent = m_textEdit->toPlainText();
+//        if (m_isTextConverted)
+//        {
+//            emit textEditClicked(m_textNote);
+//        }
+//        else
+//        {
+//            m_textEdit->setReadOnly(false);
+//            m_isEdited = true;
+//            emit textEditTrueClicked(m_textNote);
+//        }
     }
 }
 
@@ -297,6 +321,8 @@ void TextNoteItem::handleTextEditFocusOut()
     //this->m_textEdit->readFromDatabase();   //2567
     m_bakContent = m_textEdit->onlyreadFromDatabase();
     m_textEdit->setText(m_bakContent);
+    m_textEdit->setLineHeight(24);
+    //onTextHeightChanged(m_textEdit->getLineHeight());
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;
 //    if(m_bakContent != m_textNote.contentText)
@@ -317,7 +343,7 @@ void TextNoteItem::handleTextEditFocusOut()
 //        labelFontForWidth.setPointSize(10);
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, m_textEdit->width() * 5, m_isTextConverted);
-        QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
+        //QString elidedText = UiUtil::getElidedText(m_textEdit->font(), m_textNote.contentText, (m_textEdit->width() - 10) * 5, m_isTextConverted);
 
         if (m_isTextConverted)
         {
@@ -332,8 +358,10 @@ void TextNoteItem::handleTextEditFocusOut()
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
-        QString txt = UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE);
+        QString txt = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
         m_textEdit->setText(txt);
+        m_textEdit->setLineHeight(24);
+        //onTextHeightChanged(m_textEdit->getLineHeight());
         m_bakContent = m_textEdit->toPlainText();
         m_isEdited = false;
         //m_textEdit->setHtml(txt);
@@ -387,6 +415,26 @@ void TextNoteItem::changeTheme()
     m_bgWidget->setPalette(pb);
 }
 
+void TextNoteItem::onTextHeightChanged(int newheight)
+{
+    qDebug()<<"newheight:"<<newheight;
+    if(m_textEdit->height() <= newheight)
+    {
+        m_detailBtn->setVisible(true);
+        m_isTextConverted = true;
+    }
+    else
+    {
+        m_detailBtn->setVisible(false);
+        m_isTextConverted = false;
+    }
+}
+
+void TextNoteItem::OnToDetalPage()
+{
+    emit textEditClicked(m_textNote);
+}
+
 void TextNoteItem::resizeEvent(QResizeEvent * event)
 {
     int maxwidth = event->size().width();
@@ -397,7 +445,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
 //        labelFontForWidth.setFamily("PingFangSC-Regular");
 //        labelFontForWidth.setPointSize(10);
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
-        QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (maxwidth - 21) * 5, m_isTextConverted);
+        //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (maxwidth - 21) * 5, m_isTextConverted);
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
         qDebug() << "m_isTextConverted: " << m_isTextConverted;
         if (m_isTextConverted)
@@ -413,11 +461,14 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
 
 
         //m_bakContent = elidedText;
+        if(m_textNote.contentText != m_textEdit->getText())
         //2719 fix liuyang
-        if(elidedText != m_textEdit->getText())
+        //if(elidedText != m_textEdit->getText())
         //2719 fix liuyang
         {
-            m_textEdit->setText(UiUtil::getHtmlText(elidedText, 12, m_searchKey, BLUE));
+            m_textEdit->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE));
+            m_textEdit->setLineHeight(24);
+            //onTextHeightChanged(m_textEdit->getLineHeight());
         }
 
         //m_textEdit->setReadOnly(true);

@@ -633,6 +633,16 @@ void RightNoteList::testQMediaPlayer()
     }
 }
 
+void RightNoteList::OnlyTryToFouceOutEveryText()
+{
+    int count = this->count();
+    for(int i = 0; i < count - 1; i++)
+    {
+        TextNoteItem *pTextItem = (TextNoteItem *)this->itemWidget(this->item(i));
+        pTextItem->tryToFouceout();
+    }
+}
+
 void RightNoteList::handleSaveAsItem(bool)
 {
     hideDArrowMenu();

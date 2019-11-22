@@ -54,6 +54,7 @@ public:
     void fouceOutAllTextItem();
     void delAllEmptyText();
     void getDurtimgByRecodefinised(QString filepath);  //ynb 20191109
+    void OnlyTryToFouceOutEveryText();
 private:
     void adjustWidgetItemWidth();
 signals:
@@ -106,6 +107,7 @@ public slots:
     void getduration(qint64 position);   //获取音频总时间  ynb 20191109
 private:
     void testQMediaPlayer();
+
 
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;

@@ -24,6 +24,8 @@ public:
     void searchText(QString searchKey);
     void readFromDatabase();
     QString onlyreadFromDatabase();
+    void setLineHeight(int value);
+    int getLineHeight();
 signals:
     void clicked();
     void focusOutSignal();
@@ -34,6 +36,7 @@ signals:
 public slots:
     void updateNote();
     void textAreaChanged(); //Add 20191111
+
 
 protected:
     void mousePressEvent(QMouseEvent *event);
