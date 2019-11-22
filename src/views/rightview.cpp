@@ -60,7 +60,7 @@ void RightView::initUI()
 //    QPalette pb = DApplicationHelper::instance()->palette(m_NoSearchResault);
 //    pb.setBrush(DPalette::Text, pb.color(QPalette::));
 //    m_NoSearchResault->setPalette(pb);
-    m_NoSearchResault->setFixedSize(QSize(60,29));
+    m_NoSearchResault->setFixedSize(QSize(150,29));
     m_NoSearchResault->setAlignment(Qt::AlignCenter);
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);
@@ -184,7 +184,7 @@ void RightView::initNoteList()
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
     m_AddButtonLocked->setVisible(false);
-    m_AddButtonLocked->setFocusPolicy(Qt::NoFocus);
+    //m_AddButtonLocked->setFocusPolicy(Qt::NoFocus);
 
 }
 

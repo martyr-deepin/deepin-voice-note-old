@@ -180,10 +180,6 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     }
     QString destSrc = src;
 
-//    QString leftArrow = "<";
-//    QString leftArrowRich = "&lt";
-//    destSrc = destSrc.replace(leftArrow,leftArrowRich);
-
     QString n = "\n";
     QString br = "<br/>";
     destSrc = destSrc.replace(n,br);

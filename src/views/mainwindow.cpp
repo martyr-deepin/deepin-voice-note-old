@@ -47,6 +47,7 @@ void MyMainWindow::initConnection()
 
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
+    //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::tryToSearch);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
     connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleSearchDialogClicked);
     connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseSearchDialog);
@@ -215,6 +216,7 @@ void MyMainWindow::showListPage()
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
+    m_mainPage->setFocus();
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
 
@@ -222,6 +224,7 @@ void MyMainWindow::showListPage()
     {
         m_mainPage->ChangeCurFolderToTop(m_textNoteEdit->getFolderID());
     }
+
 }
 
 void MyMainWindow::handleSearchKey()
