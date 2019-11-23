@@ -355,3 +355,14 @@ void FolerWidgetItem::changeTheme()
         m_createTimeLabel->setPalette(pc);
     }
 }
+
+//liuyang 3550 3547 3528
+void FolerWidgetItem::updateTimeLable(const QDateTime &time)
+{
+    if(m_createTimeLabel != nullptr)
+    {
+        m_folder.createTime = time;
+        m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));
+    }
+}
+//liuyang 3550 3547 3528

@@ -355,16 +355,28 @@ void LeftView::OnChangeCurFolderToTop(int folderID)
     FolerWidgetItem *ptmpWidget = (FolerWidgetItem *)m_leftFolderView->itemWidget(tmpItem);
     if(nullptr != ptmpWidget)
     {
+        FOLDER newFolder; //liuyang 3550 3547 3528
         if(ptmpWidget->m_folder.id != folderID)
         {
             QListWidgetItem *preItem = m_leftFolderView->currentItem();
             FolerWidgetItem *pWidget = (FolerWidgetItem*)m_leftFolderView->itemWidget(preItem);
 
-            FOLDER newFolder;
+
+            //FOLDER newFolder; //liuyang 3550 3547 3528
+
             newFolder.id = pWidget->m_folder.id;
             newFolder.imgPath = pWidget->m_folder.imgPath;
             newFolder.folderName = pWidget->m_folder.folderName;
             newFolder.createTime = pWidget->m_folder.createTime;
+
+            //liuyang 3550 3547 3528
+            QDateTime curtime = QDateTime::currentDateTime();
+            if(newFolder.createTime != curtime)
+            {
+               newFolder.createTime = curtime;
+               m_folderCtr->updateFolderCreateTime(newFolder);
+            }
+            //liuyang 3550 3547 3528
 
             QString searchKey = pWidget->getSearchText();
 
@@ -377,6 +389,21 @@ void LeftView::OnChangeCurFolderToTop(int folderID)
 
             m_leftFolderView->setCurrentRow(0);
         }
+        //liuyang 3550 3547 3528
+        else
+        {
+            QDateTime curtime = QDateTime::currentDateTime();
+            if(ptmpWidget->m_folder.createTime != curtime)
+            {
+                newFolder.id = ptmpWidget->m_folder.id;
+                newFolder.imgPath = ptmpWidget->m_folder.imgPath;
+                newFolder.folderName = ptmpWidget->m_folder.folderName;
+                newFolder.createTime = curtime;
+                m_folderCtr->updateFolderCreateTime(newFolder);
+                ptmpWidget->updateTimeLable(curtime);
+            }
+        }
+        //liuyang 3550 3547 3528
     }
 }
 

@@ -16,6 +16,7 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
         m_noteCtr = noteCtr;
     }
     m_textNote = textNote;
+    this->setText(m_textNote.contentText);//liuyang 3550 3547 3528
     initConnection();
 
 //    QTextEdit *tmp = new QTextEdit(this);
@@ -48,7 +49,8 @@ TextNoteEdit::~TextNoteEdit()
 
 QString TextNoteEdit::getText()
 {
-    return toPlainText();
+    QString tmp = this->toPlainText();
+    return tmp;
 }
 
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
@@ -129,6 +131,13 @@ void TextNoteEdit::initConnection()
 
 void TextNoteEdit::updateNote()
 {
+    //liuyang 3550 3547 3528
+    QString preContent = this->toPlainText();
+    if(preContent == m_textNote.contentText)
+    {
+        return;
+    }
+    //liuyang 3550 3547 3528
     qDebug() << "TextNoteEdit::updateNote" << "start";
     if (this->isReadOnly())
     {
@@ -137,7 +146,15 @@ void TextNoteEdit::updateNote()
     }
     qDebug() << "TextNoteEdit::updateNote" << "exec";
     NOTE note = m_textNote;
-    note.contentText = this->toPlainText();
+
+
+
+    //note.contentText = this->toPlainText();//liuyang 3550 3547 3528
+    //liuyang 3550 3547 3528
+    note.contentText = preContent;
+    note.createTime = QDateTime::currentDateTime();
+    //liuyang 3550 3547 3528
+
     //==== start add 20191105  bug2162
     if (!UiUtil::autoAddEditTxt(note))
     {
@@ -152,9 +169,14 @@ void TextNoteEdit::updateNote()
     else
     {
         m_textNote.contentText = this->toPlainText();
+        //liuyang 3550 3547 3528
+        m_textNote.createTime = note.createTime;
+        //liuyang 3550 3547 3528
         emit sigTextChanged(m_textNote.contentText);
     }
 }
+
+
 
 //Add s 20191111
 void TextNoteEdit::textAreaChanged()
@@ -219,3 +241,10 @@ int TextNoteEdit::getLineHeight()
     }
     return height;
 }
+
+//liuyang 3550 3547 3528
+QDateTime TextNoteEdit::getUpdateTime()
+{
+    return m_textNote.createTime;
+}
+//liuyang 3550 3547 3528

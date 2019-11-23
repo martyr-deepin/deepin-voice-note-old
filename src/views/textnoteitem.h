@@ -53,6 +53,7 @@ public:
     void init();
     int getId();
     NOTE_TYPE getType();
+    NOTE getTextNote();//liuyang 3550 3547 3528
     void setDetalBtnInVisible();
 
 signals:

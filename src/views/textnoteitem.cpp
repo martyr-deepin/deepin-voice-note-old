@@ -17,6 +17,8 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searc
     m_isEdited = false;
     m_mouseIsIn = false;
 
+    m_bakContent = textNote.contentText;//liuyang 3550 3547 3528
+
     initUI();
     initConnection();
 }
@@ -50,6 +52,13 @@ NOTE_TYPE TextNoteItem::getType()
 {
     return m_textNote.noteType;
 }
+
+//liuyang 3550 3547 3528
+NOTE TextNoteItem::getTextNote()
+{
+    return  m_textNote;
+}
+//liuyang 3550 3547 3528
 
 void TextNoteItem::setDetalBtnInVisible()
 {
@@ -221,6 +230,12 @@ void TextNoteItem::changeToEditMode()
         m_textEdit->setReadOnly(false);
         m_textEdit->setFocus();
         m_isEdited = true;
+
+        //liuyang 3550 3547 3528
+        QTextCursor cursor = m_textEdit->textCursor();
+        cursor.movePosition(QTextCursor::End);
+        m_textEdit->setTextCursor(cursor);
+        //liuyang 3550 3547 3528
     }
 }
 
@@ -326,9 +341,18 @@ void TextNoteItem::handleMenuBtnClicked()
 
 void TextNoteItem::handleTextEditFocusOut()
 {
-    qDebug()<<"-------------------------------handleTextEditFocusOut()";
     //this->m_textEdit->readFromDatabase();   //2567
     m_bakContent = m_textEdit->onlyreadFromDatabase();
+
+    //liuyang 3550 3547 3528
+//    if(m_bakContent == m_textEdit->getText())
+//    //if(0 == m_bakContent.compare(m_textEdit->getText()))
+//    {
+//        qDebug() << "text is same";
+//        return;
+//    }
+    //liuyang 3550 3547 3528
+
     m_textEdit->setText(m_bakContent);
     m_textEdit->setLineHeight(24);
     //onTextHeightChanged(m_textEdit->getLineHeight());
@@ -356,13 +380,13 @@ void TextNoteItem::handleTextEditFocusOut()
 
         if (m_isTextConverted)
         {
-            qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(true)";
+
             m_textEdit->setReadOnly(true);
             m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
         }
         else
         {
-            qDebug() << "TextNoteItem::handleTextEditFocusOut setReadOnly(false)";
+
             m_textEdit->setReadOnly(true);
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
@@ -415,6 +439,14 @@ void TextNoteItem::tryToFouceout()
 void TextNoteItem::textEditChanged(QString str)
 {
     m_textNote.contentText = str;
+    //liuyang 3550 3547 3528
+    m_textNote.createTime = m_textEdit->getUpdateTime();
+    QString timeContent = "   " + UiUtil::convertDateTime(m_textNote.createTime);
+    if(timeContent != m_timeLabel->text())
+    {
+       m_timeLabel->setText(timeContent);
+    }
+    //liuyang 3550 3547 3528
 }
 
 void TextNoteItem::changeTheme()

@@ -601,6 +601,27 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
 //        m_textChanged = changed;
 //        //emit sigChangeCurFolderToTop();
 //    }
+    //liuyang 3550 3547 3528
+    if(changed)
+    {
+       if(this->count() > 2)
+       {
+           TextNoteItem *senderWidget = static_cast<TextNoteItem *>(sender());
+           TextNoteItem *pLasteWidget = static_cast<TextNoteItem *>(this->itemWidget(this->item(this->count() - 2)));
+           if(pLasteWidget != senderWidget)
+           {
+               NOTE note = senderWidget->getTextNote();
+               QListWidgetItem *senderItem = getListItemById(note.id);
+               this->removeItemWidget(senderItem);
+               delete senderItem;
+               senderItem = nullptr;
+               addWidgetItem(true,note,"");
+               this->scrollToBottom();
+           }
+       }
+       emit sigChangeCurFolderToTop(m_currSelNote.folderId);
+    }
+    //liuyang 3550 3547 3528
 }
 
 void RightNoteList::onCallDelDialog(NOTE textNote)
@@ -633,7 +654,9 @@ void RightNoteList::onCheckEditState(NOTE note)
 //    m_textClicked = true;
 //    if(m_textChanged && m_textClicked)
 //    {
-        emit sigChangeCurFolderToTop(m_currClickTextNote.folderId);
+
+        //emit sigChangeCurFolderToTop(m_currClickTextNote.folderId);//liuyang 3550 3547 3528
+
 //    }
 //    m_textChanged = false;
 //    //m_textClicked = false;
@@ -670,7 +693,10 @@ void RightNoteList::OnlyTryToFouceOutEveryText()
     for(int i = 0; i < count - 1; i++)
     {
         TextNoteItem *pTextItem = (TextNoteItem *)this->itemWidget(this->item(i));
-        pTextItem->tryToFouceout();
+        if(TEXT == pTextItem->getType())
+        {
+            pTextItem->tryToFouceout();
+        }
     }
 }
 

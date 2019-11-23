@@ -26,6 +26,7 @@ public:
     QString onlyreadFromDatabase();
     void setLineHeight(int value);
     int getLineHeight();
+    QDateTime getUpdateTime(); //liuyang 3550 3547 3528
 signals:
     void clicked();
     void focusOutSignal();

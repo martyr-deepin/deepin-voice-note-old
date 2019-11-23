@@ -48,7 +48,7 @@ public:
     void Init();
     void copy(FolerWidgetItem *pSourceFolder);
     QString getSearchText();
-
+    void updateTimeLable(const QDateTime &time);//liuyang 3550 3547 3528
 
 public slots:
     void checkNameValid();
