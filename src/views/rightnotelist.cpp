@@ -14,7 +14,7 @@
 #include <QFileInfo>
 #include <DApplicationHelper>
 #include <QPainter>
-
+#include <QCursor>
 
 MMenu::MMenu(QWidget *parent)
 {
@@ -203,6 +203,8 @@ void RightNoteList::initConnection()
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
+
+
 }
 
 void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
@@ -230,7 +232,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
 
 
 
-
+        textItem->setDetalBtnInVisible();
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
@@ -449,6 +451,15 @@ void RightNoteList::keyPressEvent(QKeyEvent *k)
     }
 }
 
+void RightNoteList::wheelEvent(QWheelEvent *e)
+{
+    qDebug()<<"RightNoteList::wheelEvent";
+    if(Intancer::get_Intancer()->getWantScrollRightListFlag())
+    {
+        DListWidget::wheelEvent(e);
+    }
+}
+
 void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note)
 {
     bool flag = Intancer::get_Intancer()->getTryToDelEmptyTextNote();
@@ -480,6 +491,25 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
                 m_saveAsAction->setDisabled(false);
             }
 
+            // Zhangya 2019.11.23 bug fix 3085
+            VoiceNoteItem* Voiceitem = qobject_cast<VoiceNoteItem*>(textNoteItem);
+            if(Voiceitem)
+            {
+                QPoint pGlobal = Voiceitem->m_menuBtn->mapToGlobal(QPoint(0,0));
+                QPoint arrowPoint(pGlobal.x() + Voiceitem->m_menuBtn->width() / 2, pGlobal.y() +Voiceitem->m_menuBtn->height());
+                menuArrowPointGlobal = arrowPoint;
+                QCursor::setPos(menuArrowPointGlobal);
+            }
+
+            TextNoteItem* itemText = qobject_cast<TextNoteItem*>(textNoteItem);
+            if(itemText)
+            {
+                QPoint pGlobal = itemText->m_menuBtn->mapToGlobal(QPoint(0,0));
+                QPoint arrowPoint(pGlobal.x() + itemText->m_menuBtn->width() / 2, pGlobal.y() +itemText->m_menuBtn->height());
+                menuArrowPointGlobal = arrowPoint;
+                QCursor::setPos(menuArrowPointGlobal);
+            }
+            // Zhangya 2019.11.23 bug fix 3085
             showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
             qDebug()<<"handleMenuBtnClicked show";
         }
@@ -582,6 +612,7 @@ void RightNoteList::onCallDelDialog(NOTE textNote)
     {
         //m_delConfirmDialog->show();
         Intancer::get_Intancer()->setTryToDelEmptyTextNote(true);
+
         handleDelDialogClicked(1,"");
     }
 }
@@ -852,6 +883,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
+
             m_addTextBtn->setDisableBtn(false);
             emit sig_TextEditNotEmpty(false);
 

@@ -9,6 +9,7 @@
 
 TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey, QWidget *parent) :DWidget(parent), m_isTextConverted(false)
 {
+    m_textEdit = nullptr;
     this->m_textNote = textNote;
     this->m_noteCtr = noteCtr;
     m_searchKey = searchKey;
@@ -48,6 +49,14 @@ int TextNoteItem::getId()
 NOTE_TYPE TextNoteItem::getType()
 {
     return m_textNote.noteType;
+}
+
+void TextNoteItem::setDetalBtnInVisible()
+{
+    if(nullptr != m_detailBtn)
+    {
+        m_detailBtn->setVisible(false);
+    }
 }
 
 void TextNoteItem::initUI()

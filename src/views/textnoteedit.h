@@ -40,7 +40,9 @@ public slots:
 
 protected:
     void mousePressEvent(QMouseEvent *event);
+    void focusInEvent(QFocusEvent *e);
     void focusOutEvent(QFocusEvent *e);
+    void wheelEvent(QWheelEvent *e);
 
 private:
     NOTE m_textNote;

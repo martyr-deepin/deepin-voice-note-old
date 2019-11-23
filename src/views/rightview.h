@@ -73,6 +73,7 @@ public slots:
     void on_CheckRecodeCouldUse(bool coulduse);
     void ShowRecodeTip();
     void handleStopRecord2(qint64 position); //ynb  20191109
+    void OnTimeOut();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -110,6 +111,8 @@ private:
     QThread *m_pVoiceVolumethread;
     DToolTip *m_pNotRecordToolTip;
     VOICE_INFO m_voiceinfo; //ynb  20191109
+    QTimer *m_InitlateTimerOut;
+    bool m_initing;
 };
 
 #endif // RIGHTVIEW_H

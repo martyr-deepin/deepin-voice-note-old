@@ -15,8 +15,10 @@
 
 RightView::RightView()
 {
+    m_initing = true;
     //m_pVoiceAudioDeviceWatcher = new VoiceAudioDeviceWatcher(this);
     m_currFolderId = -1;
+    m_InitlateTimerOut = new QTimer(this);
     Intancer::get_Intancer()->initHeightForRight();
     initUI();
     initConnection();
@@ -24,6 +26,7 @@ RightView::RightView()
 
     m_pVoiceVolumeWatcher->start();
     connect(m_pVoiceVolumeWatcher, SIGNAL(sigRecodeState(bool)), this, SLOT(on_CheckRecodeCouldUse(bool)));
+
 
 //    DTextEdit *pTextEdit = new DTextEdit(this);
 //    pTextEdit->setFixedSize(QSize(100,100));
@@ -108,6 +111,9 @@ void RightView::initConnection()
     connect(m_noteListWidget, &RightNoteList::positionByfinishRecord, this, &RightView::handleStopRecord2); //ynb 20191109
 
     connect(m_noteListWidget, SIGNAL(sig_CheckFileExist()), this, SIGNAL(sigRvCheckFile()));    //by yuanshuai 20191120 2841
+    //connect(m_InitlateTimerOut, SIGNAL(timeout()), this, SLOT(OnTimeOut()));
+
+    m_InitlateTimerOut->singleShot(1000, this,SLOT(OnTimeOut()));
 }
 
 
@@ -272,7 +278,16 @@ void RightView::handleSelFolderChg(int folderId)
     m_noteListWidget->delAllEmptyText();
     m_currFolderId = folderId;
     updateNoteList();
-    m_noteListWidget->OnlyTryToFouceOutEveryText();
+
+    if(m_initing)
+    {
+        m_InitlateTimerOut->start(1000);
+    }
+    else
+    {
+        m_noteListWidget->OnlyTryToFouceOutEveryText();
+    }
+
     if(-1 != folderId)
     {
         m_addVoiceBtn->setVisible(true);
@@ -281,6 +296,7 @@ void RightView::handleSelFolderChg(int folderId)
     {
         m_addVoiceBtn->setVisible(false);
     }
+    //m_noteListWidget->setFocus();
 }
 
 void RightView::handleSearchNote(int folderId, QString searchKey)
@@ -771,6 +787,15 @@ void RightView::handleStopRecord2(qint64 position)
     //updateNoteList();
 }
 // end ynb 20191109
+
+void RightView::OnTimeOut()
+{
+    if(nullptr != m_noteListWidget)
+    {
+        m_noteListWidget->OnlyTryToFouceOutEveryText();
+    }
+    m_initing = false;
+}
 
 void RightView::resizeEvent(QResizeEvent * event)
 {

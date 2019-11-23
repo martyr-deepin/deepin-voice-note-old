@@ -1,5 +1,5 @@
 #include "textnoteedit.h"
-
+#include "intancer.h"
 #include <QMouseEvent>
 
 #include <QDebug>
@@ -81,11 +81,21 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 //        emit clicked();
 //    }
     //要继续保留QListWidget原有的点击事件.
+
     QTextEdit::mousePressEvent(event);
+
+}
+
+void TextNoteEdit::focusInEvent(QFocusEvent *e)
+{
+    Intancer::get_Intancer()->setWantScrollRightListFlag(false);
+    qDebug()<<"TextNoteEdit::focusInEvent";
+    DTextEdit::focusInEvent(e);
 }
 
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {
+    Intancer::get_Intancer()->setWantScrollRightListFlag(true);
     if (this->isReadOnly())
     {
         return;
@@ -96,8 +106,21 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         emit sigDelMyself();
     }
     //emit focusOutSignal();
+
+    qDebug()<<"TextNoteEdit::focusOutEvent";
     DTextEdit::focusOutEvent(e);
 }
+
+void TextNoteEdit::wheelEvent(QWheelEvent *e)
+{
+    qDebug()<<"RightNoteList::wheelEvent";
+
+    if(!Intancer::get_Intancer()->getWantScrollRightListFlag())
+    {
+        DTextEdit::wheelEvent(e);
+    }
+}
+
 void TextNoteEdit::initConnection()
 {
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);

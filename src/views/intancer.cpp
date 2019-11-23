@@ -11,6 +11,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     isViewAddTextButtonShow = false;
     isSearching = false;
     isMoveFolder_count = 0;
+    wantScrollRightList = true;
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
@@ -154,6 +155,16 @@ void Intancer::setSearchingFlag(bool value)
 bool Intancer::getSearchingFlag()
 {
     return isSearching;
+}
+
+void Intancer::setWantScrollRightListFlag(bool value)
+{
+    wantScrollRightList = value;
+}
+
+bool Intancer::getWantScrollRightListFlag()
+{
+    return wantScrollRightList;
 }
 
 void Intancer::initMoveFolderCount()

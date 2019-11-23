@@ -53,6 +53,8 @@ public:
     void init();
     int getId();
     NOTE_TYPE getType();
+    void setDetalBtnInVisible();
+
 signals:
     void textEditTrueClicked(NOTE m_textNote);
     void textEditClicked(NOTE m_textNote);

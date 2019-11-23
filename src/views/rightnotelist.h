@@ -75,6 +75,7 @@ protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent * event);
     void keyPressEvent(QKeyEvent *k);
+    void wheelEvent(QWheelEvent *e);
 
 public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
@@ -141,6 +142,7 @@ private:
     int duringTime;
     bool m_textClicked;
     bool m_textChanged;
+
     //MyCustomSlider *m_myslider;
     void createDArrowMenu();
     void destroyDArrowMenu();

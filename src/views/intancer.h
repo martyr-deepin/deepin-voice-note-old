@@ -47,9 +47,13 @@ public:
     void setSearchingFlag(bool value);
     bool getSearchingFlag();
 
+    void setWantScrollRightListFlag(bool value);
+    bool getWantScrollRightListFlag();
+
     void initMoveFolderCount();
     void CountMoveFolderCount();
     int getMoveFolderFlag();
+
 
 
 signals:
@@ -65,6 +69,7 @@ private:
      bool isRenameRepeat;
      bool isViewAddTextButtonShow;
      bool isSearching;
+     bool wantScrollRightList;
      int  isMoveFolder_count;
 
      int m_RightListHeight;
