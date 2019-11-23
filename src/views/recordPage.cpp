@@ -54,7 +54,6 @@ DWIDGET_USE_NAMESPACE
 RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 //RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
-    this->setFocusPolicy(Qt::StrongFocus);
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter

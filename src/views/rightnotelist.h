@@ -76,7 +76,6 @@ protected:
     //bool eventFilter(QObject *o, QEvent *e);
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent * event);
-    void keyPressEvent(QKeyEvent *k);
     void wheelEvent(QWheelEvent *e);
 
 public slots:

@@ -448,14 +448,6 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
     //2719 fix liuyang
 }
 
-void RightNoteList::keyPressEvent(QKeyEvent *k)
-{
-    if(k->key() == Qt::Key_Space)
-    {
-        qDebug()<<"Key_Space";
-    }
-}
-
 void RightNoteList::wheelEvent(QWheelEvent *e)
 {
     qDebug()<<"RightNoteList::wheelEvent";
