@@ -166,6 +166,29 @@ int MainPage::getAllFolderListNumFromDatabase()
     return m_leftView->getAllFolderListNum();
 }
 
+//Add start bug 2587
+void MainPage::addFolder()
+{
+    m_leftView->addFolder();
+}
+void MainPage::reNameFolder()
+{
+    m_leftView->reNameFolder();
+}
+void MainPage::deleteFolder()
+{
+    m_leftView->deleteFolder();
+}
+void MainPage::VoicePlayOrPause()
+{
+    m_rightView->VoicePlayOrPause();
+}
+bool MainPage::shortcutsDeleteByRightlist()
+{
+    return m_rightView->shortcutsDelete();
+}
+//Add end bug 2587
+
 void MainPage::onAddFolder()
 {
     emit clearSearch();

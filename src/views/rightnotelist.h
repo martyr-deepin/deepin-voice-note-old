@@ -55,6 +55,8 @@ public:
     void delAllEmptyText();
     void getDurtimgByRecodefinised(QString filepath);  //ynb 20191109
     void OnlyTryToFouceOutEveryText();
+    void VoicePlayOrPause(); //Add bug 2587
+    bool shortcutsDelete();  //Add bug 2587
 private:
     void adjustWidgetItemWidth();
 signals:
@@ -84,7 +86,8 @@ public slots:
     void handleDelDialogClicked(int index, const QString &text);
     void handleCloseDialogClicked();
     void handlePlayingStateChanged(QMediaPlayer::State state);
-    void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
+    void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos, NOTE note);  //Edit bug 2587
+    //void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
     void pause();
     void stop();
     void handleClickRecordButton();
@@ -106,6 +109,8 @@ public slots:
     void onCheckEditState(NOTE note);
     void onfouceOutAllTextItem();
     void getduration(qint64 position);   //获取音频总时间  ynb 20191109
+    void onTextEditGetFocus(NOTE note); //Add bug 2587
+    void onTextEditOutFocus(NOTE note); //Add bug 2587
 private:
     void testQMediaPlayer();
 
@@ -142,6 +147,8 @@ private:
     int duringTime;
     bool m_textClicked;
     bool m_textChanged;
+    bool m_textGetFocus; //Add bug 2587
+    bool m_voiceOperation; //对录音回访的操作时设为true  Add bug 2587
 
     //MyCustomSlider *m_myslider;
     void createDArrowMenu();

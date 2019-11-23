@@ -35,7 +35,13 @@ public:
     void saveRecorde();
     void ChangeCurFolderToTop(int folderID);
     int getAllFolderListNumFromDatabase();
-
+    //Add start bug 2587
+    void addFolder();
+    void reNameFolder();
+    void deleteFolder();
+    void VoicePlayOrPause();
+    bool shortcutsDeleteByRightlist();
+    //Add end bug 2587
 signals:
     void textEditClicked(NOTE textNote);
     void clearSearch();

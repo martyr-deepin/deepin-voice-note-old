@@ -34,6 +34,8 @@ public:
     bool searchFolder(QString searchKey,bool &hasNoFolder);
     void selectTheFirstFolderByCode();
     int getAllFolderListNum();
+    void reNameFolder(); //Add bug 2587
+    void deleteFolder(); //Add bug 2587
 
 signals:
     void selFolderIdChg(int folderId);

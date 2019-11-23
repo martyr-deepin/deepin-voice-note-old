@@ -525,6 +525,17 @@ void RightView::OnlySaveRecord()
     m_recordPage->stopRecord();
 }
 
+//Add start bug 2587
+bool RightView::shortcutsDelete()
+{
+    return m_noteListWidget->shortcutsDelete();
+}
+void RightView::VoicePlayOrPause()
+{
+    m_noteListWidget->VoicePlayOrPause();
+}
+//Add end bug 2587
+
 void RightView::handleStartRecord()
 {
     //QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);

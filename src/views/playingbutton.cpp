@@ -169,6 +169,20 @@ void PlayingButton::setPlayEnable()
     }
 }
 
+//Add start bug 2587
+void PlayingButton::VoicePlayOrPause()
+{
+   if (pauseButton->isVisible())
+   {
+       pauseButton->clicked();
+   }
+   else
+   {
+       resumeButton->clicked();
+   }
+}
+//Add end bug 2587
+
 void PlayingButton::handlePause() {
 //    layout->removeWidget(pauseButton);
 //    pauseButton->setParent(NULL);

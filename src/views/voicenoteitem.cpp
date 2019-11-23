@@ -73,6 +73,13 @@ QRect VoiceNoteItem::getWaveRect()
     return m_waveform->geometry();
 }
 
+//Add start bug 2587
+void VoiceNoteItem::VoicePlayOrPause()
+{
+    m_playingButton->VoicePlayOrPause();
+}
+//Add end bug 2587
+
 void VoiceNoteItem::setPlayDiseable()
 {
     m_playingButton->setPlayDiseable();
@@ -247,5 +254,6 @@ void VoiceNoteItem::handleResumePlaying()
 //    QPoint itemPointToParent = this->mapToParent(QPoint(0,0));
 //    QPoint waveformPointToParent(itemPointToParent.x() + m_waveform->x(), itemPointToParent.y());
     QRect waveformPoint = m_waveform->geometry();
-    emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint);
+    emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint, m_note);  //Edit bug 2587
+    //emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint);
 }

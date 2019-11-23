@@ -40,6 +40,8 @@ public:
     int getFolderCount();
     void initTxtFilesForDir();
     void OnlySaveRecord();
+    void VoicePlayOrPause(); //Add bug 2587
+    bool shortcutsDelete(); //Add bug 2587
 
 signals:
     void textEditClicked(NOTE textNote);

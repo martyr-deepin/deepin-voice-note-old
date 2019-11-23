@@ -33,6 +33,8 @@ signals:
     void sigTextChanged(QString str);
     void sigTextHeightChanged(int newHeight); //Add 20191111
     void sigDelMyself();
+    void SigTextEditGetFocus();  //Add bug 2587
+    void SigTextEditOutFocus();  //Add bug 2587
 
 public slots:
     void updateNote();

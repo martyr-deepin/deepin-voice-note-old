@@ -31,7 +31,7 @@ public:
     void clearWaveformContent();
     void onlySetResumeNoSig();
     QRect getWaveRect();
-
+    void VoicePlayOrPause(); //Add bug 2587
     NOTE m_note;
 
     DLabel *m_timeLabel;
@@ -48,7 +48,8 @@ public:
 
 signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
-    void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect);
+    void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect, NOTE note); //Edit  bug 2587
+    //void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect);
     void pausePlayingSignal();
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();

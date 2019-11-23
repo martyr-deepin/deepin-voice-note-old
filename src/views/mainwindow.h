@@ -46,6 +46,14 @@ public slots:
     void restoreminwindow();
     //by yuanshuai 20191120 2841
     void checkFileExist();
+    //Add start bug 2587
+    void previewShortcut();
+    void searchShortcut();
+    void newNoteShortcut();
+    void deleteNoteShortcut();
+    void reNameNoteShortcut();
+    void VoiceNotesPlayShortcut();
+    //Add end bug 2587
     //end
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -91,6 +99,10 @@ private:
 //    void initRightView();
 
     void initCentralWidget();
+    //Add start bug 2587
+    void initShortcutkeys();
+    QJsonObject creatShorcutJson();
+    //Add end bug 2587
 };
 
 #endif // MAINWINDOW_H

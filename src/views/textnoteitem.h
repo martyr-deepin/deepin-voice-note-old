@@ -67,6 +67,8 @@ signals:
     void sig_TextEditNotEmpty(bool changed);
     void sig_ItemTimeChanged(NOTE noteID);
     void buttonClicled();
+    void SigTextEditGetFocus(NOTE m_textNote); //Add bug 2587
+    void SigTextEditOutFocus(NOTE m_textNote); //Add bug 2587
 
 public slots:
     void textAreaChanged();
@@ -79,6 +81,8 @@ public slots:
     void changeTheme();
     void onTextHeightChanged(int newheight);
     void OnToDetalPage();
+    void OnTextEditGetFocus(); //Add bug 2587
+    void OnTextEditOutFocus(); //Add bug 2587
 
 protected:
     void resizeEvent(QResizeEvent * event);

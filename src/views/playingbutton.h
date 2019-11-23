@@ -19,7 +19,7 @@ public:
     void onlySetResumeForButton();
     void setPlayDiseable();
     void setPlayEnable();
-
+    void VoicePlayOrPause(); //Add bug 2587
 signals:
     void pause();
     void resume();

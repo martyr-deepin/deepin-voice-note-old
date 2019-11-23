@@ -21,7 +21,17 @@ LeftView::~LeftView()
     delete m_folderCtr;
 }
 
+//Add start bug 2587
 
+void LeftView::reNameFolder()
+{
+    m_leftFolderView-> handleRenameItem(true);
+}
+void LeftView::deleteFolder()
+{
+    m_leftFolderView->handleDelItem(true);
+}
+//Add end bug 2587
 
 void LeftView::initUI()
 {

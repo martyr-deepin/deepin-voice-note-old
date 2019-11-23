@@ -15,6 +15,7 @@
 #include <DApplicationHelper>
 #include <QPainter>
 #include <QCursor>
+#include <QShortcut>  //Add bug 2587
 
 MMenu::MMenu(QWidget *parent)
 {
@@ -56,6 +57,8 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_delAction = nullptr;
     m_textClicked = false;
     m_textChanged = false;
+    m_textGetFocus = false; //Add bug 2587
+    m_voiceOperation = false; //Add bug 2587
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     Intancer::get_Intancer()->clearHeightForRightList();
     initUI();
@@ -230,7 +233,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         //connect(this, SIGNAL(sigBoardPress()), textItem, SLOT(tryToFouceout()));
 
-
+        connect(textItem, SIGNAL(SigTextEditGetFocus(NOTE)), this, SLOT(onTextEditGetFocus(NOTE))); //Add bug 2587
+        connect(textItem, SIGNAL(SigTextEditOutFocus(NOTE)), this, SLOT(onTextEditOutFocus(NOTE))); //Add bug 2587
 
         textItem->setDetalBtnInVisible();
         QListWidgetItem *item=new QListWidgetItem();
@@ -262,7 +266,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
 
 
         connect(voiceItem, SIGNAL(pausePlayingSignal()), this, SLOT(pause()));
-        connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
+        connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect, NOTE)), this, SLOT(play(VoiceNoteItem *, QString, QRect, NOTE))); //Edit  bug 2587
+        //connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         connect(Intancer::get_Intancer(), SIGNAL(sigDisAbleReplay()), voiceItem, SLOT(setPlayDiseable()));
         connect(Intancer::get_Intancer(), SIGNAL(sigEnAbleReplay()), voiceItem, SLOT(setPlayEnable()));
@@ -700,6 +705,73 @@ void RightNoteList::OnlyTryToFouceOutEveryText()
     }
 }
 
+//Add start bug 2587
+bool RightNoteList::shortcutsDelete()
+{
+    //按选中的item进行删除处理，暂时不对应。
+    //        bool IsSelItemExist = false;
+    //        for(int i =0; i <this->count()-1;++i)
+    //        {
+    //            if (this->item(i)->isSelected())
+    //            {
+    //                m_currSelItem = this->item(i);
+    //                IsSelItemExist = true;
+    //                break;
+    //            }
+    //        }
+    //        if (IsSelItemExist == true)
+    //        {
+    //             m_delConfirmDialog->show();
+    //        }
+    bool ret = false;
+    qDebug()<<"m_textGetFocus:"<< m_textGetFocus;
+    m_currSelItem = getListItemById(m_currSelNote.id);
+    if (m_currSelNote.noteType == NOTE_TYPE::TEXT)
+    {
+        if (m_textGetFocus)
+        {
+            TextNoteItem *item = (TextNoteItem*)this->itemWidget(m_currSelItem);
+            QString txt = item->m_textEdit->getText();
+            if (txt!="")
+            {
+                m_textGetFocus = false;
+                qDebug()<<"m_textGetFocus:"<< m_textGetFocus;
+                m_delConfirmDialog->show();
+            }
+            ret = true;
+        }
+    }
+    else
+    {
+        if (m_voiceOperation)
+        {
+            m_voiceOperation =false;
+            m_delConfirmDialog->show();
+            ret = true;
+        }
+
+    }
+    return ret;
+}
+void RightNoteList::VoicePlayOrPause()
+{
+   if (m_currPlayingItem != nullptr)
+   {
+        m_currPlayingItem->VoicePlayOrPause();
+   }
+}
+void RightNoteList::onTextEditGetFocus(NOTE note)
+{
+        m_currSelNote = note;
+        m_textGetFocus = true;
+}
+void RightNoteList::onTextEditOutFocus(NOTE note)
+{
+        m_currSelNote = note;
+        m_textGetFocus = false;
+}
+//Add end bug 2587
+
 void RightNoteList::handleSaveAsItem(bool)
 {
     hideDArrowMenu();
@@ -978,8 +1050,11 @@ void RightNoteList::handleClickRecordButton()
     }
 }
 
-void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos)
+void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos, NOTE note)  //Edit bug 2587
+//void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos)
 {
+    m_currSelNote = note;  //Add bug 2587
+    m_voiceOperation = true;  //Add bug 2587
     if (filepath != getPlayingFilepath()) {
         audioPlayer->stop();
 
@@ -1049,6 +1124,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
 
 void RightNoteList::pause()
 {
+    m_voiceOperation = true;  //Add bug 2587
     audioPlayer->pause();
 }
 
@@ -1307,6 +1383,16 @@ void RightNoteList::handleSaveFileEnd(bool result)
 
 void RightNoteList::handleMenuBtnPressed()
 {
+    //Add start bug 2587
+    if (m_currSelNote.noteType == VOICE)
+    {
+        m_voiceOperation = true;
+    }
+    else
+    {
+        m_textGetFocus = true;
+    }
+    //Add end bug 2587
     m_arrowButtonPressed = true;
 }
 

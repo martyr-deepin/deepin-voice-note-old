@@ -199,7 +199,8 @@ void TextNoteItem::initConnection()
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit, SIGNAL(sigDelMyself()), this, SLOT(tryToFouceout()));
     connect(m_textEdit, SIGNAL(sigTextHeightChanged(int)), this, SLOT(onTextHeightChanged(int)));
-
+    connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus,this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
+    connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus,this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
@@ -475,6 +476,17 @@ void TextNoteItem::OnToDetalPage()
 {
     emit textEditClicked(m_textNote);
 }
+
+//Add start bug 2587
+void TextNoteItem::OnTextEditGetFocus()
+{
+     emit SigTextEditGetFocus(m_textNote);
+}
+void TextNoteItem::OnTextEditOutFocus()
+{
+    emit SigTextEditOutFocus(m_textNote);
+}
+//Add end bug 2587
 
 void TextNoteItem::resizeEvent(QResizeEvent * event)
 {

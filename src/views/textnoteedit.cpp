@@ -92,7 +92,9 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
     qDebug()<<"TextNoteEdit::focusInEvent";
-    DTextEdit::focusInEvent(e);
+
+    DTextEdit::focusInEvent(e);//Add bug 2587
+    emit SigTextEditGetFocus();
 }
 
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
@@ -111,6 +113,7 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 
     qDebug()<<"TextNoteEdit::focusOutEvent";
     DTextEdit::focusOutEvent(e);
+    emit SigTextEditOutFocus();  //Add bug 2587
 }
 
 void TextNoteEdit::wheelEvent(QWheelEvent *e)
