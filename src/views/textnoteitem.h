@@ -15,6 +15,7 @@
 #include <QObject>
 #include "textnoteedit.h"
 #include "menubutton.h"
+#include "myrecodebuttons.h"
 //#include <darrowrectangle.h>
 #include <QMenu>
 #include <QAction>
@@ -42,7 +43,7 @@ public:
     QLabel *m_textLabel;
     QPlainTextEdit *m_plainTextEdit;
     //DImageButton *m_menuBtn;
-    MenuButton *m_menuBtn;
+    MyRecodeButtons *m_menuBtn;
     MenuButton *m_detailBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
@@ -55,6 +56,7 @@ public:
     NOTE_TYPE getType();
     NOTE getTextNote();//liuyang 3550 3547 3528
     void setDetalBtnInVisible();
+    QPoint remapToGlobalMenbtn(QPoint GlobalPoint);
 
 signals:
     void textEditTrueClicked(NOTE m_textNote);

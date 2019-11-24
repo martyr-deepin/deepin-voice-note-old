@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QImageReader>
 #include <DApplication>
+#include <com_deepin_daemon_audio.h>
+#include <com_deepin_daemon_audio_source.h>
 //#include <DFrameWorkDBus>
 
 //#include <ddialog.h>

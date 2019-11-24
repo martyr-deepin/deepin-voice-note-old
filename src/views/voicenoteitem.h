@@ -12,7 +12,7 @@
 #include "notecontroller.h"
 #include "playingbutton.h"
 #include "waveform.h"
-#include "menubutton.h"
+#include "myrecodebuttons.h"
 #include <DFrame>
 
 DWIDGET_USE_NAMESPACE
@@ -39,7 +39,7 @@ public:
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;
     //DImageButton *m_ctrlBtn;
-    MenuButton *m_menuBtn;
+    MyRecodeButtons *m_menuBtn;
     //DIconButton *m_menuBtn;
     //DImageButton *m_menuBtn;
     DLabel *m_voiceTimeLabel;

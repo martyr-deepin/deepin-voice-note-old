@@ -16,6 +16,7 @@ public:
     void setPicChange(QString normal, QString press, QString hover, QString disable, QString foucs);
     void DisableBtn();
     void EnAbleBtn();
+    void setBtnToNormal();
 
 signals:
     void sigHoverd();

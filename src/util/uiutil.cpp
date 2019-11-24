@@ -397,6 +397,28 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
 
 bool UiUtil::canMicrophoneInput()
 {
+//    com::deepin::daemon::Audio *m_audioInterface = new com::deepin::daemon::Audio(
+//                com::deepin::daemon::Audio::staticInterfaceName(),
+//                "/com/deepin/daemon/Audio",
+//                QDBusConnection::sessionBus());
+
+//    com::deepin::daemon::audio::Source *m_defaultSourceInterface = new com::deepin::daemon::audio::Source (
+//                com::deepin::daemon::audio::Source::staticInterfaceName(),
+//                //"com.deepin.daemon.Audio.Source",
+//                m_audioInterface->defaultSource().path(),
+//                QDBusConnection::sessionBus());
+//    double volume = m_defaultSourceInterface->volume();
+//    qDebug()<<"Volume:"<<volume;
+//    if(0.0001 < volume)
+//    {
+//        return true;
+//    }
+//    else
+//    {
+//        return false;
+//    }
+
+
     QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
                                             "com.deepin.daemon.Audio", "DefaultSource");
     if (v.isValid()) {

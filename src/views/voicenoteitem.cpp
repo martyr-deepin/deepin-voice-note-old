@@ -95,6 +95,34 @@ void VoiceNoteItem::changeTheme()
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
     pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
     m_bgWidget->setPalette(pb);
+
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != m_menuBtn)
+        {
+            m_menuBtn->setPicChange(
+                        ":/image/icon/normal/more_normal.svg",
+                        ":/image/icon/press/more_press.svg",
+                        ":/image/icon/hover/more_hover.svg",
+                        ":/image/icon/disabled/more_disabled.svg",
+                        ":/image/icon/focus/more_focus.svg");
+        }
+
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != m_menuBtn)
+        {
+            m_menuBtn->setPicChange(
+                        ":/image/icon_dark/normal/more_normal_dark.svg",
+                        ":/image/icon_dark/press/more_press_dark.svg",
+                        ":/image/icon_dark/hover/more_hover_dark.svg",
+                        ":/image/icon_dark/disabled/more_disabled_dark.svg",
+                        ":/image/icon_dark/focus/more_focus_dark.svg");
+        }
+    }
 }
 
 void VoiceNoteItem::initUI()
@@ -167,11 +195,33 @@ void VoiceNoteItem::initUI()
     m_waveform->setSizePolicy(spShape);
 
 
-    //m_menuBtn = new MenuButton(m_bgWidget);
-    m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_bgWidget);
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_menuBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/more_normal.svg",
+                    ":/image/icon/press/more_press.svg",
+                    ":/image/icon/hover/more_hover.svg",
+                    ":/image/icon/disabled/more_disabled.svg",
+                    ":/image/icon/focus/more_focus.svg",
+                    QSize(44,44),
+                    m_bgWidget);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_menuBtn = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/more_normal_dark.svg",
+                    ":/image/icon_dark/press/more_press_dark.svg",
+                    ":/image/icon_dark/hover/more_hover_dark.svg",
+                    ":/image/icon_dark/disabled/more_disabled_dark.svg",
+                    ":/image/icon_dark/focus/more_focus_dark.svg",
+                    QSize(44,44),
+                    m_bgWidget);
+    }
+
     //m_menuBtn->setFlat(true);
     //m_menuBtn = new DImageButton(m_bgWidget);
-    m_menuBtn->setFixedSize(QSize(40, 40));
+    //m_menuBtn->setFixedSize(QSize(40, 40));
     //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
     //m_menuBtn->setIconSize(QSize(20,20));
     //m_menuBtn->setFocusPolicy(Qt::NoFocus);
@@ -208,7 +258,7 @@ void VoiceNoteItem::initUI()
     m_hBoxLayout->addWidget(m_voiceTimeLabel);
     m_hBoxLayout->addSpacing(0);
     m_hBoxLayout->addWidget(m_menuBtn);
-    m_hBoxLayout->addSpacing(16);
+    m_hBoxLayout->addSpacing(12);
 
     //m_hBoxLayout->addWidget(m_menuBtn);
 
@@ -218,16 +268,14 @@ void VoiceNoteItem::initUI()
 void VoiceNoteItem::initConnection()
 {
     connect(m_menuBtn, &QAbstractButton::pressed, this, &VoiceNoteItem::sig_menuBtnPressed);
-    connect(m_menuBtn, &QAbstractButton::pressed, this, &VoiceNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::sig_menuBtnReleased);
+    connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
 
-    //connect(m_menuBtn, &DImageButton::clicked, this, &VoiceNoteItem::handleMenuBtnClicked);
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
     connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
     connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
-    connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
-
 
 
 

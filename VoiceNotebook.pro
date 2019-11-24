@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql dtkcore
+QT       += core gui sql dtkcore dbus
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets dbus
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = deepin-voice-note
 TEMPLATE = app

@@ -68,6 +68,12 @@ void TextNoteItem::setDetalBtnInVisible()
     }
 }
 
+QPoint TextNoteItem::remapToGlobalMenbtn(QPoint GlobalPoint)
+{
+    QPoint pGlobal = m_menuBtn->mapToGlobal(GlobalPoint);
+    return pGlobal;
+}
+
 void TextNoteItem::initUI()
 {
 
@@ -158,14 +164,38 @@ void TextNoteItem::initUI()
     //m_MenuBtnBackground->setFixedSize(QSize(40,m_bgWidget->height()));
     m_MenuBtnBackground->setFixedSize(QSize(48,m_bgWidget->height()));
 
-    //m_menuBtn = new MenuButton(m_MenuBtnBackground);
-    m_menuBtn = new MenuButton(DStyle::SP_SelectElement,m_MenuBtnBackground);
+
+
+
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_menuBtn = new MyRecodeButtons(
+                    ":/image/icon/normal/more_normal.svg",
+                    ":/image/icon/press/more_press.svg",
+                    ":/image/icon/hover/more_hover.svg",
+                    ":/image/icon/disabled/more_disabled.svg",
+                    ":/image/icon/focus/more_focus.svg",
+                    QSize(44,44),
+                    m_MenuBtnBackground);
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_menuBtn = new MyRecodeButtons(
+                    ":/image/icon_dark/normal/more_normal_dark.svg",
+                    ":/image/icon_dark/press/more_press_dark.svg",
+                    ":/image/icon_dark/hover/more_hover_dark.svg",
+                    ":/image/icon_dark/disabled/more_disabled_dark.svg",
+                    ":/image/icon_dark/focus/more_focus_dark.svg",
+                    QSize(44,44),
+                    m_MenuBtnBackground);
+    }
 
 //   QPalette pa; //= DApplicationHelper::instance()->palette(m_menuBtn);
 //   pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
 //   m_menuBtn->setBtnPalette(pa);
     //m_menuBtn = new DImageButton(m_MenuBtnBackground);
-    m_menuBtn->setFixedSize(QSize(40, 40));
+    //m_menuBtn->setFixedSize(QSize(40, 40));
     m_menuBtn->move(0,13);
     //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
     //m_menuBtn->setIconSize(QSize(20,20));
@@ -174,11 +204,38 @@ void TextNoteItem::initUI()
     m_menuBtn->setDisabled(true);
 
 
-    m_detailBtn = new MenuButton(m_MenuBtnBackground);
-    m_detailBtn->setFixedSize(QSize(40, 40));
-    m_detailBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/detail-normal.svg", QSize(15, 14),qApp)));
-    m_detailBtn->setIconSize(QSize(15,14));
-    m_detailBtn->move(0,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+//    m_detailBtn = new MenuButton(m_MenuBtnBackground);
+
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_detailBtn = new MenuButton(
+                    ":/image/icon/normal/detail-normal.svg",
+                    ":/image/icon/press/detail-press.svg",
+                    ":/image/icon/hover/detail-hover.svg",
+                    "",
+                    "",
+                    QSize(36,36),
+                    QSize(15,14),
+                    m_MenuBtnBackground
+                );
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_detailBtn = new MenuButton(
+                    ":/image/icon_dark/normal/detail-normal.svg",
+                    ":/image/icon_dark/press/detail-press.svg",
+                    ":/image/icon_dark/hover/detail-hover.svg",
+                    "",
+                    "",
+                    QSize(36,36),
+                    QSize(15,14),
+                    m_MenuBtnBackground
+                );
+    }
+//    m_detailBtn->setFixedSize(QSize(40, 40));
+//    m_detailBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/detail-normal.svg", QSize(15, 14),qApp)));
+//    m_detailBtn->setIconSize(QSize(15,14));
+    m_detailBtn->move(4,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
 
     //onTextHeightChanged(m_textEdit->getLineHeight());
 
@@ -206,9 +263,13 @@ void TextNoteItem::initConnection()
     connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
-    connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
+    //connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::handleMenuBtnClicked);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
+
+    //connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
+
     connect(m_detailBtn, SIGNAL(clicked()), this, SLOT(OnToDetalPage()));
 
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &TextNoteItem::changeTheme);
@@ -455,6 +516,54 @@ void TextNoteItem::changeTheme()
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
     pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
     m_bgWidget->setPalette(pb);
+
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        if(nullptr != m_menuBtn)
+        {
+            m_menuBtn->setPicChange(
+                        ":/image/icon/normal/more_normal.svg",
+                        ":/image/icon/press/more_press.svg",
+                        ":/image/icon/hover/more_hover.svg",
+                        ":/image/icon/disabled/more_disabled.svg",
+                        ":/image/icon/focus/more_focus.svg");
+        }
+
+        if(nullptr != m_detailBtn)
+        {
+            m_detailBtn->setPicChange(
+                        ":/image/icon/normal/detail-normal.svg",
+                        ":/image/icon/press/detail-press.svg",
+                        ":/image/icon/hover/detail-hover.svg",
+                        "",
+                        "");
+        }
+
+
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        if(nullptr != m_menuBtn)
+        {
+            m_menuBtn->setPicChange(
+                        ":/image/icon_dark/normal/more_normal_dark.svg",
+                        ":/image/icon_dark/press/more_press_dark.svg",
+                        ":/image/icon_dark/hover/more_hover_dark.svg",
+                        ":/image/icon_dark/disabled/more_disabled_dark.svg",
+                        ":/image/icon_dark/focus/more_focus_dark.svg");
+        }
+        if(nullptr != m_detailBtn)
+        {
+            m_detailBtn->setPicChange(
+                        ":/image/icon_dark/normal/detail-normal.svg",
+                        ":/image/icon_dark/press/detail-press.svg",
+                        ":/image/icon_dark/hover/detail-hover.svg",
+                        "",
+                        "");
+        }
+    }
 }
 
 void TextNoteItem::onTextHeightChanged(int newheight)

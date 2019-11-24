@@ -16,14 +16,31 @@ public:
 signals:
 
 public slots:
-    void OnActivePortChanged(AudioPort audioPort);
+    void OnCardsChanged(const QString & value);
+    void OnDefaultSinkChanged(const QDBusObjectPath & value);
+    void OnDefaultSourceChanged(const QDBusObjectPath & value);
+    void OnMaxUIVolumeChanged(double  value);
+    void OnSinkInputsChanged(const QList<QDBusObjectPath> &value);
+    void OnSinksChanged(const QList<QDBusObjectPath> & value);
+    void OnSourcesChanged(const QList<QDBusObjectPath> & value);
+
+    void OnActivePortChanged(AudioPort  value);
+    void OnBalanceChanged(double  value);
+    void OnBaseVolumeChanged(double  value);
+    void OnCardChanged(uint  value);
+    void OnDescriptionChanged(const QString & value);
+    void OnFadeChanged(double  value);
+    void OnMuteChanged(bool  value);
+    void OnNameChanged(const QString & value);
+    void OnPortsChanged(AudioPortList  value);
+    void OnSupportBalanceChanged(bool  value);
+    void OnSupportFadeChanged(bool  value);
+    void OnVolumeChanged(double value);
 
 private:
-    com::deepin::daemon::Audio *m_audioDBus;
-    QList<com::deepin::daemon::audio::Source *>m_SourcesInterfaceList;
-    QList<AudioPort> m_AudioPortList;
-    //0 for Unknown, 1 for Not Available, 2 for Available.
-    //QString m_appId;
+    com::deepin::daemon::Audio *m_audioInterface;
+    com::deepin::daemon::audio::Source *m_defaultSourceInterface;
+
 };
 
 #endif // VOICEAUDIODEVICEWATCHER_H
