@@ -185,8 +185,10 @@ void VoiceNoteItem::initUI()
 //    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
 //    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
 //    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
-    m_voiceTimeLabel = new QLabel();
-    m_voiceTimeLabel->setFixedSize(46, 20);
+    m_voiceTimeLabel = new DLabel();
+    //m_voiceTimeLabel->setFixedSize(46, 20);
+    m_voiceTimeLabel->setFixedSize(66, 30);//bug 3359
+    m_voiceTimeLabel->setAlignment(Qt::AlignCenter);//bug 3359
     QPalette pe;
     pe.setColor(QPalette::WindowText,QColor(00,26,46));
     m_voiceTimeLabel->setPalette(pe);

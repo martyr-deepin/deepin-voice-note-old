@@ -42,7 +42,7 @@ public:
     MenuButton *m_menuBtn;
     //DIconButton *m_menuBtn;
     //DImageButton *m_menuBtn;
-    QLabel *m_voiceTimeLabel;
+    DLabel *m_voiceTimeLabel;
     //QWidget *m_voiceShape;
     Waveform *m_waveform;
 
