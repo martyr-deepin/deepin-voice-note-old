@@ -38,7 +38,8 @@ AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 
     this->setLayout(m_itemLayout);
 
-    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &AddTextBtn::changeTheme);
+    //3653
+    //connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &AddTextBtn::changeTheme);
 
 }
 
@@ -79,17 +80,18 @@ void AddTextBtn::setDisableBtn(bool flag)
     }
 }
 
-void AddTextBtn::changeTheme()
-{
-    DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);
-    pb.setBrush(DPalette::ButtonText, pb.color(DPalette::TextTips));
+//3653
+//void AddTextBtn::changeTheme()
+//{
+//    DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);
+//    pb.setBrush(DPalette::ButtonText, pb.color(DPalette::TextTips));
 
-    pb.setBrush(DPalette::Button, QColor(0,0,0,0));
-    pb.setBrush(DPalette::Light, QColor(0,0,0,0));
-    pb.setBrush(DPalette::Dark, QColor(0,0,0,0));
-    pb.setBrush(DPalette::Shadow, pb.color(DPalette::FrameBorder));
-    m_addBtn->setPalette(pb);
-}
+//    pb.setBrush(DPalette::Button, QColor(0,0,0,0));
+//    pb.setBrush(DPalette::Light, QColor(0,0,0,0));
+//    pb.setBrush(DPalette::Dark, QColor(0,0,0,0));
+//    pb.setBrush(DPalette::Shadow, pb.color(DPalette::FrameBorder));
+//    m_addBtn->setPalette(pb);
+//}
 
 void AddTextBtn::resizeEvent(QResizeEvent * event)
 {

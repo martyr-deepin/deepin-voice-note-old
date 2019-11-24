@@ -19,7 +19,8 @@ signals:
 
 public slots:
     void setDisableBtn(bool flag);
-    void changeTheme();
+    //3653
+    //void changeTheme();
 
 protected:
     void resizeEvent(QResizeEvent * event);
