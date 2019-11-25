@@ -109,7 +109,9 @@ void MainPage::updateNoteList()
 bool MainPage::searchFolder(QString searchKey, bool &hasNoFolder)
 {
     bool result = false;
-    m_rightView->stopAllPlayback();
+    if (this->m_rightView->m_noteListWidget->isLoadedAudioPlayer) {
+        m_rightView->stopAllPlayback();
+    }
 
     m_rightView->cancleRecord();
     result = ((LeftView*)m_leftView)->searchFolder(searchKey,hasNoFolder);

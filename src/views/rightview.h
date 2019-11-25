@@ -43,6 +43,8 @@ public:
     void VoicePlayOrPause(); //Add bug 2587
     bool shortcutsDelete(); //Add bug 2587
 
+    RightNoteList *m_noteListWidget;
+
 signals:
     void textEditClicked(NOTE textNote);
     void sigBoardPress();
@@ -95,7 +97,6 @@ private:
     QWidget *m_detailPage;
     QPlainTextEdit *m_plainTextEdit;
     QVBoxLayout *m_noteListLayout;
-    RightNoteList *m_noteListWidget;
     //DImageButton *m_addVoiceBtn;
     MyRecodeButtons *m_addVoiceBtn;
     //DFloatingButton *m_addVoiceBtn;
