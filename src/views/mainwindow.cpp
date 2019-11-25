@@ -171,39 +171,48 @@ void MyMainWindow::initShortcutkeys()
 QJsonObject MyMainWindow::creatShorcutJson()
 {
     QJsonObject shortcut1;
-    shortcut1.insert("name", tr("窗口大小切换"));
+    //shortcut1.insert("name", tr("窗口大小切换"));
+    shortcut1.insert("name", tr("Window size switching"));
     shortcut1.insert("value", "Ctrl+Alt+F");
 
     QJsonObject shortcut2;
-    shortcut2.insert("name", tr("关闭应用"));
+//    shortcut2.insert("name", tr("关闭应用"));
+    shortcut2.insert("name", tr("Close App"));
     shortcut2.insert("value", "Alt+F4");
 
     QJsonObject shortcut3;
-    shortcut3.insert("name", tr("帮助"));
+    //shortcut3.insert("name", tr("帮助"));
+    shortcut3.insert("name", tr("Help"));
     shortcut3.insert("value", "F1");
 
     QJsonObject shortcut4;
-    shortcut4.insert("name", tr("搜索"));
+    //shortcut4.insert("name", tr("搜索"));
+    shortcut4.insert("name", tr("Search"));
     shortcut4.insert("value", "Ctrl+F");
 
     QJsonObject shortcut5;
-    shortcut5.insert("name", tr("显示快捷键预览"));
+    //shortcut5.insert("name", tr("显示快捷键预览"));
+    shortcut5.insert("name", tr("Show shortcut preview"));
     shortcut5.insert("value", "Ctrl+Shift+/");
 
     QJsonObject shortcut6;
-    shortcut6.insert("name", tr("新建记事本"));
+    //shortcut6.insert("name", tr("新建记事本"));
+    shortcut6.insert("name", tr("New notepad"));
     shortcut6.insert("value", "Ctrl+N");
 
     QJsonObject shortcut7;
-    shortcut7.insert("name", tr("删除记事本/删除记事项"));
+//    shortcut7.insert("name", tr("删除记事本/删除记事项"));
+    shortcut7.insert("name", tr("Delete Notepad / Delete Notes"));
     shortcut7.insert("value", "Ctrl+D");
 
     QJsonObject shortcut8;
-    shortcut8.insert("name", tr("重命名记事本"));
+//    shortcut8.insert("name", tr("重命名记事本"));
+    shortcut8.insert("name", tr("Rename Notepad"));
     shortcut8.insert("value", "F2");
 
     QJsonObject shortcut9;
-    shortcut9.insert("name", tr("语音记事项播放/暂停"));
+//    shortcut9.insert("name", tr("语音记事项播放/暂停"));
+    shortcut9.insert("name", tr("Voice recording play/pause"));
     shortcut9.insert("value", "Space");
 
     QJsonArray shortcutArray;
@@ -218,7 +227,8 @@ QJsonObject MyMainWindow::creatShorcutJson()
     shortcutArray.append(shortcut9);
 
     QJsonObject shortcut_group;
-    shortcut_group.insert("groupName", "快捷键");
+//    shortcut_group.insert("groupName", "快捷键");
+    shortcut_group.insert("groupName", tr("hot key"));
     shortcut_group.insert("groupItems", shortcutArray);
 
     QJsonArray shortcutArrayall;

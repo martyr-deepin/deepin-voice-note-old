@@ -806,17 +806,18 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
             fileDialog.setDefaultSuffix("txt");
             fileDialog.setNameFilter("TXT(*.txt)");
             //fileDialog.setNameFilter(tr("TXT(*.txt)"));
-            scanData(dir,".txt", files);
+            scanData(dir,".txt", files, tr("TextNote"));
             getNewName(newName,files);
-            fileDialog.selectFile(tr("Note") + newName);
+            fileDialog.selectFile(tr("TextNote") + newName);
+            //fileDialog.selectFile(tr("Note") + newName);
             //fileDialog.selectFile("记事本" + newName);
         }else {
             fileDialog.setDefaultSuffix("mp3");
             fileDialog.setNameFilter("MP3(*.mp3)");
             //fileDialog.setNameFilter(tr("MP3(*.mp3)"));
-            scanData(dir,".mp3", files);
+            scanData(dir,".mp3", files, tr("VoiceNote"));
             getNewName(newName,files);
-            fileDialog.selectFile(tr("Note") + newName);
+            fileDialog.selectFile(tr("VoiceNote") + newName);
             //fileDialog.selectFile("记事本" + newName);
         }
 
@@ -864,7 +865,7 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
     }
 }
 
-void RightNoteList::scanData(const QDir &fromDir, const QString &filter, QStringList &files)
+void RightNoteList::scanData(const QDir &fromDir, const QString &filter, QStringList &files, QString compareText)
 {
     QFileInfoList fileInfoList = fromDir.entryInfoList(QDir::Files);
     //QFileInfoList fileInfoList = fromDir.entryInfoList();
@@ -879,7 +880,8 @@ void RightNoteList::scanData(const QDir &fromDir, const QString &filter, QString
             {
                 QString prefilename = filename;
                 QString tmpfilename = filename.remove(3,filename.count() - 3);
-                if(0 == tmpfilename.compare("记事本"))
+                //if(0 == tmpfilename.compare("记事本"))
+                if(0 == tmpfilename.compare(compareText))
                 {
                     prefilename = prefilename.remove(0,3);
                     files.append(prefilename);

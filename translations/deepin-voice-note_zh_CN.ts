@@ -5,7 +5,7 @@
     <name>AddTextBtn</name>
     <message>
         <source>Click to Add TextNote</source>
-        <translation>点击添加文字记事项</translation>
+        <translation>点击添加文本笔记</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,47 @@
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation>该语音记事项已删除</translation>
+        <translation>该语音笔记已删除</translation>
+    </message>
+    <message>
+        <source>Window size switching</source>
+        <translation>窗口大小切换</translation>
+    </message>
+    <message>
+        <source>Close App</source>
+        <translation>关闭应用</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>帮助</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>搜索</translation>
+    </message>
+    <message>
+        <source>Show shortcut preview</source>
+        <translation>显示快捷键预览</translation>
+    </message>
+    <message>
+        <source>New notepad</source>
+        <translation>新建记事本</translation>
+    </message>
+    <message>
+        <source>Delete Notepad / Delete Notes</source>
+        <translation>删除记事本/删除记事项</translation>
+    </message>
+    <message>
+        <source>Rename Notepad</source>
+        <translation>重命名记事本</translation>
+    </message>
+    <message>
+        <source>Voice recording play/pause</source>
+        <translation>语音记事项播放/暂停</translation>
+    </message>
+    <message>
+        <source>hot key</source>
+        <translation>快捷键</translation>
     </message>
 </context>
 <context>
@@ -96,7 +136,7 @@
     </message>
     <message>
         <source>Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.</source>
-        <translation>语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。</translation>
+        <translation>语音记事本是一款提供文本记事、语音录音记录的轻量级记事工具。</translation>
     </message>
     <message>
         <source>OK</source>
@@ -104,14 +144,14 @@
     </message>
     <message>
         <source>New Folder</source>
-        <translation>新记事</translation>
+        <translation>记事本</translation>
     </message>
 </context>
 <context>
     <name>RightNoteList</name>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation>您确定要删除这条记事项吗？</translation>
+        <translation>您确定要删除这条笔记吗？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -131,7 +171,7 @@
     </message>
     <message>
         <source>Note</source>
-        <translation>记事本</translation>
+        <translation type="vanished">记事本</translation>
     </message>
     <message>
         <source>File name cannot be empty</source>
@@ -153,12 +193,20 @@
         <source>Save As MP3</source>
         <translation>保存为MP3</translation>
     </message>
+    <message>
+        <source>TextNote</source>
+        <translation>文本笔记</translation>
+    </message>
+    <message>
+        <source>VoiceNote</source>
+        <translation>语音笔记</translation>
+    </message>
 </context>
 <context>
     <name>RightView</name>
     <message>
         <source>No Result</source>
-        <translation>无结果</translation>
+        <translation>无搜索结果</translation>
     </message>
     <message>
         <source>No recording device detected</source>
@@ -169,7 +217,7 @@
     <name>SearchNonePage</name>
     <message>
         <source>No Result</source>
-        <translation>无结果</translation>
+        <translation>无搜索结果</translation>
     </message>
 </context>
 </TS>

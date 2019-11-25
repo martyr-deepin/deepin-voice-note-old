@@ -157,7 +157,7 @@ private:
     void initUI();
     void initConnection();
     void showFileDialog(SAVE_INFO saveInfo);
-    void scanData(const QDir &fromDir, const QString &filter, QStringList &files);
+    void scanData(const QDir &fromDir, const QString &filter, QStringList &files, QString compareText);
     void getNewName(QString &outName, QStringList files);
     QListWidgetItem *getListItemById(int id);
     QString getPlayingFilepath();

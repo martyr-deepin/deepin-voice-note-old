@@ -87,6 +87,46 @@
         <source>The voice memo has been deleted</source>
         <translation>The voice memo has been deleted</translation>
     </message>
+    <message>
+        <source>Window size switching</source>
+        <translation>Window size switching</translation>
+    </message>
+    <message>
+        <source>Close App</source>
+        <translation>Close App</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Help</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Search</translation>
+    </message>
+    <message>
+        <source>Show shortcut preview</source>
+        <translation>Show shortcut preview</translation>
+    </message>
+    <message>
+        <source>New notepad</source>
+        <translation>New notepad</translation>
+    </message>
+    <message>
+        <source>Delete Notepad / Delete Notes</source>
+        <translation>Delete Notepad / Delete Notes</translation>
+    </message>
+    <message>
+        <source>Rename Notepad</source>
+        <translation>Rename Notepad</translation>
+    </message>
+    <message>
+        <source>Voice recording play/pause</source>
+        <translation>Voice recording play/pause</translation>
+    </message>
+    <message>
+        <source>hot key</source>
+        <translation>hot key</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -131,7 +171,7 @@
     </message>
     <message>
         <source>Note</source>
-        <translation>Note</translation>
+        <translation type="vanished">Note</translation>
     </message>
     <message>
         <source>File name cannot be empty</source>
@@ -152,6 +192,14 @@
     <message>
         <source>Save As MP3</source>
         <translation>Save As MP3</translation>
+    </message>
+    <message>
+        <source>TextNote</source>
+        <translation>TextNote</translation>
+    </message>
+    <message>
+        <source>VoiceNote</source>
+        <translation>VoiceNote</translation>
     </message>
 </context>
 <context>
