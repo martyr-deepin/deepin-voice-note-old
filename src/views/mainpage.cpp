@@ -97,11 +97,6 @@ void MainPage::initRightView(){
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }
 
-//void MainPage::initCentralWidget()
-//{
-
-//}
-
 void MainPage::initTitleBar(){
 
 }

@@ -23,6 +23,23 @@
 DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
+class RightNoteList;
+
+class RightNoteListWorker : public QObject
+{
+    Q_OBJECT
+public:
+    explicit RightNoteListWorker(RightNoteList* parent);
+
+public slots:
+    void startLoading();
+
+signals:
+    void sigLoaded();
+
+private:
+    RightNoteList* m_parent;
+};
 
 class MMenu : public DMenu
 {
@@ -57,6 +74,8 @@ public:
     void OnlyTryToFouceOutEveryText();
     void VoicePlayOrPause(); //Add bug 2587
     bool shortcutsDelete();  //Add bug 2587
+    QMediaPlayer *audioPlayer;
+    bool isLoadedAudioPlayer = {false};
 private:
     void adjustWidgetItemWidth();
 signals:
@@ -71,6 +90,9 @@ signals:
     void positionByfinishRecord(qint64 position); //ynb 20191109
     void sigChangeCurFolderToTop(int curFolder);
     void sig_CheckFileExist();//by yuanshuai 20191120 2841
+    void sig_startloadingPlayer();
+    void sig_EnablePlaybackButton();
+    void sig_RecordButtonAvaliability(bool isAvaliable);
 
 protected:
     //bool eventFilter(QObject *o, QEvent *e);
@@ -110,6 +132,7 @@ public slots:
     void getduration(qint64 position);   //获取音频总时间  ynb 20191109
     void onTextEditGetFocus(NOTE note); //Add bug 2587
     void onTextEditOutFocus(NOTE note); //Add bug 2587
+    void loadedPlayer();
 private:
     void testQMediaPlayer();
 
@@ -125,7 +148,6 @@ private:
     DDialog *m_delConfirmDialog;
     DDialog *m_noticeNotExistDialog;
     VoiceNoteItem *m_currPlayingItem;
-    QMediaPlayer *audioPlayer;
     MySlider *m_myslider;
     DSlider *m_TestSlider;
     FileExistsDialog *m_fileExistsDialog;
@@ -163,6 +185,9 @@ private:
     QString getPlayingFilepath();
     void changeSliderPosByHand(int moveMovment);
     bool getRowByID(int id, NOTE_TYPE type, int &row);
+
+    RightNoteListWorker* m_rightNoteListWorker;
+    QThread * m_rightNoteListWorkerThread;
 };
 
 #endif // RIGHTNOTELIST_H

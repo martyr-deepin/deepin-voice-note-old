@@ -78,8 +78,6 @@ private:
     void initLeftView();
 
     void initRightView();
-
-    //void initCentralWidget();
 };
 
 #endif // MAINPAGE_H

@@ -27,6 +27,7 @@ RightView::RightView()
     m_pVoiceVolumeWatcher->start();
     connect(m_pVoiceVolumeWatcher, SIGNAL(sigRecodeState(bool)), this, SLOT(on_CheckRecodeCouldUse(bool)));
 
+    connect(m_noteListWidget, &RightNoteList::sig_RecordButtonAvaliability, this, &RightView::on_CheckRecodeCouldUse);
 
 //    DTextEdit *pTextEdit = new DTextEdit(this);
 //    pTextEdit->setFixedSize(QSize(100,100));
@@ -273,7 +274,9 @@ void RightView::onShowNoResult()
 void RightView::handleSelFolderChg(int folderId)
 {
     //stopAllNeedStop
-    m_noteListWidget->stop();
+    if (this->m_noteListWidget->isLoadedAudioPlayer) {
+        m_noteListWidget->stop();
+    }
 
     m_noteListWidget->delAllEmptyText();
     m_currFolderId = folderId;
@@ -737,6 +740,10 @@ void RightView::oncheckCurPageVoiceForDelete()
 
 void RightView::on_CheckRecodeCouldUse(bool coulduse)
 {
+    if (!this->m_noteListWidget->isLoadedAudioPlayer) {
+        coulduse = false;
+    }
+
     if(coulduse)
     {
         //m_pVoiceVolumeWatcher->stopWatch();

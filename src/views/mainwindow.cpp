@@ -20,10 +20,8 @@
 MyMainWindow::MyMainWindow()
 {
     m_quit = false; //Add bug3470
-    //qDebug()<<"2222222222222222222"<<UiUtil::canMicrophoneInput();
+
     initUI();
-    initShortcutkeys(); //Add bug 2587
-    initConnection();
 }
 
 void MyMainWindow::initUI() {
@@ -36,7 +34,8 @@ void MyMainWindow::initUI() {
     m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Currently recording, is the recording terminated?")), nullptr, QString(tr("Cancel")), QString(tr("Stop")));
     //m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
     initTitleBar();
-    initCentralWidget();
+
+    QTimer::singleShot(0, this, &MyMainWindow::initTheRest);
 }
 
 
@@ -166,6 +165,15 @@ void MyMainWindow::initShortcutkeys()
     auto openkey6 = new QShortcut(QKeySequence(Qt::Key_Space), this);
     openkey6->setContext(Qt::ApplicationShortcut);
     connect(openkey6, &QShortcut::activated, this, &MyMainWindow::VoiceNotesPlayShortcut);
+}
+
+void MyMainWindow::initTheRest()
+{
+    initCentralWidget();
+
+    initShortcutkeys(); //Add bug 2587
+
+    initConnection();
 }
 
 QJsonObject MyMainWindow::creatShorcutJson()

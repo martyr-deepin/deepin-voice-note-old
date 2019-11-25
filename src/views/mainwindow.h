@@ -101,6 +101,7 @@ private:
     void initCentralWidget();
     //Add start bug 2587
     void initShortcutkeys();
+    void initTheRest();
     QJsonObject creatShorcutJson();
     //Add end bug 2587
 };

@@ -17,9 +17,20 @@
 #include <QCursor>
 #include <QShortcut>  //Add bug 2587
 
+RightNoteListWorker::RightNoteListWorker(RightNoteList* parent)
+{
+    m_parent = parent;
+}
+
+void RightNoteListWorker::startLoading()
+{
+    m_parent->audioPlayer = new QMediaPlayer(this);
+    m_parent->audioPlayer->setNotifyInterval(200);
+    emit sigLoaded();
+}
+
 MMenu::MMenu(QWidget *parent)
 {
-
     //this->setFixedSize(QSize(162,100));
 }
 
@@ -67,6 +78,9 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
 
 RightNoteList::~RightNoteList()
 {
+    m_rightNoteListWorkerThread->quit();
+    m_rightNoteListWorkerThread->wait();
+
     Intancer::get_Intancer()->clearHeightForRightList();
 }
 
@@ -169,9 +183,15 @@ void RightNoteList::initUI()
     //end
     m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    audioPlayer = new QMediaPlayer(this);
-    audioPlayer->setNotifyInterval(200);
-    connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
+
+    m_rightNoteListWorkerThread = new QThread();
+    m_rightNoteListWorker= new RightNoteListWorker(this);
+    m_rightNoteListWorker->moveToThread(m_rightNoteListWorkerThread);
+    connect(this, &RightNoteList::sig_startloadingPlayer, m_rightNoteListWorker, &RightNoteListWorker::startLoading);
+    connect(m_rightNoteListWorker, &RightNoteListWorker::sigLoaded, this, &RightNoteList::loadedPlayer);
+    m_rightNoteListWorkerThread->start();
+
+    emit sig_startloadingPlayer();
 
     m_myslider = new MySlider(Qt::Horizontal, this);
     //m_TestSlider = new DSlider(Qt::Horizontal, this);
@@ -195,19 +215,15 @@ void RightNoteList::initUI()
 }
 void RightNoteList::initConnection()
 {
-    connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_delConfirmDialog, &DDialog::closed, this, &RightNoteList::handleCloseDialogClicked);
     //start notify by yuanshuai 20191119
     //connect(m_noticeNotExistDialog, &DDialog::buttonClicked, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
     //connect(m_noticeNotExistDialog, &DDialog::closed, this, &RightNoteList::sig_checkCurPageVoiceForDelete);
     //end
-    connect(audioPlayer,SIGNAL(durationChanged(qint64)),this,SLOT(getduration(qint64))); //ynb 20191109
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
-
-
 }
 
 void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
@@ -271,6 +287,15 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         connect(Intancer::get_Intancer(), SIGNAL(sigDisAbleReplay()), voiceItem, SLOT(setPlayDiseable()));
         connect(Intancer::get_Intancer(), SIGNAL(sigEnAbleReplay()), voiceItem, SLOT(setPlayEnable()));
+
+        connect(this, &RightNoteList::sig_EnablePlaybackButton, voiceItem, &VoiceNoteItem::setPlayEnable);
+
+        if(this->isLoadedAudioPlayer) {
+            voiceItem->setPlayEnable();
+        }
+        else {
+            voiceItem->setPlayDiseable();
+        }
 
         QListWidgetItem *item=new QListWidgetItem();
         item->setSizeHint(QSize(this->width(), 98));
@@ -765,6 +790,18 @@ void RightNoteList::onTextEditOutFocus(NOTE note)
         m_textGetFocus = false;
 }
 //Add end bug 2587
+
+void RightNoteList::loadedPlayer()
+{
+    connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
+    connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
+    connect(audioPlayer, SIGNAL(durationChanged(qint64)), this, SLOT(getduration(qint64)));
+
+    this->isLoadedAudioPlayer = true;
+
+    emit sig_EnablePlaybackButton();
+    emit sig_RecordButtonAvaliability(this->isLoadedAudioPlayer);
+}
 
 void RightNoteList::handleSaveAsItem(bool)
 {
