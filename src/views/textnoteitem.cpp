@@ -646,11 +646,21 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
 void TextNoteItem::leaveEvent(QEvent *event)
 {
     m_mouseIsIn = false;
+    //3152 liuyang
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_bgWidget->setPalette(pb);
+    //3152 liuyang
     return QWidget::leaveEvent(event);
 }
 
 void TextNoteItem::enterEvent(QEvent *event)
 {
     m_mouseIsIn = true;
+    //3152 liuyang
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+    m_bgWidget->setPalette(pb);
+    //3152 liuyang
     return QWidget::enterEvent(event);
 }

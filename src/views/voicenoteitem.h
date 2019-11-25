@@ -64,6 +64,11 @@ public slots:
     void changeTheme();
     //void handle
 
+    //3152 liuyang
+protected:
+    void leaveEvent(QEvent *event);
+    void enterEvent(QEvent *event);
+    //3152 liuyang
 private:
     NoteController *m_noteCtr;
     PlayingButton *m_playingButton;

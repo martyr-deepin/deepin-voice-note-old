@@ -125,6 +125,24 @@ void VoiceNoteItem::changeTheme()
     }
 }
 
+//3152 liuyang
+void VoiceNoteItem::leaveEvent(QEvent *event)
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_bgWidget->setPalette(pb);
+    return QWidget::leaveEvent(event);
+}
+
+void VoiceNoteItem::enterEvent(QEvent *event)
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+    m_bgWidget->setPalette(pb);
+    return QWidget::enterEvent(event);
+}
+//3152 liuyang
+
 void VoiceNoteItem::initUI()
 {
     this->setFixedHeight(VOICENOTE_HEIGHT);
