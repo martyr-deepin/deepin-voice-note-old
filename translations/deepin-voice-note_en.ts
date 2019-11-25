@@ -144,6 +144,10 @@
     </message>
     <message>
         <source>New Folder</source>
+        <translation type="vanished">NewFolder</translation>
+    </message>
+    <message>
+        <source>NewFolder</source>
         <translation>NewFolder</translation>
     </message>
 </context>

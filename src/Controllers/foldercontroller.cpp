@@ -53,7 +53,7 @@ bool FolderController::updateFolderCreateTime(FOLDER folderInfo)
 QString FolderController::getNextFolderName()
 {
     QStringList folderNameList = FolderOper::getFolderNameList();
-    QString folderName = QString(QObject::tr("New Folder"));
+    QString folderName = QString(QObject::tr("NewFolder"));
     //QString folderName = QString(QObject::tr("新记事"));
 
     //QString folderName = DEFAULT_FOLDER_NAME;

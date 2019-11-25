@@ -144,6 +144,10 @@
     </message>
     <message>
         <source>New Folder</source>
+        <translation type="vanished">记事本</translation>
+    </message>
+    <message>
+        <source>NewFolder</source>
         <translation>记事本</translation>
     </message>
 </context>
