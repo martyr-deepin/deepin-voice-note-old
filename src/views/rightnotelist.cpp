@@ -285,8 +285,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect, NOTE)), this, SLOT(play(VoiceNoteItem *, QString, QRect, NOTE))); //Edit  bug 2587
         //connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
-        connect(Intancer::get_Intancer(), SIGNAL(sigDisAbleReplay()), voiceItem, SLOT(setPlayDiseable()));
-        connect(Intancer::get_Intancer(), SIGNAL(sigEnAbleReplay()), voiceItem, SLOT(setPlayEnable()));
+        connect(Intancer::get_Intancer(), &Intancer::sigDisAbleReplay, voiceItem, &VoiceNoteItem::setPlayDisable);
+        connect(Intancer::get_Intancer(), &Intancer::sigEnAbleReplay, voiceItem, &VoiceNoteItem::setPlayEnable);
 
         connect(this, &RightNoteList::sig_EnablePlaybackButton, voiceItem, &VoiceNoteItem::setPlayEnable);
 
@@ -294,7 +294,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
             voiceItem->setPlayEnable();
         }
         else {
-            voiceItem->setPlayDiseable();
+            voiceItem->setPlayDisable();
         }
 
         QListWidgetItem *item=new QListWidgetItem();
@@ -1098,7 +1098,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         {
             m_myslider->hide();
             m_currPlayingItem->onlySetResumeNoSig();
-            m_currPlayingItem->setPlayDiseable();
+            m_currPlayingItem->setPlayDisable();
             m_currPlayingItem->clearWaveformContent();
             //by yuanshuai 20191120 2841
             //m_noticeNotExistDialog->show();

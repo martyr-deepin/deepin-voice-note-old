@@ -59,7 +59,7 @@ public slots:
     void handleStopPlay();
     void handlePausePlay();
     void handleResumePlaying();
-    void setPlayDiseable();
+    void setPlayDisable();
     void setPlayEnable();
     void changeTheme();
     //void handle

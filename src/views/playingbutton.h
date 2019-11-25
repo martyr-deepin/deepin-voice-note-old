@@ -17,7 +17,7 @@ class PlayingButton : public QWidget
 public:
     PlayingButton(QWidget *parent = 0);
     void onlySetResumeForButton();
-    void setPlayDiseable();
+    void setPlayDisable();
     void setPlayEnable();
     void VoicePlayOrPause(); //Add bug 2587
 signals:

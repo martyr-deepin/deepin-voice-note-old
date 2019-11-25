@@ -80,9 +80,9 @@ void VoiceNoteItem::VoicePlayOrPause()
 }
 //Add end bug 2587
 
-void VoiceNoteItem::setPlayDiseable()
+void VoiceNoteItem::setPlayDisable()
 {
-    m_playingButton->setPlayDiseable();
+    m_playingButton->setPlayDisable();
 }
 
 void VoiceNoteItem::setPlayEnable()

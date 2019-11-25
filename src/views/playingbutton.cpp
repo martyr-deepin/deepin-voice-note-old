@@ -151,7 +151,7 @@ void PlayingButton::onlySetResumeForButton()
 //    layout->addWidget(resumeButton);
 
 }
-void PlayingButton::setPlayDiseable()
+void PlayingButton::setPlayDisable()
 {
    if(nullptr != resumeButton)
    {
