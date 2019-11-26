@@ -918,14 +918,14 @@ void RightNoteList::scanData(const QDir &fromDir, const QString &filter, QString
         {
             QString filename = fileInfoList.at(i).fileName();
             filename = filename.remove(filename.count() - filter.count(),filter.count());
-            if(filename.count() > 3)
+            if(filename.count() > 4)
             {
                 QString prefilename = filename;
-                QString tmpfilename = filename.remove(3,filename.count() - 3);
+                QString tmpfilename = filename.remove(4,filename.count() - 4);
                 //if(0 == tmpfilename.compare("记事本"))
                 if(0 == tmpfilename.compare(compareText))
                 {
-                    prefilename = prefilename.remove(0,3);
+                    prefilename = prefilename.remove(0,4);
                     files.append(prefilename);
                 }
             }

@@ -42,11 +42,11 @@ public slots:
 
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void focusInEvent(QFocusEvent *e);
-    void focusOutEvent(QFocusEvent *e);
+    void mousePressEvent(QMouseEvent *event)override;
+    void focusInEvent(QFocusEvent *e)override;
+    void focusOutEvent(QFocusEvent *e)override;
     void contextMenuEvent(QContextMenuEvent *e) override;//3699
-    void wheelEvent(QWheelEvent *e);
+    void wheelEvent(QWheelEvent *e)override;
 
 private:
     NOTE m_textNote;
