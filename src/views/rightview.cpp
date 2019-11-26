@@ -235,6 +235,7 @@ void RightView::initRecordStackedWidget()
                     this);
     }
     m_addVoiceBtn->DisableBtn();
+    m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
 //    m_addVoiceBtn = new DFloatingButton(this);
 //    m_addVoiceBtn->setFixedSize(QSize(58,58));
 //    m_addVoiceBtn->setIcon(QIcon(":/image/icon/normal/circlebutton_voice.svg"));
@@ -744,14 +745,26 @@ void RightView::on_CheckRecodeCouldUse(bool coulduse)
         coulduse = false;
     }
 
+
     if(coulduse)
     {
         //m_pVoiceVolumeWatcher->stopWatch();
-        m_addVoiceBtn->EnAbleBtn();
+        if(m_pVoiceVolumeWatcher->getCouldUse())
+        {
+            m_addVoiceBtn->EnAbleBtn();
+            m_addVoiceBtn->setToolTip(QString(""));
+        }
+        else
+        {
+            m_addVoiceBtn->DisableBtn();
+            m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
+        }
+
     }
     else
     {
         m_addVoiceBtn->DisableBtn();
+        m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
     }
 }
 
@@ -761,7 +774,10 @@ void RightView::ShowRecodeTip()
 //    pa.setBrush(DPalette::ToolTipText, pa.color(DPalette::ToolTipText));
 
 //    m_addVoiceBtn->setPalette(pa);
-    m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
+//    m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
+//    m_addVoiceBtn->setToolTip(QString(""));
+
+
     //m_addVoiceBtn->setToolTip(QString(tr("未检测到录音设备")));
 //    QPoint pGlobal = m_addVoiceBtn->mapToGlobal(QPoint(0,0));
 //    QToolTip::showText(QPoint(pGlobal.x() + m_addVoiceBtn->width() * 3/4,pGlobal.y() - 8), QString(tr("未检测到录音设备")));

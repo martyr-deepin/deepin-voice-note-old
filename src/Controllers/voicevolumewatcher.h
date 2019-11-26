@@ -13,6 +13,7 @@ public:
     void stopWatch();
     void setIsRecoding(bool value);
     void run();
+    bool getCouldUse();
 
 signals:
     void sigRecodeState(bool couldUse);

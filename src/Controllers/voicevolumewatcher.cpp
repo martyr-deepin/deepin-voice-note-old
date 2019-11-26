@@ -46,3 +46,8 @@ void voiceVolumeWatcher::run()
         }
     }
 }
+
+bool voiceVolumeWatcher::getCouldUse()
+{
+    return m_coulduse;
+}
