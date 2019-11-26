@@ -126,6 +126,7 @@ void TextNoteItem::initUI()
 
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
+    m_textEdit->setTextNote(m_textNote, m_searchKey);
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
 //    labelFont.setPointSize(9);
