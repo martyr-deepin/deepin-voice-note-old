@@ -226,7 +226,9 @@ void RightNoteList::initConnection()
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
 }
 
-void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
+//3550-3547-3528
+void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchKey,int textEditCursorPos )
+//void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
 {
     if(note.noteType == NOTE_TYPE::TEXT)
     {
@@ -267,8 +269,9 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         textItem->init();
         if(isAddByButton)
         {
-            textItem->changeToEditMode();
-			adjustWidgetItemWidth();
+            //textItem->changeToEditMode();
+            textItem->changeToEditMode(textEditCursorPos);//3550-3547-3528
+            adjustWidgetItemWidth();
         }
 
         //textItem->changeToEditMode();
@@ -635,11 +638,13 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
            if(pLasteWidget != senderWidget)
            {
                NOTE note = senderWidget->getTextNote();
+               int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
                QListWidgetItem *senderItem = getListItemById(note.id);
                this->removeItemWidget(senderItem);
                delete senderItem;
                senderItem = nullptr;
-               addWidgetItem(true,note,"");
+               //addWidgetItem(true,note,"");
+               addWidgetItem(true,note,"",cursorPos);//3550-3547-3528
                this->scrollToBottom();
            }
        }

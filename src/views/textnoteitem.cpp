@@ -280,7 +280,8 @@ void TextNoteItem::initConnection()
 //    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
 }
 
-void TextNoteItem::changeToEditMode()
+void TextNoteItem::changeToEditMode(int cursorpos)
+//void TextNoteItem::changeToEditMode()
 {
 //    m_stackedWidget->setCurrentIndex(1);
 //    QTextCursor textCursor = m_plainTextEdit->textCursor();
@@ -294,10 +295,18 @@ void TextNoteItem::changeToEditMode()
         m_isEdited = true;
 
         //liuyang 3550 3547 3528
-        QTextCursor cursor = m_textEdit->textCursor();
-        cursor.movePosition(QTextCursor::End);
-        m_textEdit->setTextCursor(cursor);
+//        QTextCursor cursor = m_textEdit->textCursor();
+//        cursor.movePosition(QTextCursor::End);
+//        m_textEdit->setTextCursor(cursor);
         //liuyang 3550 3547 3528
+        //3550-3547-3528 patch
+        if(cursorpos > 0)
+        {
+            QTextCursor cursor = m_textEdit->textCursor();
+            cursor.setPosition(cursorpos);
+            m_textEdit->setTextCursor(cursor);
+        }
+        //3550-3547-3528 patch
     }
 }
 
@@ -664,3 +673,10 @@ void TextNoteItem::enterEvent(QEvent *event)
     //3152 liuyang
     return QWidget::enterEvent(event);
 }
+
+//3550-3547-3528 patch
+int TextNoteItem::getTextEditCursorPos()
+{
+    return  m_textEdit != nullptr ? m_textEdit->textCursor().position() : -1;
+}
+//3550-3547-3528 patch

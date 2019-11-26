@@ -49,7 +49,8 @@ public:
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
-    void changeToEditMode();
+    //void changeToEditMode();
+    void changeToEditMode(int cursorpos = -1 );//3550-3547-3528 patch
     void readFromDatabase();
     void init();
     int getId();
@@ -57,6 +58,7 @@ public:
     NOTE getTextNote();//liuyang 3550 3547 3528
     void setDetalBtnInVisible();
     QPoint remapToGlobalMenbtn(QPoint GlobalPoint);
+    int getTextEditCursorPos();//3550-3547-3528 patch
 
 signals:
     void textEditTrueClicked(NOTE m_textNote);

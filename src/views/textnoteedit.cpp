@@ -128,19 +128,21 @@ void TextNoteEdit::wheelEvent(QWheelEvent *e)
 
 void TextNoteEdit::initConnection()
 {
-    connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);
+    //connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);  //3550-3547-3528 patch
+
     connect(this->document(),SIGNAL(contentsChanged()),this,SLOT(textAreaChanged())); //Add 20191111
 }
 
 void TextNoteEdit::updateNote()
 {
-    //liuyang 3550 3547 3528
-    QString preContent = this->toPlainText();
-    if(preContent == m_textNote.contentText)
-    {
-        return;
-    }
-    //liuyang 3550 3547 3528
+    //3550-3547-3528 patch
+//    //liuyang 3550 3547 3528
+//    QString preContent = this->toPlainText();
+//    if(preContent == m_textNote.contentText)
+//    {
+//        return;
+//    }
+//    //liuyang 3550 3547 3528
     qDebug() << "TextNoteEdit::updateNote" << "start";
     if (this->isReadOnly())
     {
@@ -148,6 +150,14 @@ void TextNoteEdit::updateNote()
         return;
     }
     qDebug() << "TextNoteEdit::updateNote" << "exec";
+    //3550-3547-3528 patch
+    //liuyang 3550 3547 3528
+    QString preContent = this->toPlainText();
+    if(preContent == m_textNote.contentText)
+    {
+        return;
+    }
+    //liuyang 3550 3547 3528
     NOTE note = m_textNote;
 
 
@@ -193,6 +203,9 @@ void TextNoteEdit::textAreaChanged()
             int newheight = document->size().rheight();
             if (newheight != editor->height()){
                 qDebug()<<"newheight:"<<newheight;
+                //3550-3547-3528 patch
+                updateNote();
+                //3550-3547-3528 patch
                 emit sigTextHeightChanged(newheight);
                //editor->setFixedHeight(newheight);
             }
