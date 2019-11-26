@@ -78,17 +78,18 @@ void FolerWidgetItem::changeToClickMode()
 
         //m_BackGround->setVisible(false);
 
-        DPalette pe = DApplicationHelper::instance()->palette(m_nameLabel);
-        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextLively));
-        pe.setBrush(DPalette::WindowText, QColor(Qt::white));
-        m_nameLabel->setPalette(pe);
+//        DPalette pe = DApplicationHelper::instance()->palette(m_nameLabel);
+//        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextLively));
+//        pe.setBrush(DPalette::WindowText, QColor(Qt::white));
+//        m_nameLabel->setPalette(pe);
+         m_nameLabel->setForegroundRole(DPalette::HighlightedText);
 
 
-        DPalette pc = DApplicationHelper::instance()->palette(m_createTimeLabel);
-        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::TextLively));
-        pc.setBrush(DPalette::WindowText, QColor(Qt::white));
-        m_createTimeLabel->setPalette(pc);
-
+//        DPalette pc = DApplicationHelper::instance()->palette(m_createTimeLabel);
+//        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::TextLively));
+//        pc.setBrush(DPalette::WindowText, QColor(Qt::white));
+//        m_createTimeLabel->setPalette(pc);
+        m_createTimeLabel->setForegroundRole(DPalette::HighlightedText);
 
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
@@ -110,18 +111,20 @@ void FolerWidgetItem::changeToUnClickMode()
             m_clicked = false;
         }
 
-        DPalette pe;
-        //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
-        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextTips));
-        pe.setColor(DPalette::WindowText,pe.color(DPalette::WindowText));
-        m_createTimeLabel->setPalette(pe);
+//        DPalette pe;
+//        //DPalette pe = DApplicationHelper::instance()->palette(m_createTimeLabel);
+//        //pe.setBrush(DPalette::WindowText, pe.color(DPalette::TextTips));
+//        pe.setColor(DPalette::WindowText,pe.color(DPalette::WindowText));
+//        m_createTimeLabel->setPalette(pe);
+        m_createTimeLabel->setForegroundRole(DPalette::TextTips);
 
-        DPalette pc;
-        //DPalette pc = DApplicationHelper::instance()->palette(m_nameLabel);
-        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::WindowText));
-        pc.setColor(DPalette::WindowText,pc.color(DPalette::TextTips));
-        m_nameLabel->setPalette(pc);
-        //m_BackGround->setVisible(true);
+//        DPalette pc;
+//        //DPalette pc = DApplicationHelper::instance()->palette(m_nameLabel);
+//        //pc.setBrush(DPalette::WindowText, pc.color(DPalette::WindowText));
+//        pc.setColor(DPalette::WindowText,pc.color(DPalette::TextTips));
+//        m_nameLabel->setPalette(pc);
+//        //m_BackGround->setVisible(true);
+        m_nameLabel->setForegroundRole(DPalette::Text);
 
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
@@ -167,9 +170,10 @@ void FolerWidgetItem::Init()
     //m_nameLabel->setFont(labelFont);
     DFontSizeManager::instance()->bind(m_nameLabel,DFontSizeManager::T6);
 
-    DPalette pe;
-    pe.setColor(DPalette::WindowText,pe.color(DPalette::TextTips));
-    m_nameLabel->setPalette(pe);
+//    DPalette pe;
+//    pe.setColor(DPalette::WindowText,pe.color(DPalette::TextTips));
+//    m_nameLabel->setPalette(pe);
+    m_nameLabel->setForegroundRole(DPalette::Text);
 
 
     bool isConverted = false;
@@ -207,9 +211,10 @@ void FolerWidgetItem::Init()
 //    m_createTimeLabel->setFont(createTimeFont);
     DFontSizeManager::instance()->bind(m_createTimeLabel,DFontSizeManager::T8);
 
-    DPalette pc;
-    pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
-    m_createTimeLabel->setPalette(pc);
+//    DPalette pc;
+//    pc.setColor(DPalette::WindowText,pc.color(DPalette::WindowText));
+//    m_createTimeLabel->setPalette(pc);
+    m_createTimeLabel->setForegroundRole(DPalette::TextTips);
     m_createTimeLabel->setText(UiUtil::convertDateTime(m_folder.createTime));
     initConnection();
 
