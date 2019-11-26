@@ -5,7 +5,7 @@
     <name>AddTextBtn</name>
     <message>
         <source>Click to Add TextNote</source>
-        <translation>点击添加文本笔记</translation>
+        <translation>添加文字笔记</translation>
     </message>
 </context>
 <context>
@@ -38,7 +38,7 @@
     <name>LeftFolderList</name>
     <message>
         <source>Are you sure want to delete Folder?</source>
-        <translation>您确定要删除记事本吗？</translation>
+        <translation>您确定要删除此记事本吗？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -73,7 +73,7 @@
     </message>
     <message>
         <source>Currently recording, is the recording terminated?</source>
-        <translation>当前正在录⾳中，是否终⽌录⾳？</translation>
+        <translation>当前录音中，是否停止录音？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -81,11 +81,11 @@
     </message>
     <message>
         <source>Stop</source>
-        <translation>终止</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation>该语音笔记已删除</translation>
+        <translation>该语音笔记已被删除</translation>
     </message>
     <message>
         <source>Window size switching</source>
@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>Rename Notepad</source>
-        <translation>重命名记事本</translation>
+        <translation>重命名</translation>
     </message>
     <message>
         <source>Voice recording play/pause</source>
@@ -155,7 +155,7 @@
     <name>RightNoteList</name>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation>您确定要删除这条笔记吗？</translation>
+        <translation>您确定要删除此条笔记吗？</translation>
     </message>
     <message>
         <source>Cancel</source>

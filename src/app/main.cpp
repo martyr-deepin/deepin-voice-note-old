@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     DApplication a(argc, argv);
 
     a.setAttribute(Qt::AA_EnableHighDpiScaling);
+    a.loadTranslator();//3702
     a.setApplicationDisplayName(QObject::tr("Voice Note"));
 //    a.setApplicationDisplayName(QObject::tr("语音记事本"));
     a.setApplicationDescription(QObject::tr("Voice Notepad is a lightweight voice tool that provides text notes and voice recordings."));

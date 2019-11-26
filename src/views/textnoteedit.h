@@ -45,13 +45,14 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void focusInEvent(QFocusEvent *e);
     void focusOutEvent(QFocusEvent *e);
+    void contextMenuEvent(QContextMenuEvent *e) override;//3699
     void wheelEvent(QWheelEvent *e);
 
 private:
     NOTE m_textNote;
     NoteController *m_noteCtr;
     QString m_searchKey;
-
+    bool menuOut = false;//3699
     void initConnection();
 
 };

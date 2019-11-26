@@ -5,7 +5,7 @@
     <name>AddTextBtn</name>
     <message>
         <source>Click to Add TextNote</source>
-        <translation>Click to Add TextNote</translation>
+        <translation>Add Text Note</translation>
     </message>
 </context>
 <context>
@@ -27,18 +27,18 @@
     <name>InitEmptyPage</name>
     <message>
         <source>Create Folder</source>
-        <translation>Create Folder</translation>
+        <translation>Create Notebook</translation>
     </message>
     <message>
         <source>After create a folder, you can start your note</source>
-        <translation>After create a folder, you can start your note</translation>
+        <translation>Create a notebook to start recording voice and making notes</translation>
     </message>
 </context>
 <context>
     <name>LeftFolderList</name>
     <message>
         <source>Are you sure want to delete Folder?</source>
-        <translation>Are you sure want to delete Folder?</translation>
+        <translation>Are you sure you want to delete this notebook？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -73,7 +73,7 @@
     </message>
     <message>
         <source>Currently recording, is the recording terminated?</source>
-        <translation>Currently recording, is the recording terminated?</translation>
+        <translation>Do you want to stop the current recording?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -81,11 +81,11 @@
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Confirm</translation>
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation>The voice memo has been deleted</translation>
+        <translation>The voice note has been deleted</translation>
     </message>
     <message>
         <source>Window size switching</source>
@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>Rename Notepad</source>
-        <translation>Rename Notepad</translation>
+        <translation>Rename</translation>
     </message>
     <message>
         <source>Voice recording play/pause</source>
@@ -132,11 +132,11 @@
     <name>QObject</name>
     <message>
         <source>Voice Note</source>
-        <translation>Voice Note</translation>
+        <translation>Voice Notes</translation>
     </message>
     <message>
         <source>Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.</source>
-        <translation>Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.</translation>
+        <translation>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</translation>
     </message>
     <message>
         <source>OK</source>
@@ -148,14 +148,14 @@
     </message>
     <message>
         <source>NewFolder</source>
-        <translation>NewFolder</translation>
+        <translation>Notebook</translation>
     </message>
 </context>
 <context>
     <name>RightNoteList</name>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation>Are you sure you want to delete this note?</translation>
+        <translation>Are you sure you want to delete this note？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -167,11 +167,11 @@
     </message>
     <message>
         <source>Save as TXT</source>
-        <translation>Save as TXT</translation>
+        <translation>Save As TXT</translation>
     </message>
     <message>
         <source>Save as MP3</source>
-        <translation>Save as MP3</translation>
+        <translation>Save As MP3</translation>
     </message>
     <message>
         <source>Note</source>
@@ -191,26 +191,26 @@
     </message>
     <message>
         <source>Save As TXT</source>
-        <translation>Save As TXT</translation>
+        <translation>Save as TXT</translation>
     </message>
     <message>
         <source>Save As MP3</source>
-        <translation>Save As MP3</translation>
+        <translation>Save as MP3</translation>
     </message>
     <message>
         <source>TextNote</source>
-        <translation>TextNote</translation>
+        <translation>Text note</translation>
     </message>
     <message>
         <source>VoiceNote</source>
-        <translation>VoiceNote</translation>
+        <translation>Voice note</translation>
     </message>
 </context>
 <context>
     <name>RightView</name>
     <message>
         <source>No Result</source>
-        <translation>No Result</translation>
+        <translation>No search results</translation>
     </message>
     <message>
         <source>No recording device detected</source>

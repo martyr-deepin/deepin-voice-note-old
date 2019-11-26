@@ -225,7 +225,14 @@ void Waveform::updateWave(float sample)
 
 void Waveform::OnSetWavePos(int pos)
 {
-    m_currWavePos = pos;
+    //3558
+    //m_currWavePos = pos;
+    if(m_currWavePos != pos)
+    {
+        m_currWavePos = pos;
+        renderWave();
+    }
+    //3558
     qDebug()<<"m_currWavePos:"<<m_currWavePos;
 }
 

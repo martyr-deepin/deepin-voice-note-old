@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <uiutil.h>
 
+#include <DMenu>//3699
+
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
 {
     if (nullptr == noteCtr)
@@ -98,7 +100,13 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 }
 
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
-{
+{  
+    //3699
+    if(menuOut)
+    {
+        return;
+    }
+    //3699
     Intancer::get_Intancer()->setWantScrollRightListFlag(true);
     if (this->isReadOnly())
     {
@@ -115,7 +123,16 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     DTextEdit::focusOutEvent(e);
     emit SigTextEditOutFocus();  //Add bug 2587
 }
+//3699
+void TextNoteEdit::contextMenuEvent(QContextMenuEvent *e)
+{
+    menuOut = true;
 
+    DTextEdit::contextMenuEvent(e);
+
+    menuOut = false;
+}
+//3699
 void TextNoteEdit::wheelEvent(QWheelEvent *e)
 {
     qDebug()<<"RightNoteList::wheelEvent";
