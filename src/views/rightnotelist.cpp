@@ -518,24 +518,24 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
 
             // Zhangya 2019.11.23 bug fix 3085
             VoiceNoteItem* Voiceitem = qobject_cast<VoiceNoteItem*>(textNoteItem);
-            if(Voiceitem)
-            {
-                QPoint pGlobal = Voiceitem->m_menuBtn->mapToGlobal(QPoint(0,0));
-                QPoint arrowPoint(pGlobal.x() + Voiceitem->m_menuBtn->width() / 2, pGlobal.y() +Voiceitem->m_menuBtn->height());
-                menuArrowPointGlobal = arrowPoint;
-                QCursor::setPos(menuArrowPointGlobal);
-                Voiceitem->m_menuBtn->setBtnToNormal();
-            }
+//            if(Voiceitem)
+//            {
+//                QPoint pGlobal = Voiceitem->m_menuBtn->mapToGlobal(QPoint(0,0));
+//                QPoint arrowPoint(pGlobal.x() + Voiceitem->m_menuBtn->width() / 2, pGlobal.y() +Voiceitem->m_menuBtn->height());
+//                menuArrowPointGlobal = arrowPoint;
+//                QCursor::setPos(menuArrowPointGlobal);
+//                Voiceitem->m_menuBtn->setBtnToNormal();
+//            }
 
-            TextNoteItem* itemText = qobject_cast<TextNoteItem*>(textNoteItem);
-            if(itemText)
-            {
-                QPoint pGlobal = itemText->m_menuBtn->mapToGlobal(QPoint(0,0));
-                QPoint arrowPoint(pGlobal.x() + itemText->m_menuBtn->width() / 2, pGlobal.y() +itemText->m_menuBtn->height());
-                menuArrowPointGlobal = arrowPoint;
-                QCursor::setPos(menuArrowPointGlobal);
-                itemText->m_menuBtn->setBtnToNormal();
-            }
+//            TextNoteItem* itemText = qobject_cast<TextNoteItem*>(textNoteItem);
+//            if(itemText)
+//            {
+//                QPoint pGlobal = itemText->m_menuBtn->mapToGlobal(QPoint(0,0));
+//                QPoint arrowPoint(pGlobal.x() + itemText->m_menuBtn->width() / 2, pGlobal.y() +itemText->m_menuBtn->height());
+//                menuArrowPointGlobal = arrowPoint;
+//                QCursor::setPos(menuArrowPointGlobal);
+//                itemText->m_menuBtn->setBtnToNormal();
+//            }
             // Zhangya 2019.11.23 bug fix 3085
             showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
             qDebug()<<"handleMenuBtnClicked show";
