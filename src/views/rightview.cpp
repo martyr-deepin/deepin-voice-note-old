@@ -90,7 +90,7 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(sig_research()), this, SIGNAL(sig_research()));
     connect(m_noteListWidget, SIGNAL(sig_checkCurPageVoiceForDelete()), this, SLOT(oncheckCurPageVoiceForDelete()));
     connect(m_noteListWidget, SIGNAL(sigChangeCurFolderToTop(int)), this, SIGNAL(sigChangeCurFolderToTop(int)));
-
+    connect(m_noteListWidget, SIGNAL(sigToDetalVoicePage(QString)), this, SIGNAL(sigToDetalVoicePage(QString)));
 
 
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
@@ -114,6 +114,8 @@ void RightView::initConnection()
     connect(m_noteListWidget, SIGNAL(sig_CheckFileExist()), this, SIGNAL(sigRvCheckFile()));    //by yuanshuai 20191120 2841
     //connect(m_InitlateTimerOut, SIGNAL(timeout()), this, SLOT(OnTimeOut()));
 
+    connect(m_noteListWidget, SIGNAL(asrStart()), this, SIGNAL(asrStart())); //Add 20191111
+    connect(m_noteListWidget, SIGNAL(asrEnd()), this, SIGNAL(asrEnd()));   //Add 20191111
     m_InitlateTimerOut->singleShot(1000, this,SLOT(OnTimeOut()));
 }
 
@@ -379,6 +381,7 @@ void RightView::addNoteToNoteList(NOTE note)
 
 void RightView::updateNoteList()
 {
+    QMap <int,QMap<int,QString>> asrTxtByFolder; //Add 20191111
     //qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
     //onViewAddTextHide();
     Intancer::get_Intancer()->clearHeightForRightList();

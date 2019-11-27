@@ -57,6 +57,8 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
   , m_defaultAudioPath("/home/deepin/Desktop")
   , m_arrowButtonPressed(false)
   , m_actionHoverd(false)
+  , m_asrStatusFlg(false) //Add 20191111
+  , m_textEditNewHeight(0) //Add 20191111
 {
     duringTime = 0;
     m_Recodefinised = false;  //ynb 20191109
@@ -70,6 +72,12 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_textChanged = false;
     m_textGetFocus = false; //Add bug 2587
     m_voiceOperation = false; //Add bug 2587
+    m_asrAction = nullptr;           //Add 20191111
+    m_voiceNoteItem = nullptr;       //Add 20191111
+    m_currSelItemByasr = nullptr;    //Add 20191111
+    m_voiceNoteItemByasr = nullptr;    //Add 20191111
+    m_asrNetWorkErrDialog = nullptr; //Add 20191111
+    m_asrlimitErrDialog = nullptr;  //Add 20191111
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     Intancer::get_Intancer()->clearHeightForRightList();
     initUI();
@@ -93,6 +101,10 @@ void RightNoteList::createDArrowMenu()
         m_saveAsAction = new QAction(tr("Save As TXT"),this);
         //m_saveAsAction = new QAction(tr(NOTE_MENU_SAVE_AS_TXT),this);
         m_delAction = new QAction(tr("Delete"),this);
+        m_asrAction = new QAction(tr("Voice to Text"),this);
+        //m_asrAction = new QAction(tr("语音转文字"),this);
+        //m_asrAction = new QAction(tr(NOTE_MENU_ARS_AS_MP3),this);     //Add 20191111
+        m_contextMenu->addAction(m_asrAction);  //Add 20191111
         //m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
         m_contextMenu->addAction(m_saveAsAction);
         m_contextMenu->addAction(m_delAction);
@@ -104,6 +116,9 @@ void RightNoteList::createDArrowMenu()
         connect(m_delAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
         connect(m_saveAsAction, SIGNAL(triggered(bool)), this, SLOT(handleSaveAsItem(bool)));
         connect(m_saveAsAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd()));
+
+        connect(m_asrAction, SIGNAL(triggered(bool)), this, SLOT(handleAsrAsItem())); //Add 20191111
+        connect(m_asrAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd())); //Add 20191111
     }
 }
 
@@ -141,13 +156,30 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
         m_contextMenu->setVisible(true);
         if (type == NOTE_TYPE::TEXT)
         {
+            m_contextMenu->removeAction(m_asrAction);   //Add 20191111
             m_saveAsAction->setText(QString(tr("Save As TXT")));
+            m_contextMenu->setFixedSize(QSize(162,89)); //Add 20191111
             //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
         }
         else
         {
+            //Add s 20191111
+            m_contextMenu->addAction(m_asrAction);
+            m_contextMenu->addAction(m_saveAsAction);
+            m_contextMenu->addAction(m_delAction);
+            if (m_asrStatusFlg)
+            {
+                m_asrAction->setEnabled(false);
+                qDebug() << "srActionEnabled: false";
+            }
+            else
+            {
+                m_asrAction->setEnabled(true);
+            }
+            //Add e 20191111
             m_saveAsAction->setText(QString(tr("Save As MP3")));
             //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
+            m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);
         //m_arrowMenu->move(x,y);
@@ -181,9 +213,19 @@ void RightNoteList::initUI()
     //by yuanshuai 20191120 2841
     //m_noticeNotExistDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("该语音记事项已删除")), this);
     //end
+    m_asrlimitErrDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("Cannot convert this voice note, as notes over 20 minutes are not supported at present.")), this);  //Add 20191111
+    //m_asrlimitErrDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("无法转写此条语音笔记，暂仅支持20分钟内的语音笔记。")), this);  //Add 20191111
     m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    DPushButton *button = new DPushButton(QString("Reconvert")); //Add 20191111
+    //DPushButton *button = new DPushButton(QStringLiteral("重新转写")); //Add 20191111
+    m_asrOtherErrDMessage = UiUtil::createAsrErrorDF(this,button);  //Add 20191111
+    connect(button, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111
 
+    DPushButton *button2 = new DPushButton(QString("Reconvert")); //Add 20191111
+    //DPushButton *button2 = new DPushButton(QStringLiteral("重新转写")); //Add 20191111
+    m_asrNetWorkErrDialog = UiUtil::createAsrNetWorkErrDialog(this,button2);  //Add 20191111
+    connect(button2, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111
     m_rightNoteListWorkerThread = new QThread();
     m_rightNoteListWorker= new RightNoteListWorker(this);
     m_rightNoteListWorker->moveToThread(m_rightNoteListWorkerThread);
@@ -224,6 +266,7 @@ void RightNoteList::initConnection()
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
     connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
+    connect(&m_AiServiceController, SIGNAL(AsrResultReq(AsrResult)),this,SLOT(AsrResultResp(AsrResult))); //Add 20191111
 }
 
 //3550-3547-3528
@@ -288,6 +331,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchK
         connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect, NOTE)), this, SLOT(play(VoiceNoteItem *, QString, QRect, NOTE))); //Edit  bug 2587
         //connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
+        connect(voiceItem, SIGNAL(sigToDetalVoicePage(QString)), this, SIGNAL(sigToDetalVoicePage(QString)));
+
         connect(Intancer::get_Intancer(), &Intancer::sigDisAbleReplay, voiceItem, &VoiceNoteItem::setPlayDisable);
         connect(Intancer::get_Intancer(), &Intancer::sigEnAbleReplay, voiceItem, &VoiceNoteItem::setPlayEnable);
 
@@ -301,10 +346,24 @@ void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchK
         }
 
         QListWidgetItem *item=new QListWidgetItem();
-        item->setSizeHint(QSize(this->width(), 98));
+        item->setSizeHint(QSize(this->width(), VOICENOTE_HEIGHT)); //Edit 20191111
+//        item->setSizeHint(QSize(this->width(), 98)); //DEl ynbboy
         this->insertItem(this->count() - 1,item);
         this->setItemWidget(item, voiceItem);
         voiceItem->init();
+        //DEl start ynbboy
+//        //Add s 20191111
+//        QString asrTxt = Intancer::get_Intancer()->getAsrTxt(note.folderId,note.id);
+//        if (asrTxt !="")
+//        {
+//            voiceItem->setTextEditDisplay(true);
+//            voiceItem->setTextEditVal(asrTxt);
+//            item->setSizeHint(QSize(this->width(), VOICENOTE_HEIGHT + m_textEditNewHeight)); //ynbboy
+//            voiceItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight); //ynbboy
+//            voiceItem->m_bgWidgetBytext->move(6,55); //ynbboy
+//        }
+//        //Add e 20191111
+        //DEl end ynbboy
         if(isAddByButton)
         {
             adjustWidgetItemWidth();
@@ -835,7 +894,110 @@ void RightNoteList::handleSaveAsItem(bool)
     showFileDialog(saveInfo);
 
 }
+// Add s 20191111
+void RightNoteList::TextHeightChanged(int newHeight)
+{
+    m_textEditNewHeight = newHeight;
+}
+void RightNoteList::asrOtherErrBtnClick()
+{
+    handleAsrAsItem();
+}
+void RightNoteList::handleAsrAsItem()
+{
+    if (&m_AiServiceController != nullptr)
+    {
+        //转写限制
+        if(m_currSelNote.voiceTime > ASR_LIMIT_MILLISECOND)
+        {
+            m_asrlimitErrDialog->show();
+        }
+        else
+        {
+            //获取当前voiceNoteItem
+            m_voiceNoteItem = (VoiceNoteItem *)this->itemWidget(m_currSelItem);
 
+            //保存当前要转写的Item
+            m_currSelItemByasr =  m_currSelItem;
+            m_voiceNoteItemByasr = m_voiceNoteItem;
+
+            connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int)),this,SLOT(TextHeightChanged(int))); //Add 20191111
+
+            //设定选中的菜单按钮不可用
+            m_voiceNoteItem->setMenuBtnEnabled(false);
+            //转写状态:设定为开始
+            m_asrStatusFlg = true;
+            //转写开始文字edit显示
+            m_voiceNoteItem->setTextEditDisplay(true);
+            m_voiceNoteItem->setTextEditVal(tr("Converting voice to text"));  //ynbboy
+            m_voiceNoteItem->setTextEditAlignment(Qt::AlignCenter);
+            //m_voiceNoteItem->setTextEditVal(tr("正在转为文字..."));  //ynbboy
+
+            m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
+            m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+           // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
+            m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
+            //通知mainPage转写开始  mainPage里设置leftView不可用
+            emit asrStart();
+            //转写接口调用
+            m_AiServiceController.startAsr(m_currSelNote.contentPath,m_currSelNote.voiceTime,"","");
+        }
+    }
+}
+void RightNoteList::AsrResultResp(AsrResult clsResult)
+{
+    qDebug() << "code:" << clsResult.code;
+    qDebug() << "descInfo:" <<clsResult.descInfo;
+    qDebug() << "failType:" <<clsResult.failType;
+    qDebug() << "status:" <<clsResult.status;
+    qDebug() << "txt:" <<clsResult.txt;
+    qDebug() << "ErrorMsg:" <<clsResult.ErrorMsg;
+    //设定选中的菜单按钮可用
+    m_voiceNoteItemByasr->setMenuBtnEnabled(true);
+    //转写状态:设定为结束
+    m_asrStatusFlg = false;
+
+    //转写开始文字edit隐藏
+//    m_voiceNoteItem->setLineEditDisplay(false);
+    if (clsResult.code == "000000" && clsResult.status == "4")
+    //if ((clsResult.code == "000000" && clsResult.status == "4"))
+    {
+        //转写结束文字edit显示
+//        m_voiceNoteItem->setTextEditDisplay(true);
+        //转写文字设定
+        //clsResult.txt = "字edit显示转写结转写结束文字edit显示转写结结转写结束文字edit结转写结束文字edit结转写结束文字显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文edit";
+        m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
+        m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
+        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight)); //ynbboy
+        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight); //ynbboy
+        m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
+//        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
+        m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
+        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
+
+    }
+    else
+    {
+        m_voiceNoteItem->setTextEditDisplay(false);
+        m_voiceNoteItem->setTextEditVal("");
+        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));
+        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT);
+        if (clsResult.code == "900003")
+        {
+            //网络异常
+            m_asrNetWorkErrDialog->show();
+        }
+        else
+        {
+            //其他异常
+            m_asrOtherErrDMessage->show();
+        }
+    }
+
+    //通知mainPage转写结束  mainPage里设置leftView可用
+    emit asrEnd();
+}
+// Add e 20191111
 void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 {
     DFileDialog fileDialog(this);

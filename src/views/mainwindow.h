@@ -5,6 +5,7 @@
 #include "textnoteedit.h"
 #include "initemptypage.h"
 #include "searchnonepage.h"
+#include "voicetonotepage.h"
 #include <DMainWindow>
 #include <QFrame>
 #include <QObject>
@@ -20,6 +21,14 @@
 
 
 DWIDGET_USE_NAMESPACE
+
+enum STATIC_PAGE {
+    MAIN_PAGE = 0,
+    DETAL_PAGE =1,
+    INIT_PAGE =2,
+    NOSEARCH_PAGE =3,
+    VOICE_PAGE =4,
+};
 
 //主窗口，包含两层Page
 class MyMainWindow : public DMainWindow
@@ -55,6 +64,10 @@ public slots:
     void VoiceNotesPlayShortcut();
     //Add end bug 2587
     //end
+    void asrStart(); //Add 20191111
+    void asrEnd(); //Add 20191111
+    void asrDialogClicked(int index, const QString &text); //Add 20191111
+    void OnToDetalVoicePage(QString contant);
 protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
@@ -81,10 +94,12 @@ private:
     DSearchEdit *m_searchEdit;
     DDialog *m_SearchDialog;
     InitEmptyPage *m_InitEmptyPage;
-
+    VoiceToNotePage *m_VoiceToNotePage;
     DDialog *m_exitDialog;
     bool m_quit;  //Add bug3470
-
+    DDialog *m_asrCloseConfirmDialog;   //Add 20191111
+    int asrStateFlg;  //0:未转写  1：转写中   Add 20191111
+    QCloseEvent* m_eventSave;  //Add 20191111
     void initUI();
     void initConnection();
 

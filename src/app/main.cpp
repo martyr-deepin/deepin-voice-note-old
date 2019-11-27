@@ -23,7 +23,7 @@
  */
 
 #include "voicenotebookapp.h"
-
+#include "intancer.h"   //Add 20191111
 #include <DApplication>
 //#include <DApplicationSettings>
 //#include <DMainWindow>
@@ -42,6 +42,15 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
     //DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     DApplication a(argc, argv);
+
+    //Add start 20191111
+    QString str = argv[0];
+    QStringList strList = str.split('/');
+    if (strList.size() > 0)
+    {
+        Intancer::get_Intancer()->setApplicationName(strList.at(strList.size()-1));
+    }
+    //Add end 20191111
 
     a.setAttribute(Qt::AA_EnableHighDpiScaling);
     a.loadTranslator();//3702

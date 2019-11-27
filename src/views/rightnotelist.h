@@ -7,6 +7,9 @@
 #include "textnoteitem.h"
 #include "voicenoteitem.h"
 #include "addtextbtn.h"
+#include "aiservicecontroller.h" //Add 20191111
+#include <DToast> //Add 20191111
+#include <DMessageManager>  //Add 20191111
 #include <QDir>
 #include <DListWidget>
 #include <notecontroller.h>
@@ -94,7 +97,9 @@ signals:
     void sig_startloadingPlayer();
     void sig_EnablePlaybackButton();
     void sig_RecordButtonAvaliability(bool isAvaliable);
-
+    void asrStart();  //转写开始    //Add 20191111
+    void asrEnd();  //转写结束   //Add 20191111
+    void sigToDetalVoicePage(QString contant);
 protected:
     //bool eventFilter(QObject *o, QEvent *e);
     void paintEvent(QPaintEvent *event);
@@ -105,6 +110,7 @@ public slots:
     void handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void handleDelItem(bool);
     void handleSaveAsItem(bool);
+    void handleAsrAsItem(); //Add 20191111
     void handleDelDialogClicked(int index, const QString &text);
     void handleCloseDialogClicked();
     void handlePlayingStateChanged(QMediaPlayer::State state);
@@ -134,6 +140,9 @@ public slots:
     void onTextEditGetFocus(NOTE note); //Add bug 2587
     void onTextEditOutFocus(NOTE note); //Add bug 2587
     void loadedPlayer();
+    void AsrResultResp(AsrResult clsResult); //add 20191111
+    void TextHeightChanged(int newHeight); //Add 20191111
+    void asrOtherErrBtnClick(); //Add 20191111
 private:
     void testQMediaPlayer();
 
@@ -141,6 +150,7 @@ private:
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
     QAction *m_delAction;
+    QAction *m_asrAction; //add 20191111
     NoteController *m_noteController;
     DArrowRectangle *m_arrowMenu;
     QListWidgetItem *m_currSelItem;
@@ -154,6 +164,13 @@ private:
     FileExistsDialog *m_fileExistsDialog;
     DDialog *m_saveFileEndDialog;
     AddTextBtn *m_addTextBtn;
+    VoiceNoteItem * m_voiceNoteItem;            //Add 20191111
+    AiServiceController m_AiServiceController; //Add 20191111
+    QListWidgetItem *m_currSelItemByasr;    //Add 20191111
+    VoiceNoteItem *m_voiceNoteItemByasr;    //Add 20191111
+    DFloatingMessage *m_asrNetWorkErrDialog;   //Add 20191111
+    DDialog *m_asrlimitErrDialog;   //Add 20191111
+    DFloatingMessage *m_asrOtherErrDMessage; //Add 20191111
 
     QString m_defaultTxtName;
     QString m_defaultTxtPath;
@@ -162,6 +179,8 @@ private:
     QString m_defaultEditText;
     bool m_arrowButtonPressed;
     bool m_actionHoverd;
+    bool m_asrStatusFlg;    //转写状态Flg true:开始 false:结束   Add 20191111
+    int m_textEditNewHeight; // Add 20191111
     int curWaveformPosWidth;
     bool m_Recodefinised;  //ynb 20191109
     bool m_IsSliderBarReleased; //ynb 20191109

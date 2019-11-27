@@ -127,6 +127,14 @@
         <source>hot key</source>
         <translation>hot key</translation>
     </message>
+    <message>
+        <source>Converting a voice note now. Do you want to stop it?</source>
+        <translation>Converting a voice note now. Do you want to stop it?</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>Confirm</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -205,6 +213,18 @@
         <source>VoiceNote</source>
         <translation>Voice note</translation>
     </message>
+    <message>
+        <source>Voice to Text</source>
+        <translation>Voice to Text</translation>
+    </message>
+    <message>
+        <source>Cannot convert this voice note, as notes over 20 minutes are not supported at present.</source>
+        <translation>Cannot convert this voice note, as notes over 20 minutes are not supported at present.</translation>
+    </message>
+    <message>
+        <source>Converting voice to text</source>
+        <translation>Converting voice to text</translation>
+    </message>
 </context>
 <context>
     <name>RightView</name>
@@ -222,6 +242,17 @@
     <message>
         <source>No Result</source>
         <translation>No search results</translation>
+    </message>
+</context>
+<context>
+    <name>UiUtil</name>
+    <message>
+        <source>The voice conversion failed. Do you want to try again?</source>
+        <translation>The voice conversion failed. Do you want to try again?</translation>
+    </message>
+    <message>
+        <source>The voice conversion failed due to the poor network connection. Do you want to try again?</source>
+        <translation>The voice conversion failed due to the poor network connection. Do you want to try again?</translation>
     </message>
 </context>
 </TS>

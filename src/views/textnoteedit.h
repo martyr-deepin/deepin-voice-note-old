@@ -37,6 +37,7 @@ signals:
     void SigTextEditGetFocus();  //Add bug 2587
     void SigTextEditOutFocus();  //Add bug 2587
 
+
 public slots:
     void updateNote();
     void textAreaChanged(); //Add 20191111

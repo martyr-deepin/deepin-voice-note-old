@@ -52,7 +52,9 @@ signals:
     //start add by yuanshuai 20191121
     void sigMpCheckFile();
     //end
-
+    void asrStart();  //转写开始    //Add 20191111
+    void asrEnd();  //转写结束   //Add 20191111
+    void sigToDetalVoicePage(QString contant);
 public slots:
     void onAddFolder();
 

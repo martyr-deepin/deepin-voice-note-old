@@ -198,3 +198,33 @@ void Intancer::clearTextNoteItemChangeState()
 {
     this->isTextNoteItemChanged = false;
 }
+//Add s 20191111
+void Intancer::setAsrTxt(int FolderID,int ItemID, QString txt)
+{
+    QMap <int,QString> map;
+    map[ItemID] = txt;
+    m_mapArsTxtByFolder.insert(FolderID,map);
+}
+QString Intancer::getAsrTxt(int FolderID,int ItemID)
+{
+    QList<QMap<int,QString>> list = m_mapArsTxtByFolder.values(FolderID);
+    for (int i=0;i<list.size();++i)
+    {
+      QMap<int,QString> map = list.at(i);
+      auto find_index = map.find(ItemID);
+      if(find_index!=map.end())
+      {
+          return find_index.value();
+      }
+    }
+    return "";
+}
+void Intancer::setApplicationName(QString appName)
+{
+    m_ApplicationName = appName;
+}
+QString Intancer::getApplicationName()
+{
+    return m_ApplicationName;
+}
+//Add e 20191111

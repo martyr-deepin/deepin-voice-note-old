@@ -56,8 +56,13 @@ void MainPage::initConnection()
     //start add by yuanshuai 20191121
     QObject::connect(m_rightView, SIGNAL(sigRvCheckFile()), this, SIGNAL(sigMpCheckFile()));
     //end
+    QObject::connect(m_rightView, SIGNAL(sigToDetalVoicePage(QString)), this, SIGNAL(sigToDetalVoicePage(QString)));
 
     //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
+    QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));    //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(asrEnd()), m_leftView, SLOT(viewEnabled()));   //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(asrStart()), this, SIGNAL(asrStart()));    //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(asrEnd()), this, SIGNAL(asrEnd()));   //Add 20191111
 }
 
 void MainPage::initSplitter(){

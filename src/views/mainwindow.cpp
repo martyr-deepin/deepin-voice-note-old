@@ -19,6 +19,7 @@
 //Add end bug 2587
 MyMainWindow::MyMainWindow()
 {
+    asrStateFlg = 0; //Add 20191111
     m_quit = false; //Add bug3470
 
     initUI();
@@ -33,6 +34,9 @@ void MyMainWindow::initUI() {
 //    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
     m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Currently recording, is the recording terminated?")), nullptr, QString(tr("Cancel")), QString(tr("Stop")));
     //m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
+
+    m_asrCloseConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Converting a voice note now. Do you want to stop it?")), nullptr, QString(tr("Cancel")), QString(tr("Confirm")));  //Add 20191111
+        //m_asrCloseConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前有语音笔记正在转写中，是否确定关闭？")), nullptr, QString(tr("取消")), QString(tr("确定")));   //Add 20191111
     initTitleBar();
 
     QTimer::singleShot(0, this, &MyMainWindow::initTheRest);
@@ -46,7 +50,7 @@ void MyMainWindow::initConnection()
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
     QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
     QObject::connect(m_mainPage, SIGNAL(sigNoSearchResult()), this, SLOT(OnNoSearchResult()));
-
+    connect(m_mainPage,SIGNAL(sigAsrState(int)),this,SLOT(asrState(int)));  //Add 20191111
     connect(m_mainPage,SIGNAL(sigAllFolderDeleted()),this,SLOT(onAllFolderDeleted()));
 
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
@@ -67,6 +71,11 @@ void MyMainWindow::initConnection()
     //start add by yuanshuai 20191120 2841
     connect(m_mainPage,SIGNAL(sigMpCheckFile()),this,SLOT(checkFileExist()));
     //end
+    QObject::connect(m_mainPage, SIGNAL(asrStart()), this, SLOT(asrStart()));    //Add 20191111
+    QObject::connect(m_mainPage, SIGNAL(asrEnd()), this, SLOT(asrEnd()));   //Add 20191111
+    connect(m_asrCloseConfirmDialog, &DDialog::buttonClicked, this, &MyMainWindow::asrDialogClicked); //Add 20191111
+
+    connect(m_mainPage,SIGNAL(sigToDetalVoicePage(QString)),this,SLOT(OnToDetalVoicePage(QString)));
 }
 
 void MyMainWindow::initTitleFrame()
@@ -304,6 +313,9 @@ void MyMainWindow::initStackedWidget()
 
     m_SearchNonePage = new SearchNonePage(this);
     m_stackedWidget->addWidget(m_SearchNonePage);
+
+    m_VoiceToNotePage = new VoiceToNotePage(this);
+    m_stackedWidget->addWidget(m_VoiceToNotePage);
 }
 
 void MyMainWindow::showNoteDetail(NOTE note)
@@ -584,13 +596,54 @@ void MyMainWindow::VoiceNotesPlayShortcut()
     m_mainPage->VoicePlayOrPause();
 }
 //Add end bug 2587
+//Add s 20191111
+void MyMainWindow::asrStart()
+{
+    asrStateFlg = 1;
+}
+void MyMainWindow::asrEnd()
+{
+    asrStateFlg = 0;
+}
+void MyMainWindow::asrDialogClicked(int index, const QString &text)
+{
+    if (index == 1)
+    {
+//        m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
+//        DMainWindow::closeEvent(m_eventSave);
+        qApp->quit();
+    }
+}
+//Add e 20191111
+
+void MyMainWindow::OnToDetalVoicePage(QString contant)
+{
+    m_VoiceToNotePage->ToDetalVoicePage(contant);
+    m_stackedWidget->setCurrentIndex(VOICE_PAGE);
+    m_returnBtn->setVisible(true);
+}
+
 void MyMainWindow::closeEvent(QCloseEvent* event)
 {
     m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
+    //Add s 20191111
+    if (asrStateFlg)
+    {
+         m_eventSave = event;
+         event->ignore();
+         m_asrCloseConfirmDialog->show();
+         return;
+    }
+    else
+    {
+        event->accept();
+    }
+    //Add e 20191111
     if(Intancer::get_Intancer()->getRecodingFlag())
     {
         event->ignore();
         m_exitDialog->show();
+        return;
     }
     else
     {

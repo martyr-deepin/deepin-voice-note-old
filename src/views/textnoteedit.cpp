@@ -56,7 +56,7 @@ QString TextNoteEdit::getText()
 }
 
 void TextNoteEdit::setText(const QString &text)
-{
+{  
     DTextEdit::setText(text);
     this->setLineHeight(24);
 }

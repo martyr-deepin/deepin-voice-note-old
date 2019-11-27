@@ -125,6 +125,23 @@ void VoiceNoteItem::changeTheme()
     }
 }
 
+void VoiceNoteItem::onToDetalVoicePage()
+{
+    QString contant = m_textEdit->getText();
+    emit sigToDetalVoicePage(contant);
+}
+//Add s 20191111
+void VoiceNoteItem::setTextEditVal(QString txt)
+{
+    m_textEdit->setText(txt);
+
+}
+
+void VoiceNoteItem::setTextEditAlignment(Qt::Alignment a)
+{
+    m_textEdit->setAlignment(a);
+}
+//Add e 20191111s
 //3152 liuyang
 void VoiceNoteItem::leaveEvent(QEvent *event)
 {
@@ -145,17 +162,19 @@ void VoiceNoteItem::enterEvent(QEvent *event)
 
 void VoiceNoteItem::initUI()
 {
+    //Add e 20191111
     this->setFixedHeight(VOICENOTE_HEIGHT);
-    //this->setBlurEnabled(false);
 
-    m_timeLabel = new DLabel();
+
 
     m_bgWidget = new DFrame(this);
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
     pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
 
     m_bgWidget->setPalette(pb);
-    m_bgWidget->setFixedHeight(68);
+    //m_bgWidget->setFixedHeight(68);
+    //m_bgWidget->setFixedHeight(173);
+    m_timeLabel = new DLabel();
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -163,7 +182,7 @@ void VoiceNoteItem::initUI()
     m_itemLayout->addWidget(m_timeLabel);
     m_itemLayout->addSpacing(2);
     m_itemLayout->addWidget(m_bgWidget);
-    m_itemLayout->addSpacing(6);
+    //m_itemLayout->addSpacing(6);   //Del 20191111
     m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
     this->setLayout(m_itemLayout);
     QSizePolicy sp = m_bgWidget->sizePolicy();
@@ -172,34 +191,31 @@ void VoiceNoteItem::initUI()
 
     m_timeLabel->setObjectName("timeLabel");
 
-//    QFont timeLabelFont;
-//    timeLabelFont.setFamily("PingFangSC-Regular");
-//    timeLabelFont.setPointSize(8);
-//    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
-//    m_timeLabel->setFont(timeLabelFont);
     DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
     m_timeLabel->setText("   " + UiUtil::convertDateTime(m_note.createTime));
     m_timeLabel->setFixedHeight(16);
 
-    //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
     m_bgWidget->setObjectName("widget");
-//    m_bgWidget->setBlurRectXRadius(8);
-//    m_bgWidget->setBlurRectYRadius(8);
 
-//    QPalette pb;
-//    pb.setColor(QPalette::Background,QColor(00,00,00));
-//    m_bgWidget->setPalette(pb);
-//    m_bgWidget->setMaskAlpha(14);
+    //playWidget
+    m_bgWidgetByplay = new DWidget();
+    m_bgWidgetByplay->setFixedHeight(68);
 
-    m_hBoxLayout = new QHBoxLayout(m_bgWidget);
+    //textWidget
+    m_bgWidgetBytext = new DWidget();
+//    m_bgWidgetBytext->raise();
+//    DPalette pb2 = DApplicationHelper::instance()->palette(m_bgWidget);
+//    pb2.setBrush(DPalette::Base, pb2.color(DPalette::TextWarning));
+
+    m_ayoutBybgWidget = new QVBoxLayout(m_bgWidget);
+    m_ayoutBybgWidget->setContentsMargins(0, 0, 0, 0);
+    m_ayoutBybgWidget->addWidget(m_bgWidgetByplay);
+    m_ayoutBybgWidget->addSpacing(0); //ynbboy
+    m_ayoutBybgWidget->addWidget(m_bgWidgetBytext);
+    m_hBoxLayout = new QHBoxLayout(m_bgWidgetByplay);
     m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
-//    m_ctrlBtn = new DImageButton(m_bgWidget);
-//    m_ctrlBtn->setFixedSize(QSize(40, 40));
-//    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
-//    m_ctrlBtn->setHoverPic(":/m_waveformimage/icon/hover/play_hover.svg");
-//    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
 
     m_playingButton = new PlayingButton(this);
     m_playingButton->setFixedSize(QSize(60, 60));
@@ -207,7 +223,6 @@ void VoiceNoteItem::initUI()
     m_waveform->setCurrDisplayType(WHOLE);
     m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
     m_waveform->setFixedHeight(33);
-    //m_voiceShape = new QWidget();
     QSizePolicy spShape = m_waveform->sizePolicy();
     spShape.setHorizontalStretch(1);
     m_waveform->setSizePolicy(spShape);
@@ -237,34 +252,13 @@ void VoiceNoteItem::initUI()
                     m_bgWidget);
     }
 
-    //m_menuBtn->setFlat(true);
-    //m_menuBtn = new DImageButton(m_bgWidget);
-    //m_menuBtn->setFixedSize(QSize(40, 40));
-    //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
-    //m_menuBtn->setIconSize(QSize(20,20));
-    //m_menuBtn->setFocusPolicy(Qt::NoFocus);
-//    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
-//    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
-//    m_menuBtn->setBtnPalette(pa);
-//    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
-//    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
-    //m_menuBtn->setPalette(pa);
-    //m_menuBtn->setBtnPalette(pa);
-//    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
-//    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
-//    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
     m_voiceTimeLabel = new DLabel();
-    //m_voiceTimeLabel->setFixedSize(46, 20);
     m_voiceTimeLabel->setFixedSize(66, 30);//bug 3359
     m_voiceTimeLabel->setAlignment(Qt::AlignCenter);//bug 3359
     QPalette pe;
     pe.setColor(QPalette::WindowText,QColor(00,26,46));
     m_voiceTimeLabel->setPalette(pe);
-//    QFont font;
-//    font.setFamily("Avenir-Book");
-//    font.setPixelSize(15);
-//    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-//    m_voiceTimeLabel->setFont(font);
+
     DFontSizeManager::instance()->bind(m_voiceTimeLabel,DFontSizeManager::T6);
     m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
 
@@ -278,9 +272,199 @@ void VoiceNoteItem::initUI()
     m_hBoxLayout->addWidget(m_menuBtn);
     m_hBoxLayout->addSpacing(12);
 
-    //m_hBoxLayout->addWidget(m_menuBtn);
+    m_hBoxLayoutBytext = new QHBoxLayout(m_bgWidgetBytext);
+    m_hBoxLayoutBytext->setContentsMargins(0, 0, 0, 0);
+    m_hBoxLayoutBytext->setObjectName("horizontalLayout");
 
+    m_textEdit = new TextNoteEdit(m_bgWidgetBytext, m_noteCtr);
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
+    m_textEdit->setFont(labelFont);
+    m_hBoxLayoutBytext->addSpacing(16);
+    m_hBoxLayoutBytext->addWidget(m_textEdit);
+    //m_hBoxLayoutBytext->addSpacing(10); //ynbboy
+    QPalette pl = m_textEdit->palette();
+    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
+    m_textEdit->setPalette(pl);
+    m_textEdit->setTextColor(pb.color(DPalette::TextTips));
+    m_textEdit->setFrameShape(QFrame::NoFrame);
+    m_textEdit->setReadOnly(true);
+    m_textEdit->hide();
+    m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //todo  右边的button没有加
+    //Add start ynbboy
+
+    if(themeType == DGuiApplicationHelper::LightType)
+    {
+        m_detailBtn = new MenuButton(
+                    ":/image/icon/normal/detail-normal.svg",
+                    ":/image/icon/press/detail-press.svg",
+                    ":/image/icon/hover/detail-hover.svg",
+                    "",
+                    "",
+                    QSize(36,36),
+                    QSize(15,14),
+                    m_bgWidgetBytext
+                );
+    }
+    else if(themeType == DGuiApplicationHelper::DarkType)
+    {
+        m_detailBtn = new MenuButton(
+                    ":/image/icon_dark/normal/detail-normal.svg",
+                    ":/image/icon_dark/press/detail-press.svg",
+                    ":/image/icon_dark/hover/detail-hover.svg",
+                    "",
+                    "",
+                    QSize(36,36),
+                    QSize(15,14),
+                    m_bgWidgetBytext
+                );
+    }
+    m_bgWidgetBydetailBtn = new DWidget();
+    QVBoxLayout *etailBtnLayout = new QVBoxLayout(m_bgWidgetBydetailBtn);
+    etailBtnLayout->addSpacing(0);
+    etailBtnLayout->addWidget(m_detailBtn);
+    m_hBoxLayoutBytext->addWidget(m_bgWidgetBydetailBtn);
+    m_hBoxLayoutBytext->addSpacing(10);
+    m_bgWidgetBydetailBtn->hide();
+    //Add end ynbboy
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
+    //Add e 20191111
+//    this->setFixedHeight(VOICENOTE_HEIGHT);
+//    //this->setBlurEnabled(false);
+
+//    m_timeLabel = new DLabel();
+
+//    m_bgWidget = new DFrame(this);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+
+//    m_bgWidget->setPalette(pb);
+//    m_bgWidget->setFixedHeight(68);
+//    m_itemLayout = new QVBoxLayout();
+//    m_itemLayout->setContentsMargins(0, 0, 0, 0);
+
+//    m_itemLayout->addSpacing(6);
+//    m_itemLayout->addWidget(m_timeLabel);
+//    m_itemLayout->addSpacing(2);
+//    m_itemLayout->addWidget(m_bgWidget);
+//    m_itemLayout->addSpacing(6);
+//    m_itemLayout->setSizeConstraint(QLayout::SetNoConstraint);
+//    this->setLayout(m_itemLayout);
+//    QSizePolicy sp = m_bgWidget->sizePolicy();
+//    sp.setHorizontalStretch(1);
+//    m_bgWidget->setSizePolicy(sp);
+
+//    m_timeLabel->setObjectName("timeLabel");
+
+////    QFont timeLabelFont;
+////    timeLabelFont.setFamily("PingFangSC-Regular");
+////    timeLabelFont.setPointSize(8);
+////    QFont timeLabelFont = DFontSizeManager::instance()->get(DFontSizeManager::T9);
+////    m_timeLabel->setFont(timeLabelFont);
+//    DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
+//    m_timeLabel->setText("   " + UiUtil::convertDateTime(m_note.createTime));
+//    m_timeLabel->setFixedHeight(16);
+
+//    //m_bgWidget->setGeometry(QRect(0, 40, this->width(), 91));
+//    m_bgWidget->setObjectName("widget");
+////    m_bgWidget->setBlurRectXRadius(8);
+////    m_bgWidget->setBlurRectYRadius(8);
+
+////    QPalette pb;
+////    pb.setColor(QPalette::Background,QColor(00,00,00));
+////    m_bgWidget->setPalette(pb);
+////    m_bgWidget->setMaskAlpha(14);
+
+//    m_hBoxLayout = new QHBoxLayout(m_bgWidget);
+//    m_hBoxLayout->setContentsMargins(0, 0, 0, 0);
+//    m_hBoxLayout->setObjectName("horizontalLayout");
+
+////    m_ctrlBtn = new DImageButton(m_bgWidget);
+////    m_ctrlBtn->setFixedSize(QSize(40, 40));
+////    m_ctrlBtn->setNormalPic(":/image/icon/normal/play_normal.svg");
+////    m_ctrlBtn->setHoverPic(":/m_waveformimage/icon/hover/play_hover.svg");
+////    m_ctrlBtn->setPressPic(":/image/icon/press/play_press.svg");
+
+//    m_playingButton = new PlayingButton(this);
+//    m_playingButton->setFixedSize(QSize(60, 60));
+//    m_waveform = new Waveform();
+//    m_waveform->setCurrDisplayType(WHOLE);
+//    m_waveform->setWholeSampleList(UiUtil::convertStringToFloatList(m_note.voiceSampleData));
+//    m_waveform->setFixedHeight(33);
+//    //m_voiceShape = new QWidget();
+//    QSizePolicy spShape = m_waveform->sizePolicy();
+//    spShape.setHorizontalStretch(1);
+//    m_waveform->setSizePolicy(spShape);
+
+
+//    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+//    if(themeType == DGuiApplicationHelper::LightType)
+//    {
+//        m_menuBtn = new MyRecodeButtons(
+//                    ":/image/icon/normal/more_normal.svg",
+//                    ":/image/icon/press/more_press.svg",
+//                    ":/image/icon/hover/more_hover.svg",
+//                    ":/image/icon/disabled/more_disabled.svg",
+//                    ":/image/icon/focus/more_focus.svg",
+//                    QSize(44,44),
+//                    m_bgWidget);
+//    }
+//    else if(themeType == DGuiApplicationHelper::DarkType)
+//    {
+//        m_menuBtn = new MyRecodeButtons(
+//                    ":/image/icon_dark/normal/more_normal_dark.svg",
+//                    ":/image/icon_dark/press/more_press_dark.svg",
+//                    ":/image/icon_dark/hover/more_hover_dark.svg",
+//                    ":/image/icon_dark/disabled/more_disabled_dark.svg",
+//                    ":/image/icon_dark/focus/more_focus_dark.svg",
+//                    QSize(44,44),
+//                    m_bgWidget);
+//    }
+
+//    //m_menuBtn->setFlat(true);
+//    //m_menuBtn = new DImageButton(m_bgWidget);
+//    //m_menuBtn->setFixedSize(QSize(40, 40));
+//    //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
+//    //m_menuBtn->setIconSize(QSize(20,20));
+//    //m_menuBtn->setFocusPolicy(Qt::NoFocus);
+////    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
+////    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
+////    m_menuBtn->setBtnPalette(pa);
+////    DPalette pa = DApplicationHelper::instance()->palette(m_menuBtn);
+////    pa.setBrush(DPalette::Highlight, pa.color(DPalette::Base));
+//    //m_menuBtn->setPalette(pa);
+//    //m_menuBtn->setBtnPalette(pa);
+////    m_menuBtn->setNormalPic(":/image/icon/normal/more_normal.svg");
+////    m_menuBtn->setHoverPic(":/image/icon/hover/more_hover.svg");
+////    m_menuBtn->setPressPic(":/image/icon/press/more_press.svg");
+//    m_voiceTimeLabel = new DLabel();
+//    //m_voiceTimeLabel->setFixedSize(46, 20);
+//    m_voiceTimeLabel->setFixedSize(66, 30);//bug 3359
+//    m_voiceTimeLabel->setAlignment(Qt::AlignCenter);//bug 3359
+//    QPalette pe;
+//    pe.setColor(QPalette::WindowText,QColor(00,26,46));
+//    m_voiceTimeLabel->setPalette(pe);
+////    QFont font;
+////    font.setFamily("Avenir-Book");
+////    font.setPixelSize(15);
+////    QFont font = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+////    m_voiceTimeLabel->setFont(font);
+//    DFontSizeManager::instance()->bind(m_voiceTimeLabel,DFontSizeManager::T6);
+//    m_voiceTimeLabel->setText(UiUtil::formatMillisecondToSecAndMil(m_note.voiceTime));
+
+//    m_hBoxLayout->addSpacing(6);
+//    m_hBoxLayout->addWidget(m_playingButton);
+//    m_hBoxLayout->addSpacing(12);
+//    m_hBoxLayout->addWidget(m_waveform);
+//    m_hBoxLayout->addSpacing(20);
+//    m_hBoxLayout->addWidget(m_voiceTimeLabel);
+//    m_hBoxLayout->addSpacing(0);
+//    m_hBoxLayout->addWidget(m_menuBtn);
+//    m_hBoxLayout->addSpacing(12);
+
+//    //m_hBoxLayout->addWidget(m_menuBtn);
+
+//    connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
 }
 
 void VoiceNoteItem::initConnection()
@@ -290,12 +474,15 @@ void VoiceNoteItem::initConnection()
     connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
 
+    connect(m_detailBtn, SIGNAL(clicked()), this, SLOT(onToDetalVoicePage()));
+
+
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(pausePlayingSignal()));
     connect(m_playingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
     connect(m_playingButton, SIGNAL(resume()), this, SLOT(handleResumePlaying()));
     connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
 
-
+    connect(m_textEdit ,SIGNAL(sigTextHeightChanged(int)),this,SIGNAL(sigTextHeightChanged(int))); //Add 20191111
 
 }
 
@@ -325,3 +512,29 @@ void VoiceNoteItem::handleResumePlaying()
     emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint, m_note);  //Edit bug 2587
     //emit resumePlayingSignal(this, UiUtil::getRecordingVoiceFullPath(m_note.contentPath), waveformPoint);
 }
+//Add s 20191111
+void VoiceNoteItem::setMenuBtnEnabled(bool enabled)
+{
+    m_menuBtn->setEnabled(enabled);
+}
+void VoiceNoteItem::setLineEditDisplay(bool disp)
+{
+    if (disp)
+    {
+         m_bgWidgetBytext->show();
+    }
+    else {
+         m_bgWidgetBytext->hide();
+    }
+}
+void VoiceNoteItem::setTextEditDisplay(bool disp)
+{
+    if (disp)
+    {
+         m_textEdit->show();
+    }
+    else {
+         m_textEdit->hide();
+    }
+}
+//Add e 20191111

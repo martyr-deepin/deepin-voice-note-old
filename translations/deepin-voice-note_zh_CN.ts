@@ -127,6 +127,14 @@
         <source>hot key</source>
         <translation>快捷键</translation>
     </message>
+    <message>
+        <source>Converting a voice note now. Do you want to stop it?</source>
+        <translation>当前有语音笔记正在转写中，是否确定关闭？</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>确定</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -205,6 +213,18 @@
         <source>VoiceNote</source>
         <translation>语音笔记</translation>
     </message>
+    <message>
+        <source>Voice to Text</source>
+        <translation>语音转文字</translation>
+    </message>
+    <message>
+        <source>Cannot convert this voice note, as notes over 20 minutes are not supported at present.</source>
+        <translation>无法转写此条语音笔记，暂仅支持20分钟内的语音笔记。</translation>
+    </message>
+    <message>
+        <source>Converting voice to text</source>
+        <translation>正在转为文字...</translation>
+    </message>
 </context>
 <context>
     <name>RightView</name>
@@ -222,6 +242,17 @@
     <message>
         <source>No Result</source>
         <translation>无搜索结果</translation>
+    </message>
+</context>
+<context>
+    <name>UiUtil</name>
+    <message>
+        <source>The voice conversion failed. Do you want to try again?</source>
+        <translation>当前语音转写文字失败，是否重新转写？</translation>
+    </message>
+    <message>
+        <source>The voice conversion failed due to the poor network connection. Do you want to try again?</source>
+        <translation>当前网络状态差，语音转写失败，是否重新转写？</translation>
     </message>
 </context>
 </TS>

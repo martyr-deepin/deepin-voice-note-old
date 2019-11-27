@@ -57,7 +57,11 @@ public:
     bool getTextNoteItemChangeState();
     void setTextNoteItemChangeState(const bool isTextNoteItemChanged);
     void clearTextNoteItemChangeState();
+    void setAsrTxt(int FolderID,int ItemID, QString txt);  //Add 20191111
+    QString getAsrTxt(int FolderID,int ItemID);       //Add 20191111
 
+    void setApplicationName(QString appName);  //Add 20191111
+    QString getApplicationName();       //Add 20191111
 signals:
     void sigShowViewAddTextButton();
     void sigHideViewAddTextButton();
@@ -79,6 +83,8 @@ private:
      DApplication *m_app;
 
     bool isTextNoteItemChanged;
+    QMultiMap <int,QMap<int,QString>> m_mapArsTxtByFolder;  //Add 20191111
+    QString m_ApplicationName; //Add 20191111
 };
 
 #endif // INTANCER_H

@@ -12,6 +12,7 @@
 #define TEXTNOTE_HEIGHT (170)
 #define VOICENOTE_HEIGHT (98)
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
+#define ASR_LIMIT_MILLISECOND (5 * 3600 * 1000)  //Add 20191111
 
 static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.svg";
@@ -41,7 +42,7 @@ static const char * FOLDER_MENU_RENAME = "重命名";
 static const char * FOLDER_MENU_DELETE = "删除";
 static const char * NOTE_MENU_SAVE_AS_TXT = "保存为TXT";
 static const char * NOTE_MENU_SAVE_AS_MP3 = "保存为MP3";
-
+static const char * NOTE_MENU_ARS_AS_MP3 = "语音转文字"; //Add 20191111
 enum NOTE_TYPE {VOICE=0, TEXT=1};
 enum RICH_TEXT_COLOR {BLUE=0, WHITE=1};
 

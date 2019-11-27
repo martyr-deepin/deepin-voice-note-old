@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <DDialog>
 #include <QObject>
+#include <DFloatingMessage> //Add 20191111
+#include <DPushButton> //add 20191111
 #include <QImageReader>
 #include <DApplication>
 #include <com_deepin_daemon_audio.h>
@@ -24,6 +26,9 @@ public:
     static QPixmap getPixmap(QSize size, QString imgPath);
     static DDialog *createChooseDialog(const QString &title, const QString &content, QWidget *parent, QString cancelStr, QString deleteStr);
     static DDialog *createConfirmDialog(const QString &title, const QString &content, QWidget *parent);
+    static DDialog *createAsrConfirmDialog(const QString &title, const QString &content, QWidget *parent); //Add 20191111
+    static DFloatingMessage *createAsrErrorDF(QWidget *parent, DPushButton *button); //Add 20191111
+    static DFloatingMessage *createAsrNetWorkErrDialog(QWidget *parent,DPushButton *button); //Add 20191111
     static QString getElidedText(QFont font, QString str, int MaxWidth, bool& isConverted);
     static QString formatMillisecond(int millisecond);
     static QString formatMillisecondToSecAndMil(int millisecond);

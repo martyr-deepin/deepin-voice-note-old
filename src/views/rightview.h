@@ -54,7 +54,9 @@ signals:
     void sigStartWatchVolume();
     void sigChangeCurFolderToTop(int folderID);
     void sigRvCheckFile();//by yuanshuai 20191120 2841
-
+    void asrStart();  //转写开始    //Add 20191111
+    void asrEnd();  //转写结束   //Add 20191111
+    void sigToDetalVoicePage(QString contant);
 public slots:
     void onShowNoResult();
     void handleSelFolderChg(int folderId);

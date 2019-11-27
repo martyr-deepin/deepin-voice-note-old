@@ -362,7 +362,37 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
     return dialog;
     //dialog->addButton(okStr, false, DDialog::ButtonNormal);
 }
-
+//Add s 20191111
+DDialog *UiUtil::createAsrConfirmDialog(const QString &title, const QString &content, QWidget *parent)
+{
+    DDialog *dialog = new DDialog(title, content, parent);
+    dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
+    dialog->addButton(QString(QObject::tr("OK")), false, DDialog::ButtonNormal);
+    //dialog->addButton(QString(QObject::tr("确定")), false, DDialog::ButtonNormal);
+    return dialog;
+}
+DFloatingMessage *UiUtil::createAsrErrorDF(QWidget *parent,DPushButton *button)
+{
+    DFloatingMessage *df = new DFloatingMessage(DFloatingMessage::ResidentType,parent);
+    df->setIcon(QIcon(UiUtil::renderSVG(":/image/warning .svg", QSize(32,32),qApp)));
+    df->setMessage(QString(tr("The voice conversion failed. Do you want to try again?")));
+    //df->setMessage(QStringLiteral("当前语音转写文字失败，是否重新转写？"));
+    df->setWidget(button);
+    df->hide();
+    return df;
+}
+DFloatingMessage *UiUtil::createAsrNetWorkErrDialog(QWidget *parent,DPushButton *button)
+{
+    DFloatingMessage *df = new DFloatingMessage(DFloatingMessage::ResidentType,parent);
+    df->setIcon(QIcon(UiUtil::renderSVG(":/image/warning .svg", QSize(32,32),qApp)));
+    df->setMessage(QString(tr("The voice conversion failed due to the poor network connection. Do you want to try again?")));
+    //df->setMessage(QString(tr("当前网络状态差，语音转写失败，是否重新转写？")));
+    df->setWidget(button);
+    df->hide();
+    return df;
+}
+//Add e 20191111
 QString UiUtil::getRecordingVoiceFullPath(QString fileName)
 {
     return QDir(getRecordingSaveDirectory()).filePath(fileName);
