@@ -623,29 +623,33 @@ void RightNoteList::onAbleAddBtn(bool changed)
 
 void RightNoteList::onTextChangedFlagChange(bool changed)
 {
+    bool isTextNoteItemChanged = Intancer::get_Intancer()->getTextNoteItemChangeState();
+    Intancer::get_Intancer()->clearTextNoteItemChangeState();
+
 //    if(m_textClicked)
 //    {
 //        m_textChanged = changed;
 //        //emit sigChangeCurFolderToTop();
 //    }
     //liuyang 3550 3547 3528
-    if(changed)
-    {
+    if (changed && isTextNoteItemChanged) {
        if(this->count() > 2)
        {
            TextNoteItem *senderWidget = static_cast<TextNoteItem *>(sender());
            TextNoteItem *pLasteWidget = static_cast<TextNoteItem *>(this->itemWidget(this->item(this->count() - 2)));
            if(pLasteWidget != senderWidget)
            {
-               NOTE note = senderWidget->getTextNote();
-               int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
-               QListWidgetItem *senderItem = getListItemById(note.id);
-               this->removeItemWidget(senderItem);
-               delete senderItem;
-               senderItem = nullptr;
-               //addWidgetItem(true,note,"");
-               addWidgetItem(true,note,"",cursorPos);//3550-3547-3528
-               this->scrollToBottom();
+                NOTE note = senderWidget->getTextNote();
+                int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
+                QListWidgetItem *senderItem = getListItemById(note.id);
+                TextNoteItem* oldItem = static_cast<TextNoteItem*>(this->itemWidget(senderItem));
+
+                this->removeItemWidget(senderItem);
+                delete senderItem;
+                senderItem = nullptr;
+
+                addWidgetItem(true, note, oldItem->m_searchKey, cursorPos);//3550-3547-3528
+                this->scrollToBottom();
            }
        }
        emit sigChangeCurFolderToTop(m_currSelNote.folderId);

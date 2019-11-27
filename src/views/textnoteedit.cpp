@@ -19,13 +19,12 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
     }
     m_textNote = textNote;
     this->setText(m_textNote.contentText);//liuyang 3550 3547 3528
+
     initConnection();
 
 //    QTextEdit *tmp = new QTextEdit(this);
 //    tmp->setFixedSize(QSize(200,200));
 //    tmp->move(200,0);
-
-    setLineHeight(24);
 }
 
 TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
@@ -40,7 +39,8 @@ TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit
     }
 
     initConnection();
-    setLineHeight(24);
+
+    this->setLineHeight(24);
 }
 
 
@@ -55,13 +55,17 @@ QString TextNoteEdit::getText()
     return tmp;
 }
 
+void TextNoteEdit::setText(const QString &text)
+{
+    DTextEdit::setText(text);
+    this->setLineHeight(24);
+}
+
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
     m_searchKey = searchKey;
     m_textNote = textNote;
     this->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
-    //this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
-    setLineHeight(24);
 }
 
 int TextNoteEdit::getID()
@@ -92,8 +96,12 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
+    qDebug()<< "YZH--- TextNoteEdit::focusInEvent()";
+
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
-    qDebug()<<"TextNoteEdit::focusInEvent";
+
+    this->setText(this->getText());
+    Intancer::get_Intancer()->setTextNoteItemChangeState(false);
 
     DTextEdit::focusInEvent(e);//Add bug 2587
     emit SigTextEditGetFocus();
@@ -113,9 +121,12 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         return;
     }
     qDebug()<<"--------------------------------edit focusOutEvent";
-    if(this->getText().isEmpty())
+    if (this->getText().isEmpty())
     {
         emit sigDelMyself();
+    }
+    else {
+        this->setText(UiUtil::getHtmlText(this->getText(), 12, this->m_searchKey, BLUE));
     }
     //emit focusOutSignal();
 
@@ -235,15 +246,12 @@ void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
     this->setText(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
-    //this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
-    setLineHeight(24);
 }
 
 void TextNoteEdit::readFromDatabase()
 {
     m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
     this->setText(m_textNote.contentText);
-    setLineHeight(24);
 }
 
 QString TextNoteEdit::onlyreadFromDatabase()

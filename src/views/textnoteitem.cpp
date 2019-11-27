@@ -316,7 +316,7 @@ void TextNoteItem::readFromDatabase()
     //m_textEdit->readFromDatabase();
     m_bakContent = m_textEdit->onlyreadFromDatabase();
     m_textEdit->setText(m_bakContent);
-    m_textEdit->setLineHeight(24);
+
     //onTextHeightChanged(m_textEdit->getLineHeight());
     handleTextEditFocusOut();
 }
@@ -426,7 +426,7 @@ void TextNoteItem::handleTextEditFocusOut()
     //liuyang 3550 3547 3528
 
     m_textEdit->setText(m_bakContent);
-    m_textEdit->setLineHeight(24);
+
     //onTextHeightChanged(m_textEdit->getLineHeight());
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;
@@ -465,7 +465,7 @@ void TextNoteItem::handleTextEditFocusOut()
 
         QString txt = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
         m_textEdit->setText(txt);
-        m_textEdit->setLineHeight(24);
+
         //onTextHeightChanged(m_textEdit->getLineHeight());
         m_bakContent = m_textEdit->toPlainText();
         m_isEdited = false;
@@ -639,7 +639,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         //2719 fix liuyang
         {
             m_textEdit->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE));
-            m_textEdit->setLineHeight(24);
+
             //onTextHeightChanged(m_textEdit->getLineHeight());
         }
 

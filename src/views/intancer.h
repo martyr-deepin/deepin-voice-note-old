@@ -54,7 +54,9 @@ public:
     void CountMoveFolderCount();
     int getMoveFolderFlag();
 
-
+    bool getTextNoteItemChangeState();
+    void setTextNoteItemChangeState(const bool isTextNoteItemChanged);
+    void clearTextNoteItemChangeState();
 
 signals:
     void sigShowViewAddTextButton();
@@ -76,7 +78,7 @@ private:
      int m_RightViewHeight;
      DApplication *m_app;
 
-
+    bool isTextNoteItemChanged;
 };
 
 #endif // INTANCER_H
