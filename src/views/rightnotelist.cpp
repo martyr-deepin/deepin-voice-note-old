@@ -1007,6 +1007,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 
                 if(m_currPlayingItem->getNoteID() == m_currSelNote.id)
                 {
+                    m_currPlayingItem = nullptr;
                     audioPlayer->stop();
                 }
 
@@ -1268,11 +1269,11 @@ void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
         if(nullptr != m_currPlayingItem)
         {
             disconnect(m_myslider,SIGNAL(sigSliderPos(int)),m_currPlayingItem->m_waveform,SLOT(OnSetWavePos(int)));
+            m_currPlayingItem->m_waveform->setWavePosition(-1);
+            m_currPlayingItem->handleStopPlay();
+            m_currPlayingItem = nullptr;
         }
 
-        m_currPlayingItem->m_waveform->setWavePosition(-1);
-        m_currPlayingItem->handleStopPlay();
-        m_currPlayingItem = nullptr;
         m_myslider->hide();
     }
 }
