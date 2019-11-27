@@ -552,7 +552,16 @@ void MyMainWindow::previewShortcut()
 }
 void MyMainWindow::newNoteShortcut()
 {
-    m_mainPage->addFolder();
+    //2587
+    if(2 == m_stackedWidget->currentIndex())
+    {
+        m_InitEmptyPage->sigAddFolderByInitPage();
+    }
+    else
+    {
+        m_mainPage->addFolder();
+    }
+    //2587
 }
 void MyMainWindow::searchShortcut()
 {
