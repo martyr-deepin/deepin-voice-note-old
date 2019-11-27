@@ -1155,6 +1155,10 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
         //m_myslider->setRange(0, waveformPos.width());
         int duringtime = m_currPlayingItem->getRecodeTime();
         int maxtime = duringtime/1000;
+        if(0 == maxtime)
+        {
+            maxtime = 1;
+        }
         m_myslider->setRange(0, maxtime);
         m_myslider->setSliderPostion(0); //ynb 20191109
         m_myslider->show();
