@@ -64,7 +64,7 @@ void RightView::initUI()
 //    QPalette pb = DApplicationHelper::instance()->palette(m_NoSearchResault);
 //    pb.setBrush(DPalette::Text, pb.color(QPalette::));
 //    m_NoSearchResault->setPalette(pb);
-    m_NoSearchResault->setFixedSize(QSize(150,29));
+    m_NoSearchResault->setFixedSize(QSize(200,29));
     m_NoSearchResault->setAlignment(Qt::AlignCenter);
     m_NoSearchResault->move((this->width() - m_NoSearchResault->width())/2,(this->height() - m_NoSearchResault->height())/2);
     m_NoSearchResault->setVisible(false);

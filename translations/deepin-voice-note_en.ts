@@ -221,7 +221,7 @@
     <name>SearchNonePage</name>
     <message>
         <source>No Result</source>
-        <translation>No Result</translation>
+        <translation>No search results</translation>
     </message>
 </context>
 </TS>
