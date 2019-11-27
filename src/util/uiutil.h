@@ -35,6 +35,7 @@ public:
     static QString getRecordingSaveDirectory();
     static QString convertFloatListToString(QList<float> list);
     static QList<float> convertStringToFloatList(QString str);
+    static QString getHtmlPlainText(QString plainText);
     static QString getHtmlText(QString src, int fontSize, QString searchKey,RICH_TEXT_COLOR color);
     static bool saveTxt(QString path, QString content);
     static bool saveMP3(QString src, QString target);

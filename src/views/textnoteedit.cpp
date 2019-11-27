@@ -100,7 +100,7 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
-    this->setText(this->getText());
+    this->setText(UiUtil::getHtmlPlainText(this->toPlainText()));
     Intancer::get_Intancer()->setTextNoteItemChangeState(false);
 
     DTextEdit::focusInEvent(e);//Add bug 2587
