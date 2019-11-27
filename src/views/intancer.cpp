@@ -189,7 +189,7 @@ bool Intancer::getTextNoteItemChangeState()
     return isTextNoteItemChanged;
 }
 
-void Intancer::setTextNoteItemChangeState(bool isTextNoteItemChanged)
+void Intancer::setTextNoteItemChangeState(const bool isTextNoteItemChanged)
 {
     this->isTextNoteItemChanged = isTextNoteItemChanged;
 }

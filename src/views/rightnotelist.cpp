@@ -631,14 +631,13 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
 //        m_textChanged = changed;
 //        //emit sigChangeCurFolderToTop();
 //    }
+
     //liuyang 3550 3547 3528
     if (changed && isTextNoteItemChanged) {
-       if(this->count() > 2)
-       {
-           TextNoteItem *senderWidget = static_cast<TextNoteItem *>(sender());
-           TextNoteItem *pLasteWidget = static_cast<TextNoteItem *>(this->itemWidget(this->item(this->count() - 2)));
-           if(pLasteWidget != senderWidget)
-           {
+        if (this->count() > 2) {
+            TextNoteItem *senderWidget = static_cast<TextNoteItem *>(sender());
+            TextNoteItem *pLasteWidget = static_cast<TextNoteItem *>(this->itemWidget(this->item(this->count() - 2)));
+            if (pLasteWidget != senderWidget) {
                 NOTE note = senderWidget->getTextNote();
                 int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
                 QListWidgetItem *senderItem = getListItemById(note.id);
@@ -650,9 +649,9 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
 
                 addWidgetItem(true, note, oldItem->m_searchKey, cursorPos);//3550-3547-3528
                 this->scrollToBottom();
-           }
-       }
-       emit sigChangeCurFolderToTop(m_currSelNote.folderId);
+            }
+        }
+        emit sigChangeCurFolderToTop(m_currSelNote.folderId);
     }
     //liuyang 3550 3547 3528
 }
