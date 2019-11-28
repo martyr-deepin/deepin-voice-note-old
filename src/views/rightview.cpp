@@ -285,14 +285,15 @@ void RightView::handleSelFolderChg(int folderId)
     m_currFolderId = folderId;
     updateNoteList();
 
-    if(m_initing)
-    {
-        m_InitlateTimerOut->start(1000);
-    }
-    else
-    {
-        m_noteListWidget->OnlyTryToFouceOutEveryText();
-    }
+//    if(m_initing)
+//    {
+////        m_InitlateTimerOut->start(1000);
+//    }
+//    else
+//    {
+//        m_noteListWidget->OnlyTryToFouceOutEveryText();
+//    }
+    m_noteListWidget->OnlyTryToFouceOutEveryText();
 
     if(-1 != folderId)
     {

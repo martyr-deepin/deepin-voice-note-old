@@ -21,7 +21,8 @@ DWIDGET_USE_NAMESPACE
 #define LEFTVIEW_MAX_WIDTH 250
 
 //左侧View
-class LeftView : public DBlurEffectWidget
+//class LeftView : public DBlurEffectWidget
+class LeftView : public DWidget //liuyang 3799
 //class LeftView : public QFrame
 {
     Q_OBJECT

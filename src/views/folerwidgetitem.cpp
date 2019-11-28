@@ -371,3 +371,20 @@ void FolerWidgetItem::updateTimeLable(const QDateTime &time)
     }
 }
 //liuyang 3550 3547 3528
+
+//liuyang 3794
+void FolerWidgetItem::leaveEvent(QEvent *event)
+{
+    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    m_BackGround->setPalette(pb);
+    return QWidget::leaveEvent(event);
+}
+void FolerWidgetItem::enterEvent(QEvent *event)
+{
+   DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+   pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+   m_BackGround->setPalette(pb);
+   return QWidget::enterEvent(event);
+}
+//liuyang 3794

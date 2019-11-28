@@ -56,6 +56,12 @@ public slots:
     void tryToFouceout();
     void changeTheme();
 
+    //liuyang 3794
+protected:
+    void leaveEvent(QEvent *event);
+    void enterEvent(QEvent *event);
+    //liuyang 3794
+
 private:
 
 

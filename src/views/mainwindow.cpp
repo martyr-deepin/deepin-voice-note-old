@@ -23,6 +23,7 @@ MyMainWindow::MyMainWindow()
     m_quit = false; //Add bug3470
 
     initUI();
+    setTitlebarShadowEnabled(false);//liuyang 3799
 }
 
 void MyMainWindow::initUI() {
@@ -116,7 +117,8 @@ void MyMainWindow::initTitleFrame()
 //    titleLayout->addSpacing(12);
 //    titleLayout->addWidget(m_returnBtn);
 //    titleLayout->addWidget(m_replaceForReturn);
-    titleLayout->addSpacing(145);
+    //titleLayout->addSpacing(145);
+    titleLayout->addSpacing(230);   //liuyang 3793
     titleLayout->addWidget(m_searchEdit);
     titleLayout->addSpacing(34);
     //titleLayout->setSpacing(52);

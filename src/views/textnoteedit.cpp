@@ -254,9 +254,11 @@ void TextNoteEdit::readFromDatabase()
     this->setText(m_textNote.contentText);
 }
 
-QString TextNoteEdit::onlyreadFromDatabase()
+//QString TextNoteEdit::onlyreadFromDatabase()
+QString TextNoteEdit::onlyreadFromDatabase(QDateTime *time)//liuyang 3547
 {
-    return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+    //return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+    return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id,time);//liuyang 3547
 }
 
 void TextNoteEdit::setLineHeight(int value)

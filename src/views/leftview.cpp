@@ -120,10 +120,14 @@ void LeftView::initUI()
 //    m_addFolderBtn->setIconSize(QSize(34,34));
 
 
-    DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
-    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
-    //m_addFolderBtn->setPalette(pa);
+    //3799
+//    DPalette pa = DApplicationHelper::instance()->palette(m_addFolderBtn);
+//    pa.setBrush(DPalette::Highlight, pa.color(DPalette::DarkLively));
 
+    DPalette pa = DApplicationHelper::instance()->palette(this);
+    pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
+    this->setAutoFillBackground(true);
+    this->setPalette(pa);
 }
 
 void LeftView::initController()
@@ -356,6 +360,11 @@ void LeftView::changeTheme()
         }
 
     }
+    //liuyang 3799
+    DPalette pa = DApplicationHelper::instance()->palette(this);
+    pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
+    this->setPalette(pa);
+    //liuyang 3799
 }
 
 void LeftView::OnChangeCurFolderToTop(int folderID)

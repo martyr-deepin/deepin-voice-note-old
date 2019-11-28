@@ -285,7 +285,8 @@ void VoiceNoteItem::initUI()
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
-    m_textEdit->setTextColor(pb.color(DPalette::TextTips));
+    //m_textEdit->setTextColor(pb.color(DPalette::TextTips));
+    m_textEdit->setTextColor(pb.color(DPalette::LightLively));
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setReadOnly(true);
     m_textEdit->hide();
