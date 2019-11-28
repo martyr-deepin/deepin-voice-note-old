@@ -158,7 +158,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
         {
             m_contextMenu->removeAction(m_asrAction);   //Add 20191111
             m_saveAsAction->setText(QString(tr("Save As TXT")));
-            m_contextMenu->setFixedSize(QSize(162,89)); //Add 20191111
+            //m_contextMenu->setFixedSize(QSize(162,89)); //Add 20191111
             //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_TXT);
         }
         else
@@ -179,7 +179,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
             //Add e 20191111
             m_saveAsAction->setText(QString(tr("Save As MP3")));
             //m_saveAsAction->setText(NOTE_MENU_SAVE_AS_MP3);
-            m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
+            //m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);
         //m_arrowMenu->move(x,y);
