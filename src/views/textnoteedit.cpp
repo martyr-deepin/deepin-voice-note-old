@@ -158,7 +158,7 @@ void TextNoteEdit::initConnection()
 {
     //connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);  //3550-3547-3528 patch
 
-    connect(this->document(),SIGNAL(contentsChanged()),this,SLOT(textAreaChanged())); //Add 20191111
+    connect(this->document(), &QTextDocument::contentsChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
 }
 
 void TextNoteEdit::updateNote()
