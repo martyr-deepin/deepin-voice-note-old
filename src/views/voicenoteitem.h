@@ -79,6 +79,7 @@ public slots:
     void setPlayEnable();
     void changeTheme();
     void onToDetalVoicePage();
+    void onDetailButtonChanged(const bool isVisible);
     //void handle
 
     //3152 liuyang

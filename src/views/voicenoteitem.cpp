@@ -130,6 +130,15 @@ void VoiceNoteItem::onToDetalVoicePage()
     QString contant = m_textEdit->getText();
     emit sigToDetalVoicePage(contant);
 }
+
+void VoiceNoteItem::onDetailButtonChanged(const bool isVisible)
+{
+    qDebug() << "VoiceNoteItem::onDetailButtonChanged()";
+    qDebug() << "isVisible: " << isVisible;
+
+    this->m_detailBtn->setVisible(isVisible);
+}
+
 //Add s 20191111
 void VoiceNoteItem::setTextEditVal(QString txt)
 {
@@ -487,7 +496,7 @@ void VoiceNoteItem::initConnection()
     connect(m_playingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
 
     connect(m_textEdit ,SIGNAL(sigTextHeightChanged(int)),this,SIGNAL(sigTextHeightChanged(int))); //Add 20191111
-
+    connect(m_textEdit, &TextNoteEdit::sigDetailButtonChanged, this, &VoiceNoteItem::onDetailButtonChanged);
 }
 
 void VoiceNoteItem::handleMenuBtnClicked()
