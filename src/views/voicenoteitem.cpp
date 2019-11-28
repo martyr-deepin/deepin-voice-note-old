@@ -320,6 +320,9 @@ void VoiceNoteItem::initUI()
                     m_bgWidgetBytext
                 );
     }
+
+    m_detailBtn->setVisible(false);
+
     m_bgWidgetBydetailBtn = new DWidget();
     QVBoxLayout *etailBtnLayout = new QVBoxLayout(m_bgWidgetBydetailBtn);
     etailBtnLayout->addSpacing(0);

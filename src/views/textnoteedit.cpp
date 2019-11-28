@@ -96,7 +96,7 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
-    qDebug()<< "YZH--- TextNoteEdit::focusInEvent()";
+    qDebug()<< "TextNoteEdit::focusInEvent()";
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
@@ -159,6 +159,7 @@ void TextNoteEdit::initConnection()
     //connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);  //3550-3547-3528 patch
 
     connect(this->document(), &QTextDocument::contentsChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
+    connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::onTextChanged);
 }
 
 void TextNoteEdit::updateNote()
@@ -241,6 +242,29 @@ void TextNoteEdit::textAreaChanged()
     }
 }
 //Add e 20191111
+
+void TextNoteEdit::onTextChanged()
+{
+    qDebug() << "TextNoteEdit::onTextChanged()";
+
+    QTimer::singleShot(0, this, [=]{
+        qDebug() << "QTimer::singleShot()";
+
+        int textEditHeight = this->height();
+        int documentHeight = static_cast<int>(this->document()->size().height());
+
+        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
+        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
+        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
+
+        if (textEditHeight < documentHeight - 1) {
+            emit sigDetailButtonChanged(true);
+        }
+        else {
+            emit sigDetailButtonChanged(false);
+        }
+    });
+}
 
 void TextNoteEdit::searchText(QString searchKey)
 {

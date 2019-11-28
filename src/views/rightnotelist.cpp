@@ -297,7 +297,6 @@ void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchK
         connect(textItem, SIGNAL(SigTextEditGetFocus(NOTE)), this, SLOT(onTextEditGetFocus(NOTE))); //Add bug 2587
         connect(textItem, SIGNAL(SigTextEditOutFocus(NOTE)), this, SLOT(onTextEditOutFocus(NOTE))); //Add bug 2587
 
-        textItem->setDetalBtnInVisible();
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();

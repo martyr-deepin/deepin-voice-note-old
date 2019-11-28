@@ -57,7 +57,6 @@ public:
     int getId();
     NOTE_TYPE getType();
     NOTE getTextNote();//liuyang 3550 3547 3528
-    void setDetalBtnInVisible();
     QPoint remapToGlobalMenbtn(QPoint GlobalPoint);
     int getTextEditCursorPos();//3550-3547-3528 patch
 
@@ -89,6 +88,7 @@ public slots:
     void OnToDetalPage();
     void OnTextEditGetFocus(); //Add bug 2587
     void OnTextEditOutFocus(); //Add bug 2587
+    void onDetailButtonChanged(const bool isVisible);
 
 protected:
     void resizeEvent(QResizeEvent * event);

@@ -37,11 +37,12 @@ signals:
     void sigDelMyself();
     void SigTextEditGetFocus();  //Add bug 2587
     void SigTextEditOutFocus();  //Add bug 2587
-
+    void sigDetailButtonChanged(const bool isVisible);
 
 public slots:
     void updateNote();
     void textAreaChanged(); //Add 20191111
+    void onTextChanged();
 
 
 protected:

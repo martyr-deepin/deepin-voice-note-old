@@ -60,14 +60,6 @@ NOTE TextNoteItem::getTextNote()
 }
 //liuyang 3550 3547 3528
 
-void TextNoteItem::setDetalBtnInVisible()
-{
-    if(nullptr != m_detailBtn)
-    {
-        m_detailBtn->setVisible(false);
-    }
-}
-
 QPoint TextNoteItem::remapToGlobalMenbtn(QPoint GlobalPoint)
 {
     QPoint pGlobal = m_menuBtn->mapToGlobal(GlobalPoint);
@@ -204,9 +196,6 @@ void TextNoteItem::initUI()
     //m_menuBtn->setIconSize(QSize(10,18));
     m_menuBtn->setDisabled(true);
 
-
-//    m_detailBtn = new MenuButton(m_MenuBtnBackground);
-
     if(themeType == DGuiApplicationHelper::LightType)
     {
         m_detailBtn = new MenuButton(
@@ -233,9 +222,8 @@ void TextNoteItem::initUI()
                     m_MenuBtnBackground
                 );
     }
-//    m_detailBtn->setFixedSize(QSize(40, 40));
-//    m_detailBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/detail-normal.svg", QSize(15, 14),qApp)));
-//    m_detailBtn->setIconSize(QSize(15,14));
+
+    m_detailBtn->setVisible(false);
     m_detailBtn->move(4,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
 
     //onTextHeightChanged(m_textEdit->getLineHeight());
@@ -259,6 +247,7 @@ void TextNoteItem::initConnection()
     connect(m_textEdit, SIGNAL(sigTextHeightChanged(int)), this, SLOT(onTextHeightChanged(int)));
     connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus,this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
     connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus,this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
+    connect(m_textEdit, &TextNoteEdit::sigDetailButtonChanged, this, &TextNoteItem::onDetailButtonChanged);
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     //liuyang 3547
@@ -603,12 +592,10 @@ void TextNoteItem::onTextHeightChanged(int newheight)
     qDebug()<<"newheight:"<<newheight;
     if(m_textEdit->height() <= newheight)
     {
-        m_detailBtn->setVisible(true);
         m_isTextConverted = true;
     }
     else
     {
-        m_detailBtn->setVisible(false);
         m_isTextConverted = false;
     }
 }
@@ -628,6 +615,13 @@ void TextNoteItem::OnTextEditOutFocus()
     emit SigTextEditOutFocus(m_textNote);
 }
 //Add end bug 2587
+
+void TextNoteItem::onDetailButtonChanged(const bool isVisible) {
+    qDebug() << "TextNoteItem::onDetailButtonChanged()";
+    qDebug() << "isVisible: " << isVisible;
+
+    this->m_detailBtn->setVisible(isVisible);
+}
 
 void TextNoteItem::resizeEvent(QResizeEvent * event)
 {
