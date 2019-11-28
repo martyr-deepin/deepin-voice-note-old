@@ -59,7 +59,7 @@ void LeftView::initUI()
 
     m_leftFolderView->setObjectName("LeftSideBar");
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
-    m_leftViewLayout->addSpacing(5);
+    //m_leftViewLayout->addSpacing(5);//bug 3784,去掉加掉的5px，会造成距离边框距离只有5px，
     m_leftViewLayout->addWidget(m_leftFolderView);
 
 
@@ -320,13 +320,13 @@ void LeftView::itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *pr
 void LeftView::viewDisabled()
 {
     m_leftFolderView->setDisabled(true);
-    m_addFolderBtn->setDisabled(true);
+    m_addFolderBtn->DisableBtn();
 }
 
 void LeftView::viewEnabled()
 {
     m_leftFolderView->setDisabled(false);
-    m_addFolderBtn->setDisabled(false);
+    m_addFolderBtn->EnAbleBtn();
 }
 
 void LeftView::changeTheme()

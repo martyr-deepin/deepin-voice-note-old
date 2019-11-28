@@ -55,6 +55,7 @@ signals:
     void asrStart();  //转写开始    //Add 20191111
     void asrEnd();  //转写结束   //Add 20191111
     void sigToDetalVoicePage(QString contant);
+    void sigShowVoiceDeviceError();
 public slots:
     void onAddFolder();
 

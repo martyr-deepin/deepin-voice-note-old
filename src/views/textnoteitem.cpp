@@ -523,10 +523,12 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
     //liuyang 3547
     if(str.isEmpty())
     {
+        m_menuBtn->DisableBtn();
         handleTextEditFocusOut();
     }
     else
     {
+        m_menuBtn->EnAbleBtn();
         emit sig_TextEditNotEmpty(true);
     }
     //liuyang 3547

@@ -44,6 +44,7 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
     QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
+    QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), this, SIGNAL(stopRecoiding()));  //Add bug3470
     //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
@@ -63,6 +64,9 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(asrEnd()), m_leftView, SLOT(viewEnabled()));   //Add 20191111
     QObject::connect(m_rightView, SIGNAL(asrStart()), this, SIGNAL(asrStart()));    //Add 20191111
     QObject::connect(m_rightView, SIGNAL(asrEnd()), this, SIGNAL(asrEnd()));   //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(sigShowVoiceDeviceError()), this, SIGNAL(sigShowVoiceDeviceError()));
+
+
 }
 
 void MainPage::initSplitter(){

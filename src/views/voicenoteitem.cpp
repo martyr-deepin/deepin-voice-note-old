@@ -528,7 +528,14 @@ void VoiceNoteItem::handleResumePlaying()
 //Add s 20191111
 void VoiceNoteItem::setMenuBtnEnabled(bool enabled)
 {
-    m_menuBtn->setEnabled(enabled);
+    if(enabled)
+    {
+        m_menuBtn->EnAbleBtn();
+    }
+    else
+    {
+        m_menuBtn->DisableBtn();
+    }
 }
 void VoiceNoteItem::setLineEditDisplay(bool disp)
 {

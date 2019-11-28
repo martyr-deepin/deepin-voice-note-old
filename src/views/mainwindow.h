@@ -56,6 +56,7 @@ public slots:
     //by yuanshuai 20191120 2841
     void checkFileExist();
     //Add start bug 2587
+    void showNoVoiceDeviceDialog();
     void previewShortcut();
     void searchShortcut();
     void newNoteShortcut();

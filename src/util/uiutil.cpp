@@ -382,7 +382,7 @@ DDialog *UiUtil::createAsrConfirmDialog(const QString &title, const QString &con
 DFloatingMessage *UiUtil::createAsrErrorDF(QWidget *parent,DPushButton *button)
 {
     DFloatingMessage *df = new DFloatingMessage(DFloatingMessage::ResidentType,parent);
-    df->setIcon(QIcon(UiUtil::renderSVG(":/image/warning .svg", QSize(32,32),qApp)));
+    df->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
     df->setMessage(QString(tr("The voice conversion failed. Do you want to try again?")));
     //df->setMessage(QStringLiteral("当前语音转写文字失败，是否重新转写？"));
     df->setWidget(button);
@@ -392,7 +392,7 @@ DFloatingMessage *UiUtil::createAsrErrorDF(QWidget *parent,DPushButton *button)
 DFloatingMessage *UiUtil::createAsrNetWorkErrDialog(QWidget *parent,DPushButton *button)
 {
     DFloatingMessage *df = new DFloatingMessage(DFloatingMessage::ResidentType,parent);
-    df->setIcon(QIcon(UiUtil::renderSVG(":/image/warning .svg", QSize(32,32),qApp)));
+    df->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
     df->setMessage(QString(tr("The voice conversion failed due to the poor network connection. Do you want to try again?")));
     //df->setMessage(QString(tr("当前网络状态差，语音转写失败，是否重新转写？")));
     df->setWidget(button);

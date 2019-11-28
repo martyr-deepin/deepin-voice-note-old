@@ -77,6 +77,8 @@ void MyMainWindow::initConnection()
     connect(m_asrCloseConfirmDialog, &DDialog::buttonClicked, this, &MyMainWindow::asrDialogClicked); //Add 20191111
 
     connect(m_mainPage,SIGNAL(sigToDetalVoicePage(QString)),this,SLOT(OnToDetalVoicePage(QString)));
+    connect(m_mainPage,SIGNAL(sigShowVoiceDeviceError()),this,SLOT(showNoVoiceDeviceDialog()));
+
 }
 
 void MyMainWindow::initTitleFrame()
@@ -563,7 +565,14 @@ void MyMainWindow::checkFileExist()
     DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
 }
 //end
-
+void MyMainWindow::showNoVoiceDeviceDialog()
+{
+    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::ResidentType,this);
+    pDFloatingMessage->setMessage(QString(tr("Your audio recording device does not work.")));
+    //pDFloatingMessage->setMessage(QString(tr("您的录音设备异常，无法录制语音。")));
+    pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
+    DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
+}
 //Add start bug 2587
 void MyMainWindow::previewShortcut()
 {
@@ -623,10 +632,16 @@ void MyMainWindow::VoiceNotesPlayShortcut()
 //Add s 20191111
 void MyMainWindow::asrStart()
 {
+    //start add by yuanshuai 20191128 bug 3859
+    m_searchEdit->setEnabled(false);
+    //end
     asrStateFlg = 1;
 }
 void MyMainWindow::asrEnd()
 {
+    //start add by yuanshuai 20191128 bug 3859
+    m_searchEdit->setEnabled(true);
+    //end
     asrStateFlg = 0;
 }
 void MyMainWindow::asrDialogClicked(int index, const QString &text)

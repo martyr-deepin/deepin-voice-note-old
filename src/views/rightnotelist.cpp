@@ -976,6 +976,13 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
         Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
 
+        int count = this->count();
+        int transrow = row(m_currSelItemByasr);
+        if(transrow == count - 2)
+        {
+            this->scrollToBottom();
+        }
+
     }
     else
     {
@@ -994,6 +1001,7 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
             m_asrOtherErrDMessage->show();
         }
     }
+
 
     //通知mainPage转写结束  mainPage里设置leftView可用
     emit asrEnd();

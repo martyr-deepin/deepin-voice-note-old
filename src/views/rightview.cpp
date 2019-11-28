@@ -745,6 +745,7 @@ void RightView::oncheckCurPageVoiceForDelete()
 
 void RightView::on_CheckRecodeCouldUse(bool coulduse)
 {
+
     if (!this->m_noteListWidget->isLoadedAudioPlayer) {
         coulduse = false;
     }
@@ -769,7 +770,14 @@ void RightView::on_CheckRecodeCouldUse(bool coulduse)
     {
         m_addVoiceBtn->DisableBtn();
         m_addVoiceBtn->setToolTip(QString(tr("No recording device detected")));
+
+        if(Intancer::get_Intancer()->getRecodingFlag())
+        {
+            m_recordPage->stopRecord();
+            emit sigShowVoiceDeviceError();
+        }
     }
+
 }
 
 void RightView::ShowRecodeTip()
