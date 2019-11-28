@@ -51,7 +51,7 @@ void MyMainWindow::initConnection()
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
     QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
     QObject::connect(m_mainPage, SIGNAL(sigNoSearchResult()), this, SLOT(OnNoSearchResult()));
-    connect(m_mainPage,SIGNAL(sigAsrState(int)),this,SLOT(asrState(int)));  //Add 20191111
+
     connect(m_mainPage,SIGNAL(sigAllFolderDeleted()),this,SLOT(onAllFolderDeleted()));
 
     QObject::connect(m_returnBtn, SIGNAL(clicked()), this, SLOT(showListPage()));
