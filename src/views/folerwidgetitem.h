@@ -61,7 +61,7 @@ private:
 
     FolderController *m_folderCtr;
     QString m_searchKey;
-    QStackedWidget * m_stackedWidget;
+    QStackedWidget *m_stackedWidget;
 
     void initConnection();
     //QPixmap getPixmap(QSize size, QString imgPath);
