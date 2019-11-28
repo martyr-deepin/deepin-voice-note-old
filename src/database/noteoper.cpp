@@ -96,8 +96,8 @@ QList<NOTE> NoteOper::searchNote(int folderId, QString searchKey)
     return noteInfo;
 
 }
-
-QString NoteOper::getConttextByNoteID(int folderId, int noteId)
+QString NoteOper::getConttextByNoteID(int folderId, int noteId, QDateTime *time)//liuyang 3547
+//QString NoteOper::getConttextByNoteID(int folderId, int noteId)
 {
     QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where folder_id = %2 order by create_time asc";
     QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(folderId);
@@ -116,6 +116,12 @@ QString NoteOper::getConttextByNoteID(int folderId, int noteId)
             {
                 noteInfoTmp.contentText = tmp.at(2).toString();
                 text = noteInfoTmp.contentText;
+                //liuyang 3547
+                if(time != nullptr)
+                {
+                    *time = tmp.at(7).toDateTime();
+                }
+                //liuyang 3547
                 break;
             }
         }

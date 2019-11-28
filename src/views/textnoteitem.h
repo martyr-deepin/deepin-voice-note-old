@@ -82,7 +82,8 @@ public slots:
     void handleTextEditFocusOut();
     void handleMenuBtnStateChanged();
     void tryToFouceout();
-    void textEditChanged(QString str);
+    void textEditChanged(const QString &str);//liuyang 3547
+    //void textEditChanged(QString str);
     void changeTheme();
     void onTextHeightChanged(int newheight);
     void OnToDetalPage();

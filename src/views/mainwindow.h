@@ -92,6 +92,7 @@ private:
     //DIconButton *m_returnBtn;
     QFrame *m_titleFrame;
     DSearchEdit *m_searchEdit;
+    QString m_bakForSearchStr;
     DDialog *m_SearchDialog;
     InitEmptyPage *m_InitEmptyPage;
     VoiceToNotePage *m_VoiceToNotePage;

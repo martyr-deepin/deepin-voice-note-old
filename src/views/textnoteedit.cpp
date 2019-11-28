@@ -158,7 +158,7 @@ void TextNoteEdit::initConnection()
 {
     //connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);  //3550-3547-3528 patch
 
-    connect(this->document(),SIGNAL(contentsChanged()),this,SLOT(textAreaChanged())); //Add 20191111
+    connect(this->document(), &QTextDocument::contentsChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
 }
 
 void TextNoteEdit::updateNote()
@@ -254,9 +254,11 @@ void TextNoteEdit::readFromDatabase()
     this->setText(m_textNote.contentText);
 }
 
-QString TextNoteEdit::onlyreadFromDatabase()
+//QString TextNoteEdit::onlyreadFromDatabase()
+QString TextNoteEdit::onlyreadFromDatabase(QDateTime *time)//liuyang 3547
 {
-    return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+    //return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+    return m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id,time);//liuyang 3547
 }
 
 void TextNoteEdit::setLineHeight(int value)

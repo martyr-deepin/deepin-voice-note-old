@@ -604,7 +604,8 @@ QString UiUtil::getRecordingTxtFullPath(QString fileName)
 
 bool UiUtil::autoAddEditTxt(const NOTE &noteInfo)
 {
-   QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+   QString current_date = QString::number(noteInfo.id);
+   //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
    QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
    QString path = UiUtil::getRecordingTxtFullPath(fileName);
    if (!UiUtil::saveTxt(path, noteInfo.contentText))
@@ -616,7 +617,8 @@ bool UiUtil::autoAddEditTxt(const NOTE &noteInfo)
 
 bool UiUtil::autoDeleteTxt(const NOTE &noteInfo)
 {
-    QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+    QString current_date = QString::number(noteInfo.id);
+    //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
     QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
     QString path = UiUtil::getRecordingTxtFullPath(fileName);
     if (!UiUtil::DeleteFileOrFolder(path))

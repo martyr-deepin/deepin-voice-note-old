@@ -24,7 +24,8 @@ public:
     int getFolderID();
     void searchText(QString searchKey);
     void readFromDatabase();
-    QString onlyreadFromDatabase();
+    //QString onlyreadFromDatabase();
+    QString onlyreadFromDatabase(QDateTime *time = nullptr);// liuyang 3547
     void setLineHeight(int value);
     int getLineHeight();
     QDateTime getUpdateTime(); //liuyang 3550 3547 3528

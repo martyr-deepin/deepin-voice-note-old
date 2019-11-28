@@ -261,7 +261,8 @@ void TextNoteItem::initConnection()
     connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus,this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
-    connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
+    //liuyang 3547
+    //connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
@@ -276,8 +277,8 @@ void TextNoteItem::initConnection()
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &TextNoteItem::changeTheme);
 
 //    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
-    //connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
-    //connect(m_textEdit->document(), SIGNAL(contentsChanged()), this, SLOT(textAreaChanged()));
+//    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
+//    connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
 //    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
 }
 
@@ -314,9 +315,20 @@ void TextNoteItem::changeToEditMode(int cursorpos)
 void TextNoteItem::readFromDatabase()
 {
     //m_textEdit->readFromDatabase();
-    m_bakContent = m_textEdit->onlyreadFromDatabase();
+    //liuyang 3547
+    //m_bakContent = m_textEdit->onlyreadFromDatabase();
+    QDateTime time;
+    m_bakContent = m_textEdit->onlyreadFromDatabase(&time);
+    //liuyang 3547
     m_textEdit->setText(m_bakContent);
 
+    //liuyang 3547
+    if(time != m_textNote.createTime)
+    {
+        m_textNote.createTime = time;
+        emit sig_TextEditNotEmpty(true);
+    }
+    //liuyang 3547
     //onTextHeightChanged(m_textEdit->getLineHeight());
     handleTextEditFocusOut();
 }
@@ -507,8 +519,8 @@ void TextNoteItem::tryToFouceout()
         handleTextEditFocusOut();
 //    }
 }
-
-void TextNoteItem::textEditChanged(QString str)
+void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
+//void TextNoteItem::textEditChanged(QString str)
 {
     m_textNote.contentText = str;
     //liuyang 3550 3547 3528
@@ -518,6 +530,16 @@ void TextNoteItem::textEditChanged(QString str)
     {
        m_timeLabel->setText(timeContent);
     }
+    //liuyang 3547
+    if(str.isEmpty())
+    {
+        handleTextEditFocusOut();
+    }
+    else
+    {
+        emit sig_TextEditNotEmpty(true);
+    }
+    //liuyang 3547
     //liuyang 3550 3547 3528
 }
 
