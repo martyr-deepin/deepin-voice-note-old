@@ -379,9 +379,12 @@ void RecordPage::exitRecord()
     m_audioRecorder->stop();
     m_tickerTimer->stop();
     m_recordTimeLabel->setText("00:00");
-    recordPath.clear();
+    //start notify by yuanshuai 20191128 bug 3807
+//    recordPath.clear();
+//    QFile(getRecordingFilepath()).remove();
     QFile(getRecordingFilepath()).remove();
-
+    recordPath.clear();
+    //end
     emit cancelRecord();
     Intancer::get_Intancer()->setRecodingFlag(false);
 }

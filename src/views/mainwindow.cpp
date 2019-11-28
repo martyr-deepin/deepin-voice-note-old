@@ -169,7 +169,10 @@ void MyMainWindow::initShortcutkeys()
     openkey4->setContext(Qt::ApplicationShortcut);
     connect(openkey4, &QShortcut::activated, this, &MyMainWindow::reNameNoteShortcut);
 
-    auto openkey5 = new QShortcut(QKeySequence(Qt::Key_D + Qt::ControlModifier), this);
+    //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
+//    auto openkey5 = new QShortcut(QKeySequence(Qt::Key_D + Qt::ControlModifier), this);
+    auto openkey5 = new QShortcut(QKeySequence(Qt::Key_Delete), this);
+    //Edit end 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
     openkey5->setContext(Qt::ApplicationShortcut);
     connect(openkey5, &QShortcut::activated, this, &MyMainWindow::deleteNoteShortcut);
 
@@ -222,7 +225,10 @@ QJsonObject MyMainWindow::creatShorcutJson()
     QJsonObject shortcut7;
 //    shortcut7.insert("name", tr("删除记事本/删除记事项"));
     shortcut7.insert("name", tr("Delete Notepad / Delete Notes"));
-    shortcut7.insert("value", "Ctrl+D");
+    //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
+//    shortcut7.insert("value", "Ctrl+D");
+    shortcut7.insert("value", "DEL");
+   //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
 
     QJsonObject shortcut8;
 //    shortcut8.insert("name", tr("重命名记事本"));
@@ -329,12 +335,17 @@ void MyMainWindow::showNoteDetail(NOTE note)
     m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     //m_replaceForReturn->setVisible(false);
+    //start add by yuanshuai 20191128 bug 3731
+    Intancer::get_Intancer()->setEndRecordFlag(false);
+    //end
 }
 
 void MyMainWindow::showListPage()
 {
-    //bool ret = false;
-    if(!m_searchEdit->text().isEmpty())
+
+    //start notify by yuanshuai 20191128 bug 3731
+    //if(!m_searchEdit->text().isEmpty())
+    if((!m_searchEdit->text().isEmpty())&&(Intancer::get_Intancer()->getEndRecordFlag()))
     {
         bool hasNoFolder = false;
         m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
@@ -343,6 +354,7 @@ void MyMainWindow::showListPage()
 //            m_stackedWidget->setCurrentIndex(0);
 //        }
     }
+    //end
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
@@ -419,10 +431,16 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
+        //start add by yuanshuai 20191128 bug 3731
+        Intancer::get_Intancer()->setEndRecordFlag(true);
+        //end
         handleSearchKey();
     }
     else
     {
+        //start add by yuanshuai 20191128 bug 3731
+        Intancer::get_Intancer()->setEndRecordFlag(false);
+        //end
         m_searchEdit->clear();
         Intancer::get_Intancer()->setSearchingFlag(false);
     }
@@ -566,16 +584,20 @@ void MyMainWindow::previewShortcut()
 }
 void MyMainWindow::newNoteShortcut()
 {
-    //2587
-    if(2 == m_stackedWidget->currentIndex())
+    //start add by yuanshuai 20191128 bug 3855
+    if(!Intancer::get_Intancer()->getRecodingFlag())
     {
-        m_InitEmptyPage->sigAddFolderByInitPage();
+        //2587
+        if(2 == m_stackedWidget->currentIndex())
+        {
+            m_InitEmptyPage->sigAddFolderByInitPage();
+        }
+        else
+        {
+            m_mainPage->addFolder();
+        }
+        //2587
     }
-    else
-    {
-        m_mainPage->addFolder();
-    }
-    //2587
 }
 void MyMainWindow::searchShortcut()
 {

@@ -134,7 +134,6 @@ void FolerWidgetItem::changeToUnClickMode()
 void FolerWidgetItem::Init()
 {
     this->setFixedSize(QSize(230, 64));
-
     this->setBlurEnabled(false);
     this->setBlurRectXRadius(8);
     this->setBlurRectYRadius(8);

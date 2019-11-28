@@ -17,6 +17,9 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     m_RightViewHeight = 0;
 
     isTextNoteItemChanged = false;
+    //start add by yuanshuai 20191128 bug 3731
+    isEndRecord = false;
+    //end
 }
 
 Intancer::~Intancer()
@@ -228,3 +231,14 @@ QString Intancer::getApplicationName()
     return m_ApplicationName;
 }
 //Add e 20191111
+//start add by yuanshuai 20191128 bug 3731
+void Intancer::setEndRecordFlag(bool value)
+{
+    isEndRecord = value;
+}
+
+bool Intancer::getEndRecordFlag()
+{
+    return isEndRecord;
+}
+//end

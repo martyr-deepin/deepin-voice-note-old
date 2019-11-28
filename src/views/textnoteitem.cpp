@@ -315,6 +315,7 @@ void TextNoteItem::readFromDatabase()
     if(time != m_textNote.createTime)
     {
         m_textNote.createTime = time;
+        m_textNote.contentText = m_bakContent;
         emit sig_TextEditNotEmpty(true);
     }
     //liuyang 3547

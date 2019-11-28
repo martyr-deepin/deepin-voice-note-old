@@ -62,6 +62,11 @@ public:
 
     void setApplicationName(QString appName);  //Add 20191111
     QString getApplicationName();       //Add 20191111
+
+    //start add by yuanshuai 20191128 bug 3731
+    void setEndRecordFlag(bool value);
+    bool getEndRecordFlag();
+    //end
 signals:
     void sigShowViewAddTextButton();
     void sigHideViewAddTextButton();
@@ -77,7 +82,9 @@ private:
      bool isSearching;
      bool wantScrollRightList;
      int  isMoveFolder_count;
-
+     //start add by yuanshuai 20191128 bug 3731
+     bool isEndRecord;
+     //end
      int m_RightListHeight;
      int m_RightViewHeight;
      DApplication *m_app;

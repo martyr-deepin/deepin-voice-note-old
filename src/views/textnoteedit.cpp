@@ -96,7 +96,7 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
-    qDebug()<< "TextNoteEdit::focusInEvent()";
+    qDebug()<< "YZH--- TextNoteEdit::focusInEvent()";
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
