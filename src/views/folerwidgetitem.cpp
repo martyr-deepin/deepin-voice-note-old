@@ -121,7 +121,7 @@ void FolerWidgetItem::changeToUnClickMode()
 //        pc.setColor(DPalette::WindowText,pc.color(DPalette::TextTips));
 //        m_nameLabel->setPalette(pc);
 //        //m_BackGround->setVisible(true);
-        m_nameLabel->setForegroundRole(DPalette::Text);
+        m_nameLabel->setForegroundRole(DPalette::TextTitle);
 
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
@@ -369,9 +369,9 @@ void FolerWidgetItem::leaveEvent(QEvent *event)
 }
 void FolerWidgetItem::enterEvent(QEvent *event)
 {
-   DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-   pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
-   m_BackGround->setPalette(pb);
-   return QWidget::enterEvent(event);
+    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+    m_BackGround->setPalette(pb);
+    return QWidget::enterEvent(event);
 }
 //liuyang 3794
