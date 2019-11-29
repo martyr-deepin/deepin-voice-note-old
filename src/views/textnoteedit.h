@@ -51,6 +51,7 @@ protected:
     void focusOutEvent(QFocusEvent *e)override;
     void contextMenuEvent(QContextMenuEvent *e) override;//3699
     void wheelEvent(QWheelEvent *e)override;
+    void keyReleaseEvent(QKeyEvent *e) override;
 
 private:
     NOTE m_textNote;

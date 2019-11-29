@@ -627,8 +627,8 @@ void TextNoteItem::OnTextEditOutFocus()
 //Add end bug 2587
 
 void TextNoteItem::onDetailButtonChanged(const bool isVisible) {
-    qDebug() << "TextNoteItem::onDetailButtonChanged()";
-    qDebug() << "isVisible: " << isVisible;
+//    qDebug() << "TextNoteItem::onDetailButtonChanged()";
+//    qDebug() << "isVisible: " << isVisible;
 
     this->m_detailBtn->setVisible(isVisible);
 }

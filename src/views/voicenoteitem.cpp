@@ -133,8 +133,8 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 void VoiceNoteItem::onDetailButtonChanged(const bool isVisible)
 {
-    qDebug() << "VoiceNoteItem::onDetailButtonChanged()";
-    qDebug() << "isVisible: " << isVisible;
+//    qDebug() << "VoiceNoteItem::onDetailButtonChanged()";
+//    qDebug() << "isVisible: " << isVisible;
 
     this->m_detailBtn->setVisible(isVisible);
 }

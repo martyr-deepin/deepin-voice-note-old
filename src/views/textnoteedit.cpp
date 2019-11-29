@@ -96,7 +96,7 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
-    qDebug()<< "YZH--- TextNoteEdit::focusInEvent()";
+//    qDebug()<< "TextNoteEdit::focusInEvent()";
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
@@ -109,6 +109,8 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
+//    qDebug()<< "TextNoteEdit::focusOutEvent()";
+
     //3699
     if(menuOut)
     {
@@ -130,10 +132,11 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     }
     //emit focusOutSignal();
 
-    qDebug()<<"TextNoteEdit::focusOutEvent";
     DTextEdit::focusOutEvent(e);
+
     emit SigTextEditOutFocus();  //Add bug 2587
 }
+
 //3699
 void TextNoteEdit::contextMenuEvent(QContextMenuEvent *e)
 {
@@ -143,27 +146,39 @@ void TextNoteEdit::contextMenuEvent(QContextMenuEvent *e)
 
     menuOut = false;
 }
+
 //3699
 void TextNoteEdit::wheelEvent(QWheelEvent *e)
 {
-    qDebug()<<"RightNoteList::wheelEvent";
+    qDebug() << "TextNoteEdit::wheelEvent()";
 
-    if(!Intancer::get_Intancer()->getWantScrollRightListFlag())
-    {
+    if(!Intancer::get_Intancer()->getWantScrollRightListFlag()) {
         DTextEdit::wheelEvent(e);
     }
 }
 
+void TextNoteEdit::keyReleaseEvent(QKeyEvent *e)
+{
+//    qDebug() << "TextNoteEdit::keyReleaseEvent()";
+
+    if(!e->isAutoRepeat()) {
+        this->updateNote();
+    }
+
+    DTextEdit::keyReleaseEvent(e);
+}
+
+
 void TextNoteEdit::initConnection()
 {
-    //connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::updateNote);  //3550-3547-3528 patch
-
     connect(this->document(), &QTextDocument::contentsChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::onTextChanged);
 }
 
 void TextNoteEdit::updateNote()
 {
+    qDebug() << "TextNoteEdit::updateNote()";
+
     //3550-3547-3528 patch
 //    //liuyang 3550 3547 3528
 //    QString preContent = this->toPlainText();
@@ -172,24 +187,22 @@ void TextNoteEdit::updateNote()
 //        return;
 //    }
 //    //liuyang 3550 3547 3528
-    qDebug() << "TextNoteEdit::updateNote" << "start";
-    if (this->isReadOnly())
-    {
+
+    if (this->isReadOnly()) {
         qDebug() << "TextNoteEdit::updateNote" << "return";
         return;
     }
-    qDebug() << "TextNoteEdit::updateNote" << "exec";
+
+    qDebug() << "TextNoteEdit::updateNote(): " << "executed";
+
     //3550-3547-3528 patch
     //liuyang 3550 3547 3528
     QString preContent = this->toPlainText();
-    if(preContent == m_textNote.contentText)
-    {
+    if (preContent == m_textNote.contentText) {
         return;
     }
     //liuyang 3550 3547 3528
     NOTE note = m_textNote;
-
-
 
     //note.contentText = this->toPlainText();//liuyang 3550 3547 3528
     //liuyang 3550 3547 3528
@@ -198,18 +211,15 @@ void TextNoteEdit::updateNote()
     //liuyang 3550 3547 3528
 
     //==== start add 20191105  bug2162
-    if (!UiUtil::autoAddEditTxt(note))
-    {
+    if (!UiUtil::autoAddEditTxt(note)) {
         qDebug() << "error: edit file error";
     }
     //==== end add 20191105  bug2162
-    if(!m_noteCtr->updateNote(note))
-    {
+    if(!m_noteCtr->updateNote(note)) {
         //todo：弹出popup，保存失败
         qDebug()<< "error: update text note fail!";
     }
-    else
-    {
+    else {
         m_textNote.contentText = this->toPlainText();
         //liuyang 3550 3547 3528
         m_textNote.createTime = note.createTime;
@@ -233,7 +243,7 @@ void TextNoteEdit::textAreaChanged()
             if (newheight != editor->height()){
                 qDebug()<<"newheight:"<<newheight;
                 //3550-3547-3528 patch
-                updateNote();
+
                 //3550-3547-3528 patch
                 emit sigTextHeightChanged(newheight);
                //editor->setFixedHeight(newheight);
