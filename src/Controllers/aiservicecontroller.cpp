@@ -64,6 +64,19 @@ QString AiServiceController::startAsr(QString filePath, int fileDuration, QStrin
 
     }
     QString ret = m_asrInterface->startAsr(param);
+    //Add start 3858
+    if (ret != "000000")
+    {
+        class AsrResult clsResult;
+        clsResult.code = ret;
+        if(m_asrInterface) delete m_asrInterface;
+        if(m_session) delete m_session;
+        m_session = nullptr;
+        m_asrInterface = nullptr;
+        qDebug()<< "clsResult.code:"<<clsResult.code;
+        emit AsrResultReq(clsResult);
+    }
+    //Add end 3858
     qDebug()<< "start:"<<ret;
     return ret;
 }

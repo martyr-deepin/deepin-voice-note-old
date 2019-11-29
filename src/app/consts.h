@@ -12,7 +12,7 @@
 #define TEXTNOTE_HEIGHT (170)
 #define VOICENOTE_HEIGHT (98)
 #define ADDBUTTON_HEIGHT_HEIGHT (84)
-#define ASR_LIMIT_MILLISECOND (5 * 3600 * 1000)  //Add 20191111
+#define ASR_LIMIT_MILLISECOND (1200 * 1000)  //Add 20191111
 
 static QString DEFAULT_FOLDER_IMG_PATH_1 = ":/image/icon/DefaultAvatar/1.svg";
 static QString DEFAULT_FOLDER_IMG_PATH_2 = ":/image/icon/DefaultAvatar/2.svg";
