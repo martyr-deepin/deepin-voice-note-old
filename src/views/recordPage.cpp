@@ -52,7 +52,6 @@
 DWIDGET_USE_NAMESPACE
 
 RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
-//RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
     this->workController = WorkerController::getInstance();
 
@@ -62,73 +61,9 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 
     m_recordingTime = 0;
 
-//    layout = new QVBoxLayout();
-//    layout->setContentsMargins(0, 0, 0, 0);
-//    setLayout(layout);
-
-//    titleLabel = new QLabel(tr("New recording"));
-//    QFont titleFont;
-//    titleFont.setPixelSize(26);
-//    titleLabel->setFont(titleFont);
-//    waveform = new Waveform(this);
-//    QFont recordTimeFont;
-//    recordTimeFont.setPixelSize(14);
-//    recordTimeLabel = new QLabel("00:00");
-//    recordTimeLabel->setFont(recordTimeFont);
-
-//    buttonAreaWidget = new QWidget();
-//    buttonAreaLayout = new QVBoxLayout();
-//    buttonAreaLayout->setContentsMargins(0, 0, 0, 0);
-
-//    buttonWidget = new QWidget();
-//    buttonLayout = new QHBoxLayout(buttonWidget);
-//    buttonLayout->setContentsMargins(0, 0, 0, 0);
-
-//    expandAnimationButtonLayout = new QVBoxLayout();
-//    expandAnimationButtonLayout->setContentsMargins(0, 0, 0, 0);
-
-//    expandAnimationButton = new ExpandAnimationButton(this);
-//    connect(expandAnimationButton, &ExpandAnimationButton::finish, this, &RecordPage::handleExpandAnimationFinish);
-
-//    expandAnimationButtonLayout->addWidget(expandAnimationButton, 0, Qt::AlignHCenter);
-
-//    shrankAnimationButtonLayout = new QVBoxLayout();
-//    shrankAnimationButtonLayout->setContentsMargins(0, 0, 0, 0);
-
-//    shrankAnimationButton = new ShrankAnimationButton();
-//    connect(shrankAnimationButton, &ShrankAnimationButton::finish, this, &RecordPage::handleShrankAnimationFinish);
-
-//    shrankAnimationButtonLayout->addWidget(shrankAnimationButton, 0, Qt::AlignHCenter);
-
-//    recordingButton = new RecordingButton();
-
-//    finishButton = new DImageButton(
-//        Utils::getQrcPath("finish_normal.svg"),
-//        Utils::getQrcPath("finish_hover.svg"),
-//        Utils::getQrcPath("finish_press.svg")
-//    );
-
-//    buttonLayout->addStretch();
-//    buttonLayout->addWidget(recordingButton, 0, Qt::AlignVCenter);
-//    buttonLayout->addSpacing(20);
-//    buttonLayout->addWidget(finishButton, 0, Qt::AlignVCenter);
-//    buttonLayout->addStretch();
-
-//    buttonAreaLayout->addWidget(buttonWidget, 0, Qt::AlignHCenter);
-
-//    layout->addSpacing(36);
-//    layout->addWidget(titleLabel, 0, Qt::AlignHCenter);
-//    layout->addStretch();
-//    layout->addWidget(waveform, 1, Qt::AlignHCenter);
-//    layout->addStretch();
-//    layout->addWidget(recordTimeLabel, 0, Qt::AlignHCenter);
-//    layout->addStretch();
-//    layout->addWidget(buttonAreaWidget);
-//    layout->addSpacing(30); // NOTE: bottom buttons padding
-
     m_audioRecorder = new QAudioRecorder(this);
-    qDebug() << "m_audioRecorder->supportedAudioCodecs():" << m_audioRecorder->supportedAudioCodecs();
-    qDebug() << "m_audioRecorder->supportedContainers():" << m_audioRecorder->supportedContainers();
+    qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
+    qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
 
     QAudioEncoderSettings audioSettings;
     audioSettings.setQuality(QMultimedia::HighQuality);
@@ -155,28 +90,12 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
     m_tickerTimer->setInterval(200);
     connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
 
-//    startRecord();
-
     connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
     connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
     connect(m_recordingButton, SIGNAL(resume()), this, SLOT(resumeRecord()));
     connect(m_finishButton, SIGNAL(clicked()), this, SIGNAL(buttonClicled()));
     connect(m_recordingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
     connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
-
-//    QFileInfoList fileInfoList = Utils::getRecordingFileinfos();
-//    if (fileInfoList.count() == 0) {
-//        buttonAreaWidget->setLayout(buttonAreaLayout);
-
-//        // Get keyboard focus.
-//        setFocus();
-//    } else {
-//        buttonAreaWidget->setLayout(expandAnimationButtonLayout);
-//        expandAnimationButton->startAnimation();
-//    }
-
-//     m_audioInputs = m_audioRecorder->audioInputs();
-//     m_audioStatus = m_audioRecorder->availability();
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
