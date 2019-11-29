@@ -300,7 +300,7 @@ void RecordPage::renderRecordingTime()
         QString time = UiUtil::formatMillisecond(m_recordingTime);
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
-        qDebug()<<"recode time:"<<time;
+        //qDebug()<<"recode time:"<<time;
         if(0 == time.compare("01:00:00"))
         {
             if(nullptr != m_finishButton)

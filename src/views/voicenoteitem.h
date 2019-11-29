@@ -40,6 +40,9 @@ public:
 
     void setLineEditDisplay(bool disp); //true: 显示 fasle:隐藏  Add 20191111
     void setTextEditDisplay(bool disp); //true: 显示 fasle:隐藏  Add 20191111
+    //start add by yuanshuai 20191128 bug 3876
+    void setDocmentAligment(QTextOption op);
+    //end
     NOTE m_note;
 
     DLabel *m_timeLabel;

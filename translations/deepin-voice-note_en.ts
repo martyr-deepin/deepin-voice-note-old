@@ -135,6 +135,10 @@
         <source>Confirm</source>
         <translation>Confirm</translation>
     </message>
+    <message>
+        <source>Your audio recording device does not work.</source>
+        <translation>Your audio recording device does not work.</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -224,6 +228,10 @@
     <message>
         <source>Converting voice to text</source>
         <translation>Converting voice to text</translation>
+    </message>
+    <message>
+        <source>Reconvert</source>
+        <translation>Reconvert</translation>
     </message>
 </context>
 <context>

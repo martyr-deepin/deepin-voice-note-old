@@ -923,7 +923,10 @@ void RightNoteList::handleAsrAsItem()
             //转写开始文字edit显示
             m_voiceNoteItem->setTextEditDisplay(true);
             m_voiceNoteItem->setTextEditVal(tr("Converting voice to text"));  //ynbboy
-            m_voiceNoteItem->setTextEditAlignment(Qt::AlignCenter);
+            //start add by yuanshuai 20191128 bug 3876
+            //m_voiceNoteItem->setTextEditAlignment(Qt::AlignCenter);
+            m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignHCenter));
+            //end
             //m_voiceNoteItem->setTextEditVal(tr("正在转为文字..."));  //ynbboy
 
             m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig

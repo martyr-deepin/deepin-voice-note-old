@@ -135,6 +135,10 @@
         <source>Confirm</source>
         <translation>确定</translation>
     </message>
+    <message>
+        <source>Your audio recording device does not work.</source>
+        <translation>您的录音设备异常，无法录制语音。</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -224,6 +228,10 @@
     <message>
         <source>Converting voice to text</source>
         <translation>正在转为文字...</translation>
+    </message>
+    <message>
+        <source>Reconvert</source>
+        <translation>重新转写</translation>
     </message>
 </context>
 <context>

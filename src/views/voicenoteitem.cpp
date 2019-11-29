@@ -558,3 +558,9 @@ void VoiceNoteItem::setTextEditDisplay(bool disp)
     }
 }
 //Add e 20191111
+//start add by yuanshuai 20191128 bug 3876
+void VoiceNoteItem::setDocmentAligment(QTextOption op)
+{
+    m_textEdit->document()->setDefaultTextOption(op);
+}
+//end
