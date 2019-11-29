@@ -81,8 +81,8 @@ public:
     bool shortcutsDelete();  //Add bug 2587
     QMediaPlayer *audioPlayer;
     bool isLoadedAudioPlayer = {false};
-private:
     void adjustWidgetItemWidth();
+
 signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();

@@ -1525,8 +1525,9 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
                 //curTimeStr = curTime.toString(tr("mm:ss"));
             }
 
-            m_myslider->setTimeText(curTimeStr);
+            //m_myslider->setTimeText(curTimeStr); liuyang 3561
             m_myslider->setSliderPostion(s);
+            m_myslider->setTimeText(curTimeStr); //liuyang 3561
 //            int sliderPos = m_myslider->gethandlePos();
 //            m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
             //m_myslider->setSliderPostion(sliderPos);

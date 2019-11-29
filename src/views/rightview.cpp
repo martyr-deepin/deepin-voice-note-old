@@ -423,6 +423,7 @@ void RightView::updateNoteList()
 
         m_noteListWidget->setCurrentRow(noteList.size());
         //m_noteListWidget->scrollToBottom();
+        m_noteListWidget->adjustWidgetItemWidth();//2289 liuyang
     }
 
 //    if(m_noteListWidget->verticalScrollBar()->isVisible())
