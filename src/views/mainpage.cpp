@@ -43,9 +43,11 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(clearNoteListSignal()), m_rightView, SLOT(handleClearNote()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), m_rightView, SLOT(OnAllFolderGone()));
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
+    QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(onStartRecoding()));   //Edit 3884
+    QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(onStopRecoding()));    //Edit 3884
     QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
-    QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));
-    QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
+    //QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));
+    //QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), this, SIGNAL(stopRecoiding()));  //Add bug3470
     //QObject::connect(m_leftView, SIGNAL(sigAddFolder()), m_rightView, SLOT(OnAddAFolder()));
     QObject::connect(m_leftView, SIGNAL(sigAddFolder()), this, SLOT(onAddFolder()));
@@ -60,8 +62,8 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(sigToDetalVoicePage(QString)), this, SIGNAL(sigToDetalVoicePage(QString)));
 
     //QObject::connect(m_leftView, LeftView::selFolderIdChg, m_rightView, &RightView::handleSelFolderChg);
-    QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));    //Add 20191111
-    QObject::connect(m_rightView, SIGNAL(asrEnd()), m_leftView, SLOT(viewEnabled()));   //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(onStartAsr()));    //Add 20191111 Edit 3884
+    QObject::connect(m_rightView, SIGNAL(asrEnd()), m_leftView, SLOT(onEndAsr()));   //Add 20191111 Edit 3884
     QObject::connect(m_rightView, SIGNAL(asrStart()), this, SIGNAL(asrStart()));    //Add 20191111
     QObject::connect(m_rightView, SIGNAL(asrEnd()), this, SIGNAL(asrEnd()));   //Add 20191111
     QObject::connect(m_rightView, SIGNAL(sigShowVoiceDeviceError()), this, SIGNAL(sigShowVoiceDeviceError()));

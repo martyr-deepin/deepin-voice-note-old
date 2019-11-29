@@ -83,12 +83,16 @@ void MyMainWindow::initConnection()
 
 void MyMainWindow::initTitleFrame()
 {
-    QIcon icon = QIcon::fromTheme("deepin-voice-note");
-    m_logo = new QLabel(this);
-    m_logo->setObjectName("LogoButton");
-    m_logo->setFixedSize(QSize(32, 32));
-    m_logo->setPixmap(icon.pixmap(QSize(32, 32)));
-    m_logo->move(9,10);
+    //chengjinwei 2019 11 29 bug3800
+     titlebar()->setIcon(QIcon::fromTheme("deepin-voice-note"));
+//    QIcon icon = QIcon::fromTheme("deepin-voice-note");
+//    m_logo = new QLabel(this);
+//    m_logo->setObjectName("LogoButton");
+//    m_logo->setFixedSize(QSize(32, 32));
+//    m_logo->setPixmap(icon.pixmap(QSize(32, 32)));
+//    m_logo->move(9,10);
+    //chengjinwei 2019 11 29 bug3800
+
 
     m_returnBtn = new DIconButton(this);
     m_returnBtn->setFixedSize(QSize(36,36));
@@ -97,7 +101,12 @@ void MyMainWindow::initTitleFrame()
     m_returnBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/back_normal.svg", QSize(27,27),qApp)));
     m_returnBtn->setIconSize(QSize(27,27));
     m_returnBtn->setVisible(false);
-    m_returnBtn->move(m_logo->x() + m_logo->width() + 15,8);
+
+    //chengjinwei 2019 11 29 bug3800
+    //m_returnBtn->move(m_logo->x() + m_logo->width() + 15,8);
+    this->titlebar()->addWidget(m_returnBtn,Qt::AlignLeft);
+    //chengjinwei 2019 11 29 bug3800
+
 //    m_replaceForReturn = new DWidget;
 //    m_replaceForReturn->setFixedSize(QSize(36, 36));
 //    m_replaceForReturn->setVisible(true);

@@ -189,7 +189,10 @@ void TextNoteItem::initUI()
 //   m_menuBtn->setBtnPalette(pa);
     //m_menuBtn = new DImageButton(m_MenuBtnBackground);
     //m_menuBtn->setFixedSize(QSize(40, 40));
-    m_menuBtn->move(0,13);
+    //chengjinwei 2019 11 29 bug3790
+    //m_menuBtn->move(0,13);
+    m_menuBtn->move(6,13);
+    //chengjinwei 2019 11 29 bug3790
     //m_menuBtn->setIcon(QIcon(":/image/icon/normal/more_normal.svg"));
     //m_menuBtn->setIconSize(QSize(20,20));
     //m_menuBtn->setIconSize(QSize(40,18));
@@ -224,7 +227,11 @@ void TextNoteItem::initUI()
     }
 
     m_detailBtn->setVisible(false);
-    m_detailBtn->move(4,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+
+    //chengjinwei 2019 11 29 bug3790
+    //m_detailBtn->move(4,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+    m_detailBtn->move(10,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+    //chengjinwei 2019 11 29 bug3790
 
     //onTextHeightChanged(m_textEdit->getLineHeight());
 

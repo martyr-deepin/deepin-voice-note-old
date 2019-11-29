@@ -7,6 +7,7 @@ voiceVolumeWatcher::voiceVolumeWatcher(QObject *parent) : QThread(parent)
     m_loopwatch = true;
     m_isRecoding = false;
     m_coulduse = false;
+    m_failedCount = 0;
 }
 
 voiceVolumeWatcher::~voiceVolumeWatcher()
@@ -37,11 +38,32 @@ void voiceVolumeWatcher::run()
             bool couldUse = false;
             couldUse = UiUtil::canMicrophoneInput();
             //couldUse = true;
+            if(!couldUse)
+            {
+                m_failedCount++;
+            }
+            else
+            {
+                m_failedCount = 0;
+            }
+
             if(couldUse != m_coulduse)
             {
-                //发送log信息到UI
-                m_coulduse = couldUse;
-                emit sigRecodeState(couldUse);
+                if(!couldUse)//failded
+                {
+                    if(5 <= m_failedCount)//real failed
+                    {
+                        //发送log信息到UI
+                        m_coulduse = couldUse;
+                        emit sigRecodeState(couldUse);
+                    }
+                }
+                else
+                {
+                    //发送log信息到UI
+                    m_coulduse = couldUse;
+                    emit sigRecodeState(couldUse);
+                }
             }
         }
     }

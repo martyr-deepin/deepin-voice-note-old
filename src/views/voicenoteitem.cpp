@@ -277,9 +277,9 @@ void VoiceNoteItem::initUI()
     m_hBoxLayout->addWidget(m_waveform);
     m_hBoxLayout->addSpacing(20);
     m_hBoxLayout->addWidget(m_voiceTimeLabel);
-    m_hBoxLayout->addSpacing(0);
+    m_hBoxLayout->addSpacing(6);
     m_hBoxLayout->addWidget(m_menuBtn);
-    m_hBoxLayout->addSpacing(12);
+    m_hBoxLayout->addSpacing(6);
 
     m_hBoxLayoutBytext = new QHBoxLayout(m_bgWidgetBytext);
     m_hBoxLayoutBytext->setContentsMargins(0, 0, 0, 0);
@@ -294,8 +294,12 @@ void VoiceNoteItem::initUI()
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
-    //m_textEdit->setTextColor(pb.color(DPalette::TextTips));
-    m_textEdit->setTextColor(pb.color(DPalette::LightLively));
+    //zhangya 3846
+    //m_textEdit->setTextColor(pb.color(DPalette::LightLively));
+    QColor hightTextColor = pb.highlight().color();
+    hightTextColor.setAlpha(hightTextColor.alpha() + 20);
+    m_textEdit->setTextColor(hightTextColor);
+    //zhangya 3846
     m_textEdit->setFrameShape(QFrame::NoFrame);
     m_textEdit->setReadOnly(true);
     m_textEdit->hide();

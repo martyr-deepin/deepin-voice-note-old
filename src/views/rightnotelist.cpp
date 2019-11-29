@@ -913,7 +913,7 @@ void RightNoteList::handleAsrAsItem()
             //保存当前要转写的Item
             m_currSelItemByasr =  m_currSelItem;
             m_voiceNoteItemByasr = m_voiceNoteItem;
-
+            m_currSelNoteByasr  = m_currSelNote;  //Add 3878
             connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int)),this,SLOT(TextHeightChanged(int))); //Add 20191111
 
             //设定选中的菜单按钮不可用
@@ -936,7 +936,10 @@ void RightNoteList::handleAsrAsItem()
             //通知mainPage转写开始  mainPage里设置leftView不可用
             emit asrStart();
             //转写接口调用
-            m_AiServiceController.startAsr(m_currSelNote.contentPath,m_currSelNote.voiceTime,"","");
+            //Edit start 3878
+//            m_AiServiceController.startAsr(m_currSelNote.contentPath,m_currSelNote.voiceTime,"","");
+            m_AiServiceController.startAsr(m_currSelNoteByasr.contentPath,m_currSelNoteByasr.voiceTime,"","");
+            //Edit end 3878
         }
     }
 }
@@ -964,12 +967,16 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         //clsResult.txt = "字edit显示转写结转写结束文字edit显示转写结结转写结束文字edit结转写结束文字edit结转写结束文字显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文edit";
         m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
         m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
+        m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
         m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight)); //ynbboy
         m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
 //        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
-        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
+        //Edit start 3878
+//        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
+        Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
+        //Edit end 3878
 
         int count = this->count();
         int transrow = row(m_currSelItemByasr);

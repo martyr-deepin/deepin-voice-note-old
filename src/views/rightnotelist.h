@@ -166,6 +166,7 @@ private:
     AiServiceController m_AiServiceController; //Add 20191111
     QListWidgetItem *m_currSelItemByasr;    //Add 20191111
     VoiceNoteItem *m_voiceNoteItemByasr;    //Add 20191111
+    NOTE m_currSelNoteByasr; //Add 3878
     DFloatingMessage *m_asrNetWorkErrDialog;   //Add 20191111
     DDialog *m_asrlimitErrDialog;   //Add 20191111
     DFloatingMessage *m_asrOtherErrDMessage; //Add 20191111

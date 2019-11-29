@@ -54,8 +54,12 @@ public slots:
     void addFolder();
     void handleSelFolderChg(QListWidgetItem *item);
     void itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *previous);
-    void viewDisabled();
-    void viewEnabled();
+    //    void viewDisabled();  //Del 3884
+    //    void viewEnabled();     //Del 3884
+        void onStartRecoding(); //Add  3884
+        void onStopRecoding();  //Add  3884
+        void onStartAsr();  //Add  3884
+        void onEndAsr();  //Add  3884
     void changeTheme();
     void OnChangeCurFolderToTop(int folderID);
     void onNoResult(); //Add bug3136
@@ -73,11 +77,16 @@ private:
     QString m_currSearchKey;
     DWidget *m_greyboard;
 
+    int m_RecodingState; // 0:录音开始  1:录音结束   Add 3884
+    int m_asrState;  // 0:转写开始  1:转写结束   Add 3884
+
     void initUI();
     void initController();
     void initConnection();
     void updateFolderView();
     void clearNoteList();
+    void viewDisabled();  //Add 3884
+    void viewEnabled();     //Add 3884
 };
 
 #endif // LEFTVIEW_H

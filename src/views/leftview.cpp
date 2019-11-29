@@ -10,6 +10,8 @@
 
 //#include <DStyledItemDelegate>
 LeftView::LeftView()
+    :m_RecodingState(1) //Add 3884
+    ,m_asrState(1)  //Add 3884
 {
     initController();
     initUI();
@@ -319,16 +321,48 @@ void LeftView::itemSelectedChanged(QListWidgetItem *current, QListWidgetItem *pr
 
 void LeftView::viewDisabled()
 {
-    m_leftFolderView->setDisabled(true);
-    m_addFolderBtn->DisableBtn();
+    //Edit start 3884
+    if (!(m_RecodingState && m_asrState))
+    {
+        m_leftFolderView->setDisabled(true);
+        m_addFolderBtn->DisableBtn();
+    }
+    //Edit end 3884
 }
 
 void LeftView::viewEnabled()
 {
-    m_leftFolderView->setDisabled(false);
-    m_addFolderBtn->EnAbleBtn();
+    //Edit start 3884
+    if (m_RecodingState && m_asrState)
+    {
+        m_leftFolderView->setDisabled(false);
+        m_addFolderBtn->EnAbleBtn();
+    }
+    //Edit end 3884
 }
 
+//Add start 3884
+void LeftView::onStartRecoding()
+{
+    m_RecodingState = 0;
+    viewDisabled();
+}
+void LeftView::onStopRecoding()
+{
+    m_RecodingState = 1;
+    viewEnabled();
+}
+void LeftView::onStartAsr()
+{
+    m_asrState = 0;
+    viewDisabled();
+}
+void LeftView::onEndAsr()
+{
+    m_asrState = 1;
+    viewEnabled();
+}
+//Add end 3884
 void LeftView::changeTheme()
 {
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
