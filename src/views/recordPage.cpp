@@ -54,7 +54,7 @@ DWIDGET_USE_NAMESPACE
 RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 {
     this->workController = WorkerController::getInstance();
-
+    m_audioRecorder = nullptr;
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter
@@ -297,6 +297,11 @@ void RecordPage::stopRecord()
 
 void RecordPage::exitRecord()
 {
+    if(nullptr == m_audioRecorder)
+    {
+        return;
+    }
+
     m_recordingButton->onlyhandleResume();
     m_audioRecorder->stop();
     m_tickerTimer->stop();

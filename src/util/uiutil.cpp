@@ -477,7 +477,7 @@ bool UiUtil::canMicrophoneInput()
                                                     "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-                qDebug()<<"volume:" <<volume;
+                //qDebug()<<"volume:" <<volume;
                 if(0.0001 < volume)
                 {
                     return true;
