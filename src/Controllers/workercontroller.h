@@ -29,8 +29,11 @@ signals:
     void mediaPlayerCreated(QMediaPlayer* mediaPlayer);
     void toCreateAudioRecorder();
     void audioRecorderCreated(QAudioRecorder* audioRecorder);
+    void recordAvailability(const bool isAvailable);
 
 private:
+    void updateRecordAvailability();
+
     Worker *worker = nullptr;
 
     QMediaPlayer *mediaPlayer = nullptr;

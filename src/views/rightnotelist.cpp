@@ -860,7 +860,6 @@ void RightNoteList::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
     connect(audioPlayer, &QMediaPlayer::durationChanged, this, &RightNoteList::getduration);
 
     emit sig_EnablePlaybackButton();
-    emit sig_RecordButtonAvaliability(this->isLoadedAudioPlayer);
 }
 
 void RightNoteList::handleSaveAsItem(bool)

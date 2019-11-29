@@ -245,17 +245,17 @@ void TextNoteEdit::textAreaChanged()
 
 void TextNoteEdit::onTextChanged()
 {
-    qDebug() << "TextNoteEdit::onTextChanged()";
+//    qDebug() << "TextNoteEdit::onTextChanged()";
 
     QTimer::singleShot(0, this, [=]{
-        qDebug() << "QTimer::singleShot()";
+//        qDebug() << "QTimer::singleShot()";
 
         int textEditHeight = this->height();
         int documentHeight = static_cast<int>(this->document()->size().height());
 
-        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
-        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
-        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
+//        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
+//        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
+//        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
         if (textEditHeight < documentHeight - 1) {
             emit sigDetailButtonChanged(true);

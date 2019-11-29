@@ -49,6 +49,19 @@ void WorkerController::createMediaPlayer()
     emit this->toCreateMediaPlayer();
 }
 
+void WorkerController::createAudioRecorder()
+{
+    qDebug() << "WorkerController::createAudioRecorder()";
+
+    if (this->audioRecorder) {
+        emit this->audioRecorderCreated(this->audioRecorder);
+
+        return;
+    }
+
+    emit this->toCreateAudioRecorder();
+}
+
 void WorkerController::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
 {
     qDebug() << "WorkerController::onMediaPlayerCreated()";
@@ -61,19 +74,7 @@ void WorkerController::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
     }
 
     emit this->mediaPlayerCreated(this->mediaPlayer);
-}
-
-void WorkerController::createAudioRecorder()
-{
-    qDebug() << "WorkerController::createAudioRecorder()";
-
-    if (this->audioRecorder) {
-        emit this->audioRecorderCreated(this->audioRecorder);
-
-        return;
-    }
-
-    emit this->toCreateAudioRecorder();
+    this->updateRecordAvailability();
 }
 
 void WorkerController::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
@@ -88,4 +89,20 @@ void WorkerController::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
     }
 
     emit this->audioRecorderCreated(this->audioRecorder);
+    this->updateRecordAvailability();
+}
+
+void WorkerController::updateRecordAvailability()
+{
+    qDebug() << "WorkerController::updateRecordAvailability()";
+
+    bool isAvailable = false;
+
+    if (this->mediaPlayer && this->audioRecorder) {
+        isAvailable = true;
+    }
+
+    qDebug() << "isAvailable: " << isAvailable;
+
+    emit recordAvailability(isAvailable);
 }

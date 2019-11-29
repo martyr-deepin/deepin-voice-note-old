@@ -119,6 +119,8 @@ private:
     VOICE_INFO m_voiceinfo; //ynb  20191109
     QTimer *m_InitlateTimerOut;
     bool m_initing;
+
+    WorkerController *workController;
 };
 
 #endif // RIGHTVIEW_H

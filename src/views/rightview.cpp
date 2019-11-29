@@ -15,6 +15,8 @@
 
 RightView::RightView()
 {
+    this->workController = WorkerController::getInstance();
+
     m_initing = true;
     //m_pVoiceAudioDeviceWatcher = new VoiceAudioDeviceWatcher(this);
     m_currFolderId = -1;
@@ -26,8 +28,6 @@ RightView::RightView()
 
     m_pVoiceVolumeWatcher->start();
     connect(m_pVoiceVolumeWatcher, SIGNAL(sigRecodeState(bool)), this, SLOT(on_CheckRecodeCouldUse(bool)));
-
-    connect(m_noteListWidget, &RightNoteList::sig_RecordButtonAvaliability, this, &RightView::on_CheckRecodeCouldUse);
 
 //    DTextEdit *pTextEdit = new DTextEdit(this);
 //    pTextEdit->setFixedSize(QSize(100,100));
@@ -80,6 +80,8 @@ void RightView::initUI()
 
 void RightView::initConnection()
 {
+    connect(this->workController, &WorkerController::recordAvailability, this, &RightView::on_CheckRecodeCouldUse);
+
     //&RightView::addTextNote
     connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_noteListWidget, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
@@ -745,11 +747,12 @@ void RightView::oncheckCurPageVoiceForDelete()
 
 void RightView::on_CheckRecodeCouldUse(bool coulduse)
 {
+    qDebug() << "RightView::on_CheckRecodeCouldUse()";
+    qDebug() << "coulduse: " << coulduse;
 
     if (!this->m_noteListWidget->isLoadedAudioPlayer) {
         coulduse = false;
     }
-
 
     if(coulduse)
     {
