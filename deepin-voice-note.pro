@@ -36,6 +36,12 @@ CONFIG += c++11 link_pkgconfig
 SOURCES += \
     src/app/main.cpp \
     src/app/voicenotebookapp.cpp \
+    src/Controllers/aiservicecontroller.cpp \
+    src/Controllers/foldercontroller.cpp \
+    src/Controllers/notecontroller.cpp \
+    src/Controllers/notewatchercontroller.cpp \
+    src/Controllers/voiceaudiodevicewatcher.cpp \
+    src/Controllers/voicevolumewatcher.cpp \
     src/views/mainwindow.cpp \
     src/views/dfmsplitter.cpp \
     src/views/rightview.cpp \
@@ -43,12 +49,10 @@ SOURCES += \
     src/views/folerwidgetitem.cpp \
     src/database/databaseoper.cpp \
     src/database/folderoper.cpp \
-    src/Controllers/foldercontroller.cpp \
     src/views/leftfolderlist.cpp \
     src/views/textnoteitem.cpp \
     src/util/uiutil.cpp \
     src/views/rightnotelist.cpp \
-    src/Controllers/notecontroller.cpp \
     src/database/noteoper.cpp \
     src/views/textnoteedit.cpp \
     src/views/mainpage.cpp \
@@ -72,31 +76,31 @@ SOURCES += \
     src/views/replaysliderbar.cpp \
     src/views/initemptypage.cpp \
     src/views/theadmngintancer.cpp \
-    src/Controllers/notewatchercontroller.cpp \
     src/views/myrecodebuttons.cpp \
-    src/Controllers/voiceaudiodevicewatcher.cpp \
-    src/Controllers/voicevolumewatcher.cpp \
     src/views/searchnonepage.cpp \
-    src/Controllers/aiservicecontroller.cpp \
-    src/views/voicetonotepage.cpp
+    src/views/voicetonotepage.cpp \
+    src/util/worker.cpp
 
 HEADERS += \
-    src/app \
+    src/app/consts.h \
     src/app/voicenotebookapp.h \
+    src/Controllers/aiservicecontroller.h \
+    src/Controllers/foldercontroller.h \
+    src/Controllers/notecontroller.h \
+    src/Controllers/notewatchercontroller.h \
+    src/Controllers/voiceaudiodevicewatcher.h \
+    src/Controllers/voicevolumewatcher.h \
     src/views/mainwindow.h \
     src/views/dfmsplitter.h \
     src/views/rightview.h \
     src/views/leftview.h \
     src/views/folerwidgetitem.h \
     src/database/databaseoper.h \
-    src/app/consts.h \
     src/database/folderoper.h \
-    src/Controllers/foldercontroller.h \
     src/views/leftfolderlist.h \
     src/views/textnoteitem.h \
     src/util/uiutil.h \
     src/views/rightnotelist.h \
-    src/Controllers/notecontroller.h \
     src/database/noteoper.h \
     src/views/textnoteedit.h \
     src/views/mainpage.h \
@@ -120,21 +124,17 @@ HEADERS += \
     src/views/replaysliderbar.h \
     src/views/initemptypage.h \
     src/views/theadmngintancer.h \
-    src/Controllers/notewatchercontroller.h \
     src/views/myrecodebuttons.h \
-    src/Controllers/voiceaudiodevicewatcher.h \
-    src/Controllers/voicevolumewatcher.h \
     src/views/searchnonepage.h \
-    src/Controllers/aiservicecontroller.h \
-    src/views/voicetonotepage.h
+    src/views/voicetonotepage.h \
+    src/util/worker.h
 
 INCLUDEPATH += \
     src/app \
-    src/views \
-    src/database \
     src/Controllers \
-    src/util
-
+    src/database \
+    src/util \
+    src/views
 
 FORMS +=
 
