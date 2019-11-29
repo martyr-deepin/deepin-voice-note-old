@@ -769,14 +769,6 @@ void RightNoteList::getduration(qint64 position)
 }
 //e ynbboy 20191109
 
-void RightNoteList::testQMediaPlayer()
-{
-    if(nullptr != audioPlayer)
-    {
-        //audioPlayer->setMedia("");
-    }
-}
-
 void RightNoteList::OnlyTryToFouceOutEveryText()
 {
     int count = this->count();
@@ -861,9 +853,9 @@ void RightNoteList::onTextEditOutFocus(NOTE note)
 
 void RightNoteList::loadedPlayer()
 {
-    connect(audioPlayer, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(handlePlayingStateChanged(QMediaPlayer::State)));
-    connect(audioPlayer, SIGNAL(positionChanged(qint64)), this, SLOT(handleAudioPositionChanged(qint64)));
-    connect(audioPlayer, SIGNAL(durationChanged(qint64)), this, SLOT(getduration(qint64)));
+    connect(audioPlayer, &QMediaPlayer::stateChanged, this, &RightNoteList::handlePlayingStateChanged);
+    connect(audioPlayer, &QMediaPlayer::positionChanged, this, &RightNoteList::handleAudioPositionChanged);
+    connect(audioPlayer, &QMediaPlayer::durationChanged, this, &RightNoteList::getduration);
 
     this->isLoadedAudioPlayer = true;
 

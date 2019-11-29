@@ -143,10 +143,8 @@ public slots:
     void AsrResultResp(AsrResult clsResult); //add 20191111
     void TextHeightChanged(int newHeight); //Add 20191111
     void asrOtherErrBtnClick(); //Add 20191111
+
 private:
-    void testQMediaPlayer();
-
-
     MMenu *m_contextMenu;
     QAction *m_saveAsAction;
     QAction *m_delAction;
