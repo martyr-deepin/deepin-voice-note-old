@@ -27,6 +27,7 @@
 #include <QAudioProbe>
 #include <QAudioRecorder>
 #include <QVBoxLayout>
+#include <workercontroller.h>
 
 //#include "dimagebutton.h"
 #include <DImageButton>
@@ -84,6 +85,7 @@ public slots:
     void startRecord();
     void stopRecord();
     void changeTheme();
+    void onAudioRecorderCreated(QAudioRecorder* audioRecorder);
     
 private:
     //ExpandAnimationButton *expandAnimationButton;
@@ -109,6 +111,8 @@ private:
     Waveform *m_waveform;
     QStringList m_audioInputs;
     QMultimedia::AvailabilityStatus m_audioStatus;
+
+    WorkerController* workController;
 
     void initUI();
     void initConnection();

@@ -54,6 +54,8 @@ DWIDGET_USE_NAMESPACE
 RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 //RecordPage::RecordPage(QWidget *parent) : QWidget(parent)
 {
+    this->workController = WorkerController::getInstance();
+
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter
@@ -106,27 +108,27 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 //        Utils::getQrcPath("finish_press.svg")
 //    );
 
-    /*buttonLayout->addStretch();
-    buttonLayout->addWidget(recordingButton, 0, Qt::AlignVCenter);
-    buttonLayout->addSpacing(20);
-    buttonLayout->addWidget(finishButton, 0, Qt::AlignVCenter);
-    buttonLayout->addStretch();
+//    buttonLayout->addStretch();
+//    buttonLayout->addWidget(recordingButton, 0, Qt::AlignVCenter);
+//    buttonLayout->addSpacing(20);
+//    buttonLayout->addWidget(finishButton, 0, Qt::AlignVCenter);
+//    buttonLayout->addStretch();
 
-    buttonAreaLayout->addWidget(buttonWidget, 0, Qt::AlignHCenter);
+//    buttonAreaLayout->addWidget(buttonWidget, 0, Qt::AlignHCenter);
 
-    layout->addSpacing(36);
-    layout->addWidget(titleLabel, 0, Qt::AlignHCenter);
-    layout->addStretch();
-    layout->addWidget(waveform, 1, Qt::AlignHCenter);
-    layout->addStretch();
-    layout->addWidget(recordTimeLabel, 0, Qt::AlignHCenter);
-    layout->addStretch();
-    layout->addWidget(buttonAreaWidget);
-    layout->addSpacing(30);   */  // NOTE: bottom buttons padding
+//    layout->addSpacing(36);
+//    layout->addWidget(titleLabel, 0, Qt::AlignHCenter);
+//    layout->addStretch();
+//    layout->addWidget(waveform, 1, Qt::AlignHCenter);
+//    layout->addStretch();
+//    layout->addWidget(recordTimeLabel, 0, Qt::AlignHCenter);
+//    layout->addStretch();
+//    layout->addWidget(buttonAreaWidget);
+//    layout->addSpacing(30); // NOTE: bottom buttons padding
 
     m_audioRecorder = new QAudioRecorder(this);
-    qDebug() << "support codecs:" << m_audioRecorder->supportedAudioCodecs();
-    qDebug() << "support containers:" << m_audioRecorder->supportedContainers();
+    qDebug() << "m_audioRecorder->supportedAudioCodecs():" << m_audioRecorder->supportedAudioCodecs();
+    qDebug() << "m_audioRecorder->supportedContainers():" << m_audioRecorder->supportedContainers();
 
     QAudioEncoderSettings audioSettings;
     audioSettings.setQuality(QMultimedia::HighQuality);
@@ -134,10 +136,10 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_audioRecorder->setAudioSettings(audioSettings);
 
-    //m_audioRecorder->setContainerFormat("audio/x-wav");
-    //m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
+//    m_audioRecorder->setContainerFormat("audio/x-wav");
+//    m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
     m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
-    //m_audioRecorder->setContainerFormat("audio/mp3");
+//    m_audioRecorder->setContainerFormat("audio/mp3");
 #else
     audioSettings.setCodec("audio/PCM");
     m_audioRecorder->setAudioSettings(audioSettings);
@@ -149,13 +151,11 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
         connect(audioProbe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(renderLevel(QAudioBuffer)));
     }
 
-    int birrate = m_audioRecorder->audioSettings().bitRate();
     m_tickerTimer = new QTimer(this);
     m_tickerTimer->setInterval(200);
     connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
 
-
-    //startRecord();
+//    startRecord();
 
     connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
     connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
@@ -163,8 +163,6 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
     connect(m_finishButton, SIGNAL(clicked()), this, SIGNAL(buttonClicled()));
     connect(m_recordingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
     connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
-
-
 
 //    QFileInfoList fileInfoList = Utils::getRecordingFileinfos();
 //    if (fileInfoList.count() == 0) {
@@ -177,9 +175,8 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
 //        expandAnimationButton->startAnimation();
 //    }
 
-     //m_audioInputs = m_audioRecorder->audioInputs();
+//     m_audioInputs = m_audioRecorder->audioInputs();
 //     m_audioStatus = m_audioRecorder->availability();
-
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
@@ -266,7 +263,8 @@ void RecordPage::initUI()
 }
 void RecordPage::initConnection()
 {
-
+    connect(this->workController, &WorkerController::audioRecorderCreated, this, &RecordPage::onAudioRecorderCreated);
+    this->workController->createAudioRecorder();
 }
 
 //void RecordPage::handleExpandAnimationFinish()
@@ -359,6 +357,16 @@ void RecordPage::changeTheme()
         }
 
     }
+}
+
+void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
+{
+    qDebug() << "RecordPage::onAudioRecorderCreated()";
+
+    this->m_audioRecorder = audioRecorder;
+
+    qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
+    qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
 }
 
 void RecordPage::stopRecord()

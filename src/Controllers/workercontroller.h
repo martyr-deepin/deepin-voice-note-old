@@ -33,8 +33,11 @@ signals:
 private:
     Worker *worker = nullptr;
 
-    QMediaPlayer *mediaPlayer;
-    QAudioRecorder *audioRecorder;
+    QMediaPlayer *mediaPlayer = nullptr;
+    QAudioRecorder *audioRecorder = nullptr;
+
+    bool isMediaplayedCreated = false;
+    bool isAudioRecorderCreated = false;
 };
 
 #endif // WORKERCONTROLLER_H
