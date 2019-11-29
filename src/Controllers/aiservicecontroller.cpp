@@ -4,7 +4,6 @@
 #include <QDBusConnection>
 #include <QDBusError>
 #include <QDebug>
-#include <QMediaPlayer>
 #include <QObject>
 
 AiServiceController::AiServiceController()

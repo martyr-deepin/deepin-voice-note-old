@@ -243,10 +243,10 @@ void TextNoteItem::initConnection()
     //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
-    connect(m_textEdit, SIGNAL(sigDelMyself()), this, SLOT(tryToFouceout()));
-    connect(m_textEdit, SIGNAL(sigTextHeightChanged(int)), this, SLOT(onTextHeightChanged(int)));
-    connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus,this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
-    connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus,this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
+    connect(m_textEdit, &TextNoteEdit::sigDelMyself, this, &TextNoteItem::tryToFouceout);
+    connect(m_textEdit, &TextNoteEdit::sigTextHeightChanged, this, &TextNoteItem::onTextHeightChanged);
+    connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus, this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
+    connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus, this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
     connect(m_textEdit, &TextNoteEdit::sigDetailButtonChanged, this, &TextNoteItem::onDetailButtonChanged);
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
