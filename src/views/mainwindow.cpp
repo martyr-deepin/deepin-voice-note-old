@@ -117,32 +117,21 @@ void MyMainWindow::initTitleFrame()
 //    sp.setHorizontalStretch(1);
 //    m_searchEdit->setSizePolicy(sp);
 
-    m_titleFrame = new QFrame;
-    m_titleFrame->setObjectName("TitleBar");
+//    m_titleFrame = new QFrame;
+//    m_titleFrame->setObjectName("TitleBar");
 
-    QHBoxLayout *titleLayout = new QHBoxLayout;
-//    titleLayout->setMargin(0);
-//    titleLayout->setSpacing(0);
-//    titleLayout->addSpacing(2);
-//    titleLayout->addWidget(m_logo);
-//    titleLayout->addSpacing(12);
-//    titleLayout->addWidget(m_returnBtn);
-//    titleLayout->addWidget(m_replaceForReturn);
-    //titleLayout->addSpacing(145);
-    titleLayout->addSpacing(230);   //liuyang 3793
-    titleLayout->addWidget(m_searchEdit);
-    titleLayout->addSpacing(34);
-    //titleLayout->setSpacing(52);
-    titleLayout->setContentsMargins(0, 0, 0, 0);
+//    QHBoxLayout *titleLayout = new QHBoxLayout;
+//    titleLayout->addSpacing(230);   //liuyang 3793
+//    titleLayout->addWidget(m_searchEdit);
+//    titleLayout->addSpacing(34);
+//    titleLayout->setContentsMargins(0, 0, 0, 0);
 
-//    QSizePolicy spLogo= m_logo->sizePolicy();
-//    spLogo.setHorizontalStretch(1);
-//    m_logo->setSizePolicy(spLogo);
-    m_titleFrame->setLayout(titleLayout);
-    m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
-    m_titleFrame->setFocusPolicy(Qt::ClickFocus);
+//    m_titleFrame->setLayout(titleLayout);
+//    m_titleFrame->setFixedHeight(TITLE_FIXED_HEIGHT);
+//    m_titleFrame->setFocusPolicy(Qt::ClickFocus);
 
-    this->titlebar()->setCustomWidget(m_titleFrame, false);
+    this->titlebar()->addWidget(m_searchEdit,Qt::AlignCenter);
+    //this->titlebar()->setCustomWidget(m_titleFrame, false);
 
 }
 
