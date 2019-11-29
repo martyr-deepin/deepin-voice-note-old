@@ -7,18 +7,26 @@ Q_GLOBAL_STATIC(WorkerController, workerController)
 
 WorkerController::WorkerController()
 {
+    qDebug() << "WorkerController::WorkerController()";
+
     worker = new Worker();
     worker->moveToThread(&workerThread);
 
     connect(this, &WorkerController::toCreateMediaPlayer, worker, &Worker::createMediaPlayer);
     connect(worker, &Worker::mediaPlayerCreated, this, &WorkerController::onMediaPlayerCreated);
 
+    connect(this, &WorkerController::toCreateAudioRecorder, worker, &Worker::createAudioRecorder);
+    connect(worker, &Worker::audioRecorderCreated, this, &WorkerController::onAudioRecorderCreated);
+
     workerThread.start();
 }
 
 WorkerController::~WorkerController()
 {
+    qDebug() << "WorkerController::~WorkerController()";
 
+    this->workerThread.quit();
+    this->workerThread.wait();
 }
 
 WorkerController* WorkerController::getInstance()
@@ -53,4 +61,31 @@ void WorkerController::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
     }
 
     emit this->mediaPlayerCreated(this->mediaPlayer);
+}
+
+void WorkerController::createAudioRecorder()
+{
+    qDebug() << "WorkerController::createAudioRecorder()";
+
+    if (this->audioRecorder) {
+        emit this->audioRecorderCreated(this->audioRecorder);
+
+        return;
+    }
+
+    emit this->toCreateAudioRecorder();
+}
+
+void WorkerController::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
+{
+    qDebug() << "WorkerController::onAudioRecorderCreated()";
+
+    if (!this->audioRecorder) {
+        this->audioRecorder = audioRecorder;
+    }
+    else {
+        audioRecorder->deleteLater();
+    }
+
+    emit this->audioRecorderCreated(this->audioRecorder);
 }

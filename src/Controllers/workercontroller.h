@@ -18,18 +18,23 @@ public:
     static WorkerController* getInstance();
 
     void createMediaPlayer();
+    void createAudioRecorder();
 
 public slots:
     void onMediaPlayerCreated(QMediaPlayer* mediaPlayer);
+    void onAudioRecorderCreated(QAudioRecorder* audioRecorder);
 
 signals:
     void toCreateMediaPlayer();
     void mediaPlayerCreated(QMediaPlayer* mediaPlayer);
+    void toCreateAudioRecorder();
+    void audioRecorderCreated(QAudioRecorder* audioRecorder);
 
 private:
     Worker *worker = nullptr;
 
-    QMediaPlayer* mediaPlayer;
+    QMediaPlayer *mediaPlayer;
+    QAudioRecorder *audioRecorder;
 };
 
 #endif // WORKERCONTROLLER_H

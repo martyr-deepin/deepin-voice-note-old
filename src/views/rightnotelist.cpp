@@ -16,6 +16,7 @@
 #include <QPainter>
 #include <QCursor>
 #include <QShortcut>  //Add bug 2587
+#include <workercontroller.h>
 
 RightNoteListWorker::RightNoteListWorker(RightNoteList* parent)
 {
@@ -79,6 +80,8 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_asrNetWorkErrDialog = nullptr; //Add 20191111
     m_asrlimitErrDialog = nullptr;  //Add 20191111
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    this->workController = WorkerController::getInstance();
+
     Intancer::get_Intancer()->clearHeightForRightList();
     initUI();
     initConnection();
@@ -86,9 +89,6 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
 
 RightNoteList::~RightNoteList()
 {
-    m_rightNoteListWorkerThread->quit();
-    m_rightNoteListWorkerThread->wait();
-
     Intancer::get_Intancer()->clearHeightForRightList();
 }
 
@@ -226,14 +226,6 @@ void RightNoteList::initUI()
     //DPushButton *button2 = new DPushButton(QStringLiteral("重新转写")); //Add 20191111
     m_asrNetWorkErrDialog = UiUtil::createAsrNetWorkErrDialog(this,button2);  //Add 20191111
     connect(button2, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111
-    m_rightNoteListWorkerThread = new QThread();
-    m_rightNoteListWorker= new RightNoteListWorker(this);
-    m_rightNoteListWorker->moveToThread(m_rightNoteListWorkerThread);
-    connect(this, &RightNoteList::sig_startloadingPlayer, m_rightNoteListWorker, &RightNoteListWorker::startLoading);
-    connect(m_rightNoteListWorker, &RightNoteListWorker::sigLoaded, this, &RightNoteList::loadedPlayer);
-    m_rightNoteListWorkerThread->start();
-
-    emit sig_startloadingPlayer();
 
     m_myslider = new MySlider(Qt::Horizontal, this);
     //m_TestSlider = new DSlider(Qt::Horizontal, this);
@@ -257,6 +249,9 @@ void RightNoteList::initUI()
 }
 void RightNoteList::initConnection()
 {
+    connect(this->workController, &WorkerController::mediaPlayerCreated, this, &RightNoteList::onMediaPlayerCreated);
+    this->workController->createMediaPlayer();
+
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &RightNoteList::handleDelDialogClicked);
     connect(m_delConfirmDialog, &DDialog::closed, this, &RightNoteList::handleCloseDialogClicked);
     //start notify by yuanshuai 20191119
@@ -851,13 +846,18 @@ void RightNoteList::onTextEditOutFocus(NOTE note)
 }
 //Add end bug 2587
 
-void RightNoteList::loadedPlayer()
+void RightNoteList::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
 {
+    qDebug() << "RightNoteList::onMediaPlayerCreated()";
+
+    this->audioPlayer = mediaPlayer;
+
+    this->audioPlayer->setNotifyInterval(200);
+    this->isLoadedAudioPlayer = true;
+
     connect(audioPlayer, &QMediaPlayer::stateChanged, this, &RightNoteList::handlePlayingStateChanged);
     connect(audioPlayer, &QMediaPlayer::positionChanged, this, &RightNoteList::handleAudioPositionChanged);
     connect(audioPlayer, &QMediaPlayer::durationChanged, this, &RightNoteList::getduration);
-
-    this->isLoadedAudioPlayer = true;
 
     emit sig_EnablePlaybackButton();
     emit sig_RecordButtonAvaliability(this->isLoadedAudioPlayer);

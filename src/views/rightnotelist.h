@@ -20,6 +20,7 @@
 #include <QMediaPlayer>
 #include <DPushButton>
 #include <DMenu>
+#include <workercontroller.h>
 
 //#include <DArrowRectangle>
 
@@ -94,7 +95,6 @@ signals:
     void positionByfinishRecord(qint64 position); //ynb 20191109
     void sigChangeCurFolderToTop(int curFolder);
     void sig_CheckFileExist();//by yuanshuai 20191120 2841
-    void sig_startloadingPlayer();
     void sig_EnablePlaybackButton();
     void sig_RecordButtonAvaliability(bool isAvaliable);
     void asrStart();  //转写开始    //Add 20191111
@@ -139,10 +139,10 @@ public slots:
     void getduration(qint64 position);   //获取音频总时间  ynb 20191109
     void onTextEditGetFocus(NOTE note); //Add bug 2587
     void onTextEditOutFocus(NOTE note); //Add bug 2587
-    void loadedPlayer();
     void AsrResultResp(AsrResult clsResult); //add 20191111
     void TextHeightChanged(int newHeight); //Add 20191111
     void asrOtherErrBtnClick(); //Add 20191111
+    void onMediaPlayerCreated(QMediaPlayer* mediaPlayer);
 
 private:
     MMenu *m_contextMenu;
@@ -205,8 +205,7 @@ private:
     void changeSliderPosByHand(int moveMovment);
     bool getRowByID(int id, NOTE_TYPE type, int &row);
 
-    RightNoteListWorker* m_rightNoteListWorker;
-    QThread * m_rightNoteListWorkerThread;
+    WorkerController* workController;
 };
 
 #endif // RIGHTNOTELIST_H
