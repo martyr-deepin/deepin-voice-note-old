@@ -60,42 +60,6 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
     installEventFilter(this);  // add event filter
 
     m_recordingTime = 0;
-
-    m_audioRecorder = new QAudioRecorder(this);
-    qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
-    qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
-
-    QAudioEncoderSettings audioSettings;
-    audioSettings.setQuality(QMultimedia::HighQuality);
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
-    m_audioRecorder->setAudioSettings(audioSettings);
-
-//    m_audioRecorder->setContainerFormat("audio/x-wav");
-//    m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
-    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
-//    m_audioRecorder->setContainerFormat("audio/mp3");
-#else
-    audioSettings.setCodec("audio/PCM");
-    m_audioRecorder->setAudioSettings(audioSettings);
-    m_audioRecorder->setContainerFormat("wav");
-#endif
-
-    audioProbe = new QAudioProbe(this);
-    if (audioProbe->setSource(m_audioRecorder)) {
-        connect(audioProbe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(renderLevel(QAudioBuffer)));
-    }
-
-    m_tickerTimer = new QTimer(this);
-    m_tickerTimer->setInterval(200);
-    connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
-
-    connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
-    connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
-    connect(m_recordingButton, SIGNAL(resume()), this, SLOT(resumeRecord()));
-    connect(m_finishButton, SIGNAL(clicked()), this, SIGNAL(buttonClicled()));
-    connect(m_recordingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
-    connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
@@ -283,9 +247,40 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
     qDebug() << "RecordPage::onAudioRecorderCreated()";
 
     this->m_audioRecorder = audioRecorder;
-
     qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
     qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
+
+    QAudioEncoderSettings audioSettings;
+    audioSettings.setQuality(QMultimedia::HighQuality);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+    m_audioRecorder->setAudioSettings(audioSettings);
+
+//    m_audioRecorder->setContainerFormat("audio/x-wav");
+//    m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
+    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
+//    m_audioRecorder->setContainerFormat("audio/mp3");
+#else
+    audioSettings.setCodec("audio/PCM");
+    m_audioRecorder->setAudioSettings(audioSettings);
+    m_audioRecorder->setContainerFormat("wav");
+#endif
+
+    audioProbe = new QAudioProbe(this);
+    if (audioProbe->setSource(m_audioRecorder)) {
+        connect(audioProbe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(renderLevel(QAudioBuffer)));
+    }
+
+    m_tickerTimer = new QTimer(this);
+    m_tickerTimer->setInterval(200);
+    connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
+
+    connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
+    connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
+    connect(m_recordingButton, SIGNAL(resume()), this, SLOT(resumeRecord()));
+    connect(m_finishButton, SIGNAL(clicked()), this, SIGNAL(buttonClicled()));
+    connect(m_recordingButton, SIGNAL(pause()), this, SIGNAL(buttonClicled()));
+    connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
 }
 
 void RecordPage::stopRecord()

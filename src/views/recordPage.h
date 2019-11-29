@@ -48,13 +48,11 @@ DWIDGET_USE_NAMESPACE
 
 //录音按钮Page
 class RecordPage : public DFloatingWidget
-//class RecordPage : public QWidget
 {
     Q_OBJECT
     
 public:
     RecordPage(DWidget *parent = 0);
-    //RecordPage(QWidget *parent = 0);
     void getAudioStates(QMultimedia::AvailabilityStatus &audioinputs);
 
     //QLabel *m_voiceTimeLabel;
