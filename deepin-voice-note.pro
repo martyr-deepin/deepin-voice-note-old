@@ -42,6 +42,7 @@ SOURCES += \
     src/Controllers/notewatchercontroller.cpp \
     src/Controllers/voiceaudiodevicewatcher.cpp \
     src/Controllers/voicevolumewatcher.cpp \
+    src/Controllers/workercontroller.cpp \
     src/views/mainwindow.cpp \
     src/views/dfmsplitter.cpp \
     src/views/rightview.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     src/Controllers/notewatchercontroller.h \
     src/Controllers/voiceaudiodevicewatcher.h \
     src/Controllers/voicevolumewatcher.h \
+    src/Controllers/workercontroller.h \
     src/views/mainwindow.h \
     src/views/dfmsplitter.h \
     src/views/rightview.h \
