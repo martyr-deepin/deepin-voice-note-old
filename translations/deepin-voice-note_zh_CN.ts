@@ -89,11 +89,11 @@
     </message>
     <message>
         <source>Window size switching</source>
-        <translation>窗口大小切换</translation>
+        <translation type="vanished">窗口大小切换</translation>
     </message>
     <message>
         <source>Close App</source>
-        <translation>关闭应用</translation>
+        <translation type="vanished">关闭应用</translation>
     </message>
     <message>
         <source>Help</source>
@@ -101,31 +101,31 @@
     </message>
     <message>
         <source>Search</source>
-        <translation>搜索</translation>
+        <translation type="vanished">搜索</translation>
     </message>
     <message>
         <source>Show shortcut preview</source>
-        <translation>显示快捷键预览</translation>
+        <translation type="vanished">显示快捷键预览</translation>
     </message>
     <message>
         <source>New notepad</source>
-        <translation>新建记事本</translation>
+        <translation type="vanished">新建记事本</translation>
     </message>
     <message>
         <source>Delete Notepad / Delete Notes</source>
-        <translation>删除记事本/删除记事项</translation>
+        <translation type="vanished">删除记事本/删除记事项</translation>
     </message>
     <message>
         <source>Rename Notepad</source>
-        <translation>重命名</translation>
+        <translation type="vanished">重命名</translation>
     </message>
     <message>
         <source>Voice recording play/pause</source>
-        <translation>语音记事项播放/暂停</translation>
+        <translation type="vanished">语音记事项播放/暂停</translation>
     </message>
     <message>
         <source>hot key</source>
-        <translation>快捷键</translation>
+        <translation type="vanished">快捷键</translation>
     </message>
     <message>
         <source>Converting a voice note now. Do you want to stop it?</source>
@@ -138,6 +138,62 @@
     <message>
         <source>Your audio recording device does not work.</source>
         <translation>您的录音设备异常，无法录制语音。</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">删除</translation>
+    </message>
+    <message>
+        <source>Display shortcuts</source>
+        <translation>显示快捷键预览</translation>
+    </message>
+    <message>
+        <source>New notebook</source>
+        <translation>新建记事本</translation>
+    </message>
+    <message>
+        <source>Delete notebook/note</source>
+        <translation>删除记事本/删除记事项</translation>
+    </message>
+    <message>
+        <source>Rename notebook</source>
+        <translation>重命名记事本</translation>
+    </message>
+    <message>
+        <source>Play/Pause</source>
+        <translation>播放/暂停</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>全选</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>剪切</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <source>TextDelete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Notebooks</source>
+        <translation>记事本</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>记事项</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
     </message>
 </context>
 <context>

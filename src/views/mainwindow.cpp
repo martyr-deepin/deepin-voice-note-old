@@ -201,74 +201,211 @@ void MyMainWindow::initTheRest()
     initConnection();
 }
 
+//QJsonObject MyMainWindow::creatShorcutJson()
+//{
+//    //start notify by yuanshuai bug shortcut
+//    QJsonObject shortcut1;
+//    //shortcut1.insert("name", tr("帮助"));
+//    shortcut1.insert("name", tr("Help"));
+//    shortcut1.insert("value", "F1");
+
+//    QJsonObject shortcut2;
+//    //shortcut2.insert("name", tr("搜索"));
+//    shortcut2.insert("name", tr("Search"));
+//    shortcut2.insert("value", "Ctrl+F");
+
+//    QJsonObject shortcut3;
+//    //shortcut3.insert("name", tr("显示快捷键预览"));
+//    shortcut3.insert("name", tr("Display shortcuts"));
+//    shortcut3.insert("value", "Ctrl+Shift+?");
+
+//    QJsonObject shortcut4;
+//    //shortcut4.insert("name", tr("新建记事本"));
+//    shortcut4.insert("name", tr("New notebook"));
+//    shortcut4.insert("value", "Ctrl+N");
+
+//    QJsonObject shortcut5;
+////    shortcut5.insert("name", tr("删除记事本/删除记事项"));
+//    shortcut5.insert("name", tr("Delete notebook/note"));
+//    //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
+////    shortcut5.insert("value", "Ctrl+D");
+//    shortcut5.insert("value", "Delete");
+//   //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
+
+//    QJsonObject shortcut6;
+////    shortcut6.insert("name", tr("重命名记事本"));
+//    shortcut6.insert("name", tr("Rename notebook"));
+//    shortcut6.insert("value", "F2");
+
+//    QJsonObject shortcut7;
+////    shortcut7.insert("name", tr("播放/暂停"));
+//    shortcut7.insert("name", tr("Play/Pause"));
+//    shortcut7.insert("value", "Space");
+
+//    QJsonObject shortcut8;
+////    shortcut8.insert("name", tr("全选"));
+//    shortcut8.insert("name", tr("Select all"));
+//    shortcut8.insert("value", "Ctrl+A");
+
+//    QJsonObject shortcut9;
+////    shortcut9.insert("name", tr("复制"));
+//    shortcut9.insert("name", tr("Copy"));
+//    shortcut9.insert("value", "Ctrl+C");
+
+//    QJsonObject shortcut10;
+////    shortcut10.insert("name", tr("剪切"));
+//    shortcut10.insert("name", tr("Cut"));
+//    shortcut10.insert("value", "Ctrl+X");
+
+//    QJsonObject shortcut11;
+////    shortcut11.insert("name", tr("粘贴"));
+//    shortcut11.insert("name", tr("Paste"));
+//    shortcut11.insert("value", "Ctrl+V");
+
+//    QJsonObject shortcut12;
+////    shortcut12.insert("name", tr("删除"));
+//    shortcut12.insert("name", tr("Delete"));
+//    shortcut12.insert("value", "Delete");
+
+//    QJsonArray shortcutArray;
+//    shortcutArray.append(shortcut1);
+//    shortcutArray.append(shortcut2);
+//    shortcutArray.append(shortcut3);
+//    shortcutArray.append(shortcut4);
+//    shortcutArray.append(shortcut5);
+//    shortcutArray.append(shortcut6);
+//    shortcutArray.append(shortcut7);
+//    shortcutArray.append(shortcut8);
+//    shortcutArray.append(shortcut9);
+//    shortcutArray.append(shortcut10);
+//    shortcutArray.append(shortcut11);
+//    shortcutArray.append(shortcut12);
+
+//    QJsonObject shortcut_group;
+////    shortcut_group.insert("groupName", "快捷键");
+//    shortcut_group.insert("groupName", tr("hot key"));
+//    shortcut_group.insert("groupItems", shortcutArray);
+
+//    QJsonArray shortcutArrayall;
+//    shortcutArrayall.append(shortcut_group);
+
+//    QJsonObject main_shortcut;
+//    main_shortcut.insert("shortcut", shortcutArrayall);
+
+//    return main_shortcut;
+//}
 QJsonObject MyMainWindow::creatShorcutJson()
 {
-    QJsonObject shortcut1;
-    //shortcut1.insert("name", tr("窗口大小切换"));
-    shortcut1.insert("name", tr("Window size switching"));
-    shortcut1.insert("value", "Ctrl+Alt+F");
 
-    QJsonObject shortcut2;
-//    shortcut2.insert("name", tr("关闭应用"));
-    shortcut2.insert("name", tr("Close App"));
-    shortcut2.insert("value", "Alt+F4");
+
+    QJsonObject shortcut1;
+    //shortcut3.insert("name", tr("帮助"));
+    shortcut1.insert("name", tr("Help"));
+    shortcut1.insert("value", "F1");
+
+//    QJsonObject shortcut2;
+//    //shortcut4.insert("name", tr("搜索"));
+//    shortcut2.insert("name", tr("Search"));
+//    shortcut2.insert("value", "Ctrl+F");
 
     QJsonObject shortcut3;
-    //shortcut3.insert("name", tr("帮助"));
-    shortcut3.insert("name", tr("Help"));
-    shortcut3.insert("value", "F1");
+    //shortcut5.insert("name", tr("显示快捷键预览"));
+    shortcut3.insert("name", tr("Display shortcuts"));
+    shortcut3.insert("value", "Ctrl+Shift+?");
 
     QJsonObject shortcut4;
-    //shortcut4.insert("name", tr("搜索"));
-    shortcut4.insert("name", tr("Search"));
-    shortcut4.insert("value", "Ctrl+F");
+    //shortcut6.insert("name", tr("新建记事本"));
+    shortcut4.insert("name", tr("New notebook"));
+    shortcut4.insert("value", "Ctrl+N");
 
     QJsonObject shortcut5;
-    //shortcut5.insert("name", tr("显示快捷键预览"));
-    shortcut5.insert("name", tr("Show shortcut preview"));
-    shortcut5.insert("value", "Ctrl+Shift+/");
-
-    QJsonObject shortcut6;
-    //shortcut6.insert("name", tr("新建记事本"));
-    shortcut6.insert("name", tr("New notepad"));
-    shortcut6.insert("value", "Ctrl+N");
-
-    QJsonObject shortcut7;
 //    shortcut7.insert("name", tr("删除记事本/删除记事项"));
-    shortcut7.insert("name", tr("Delete Notepad / Delete Notes"));
+    shortcut5.insert("name", tr("Delete notebook/note"));
     //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
 //    shortcut7.insert("value", "Ctrl+D");
-    shortcut7.insert("value", "DEL");
+    shortcut5.insert("value", "Delete");
    //Edit start 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
 
-    QJsonObject shortcut8;
+    QJsonObject shortcut6;
 //    shortcut8.insert("name", tr("重命名记事本"));
-    shortcut8.insert("name", tr("Rename Notepad"));
-    shortcut8.insert("value", "F2");
+    shortcut6.insert("name", tr("Rename notebook"));
+    shortcut6.insert("value", "F2");
 
-    QJsonObject shortcut9;
-//    shortcut9.insert("name", tr("语音记事项播放/暂停"));
-    shortcut9.insert("name", tr("Voice recording play/pause"));
-    shortcut9.insert("value", "Space");
+    QJsonObject shortcut7;
+//    shortcut9.insert("name", tr("播放/暂停"));
+    shortcut7.insert("name", tr("Play/Pause"));
+    shortcut7.insert("value", "Space");
 
-    QJsonArray shortcutArray;
-    shortcutArray.append(shortcut1);
-    shortcutArray.append(shortcut2);
-    shortcutArray.append(shortcut3);
-    shortcutArray.append(shortcut4);
-    shortcutArray.append(shortcut5);
-    shortcutArray.append(shortcut6);
-    shortcutArray.append(shortcut7);
-    shortcutArray.append(shortcut8);
-    shortcutArray.append(shortcut9);
+        QJsonObject shortcut8;
+    //    shortcut8.insert("name", tr("全选"));
+        shortcut8.insert("name", tr("Select all"));
+        shortcut8.insert("value", "Ctrl+A");
 
-    QJsonObject shortcut_group;
-//    shortcut_group.insert("groupName", "快捷键");
-    shortcut_group.insert("groupName", tr("hot key"));
-    shortcut_group.insert("groupItems", shortcutArray);
+        QJsonObject shortcut9;
+    //    shortcut9.insert("name", tr("复制"));
+        shortcut9.insert("name", tr("Copy"));
+        shortcut9.insert("value", "Ctrl+C");
+
+        QJsonObject shortcut10;
+    //    shortcut10.insert("name", tr("剪切"));
+        shortcut10.insert("name", tr("Cut"));
+        shortcut10.insert("value", "Ctrl+X");
+
+        QJsonObject shortcut11;
+    //    shortcut11.insert("name", tr("粘贴"));
+        shortcut11.insert("name", tr("Paste"));
+        shortcut11.insert("value", "Ctrl+V");
+
+        QJsonObject shortcut12;
+    //    shortcut12.insert("name", tr("删除"));
+        shortcut12.insert("name", tr("TextDelete"));
+        shortcut12.insert("value", "Delete");
+
+    QJsonArray shortcutArray1;
+    shortcutArray1.append(shortcut4);
+    shortcutArray1.append(shortcut5);
+    shortcutArray1.append(shortcut6);
+
+    QJsonArray shortcutArray2;
+    shortcutArray2.append(shortcut7);
+    shortcutArray2.append(shortcut8);
+    shortcutArray2.append(shortcut9);
+    shortcutArray2.append(shortcut10);
+    shortcutArray2.append(shortcut11);
+    shortcutArray2.append(shortcut12);
+
+    QJsonArray shortcutArray3;
+    shortcutArray3.append(shortcut1);
+    //shortcutArray.append(shortcut2);
+    shortcutArray3.append(shortcut3);
+
+
+
+
+//    QJsonObject shortcut_group;
+////    shortcut_group.insert("groupName", "快捷键");
+//    shortcut_group.insert("groupName", tr("hot key"));
+//    shortcut_group.insert("groupItems", shortcutArray);
+
+    QJsonObject shortcut_group1;
+//    shortcut_group1.insert("groupName", "记事本");
+    shortcut_group1.insert("groupName", tr("Notebooks"));
+    shortcut_group1.insert("groupItems", shortcutArray1);
+
+    QJsonObject shortcut_group2;
+//    shortcut_group.insert("groupName", "记事项");
+    shortcut_group2.insert("groupName", tr("Notes"));
+    shortcut_group2.insert("groupItems", shortcutArray2);
+
+    QJsonObject shortcut_group3;
+//    shortcut_group.insert("groupName", "设置");
+    shortcut_group3.insert("groupName", tr("Settings"));
+    shortcut_group3.insert("groupItems", shortcutArray3);
 
     QJsonArray shortcutArrayall;
-    shortcutArrayall.append(shortcut_group);
+    shortcutArrayall.append(shortcut_group1);
+    shortcutArrayall.append(shortcut_group2);
+    shortcutArrayall.append(shortcut_group3);
 
     QJsonObject main_shortcut;
     main_shortcut.insert("shortcut", shortcutArrayall);

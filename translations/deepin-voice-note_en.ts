@@ -89,11 +89,11 @@
     </message>
     <message>
         <source>Window size switching</source>
-        <translation>Window size switching</translation>
+        <translation type="vanished">Window size switching</translation>
     </message>
     <message>
         <source>Close App</source>
-        <translation>Close App</translation>
+        <translation type="vanished">Close App</translation>
     </message>
     <message>
         <source>Help</source>
@@ -101,31 +101,31 @@
     </message>
     <message>
         <source>Search</source>
-        <translation>Search</translation>
+        <translation type="vanished">Search</translation>
     </message>
     <message>
         <source>Show shortcut preview</source>
-        <translation>Show shortcut preview</translation>
+        <translation type="vanished">Show shortcut preview</translation>
     </message>
     <message>
         <source>New notepad</source>
-        <translation>New notepad</translation>
+        <translation type="vanished">New notepad</translation>
     </message>
     <message>
         <source>Delete Notepad / Delete Notes</source>
-        <translation>Delete Notepad / Delete Notes</translation>
+        <translation type="vanished">Delete Notepad / Delete Notes</translation>
     </message>
     <message>
         <source>Rename Notepad</source>
-        <translation>Rename</translation>
+        <translation type="vanished">Rename</translation>
     </message>
     <message>
         <source>Voice recording play/pause</source>
-        <translation>Voice recording play/pause</translation>
+        <translation type="vanished">Voice recording play/pause</translation>
     </message>
     <message>
         <source>hot key</source>
-        <translation>hot key</translation>
+        <translation type="vanished">hot key</translation>
     </message>
     <message>
         <source>Converting a voice note now. Do you want to stop it?</source>
@@ -138,6 +138,62 @@
     <message>
         <source>Your audio recording device does not work.</source>
         <translation>Your audio recording device does not work.</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Delete</translation>
+    </message>
+    <message>
+        <source>Display shortcuts</source>
+        <translation>Display shortcuts</translation>
+    </message>
+    <message>
+        <source>New notebook</source>
+        <translation>New notebook</translation>
+    </message>
+    <message>
+        <source>Delete notebook/note</source>
+        <translation>Delete notebook/note</translation>
+    </message>
+    <message>
+        <source>Rename notebook</source>
+        <translation>Rename notebook</translation>
+    </message>
+    <message>
+        <source>Play/Pause</source>
+        <translation>Play/Pause</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>Select all</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Paste</translation>
+    </message>
+    <message>
+        <source>TextDelete</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>Notebooks</source>
+        <translation>Notebooks</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notes</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Settings</translation>
     </message>
 </context>
 <context>
