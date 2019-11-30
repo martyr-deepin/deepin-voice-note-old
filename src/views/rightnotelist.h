@@ -112,7 +112,7 @@ public slots:
     void handleAsrAsItem(); //Add 20191111
     void handleDelDialogClicked(int index, const QString &text);
     void handleCloseDialogClicked();
-    void handlePlayingStateChanged(QMediaPlayer::State state);
+    //void handlePlayingStateChanged(QMediaPlayer::State state);
     void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos, NOTE note);  //Edit bug 2587
     //void play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect waveformPos);
     void pause();
@@ -203,6 +203,7 @@ private:
     QString getPlayingFilepath();
     void changeSliderPosByHand(int moveMovment);
     bool getRowByID(int id, NOTE_TYPE type, int &row);
+    void DotheStopThePlayVoiceItem();
 
     WorkerController* workController;
 };

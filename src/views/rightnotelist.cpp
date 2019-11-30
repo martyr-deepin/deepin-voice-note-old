@@ -853,7 +853,7 @@ void RightNoteList::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
     this->audioPlayer->setNotifyInterval(200);
     this->isLoadedAudioPlayer = true;
 
-    connect(audioPlayer, &QMediaPlayer::stateChanged, this, &RightNoteList::handlePlayingStateChanged);
+    //connect(audioPlayer, &QMediaPlayer::stateChanged, this, &RightNoteList::handlePlayingStateChanged);
     connect(audioPlayer, &QMediaPlayer::positionChanged, this, &RightNoteList::handleAudioPositionChanged);
     connect(audioPlayer, &QMediaPlayer::durationChanged, this, &RightNoteList::getduration);
 
@@ -1179,6 +1179,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                 {
                     m_currPlayingItem = nullptr;
                     audioPlayer->stop();
+                    DotheStopThePlayVoiceItem();
                 }
 
                 if(delRow < playRow)
@@ -1257,6 +1258,7 @@ void RightNoteList::handleClickRecordButton()
     {
         //m_currPlayingItem->handleStopPlay();
         audioPlayer->stop();
+        DotheStopThePlayVoiceItem();
         //audioPlayer->setMedia(QUrl::fromLocalFile("default"));//clear path
         //m_currPlayingItem = nullptr;
     }
@@ -1269,6 +1271,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
     m_voiceOperation = true;  //Add bug 2587
     if (filepath != getPlayingFilepath()) {
         audioPlayer->stop();
+        DotheStopThePlayVoiceItem();
 
         m_currPlayingItem = voiceNoteItem;
 
@@ -1347,24 +1350,8 @@ void RightNoteList::pause()
 void RightNoteList::stop()
 {
     audioPlayer->stop();
+    DotheStopThePlayVoiceItem();
 }
-
-//void RightNoteList::resume()
-//{
-//    audioPlayer->play();
-//}
-
-//void RightNoteList::stop(QString filepath)
-//{
-//    if (filepath == getPlayingFilepath()) {
-//        audioPlayer->stop();
-//    }
-//}
-
-//void RightNoteList::stopPlayer()
-//{
-//    audioPlayer->stop();
-//}
 
 QString RightNoteList::getPlayingFilepath()
 {
@@ -1432,21 +1419,33 @@ bool RightNoteList::getRowByID(int id, NOTE_TYPE type,  int &row)
     return ret;
 }
 
-void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
+void RightNoteList::DotheStopThePlayVoiceItem()
 {
-    if (QMediaPlayer::StoppedState == state)
+    if(nullptr != m_currPlayingItem)
     {
-        if(nullptr != m_currPlayingItem)
-        {
-            disconnect(m_myslider,SIGNAL(sigSliderPos(int)),m_currPlayingItem->m_waveform,SLOT(OnSetWavePos(int)));
-            m_currPlayingItem->m_waveform->setWavePosition(-1);
-            m_currPlayingItem->handleStopPlay();
-            m_currPlayingItem = nullptr;
-        }
-
-        m_myslider->hide();
+        disconnect(m_myslider,SIGNAL(sigSliderPos(int)),m_currPlayingItem->m_waveform,SLOT(OnSetWavePos(int)));
+        m_currPlayingItem->m_waveform->setWavePosition(-1);
+        m_currPlayingItem->onlySetResumeNoSig();
+        m_currPlayingItem = nullptr;
     }
+    m_myslider->hide();
 }
+
+//void RightNoteList::handlePlayingStateChanged(QMediaPlayer::State state)
+//{
+//    if (QMediaPlayer::StoppedState == state)
+//    {
+//        if(nullptr != m_currPlayingItem)
+//        {
+//            disconnect(m_myslider,SIGNAL(sigSliderPos(int)),m_currPlayingItem->m_waveform,SLOT(OnSetWavePos(int)));
+//            m_currPlayingItem->m_waveform->setWavePosition(-1);
+//            m_currPlayingItem->handleStopPlay();
+//            m_currPlayingItem = nullptr;
+//        }
+
+//        m_myslider->hide();
+//    }
+//}
 
 
 void RightNoteList::handleAudioPositionChanged(qint64 position)
@@ -1536,6 +1535,12 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
             qDebug()<<"curTime:"<<curTime;
 
             seconds++;
+       }
+
+       if((audioLength <= position) && (audioLength != 0) && (position != 0))
+       {
+           //update UI to stop curplay UI.
+           DotheStopThePlayVoiceItem();
        }
     }
     //e ynbboy 20191109
