@@ -67,8 +67,7 @@ class RightNoteList : public DListWidget
 public:
     RightNoteList(NoteController *noteController);
     ~RightNoteList();
-    //void addWidgetItem(bool isAddByButton ,NOTE note, QString searchKey);//3550-3547-3528
-    void addWidgetItem(bool isAddByButton ,NOTE note, QString searchKey,int textEditCursorPos = -1);//3550-3547-3528
+    void addWidgetItem(bool isAddByButton, NOTE note, QString searchKey, int textEditCursorPos = -1); //3550-3547-3528
     void addAddTextBtn();
     void delAddTextBtn();
     void listAddTextShow();

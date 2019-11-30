@@ -226,3 +226,16 @@ bool Intancer::getEndRecordFlag()
     return isEndRecord;
 }
 //end
+
+void Intancer::setSearchKeywords(const QString & text)
+{
+    qDebug() << "Intancer::setSearchKeywords()";
+    qDebug() << "text: " << text;
+
+    this->searchKeywords = text;
+}
+
+QString Intancer::getSearchKeywords()
+{
+    return this->searchKeywords;
+}

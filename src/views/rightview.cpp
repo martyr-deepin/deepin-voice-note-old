@@ -358,7 +358,7 @@ void RightView::addNoteToNoteList(NOTE note)
         m_noteListWidget->fouceOutAllTextItem();
     }
 
-    m_noteListWidget->addWidgetItem(true,note, "");
+    m_noteListWidget->addWidgetItem(true, note, Intancer::get_Intancer()->getSearchKeywords());
     if(VOICE == note.noteType)
     {
         Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
@@ -409,7 +409,7 @@ void RightView::updateNoteList()
 
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(false, noteList.at(i), "");
+            m_noteListWidget->addWidgetItem(false, noteList.at(i), Intancer::get_Intancer()->getSearchKeywords());
 
             if(VOICE == noteList.at(i).noteType)
             {

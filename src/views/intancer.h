@@ -64,6 +64,10 @@ public:
     void setEndRecordFlag(bool value);
     bool getEndRecordFlag();
     //end
+
+    void setSearchKeywords(const QString & text);
+    QString getSearchKeywords();
+
 signals:
     void sigShowViewAddTextButton();
     void sigHideViewAddTextButton();
@@ -88,6 +92,8 @@ private:
 
     QMultiMap <int,QMap<int,QString>> m_mapArsTxtByFolder;  //Add 20191111
     QString m_ApplicationName; //Add 20191111
+
+    QString searchKeywords = "";
 };
 
 #endif // INTANCER_H

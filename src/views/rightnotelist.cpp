@@ -676,6 +676,10 @@ void RightNoteList::onAbleAddBtn(bool changed)
 
 void RightNoteList::onTextChangedFlagChange(bool changed)
 {
+    qDebug() << "RightNoteList::onTextChangedFlagChange()";
+    qDebug() << "changed: " << changed;
+    qDebug() << "this->count(): " << this->count();
+
 //    if(m_textClicked)
 //    {
 //        m_textChanged = changed;
@@ -697,8 +701,8 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
                this->removeItemWidget(senderItem);
                delete senderItem;
                senderItem = nullptr;
-               //addWidgetItem(true,note,"");
-               addWidgetItem(true,note,"",cursorPos);//3550-3547-3528
+
+               addWidgetItem(true, note, Intancer::get_Intancer()->getSearchKeywords(), cursorPos); //3550-3547-3528
                this->scrollToBottom();
            }
        }

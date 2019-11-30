@@ -92,16 +92,21 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
-    Intancer::get_Intancer()->setWantScrollRightListFlag(false);
-    qDebug()<<"TextNoteEdit::focusInEvent";
+    qDebug() << "TextNoteEdit::focusInEvent()";
 
-    DTextEdit::focusInEvent(e);//Add bug 2587
+    Intancer::get_Intancer()->setWantScrollRightListFlag(false);
+
+    this->setText(UiUtil::getHtmlPlainText(this->toPlainText()));
+    this->setLineHeight(24);
+
+    DTextEdit::focusInEvent(e); //Add bug 2587
+
     emit SigTextEditGetFocus();
 }
 
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
-//    qDebug()<< "TextNoteEdit::focusOutEvent()";
+    qDebug()<< "TextNoteEdit::focusOutEvent()";
 
     //3699
     if(menuOut)
@@ -120,6 +125,11 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         emit sigDelMyself();
     }
     //emit focusOutSignal();
+
+    QString searchKeywords = Intancer::get_Intancer()->getSearchKeywords();
+    qDebug() << "searchKeywords: " << searchKeywords;
+    this->setText(UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE));
+    this->setLineHeight(24);
 
     DTextEdit::focusOutEvent(e);
 

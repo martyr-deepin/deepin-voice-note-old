@@ -58,6 +58,9 @@ void MyMainWindow::initConnection()
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::handleSearchKey);
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::tryToSearch);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
+
+    connect(m_searchEdit, &DSearchEdit::textChanged, Intancer::get_Intancer(), &Intancer::setSearchKeywords);
+
     connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleSearchDialogClicked);
     connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseSearchDialog);
     connect(m_InitEmptyPage,SIGNAL(sigAddFolderByInitPage()),this,SLOT(onAddFolderByInitPage()));
