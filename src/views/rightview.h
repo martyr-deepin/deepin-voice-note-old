@@ -77,7 +77,7 @@ public slots:
     void onViewAddTextHide();
     void changeTheme();
     void oncheckCurPageVoiceForDelete();
-    void on_CheckRecodeCouldUse(bool coulduse);
+    void onCheckRecordCouldUse(bool coulduse);
     void ShowRecodeTip();
     void handleStopRecord2(qint64 position); //ynb  20191109
     void OnTimeOut();
