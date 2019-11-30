@@ -54,9 +54,6 @@ public:
     void CountMoveFolderCount();
     int getMoveFolderFlag();
 
-    bool getTextNoteItemChangeState();
-    void setTextNoteItemChangeState(const bool isTextNoteItemChanged);
-    void clearTextNoteItemChangeState();
     void setAsrTxt(int FolderID,int ItemID, QString txt);  //Add 20191111
     QString getAsrTxt(int FolderID,int ItemID);       //Add 20191111
 
@@ -89,7 +86,6 @@ private:
      int m_RightViewHeight;
      DApplication *m_app;
 
-    bool isTextNoteItemChanged;
     QMultiMap <int,QMap<int,QString>> m_mapArsTxtByFolder;  //Add 20191111
     QString m_ApplicationName; //Add 20191111
 };

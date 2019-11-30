@@ -18,7 +18,6 @@ public:
     ~TextNoteEdit();
 
     QString getText();
-    void setText(const QString &text);
     void setTextNote(NOTE textNote, QString searchKey);
     int getID();
     int getFolderID();

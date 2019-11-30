@@ -1,7 +1,6 @@
 #include "notecontroller.h"
 
 #include <noteoper.h>
-#include "intancer.h"
 
 NoteController::NoteController()
 {
@@ -38,7 +37,6 @@ bool NoteController::addNote(NOTE &noteInfo)
 
 bool NoteController::updateNote(NOTE noteInfo)
 {
-    Intancer::get_Intancer()->setTextNoteItemChangeState(true);
     return NoteOper::updateNote(noteInfo);
 }
 

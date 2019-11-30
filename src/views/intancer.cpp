@@ -15,8 +15,6 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
-
-    isTextNoteItemChanged = false;
     //start add by yuanshuai 20191128 bug 3731
     isEndRecord = false;
     //end
@@ -187,20 +185,6 @@ int Intancer::getMoveFolderFlag()
     return isMoveFolder_count;
 }
 
-bool Intancer::getTextNoteItemChangeState()
-{
-    return isTextNoteItemChanged;
-}
-
-void Intancer::setTextNoteItemChangeState(const bool isTextNoteItemChanged)
-{
-    this->isTextNoteItemChanged = isTextNoteItemChanged;
-}
-
-void Intancer::clearTextNoteItemChangeState()
-{
-    this->isTextNoteItemChanged = false;
-}
 //Add s 20191111
 void Intancer::setAsrTxt(int FolderID,int ItemID, QString txt)
 {

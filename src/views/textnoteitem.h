@@ -49,7 +49,6 @@ public:
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;
     TextNoteEdit *m_textEdit;
-    QString m_searchKey;
     //void changeToEditMode();
     void changeToEditMode(int cursorpos = -1 );//3550-3547-3528 patch
     void readFromDatabase();
@@ -101,6 +100,7 @@ private:
 //    QAction *m_saveAsAction;
 //    QAction *m_delAction;
     bool m_isTextConverted;
+    QString m_searchKey;
     int m_menuBtnState;
     bool m_isEdited;
     bool m_mouseIsIn;
