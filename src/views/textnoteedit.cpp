@@ -170,7 +170,7 @@ void TextNoteEdit::keyReleaseEvent(QKeyEvent *e)
 
 void TextNoteEdit::initConnection()
 {
-    connect(this->document(), &QTextDocument::contentsChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
+    connect(this->document(), &QTextDocument::modificationChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
     connect(this, &TextNoteEdit::textChanged, this, &TextNoteEdit::onTextChanged);
 }
 
