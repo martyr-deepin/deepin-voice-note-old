@@ -133,7 +133,7 @@ void FolerWidgetItem::changeToUnClickMode()
 
 void FolerWidgetItem::Init()
 {
-    this->setFixedSize(QSize(224, 64));
+    this->setFixedSize(QSize(230, 64));
     this->setBlurEnabled(false);
     this->setBlurRectXRadius(8);
     this->setBlurRectYRadius(8);
@@ -141,7 +141,7 @@ void FolerWidgetItem::Init()
 
     m_BackGround = new DFrame(this);
     m_BackGround->move(0, 0);
-    m_BackGround->setFixedSize(224, 64);
+    m_BackGround->setFixedSize(230, 64);
     m_BackGround->setVisible(true);
 
 
