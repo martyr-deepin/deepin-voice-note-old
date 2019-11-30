@@ -266,7 +266,7 @@ void TextNoteEdit::onTextChanged()
 //        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
 //        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
-        if (textEditHeight < documentHeight - 1) {
+        if (textEditHeight < documentHeight - 3) {
             emit sigDetailButtonChanged(true);
         }
         else {

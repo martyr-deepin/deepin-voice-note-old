@@ -125,13 +125,14 @@ void TextNoteItem::initUI()
 //    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T8);
 //    m_textEdit->setFont(labelFont);
     DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
-    //m_textEdit->setFixedHeight(97);
-    //m_textEdit->setFixedHeight(124);
-    m_textEdit->setFixedHeight(133);
+    //m_textEdit->setFixedHeight(133);
+    m_textEdit->setFixedHeight(120);
+    m_textEdit->document()->setDocumentMargin(1);
 
-    //m_hBoxLayout->addSpacing(6);
+    m_hBoxLayout->addSpacing(3);
     m_hBoxLayout->addWidget(m_textEdit);
-    m_hBoxLayout->addSpacing(13);
+    //m_hBoxLayout->addSpacing(10);
+
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
@@ -600,15 +601,15 @@ void TextNoteItem::changeTheme()
 
 void TextNoteItem::onTextHeightChanged(int newheight)
 {
-    qDebug()<<"newheight:"<<newheight;
-    if(m_textEdit->height() <= newheight)
-    {
-        m_isTextConverted = true;
-    }
-    else
-    {
-        m_isTextConverted = false;
-    }
+//    qDebug()<<"newheight:"<<newheight;
+//    if(m_textEdit->height() <= newheight)
+//    {
+//        m_isTextConverted = true;
+//    }
+//    else
+//    {
+//        m_isTextConverted = false;
+//    }
 }
 
 void TextNoteItem::OnToDetalPage()
@@ -630,7 +631,13 @@ void TextNoteItem::OnTextEditOutFocus()
 void TextNoteItem::onDetailButtonChanged(const bool isVisible) {
 //    qDebug() << "TextNoteItem::onDetailButtonChanged()";
 //    qDebug() << "isVisible: " << isVisible;
-
+    if(isVisible)
+    {
+        m_isTextConverted = true;
+    }
+    else {
+        m_isTextConverted = false;
+    }
     this->m_detailBtn->setVisible(isVisible);
 }
 
