@@ -22,7 +22,8 @@ DWIDGET_USE_NAMESPACE
 #define FOLDER_MAX_WIDTH 110
 
 //左侧item项
-class FolerWidgetItem : public DBlurEffectWidget
+class FolerWidgetItem : public DWidget
+//class FolerWidgetItem : public DBlurEffectWidget
 //class FolerWidgetItem : public QWidget
 {
     Q_OBJECT
@@ -32,6 +33,7 @@ public:
     ~FolerWidgetItem();
     RenameEdit *m_lineEdit;
     DFrame *m_BackGround;
+    DFrame *m_BackGroundHoverd;
 //    DBlurEffectWidget *m_BackBorad;
     //QLabel *m_imageLabel;
     DLabel *m_nameLabel;

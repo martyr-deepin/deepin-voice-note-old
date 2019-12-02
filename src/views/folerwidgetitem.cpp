@@ -74,7 +74,7 @@ void FolerWidgetItem::changeToClickMode()
 
         m_clicked = true;
         m_BackGround->setVisible(false);
-
+        m_BackGroundHoverd->setVisible(false);
         //m_BackGround->setVisible(false);
 
 //        DPalette pe = DApplicationHelper::instance()->palette(m_nameLabel);
@@ -105,6 +105,10 @@ void FolerWidgetItem::changeToUnClickMode()
     if ((nullptr != m_nameLabel) && (nullptr != m_createTimeLabel)) {
         if (m_clicked) {
             m_BackGround->setVisible(true);
+//            DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//            pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+//            m_BackGround->setPalette(pb);
+//            m_BackGround->setBackgroundRole(DPalette::ItemBackground);
             m_clicked = false;
         }
 
@@ -134,9 +138,9 @@ void FolerWidgetItem::changeToUnClickMode()
 void FolerWidgetItem::Init()
 {
     this->setFixedSize(QSize(230, 64));
-    this->setBlurEnabled(false);
-    this->setBlurRectXRadius(8);
-    this->setBlurRectYRadius(8);
+//    this->setBlurEnabled(false);
+//    this->setBlurRectXRadius(8);
+//    this->setBlurRectYRadius(8);
 
 
     m_BackGround = new DFrame(this);
@@ -145,12 +149,16 @@ void FolerWidgetItem::Init()
     m_BackGround->setVisible(true);
 
 
-    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    m_BackGround->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+//    m_BackGround->setPalette(pb);
+    m_BackGround->setBackgroundRole(DPalette::ItemBackground);
 
-
-
+    m_BackGroundHoverd = new DFrame(this);
+    m_BackGroundHoverd->move(0, 0);
+    m_BackGroundHoverd->setFixedSize(230, 64);
+    m_BackGroundHoverd->setVisible(false);
+    m_BackGroundHoverd->setBackgroundRole(DPalette::Light);
 
     m_FolderImage = new FolderImage(this);
     m_FolderImage->move(6, 12);
@@ -336,10 +344,12 @@ void FolerWidgetItem::tryToFouceout()
 
 void FolerWidgetItem::changeTheme()
 {
-    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-    //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    m_BackGround->setPalette(pb);
+    m_BackGround->setBackgroundRole(DPalette::ItemBackground);
+    m_BackGroundHoverd->setBackgroundRole(DPalette::Light);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//    //pb.setBrush(DPalette::Base, QColor(255,255,255,13));
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+//    m_BackGround->setPalette(pb);
 
     if (!m_clicked) {
         DPalette pc;
@@ -361,16 +371,42 @@ void FolerWidgetItem::updateTimeLable(const QDateTime &time)
 //liuyang 3794
 void FolerWidgetItem::leaveEvent(QEvent *event)
 {
-    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
-    m_BackGround->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+//    m_BackGround->setPalette(pb);
+
+//    m_BackGround->setBackgroundRole(DPalette::ItemBackground);
+    if(m_clicked)
+    {
+        m_BackGround->setVisible(false);
+        m_BackGroundHoverd->setVisible(false);
+    }
+    else
+    {
+        m_BackGround->setVisible(true);
+        m_BackGroundHoverd->setVisible(false);
+    }
+
     return QWidget::leaveEvent(event);
 }
 void FolerWidgetItem::enterEvent(QEvent *event)
 {
-    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
-    m_BackGround->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_BackGround);
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+//    m_BackGround->setPalette(pb);
+//    m_BackGround->setBackgroundRole(DPalette::Light);
+
+    if(m_clicked)
+    {
+        m_BackGround->setVisible(false);
+        m_BackGroundHoverd->setVisible(false);
+    }
+    else
+    {
+        m_BackGround->setVisible(false);
+        m_BackGroundHoverd->setVisible(true);
+    }
     return QWidget::enterEvent(event);
 }
 //liuyang 3794

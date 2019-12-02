@@ -85,7 +85,8 @@ void TextNoteItem::initUI()
 
     m_bgWidget = new DFrame(this);
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
     m_bgWidget->setPalette(pb);
 
 
@@ -547,7 +548,8 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 void TextNoteItem::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
@@ -692,7 +694,8 @@ void TextNoteItem::leaveEvent(QEvent *event)
     m_mouseIsIn = false;
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
     m_bgWidget->setPalette(pb);
     //3152 liuyang
     return QWidget::leaveEvent(event);

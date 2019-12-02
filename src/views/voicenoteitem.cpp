@@ -93,7 +93,8 @@ void VoiceNoteItem::setPlayEnable()
 void VoiceNoteItem::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
@@ -155,7 +156,8 @@ void VoiceNoteItem::setTextEditAlignment(Qt::Alignment a)
 void VoiceNoteItem::leaveEvent(QEvent *event)
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
     return QWidget::leaveEvent(event);
 }
@@ -178,8 +180,8 @@ void VoiceNoteItem::initUI()
 
     m_bgWidget = new DFrame(this);
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
-
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
     //m_bgWidget->setFixedHeight(68);
     //m_bgWidget->setFixedHeight(173);
