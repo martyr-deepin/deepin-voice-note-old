@@ -132,7 +132,7 @@ void TextNoteItem::initUI()
 
     m_hBoxLayout->addSpacing(3);
     m_hBoxLayout->addWidget(m_textEdit);
-    //m_hBoxLayout->addSpacing(10);
+    m_hBoxLayout->addSpacing(5);
 
     QPalette pl = m_textEdit->palette();
     pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
