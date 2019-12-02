@@ -97,12 +97,12 @@ void MyMainWindow::initTitleFrame()
     //chengjinwei 2019 11 29 bug3800
 
 
-    m_returnBtn = new DIconButton(this);
+    //m_returnBtn = new DIconButton(this);
+     m_returnBtn = new DIconButton(DStyle::SP_ArrowPrev,this);
     m_returnBtn->setFixedSize(QSize(36,36));
 
-    //m_returnBtn->setIcon(QIcon(":/image/icon/normal/back_normal.svg"));
-    m_returnBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/back_normal.svg", QSize(27,27),qApp)));
-    m_returnBtn->setIconSize(QSize(27,27));
+//    m_returnBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/back_normal.svg", QSize(27,27),qApp)));
+//    m_returnBtn->setIconSize(QSize(27,27));
     m_returnBtn->setVisible(false);
 
     //chengjinwei 2019 11 29 bug3800
