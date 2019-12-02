@@ -217,12 +217,12 @@ void RightNoteList::initUI()
     //m_asrlimitErrDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("无法转写此条语音笔记，暂仅支持20分钟内的语音笔记。")), this);  //Add 20191111
     m_fileExistsDialog = new FileExistsDialog();
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    DPushButton *button = new DPushButton(QString(tr("Reconvert"))); //Add 20191111
+    DPushButton *button = new DPushButton(QString(tr("Try Again"))); //Add 20191111
     //DPushButton *button = new DPushButton(QStringLiteral("重新转写")); //Add 20191111
     m_asrOtherErrDMessage = UiUtil::createAsrErrorDF(this,button);  //Add 20191111
     connect(button, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111
 
-    DPushButton *button2 = new DPushButton(QString(tr("Reconvert"))); //Add 20191111
+    DPushButton *button2 = new DPushButton(QString(tr("Try Again"))); //Add 20191111
     //DPushButton *button2 = new DPushButton(QStringLiteral("重新转写")); //Add 20191111
     m_asrNetWorkErrDialog = UiUtil::createAsrNetWorkErrDialog(this,button2);  //Add 20191111
     connect(button2, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111

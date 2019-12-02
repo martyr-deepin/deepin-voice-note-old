@@ -287,6 +287,10 @@
     </message>
     <message>
         <source>Reconvert</source>
+        <translation type="vanished">重新转写</translation>
+    </message>
+    <message>
+        <source>Try Again</source>
         <translation>重新转写</translation>
     </message>
 </context>

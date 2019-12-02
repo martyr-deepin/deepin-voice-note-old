@@ -86,7 +86,7 @@ void MyMainWindow::initConnection()
 
 void MyMainWindow::initTitleFrame()
 {
-    //chengjinwei 2019 11 29 bug3800
+    //chengjinwei 2019 11 29 bug3800    
      titlebar()->setIcon(QIcon::fromTheme("deepin-voice-note"));
 //    QIcon icon = QIcon::fromTheme("deepin-voice-note");
 //    m_logo = new QLabel(this);

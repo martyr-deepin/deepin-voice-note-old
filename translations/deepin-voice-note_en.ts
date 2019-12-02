@@ -287,7 +287,11 @@
     </message>
     <message>
         <source>Reconvert</source>
-        <translation>Reconvert</translation>
+        <translation type="vanished">Reconvert</translation>
+    </message>
+    <message>
+        <source>Try Again</source>
+        <translation>Try Again</translation>
     </message>
 </context>
 <context>
