@@ -93,10 +93,11 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
     qDebug() << "TextNoteEdit::focusInEvent()";
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
-    this->setText(UiUtil::getHtmlPlainText(this->toPlainText()));
+    this->setPlainText(this->toPlainText());
     this->setLineHeight(24);
 
     DTextEdit::focusInEvent(e); //Add bug 2587
@@ -107,6 +108,7 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
     qDebug()<< "TextNoteEdit::focusOutEvent()";
+    qDebug()<< "this->toPlainText(): " << this->toPlainText();
 
     //3699
     if(menuOut)
@@ -128,7 +130,14 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 
     QString searchKeywords = Intancer::get_Intancer()->getSearchKeywords();
     qDebug() << "searchKeywords: " << searchKeywords;
-    this->setText(UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE));
+
+    QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
+    qDebug() << "html: " << html;
+    this->setHtml(html);
+
+    qDebug() << "this->setHtml() done";
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
+
     this->setLineHeight(24);
 
     DTextEdit::focusOutEvent(e);
