@@ -7,7 +7,8 @@
 #include <DApplicationHelper>
 #include <DFontSizeManager>
 
-TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searchKey, QWidget *parent) :DWidget(parent), m_isTextConverted(false)
+TextNoteItem::TextNoteItem(const bool isAddByButton, NOTE textNote, NoteController *noteCtr, QString searchKey, QWidget *parent)
+    : DWidget(parent), m_isTextConverted(false)
 {
     m_textEdit = nullptr;
     this->m_textNote = textNote;
@@ -19,7 +20,7 @@ TextNoteItem::TextNoteItem(NOTE textNote, NoteController *noteCtr, QString searc
 
     m_bakContent = textNote.contentText;//liuyang 3550 3547 3528
 
-    initUI();
+    initUI(isAddByButton);
     initConnection();
 }
 
@@ -66,7 +67,7 @@ QPoint TextNoteItem::remapToGlobalMenbtn(QPoint GlobalPoint)
     return pGlobal;
 }
 
-void TextNoteItem::initUI()
+void TextNoteItem::initUI(const bool isAddByButton)
 {
 
     //this->setFixedHeight(150);
@@ -119,7 +120,15 @@ void TextNoteItem::initUI()
 
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
-    m_textEdit->setTextNote(m_textNote, m_searchKey);
+
+    qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+
+    if (!isAddByButton) {
+        m_textEdit->setTextNote(m_textNote, m_searchKey);
+    }
+
+    qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
 //    labelFont.setPointSize(9);

@@ -265,12 +265,14 @@ void RightNoteList::initConnection()
 }
 
 //3550-3547-3528
-void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchKey,int textEditCursorPos )
-//void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey)
+void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchKey, int textEditCursorPos)
 {
     if(note.noteType == NOTE_TYPE::TEXT)
     {
-        TextNoteItem *textItem = new TextNoteItem(note, m_noteController, searchKey);
+        TextNoteItem *textItem = new TextNoteItem(isAddByButton, note, m_noteController, searchKey);
+
+        qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(textEditTrueClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
@@ -292,6 +294,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchK
         connect(textItem, SIGNAL(SigTextEditGetFocus(NOTE)), this, SLOT(onTextEditGetFocus(NOTE))); //Add bug 2587
         connect(textItem, SIGNAL(SigTextEditOutFocus(NOTE)), this, SLOT(onTextEditOutFocus(NOTE))); //Add bug 2587
 
+        qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
         //qDebug() << "text item height: " << textItem->height();
@@ -304,6 +308,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton ,NOTE note, QString searchK
         this->insertItem(count - 1,item);
         this->setItemWidget(item, textItem);
         textItem->init();
+
         if(isAddByButton)
         {
             //textItem->changeToEditMode();

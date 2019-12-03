@@ -30,7 +30,7 @@ class TextNoteItem : public DWidget
 {
     Q_OBJECT
 public:
-    TextNoteItem(NOTE m_textNote, NoteController *noteCtr, QString searchKey,QWidget *parent = nullptr);
+    TextNoteItem(const bool isAddByButton, NOTE m_textNote, NoteController *noteCtr, QString searchKey, QWidget *parent = nullptr);
     ~TextNoteItem();
 
     NOTE m_textNote;
@@ -105,7 +105,7 @@ private:
     int m_menuBtnState;
     bool m_isEdited;
     bool m_mouseIsIn;
-    void initUI();
+    void initUI(const bool isAddByButton);
     void initConnection();
     void updateNote();
 };
