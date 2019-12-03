@@ -61,9 +61,17 @@ void TextNoteEdit::setText(const QString &text)
     qDebug() << "TextNoteEdit::setText()";
     qDebug() << "text: " << text;
 
+    int lastTextCursorPosition = this->textCursor().position();
+    qDebug() << "lastTextCursorPosition: " << lastTextCursorPosition;
+
     DTextEdit::setText(text);
 
+    QTextCursor textCursor = this->textCursor();
+    textCursor.setPosition(lastTextCursorPosition);
+    this->setTextCursor(textCursor);
+
     qDebug() << "this->toPlainText(): " << this->toPlainText();
+    qDebug() << "this->textCursor().position(): " << this->textCursor().position();
 }
 
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
@@ -108,7 +116,10 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
-    this->setPlainText(this->toPlainText());
+    qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
+    this->setText(this->toPlainText());
+    qDebug() << "this->textCursor().position() after setText: " << this->textCursor().position();
+
     this->setLineHeight(24);
 
     DTextEdit::focusInEvent(e); //Add bug 2587
@@ -144,7 +155,10 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 
     QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
     qDebug() << "html: " << html;
-    this->setHtml(html);
+
+    qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
+    this->setText(html);
+    qDebug() << "this->textCursor().position() after setText: " << this->textCursor().position();
 
     qDebug() << "this->setHtml() done";
     qDebug() << "this->toPlainText(): " << this->toPlainText();
