@@ -161,13 +161,6 @@ QList<float> UiUtil::convertStringToFloatList(QString str)
     return list;
 }
 
-QString UiUtil::getHtmlPlainText(QString plainText)
-{
-    plainText = plainText.replace("\n", "<br />");
-
-    return plainText;
-}
-
 QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color) {
     src.replace("<", "&lt;");
 
@@ -182,7 +175,6 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     }
 
     QString destSrc = src;
-
 
     QString space = " ";
     QString RichSpace = "&nbsp;";
