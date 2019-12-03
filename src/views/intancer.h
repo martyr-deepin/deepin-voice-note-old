@@ -50,6 +50,10 @@ public:
     void setWantScrollRightListFlag(bool value);
     bool getWantScrollRightListFlag();
 
+    void setVoiceToTextFlag(bool value);
+    bool getVoiceToTextFlag();
+
+
     void initMoveFolderCount();
     void CountMoveFolderCount();
     int getMoveFolderFlag();
@@ -82,6 +86,7 @@ private:
      bool isViewAddTextButtonShow;
      bool isSearching;
      bool wantScrollRightList;
+     bool isVoiceToText;
      int  isMoveFolder_count;
      //start add by yuanshuai 20191128 bug 3731
      bool isEndRecord;

@@ -81,7 +81,8 @@ SOURCES += \
     src/views/searchnonepage.cpp \
     src/views/voicetonotepage.cpp \
     src/util/worker.cpp \
-    src/views/voicetotextedit.cpp
+    src/views/voicetotextedit.cpp \
+    src/app/myapplication.cpp
 
 HEADERS += \
     src/app/consts.h \
@@ -131,7 +132,8 @@ HEADERS += \
     src/views/searchnonepage.h \
     src/views/voicetonotepage.h \
     src/util/worker.h \
-    src/views/voicetotextedit.h
+    src/views/voicetotextedit.h \
+    src/app/myapplication.h
 
 INCLUDEPATH += \
     src/app \

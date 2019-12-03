@@ -12,6 +12,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     isSearching = false;
     isMoveFolder_count = 0;
     wantScrollRightList = true;
+    isVoiceToText = false;
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
@@ -168,6 +169,16 @@ void Intancer::setWantScrollRightListFlag(bool value)
 bool Intancer::getWantScrollRightListFlag()
 {
     return wantScrollRightList;
+}
+
+void Intancer::setVoiceToTextFlag(bool value)
+{
+    isVoiceToText = value;
+}
+
+bool Intancer::getVoiceToTextFlag()
+{
+    return isVoiceToText;
 }
 
 void Intancer::initMoveFolderCount()

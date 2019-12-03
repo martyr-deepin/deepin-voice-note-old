@@ -69,6 +69,8 @@ public slots:
     void asrEnd(); //Add 20191111
     void asrDialogClicked(int index, const QString &text); //Add 20191111
     void OnToDetalVoicePage(QString contant);
+    void onShowRecordDialog();
+    void onShowVoiceToTextDialog();
 protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);

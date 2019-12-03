@@ -4,18 +4,23 @@
 #include <src/views/mainwindow.h>
 
 #include <DApplication>
+#include "myapplication.h"
 
 DWIDGET_USE_NAMESPACE
 
 class VoiceNotebookApp
 {
 public:
-    VoiceNotebookApp(DApplication &a);
+    //VoiceNotebookApp(DApplication &a);
+    VoiceNotebookApp(MyApplication &a);
     ~VoiceNotebookApp();
     //int exec();
+
+
 private:
     MyMainWindow *m_mainWindow;
-    DApplication *m_app;
+    //DApplication *m_app;
+    MyApplication *m_app;
     void initApp();
     void initMainWindow();
     void initController();

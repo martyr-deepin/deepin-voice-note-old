@@ -19,7 +19,8 @@
 //Add end bug 2587
 MyMainWindow::MyMainWindow()
 {
-    asrStateFlg = 0; //Add 20191111
+    Intancer::get_Intancer()->setVoiceToTextFlag(false);
+    //asrStateFlg = 0; //Add 20191111
     m_quit = false; //Add bug3470
 
     initUI();
@@ -773,14 +774,16 @@ void MyMainWindow::asrStart()
     //start add by yuanshuai 20191128 bug 3859
     m_searchEdit->setEnabled(false);
     //end
-    asrStateFlg = 1;
+    Intancer::get_Intancer()->setVoiceToTextFlag(true);
+    //asrStateFlg = 1;
 }
 void MyMainWindow::asrEnd()
 {
     //start add by yuanshuai 20191128 bug 3859
     m_searchEdit->setEnabled(true);
     //end
-    asrStateFlg = 0;
+    Intancer::get_Intancer()->setVoiceToTextFlag(false);
+    //asrStateFlg = 0;
 }
 void MyMainWindow::asrDialogClicked(int index, const QString &text)
 {
@@ -800,11 +803,28 @@ void MyMainWindow::OnToDetalVoicePage(QString contant)
     m_returnBtn->setVisible(true);
 }
 
+void MyMainWindow::onShowRecordDialog()
+{
+    if(nullptr != m_exitDialog)
+    {
+        m_exitDialog->show();
+    }
+}
+
+void MyMainWindow::onShowVoiceToTextDialog()
+{
+    if(nullptr != m_asrCloseConfirmDialog)
+    {
+        m_asrCloseConfirmDialog->show();
+    }
+}
+
 void MyMainWindow::closeEvent(QCloseEvent* event)
 {
     m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
     //Add s 20191111
-    if (asrStateFlg)
+    if(Intancer::get_Intancer()->getVoiceToTextFlag())
+    //if (asrStateFlg)
     {
          m_eventSave = event;
          event->ignore();
@@ -813,19 +833,19 @@ void MyMainWindow::closeEvent(QCloseEvent* event)
     }
     else
     {
-        event->accept();
+        if(Intancer::get_Intancer()->getRecodingFlag())
+        {
+            event->ignore();
+            m_exitDialog->show();
+            return;
+        }
+        else
+        {
+            event->accept();
+        }
     }
     //Add e 20191111
-    if(Intancer::get_Intancer()->getRecodingFlag())
-    {
-        event->ignore();
-        m_exitDialog->show();
-        return;
-    }
-    else
-    {
-        event->accept();
-    }
+
     //DMainWindow::closeEvent(event);
 }
 

@@ -13,7 +13,7 @@ DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 
 
-VoiceNotebookApp::VoiceNotebookApp(DApplication &a)
+VoiceNotebookApp::VoiceNotebookApp(MyApplication &a)
 {
     m_app = &a;
     Intancer::get_Intancer()->setApp(m_app);
@@ -41,6 +41,7 @@ VoiceNotebookApp::~VoiceNotebookApp()
 
 
 //    initChildren();
+
 void VoiceNotebookApp::initApp()
 {
     m_app->setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -74,7 +75,7 @@ void VoiceNotebookApp::initApp()
 //    folder1.createTime = QDateTime::currentDateTime();
 //    //test1->addFolder(folder1);
 //    FolderOper::addFolder(folder1);
-
+    initConnection();
     m_app->exec();
 }
 
@@ -92,7 +93,8 @@ void VoiceNotebookApp::initController()
 }
 void VoiceNotebookApp::initConnection()
 {
-
+    QObject::connect(m_app, &MyApplication::sigShowRecordDialog, m_mainWindow, &MyMainWindow::onShowRecordDialog);
+    QObject::connect(m_app, &MyApplication::sigShowVoiceToTextDialog, m_mainWindow, &MyMainWindow::onShowVoiceToTextDialog);
 }
 
 //int VoiceNotebookApp::exec()
