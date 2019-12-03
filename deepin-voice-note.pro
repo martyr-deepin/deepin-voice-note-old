@@ -80,7 +80,8 @@ SOURCES += \
     src/views/myrecodebuttons.cpp \
     src/views/searchnonepage.cpp \
     src/views/voicetonotepage.cpp \
-    src/util/worker.cpp
+    src/util/worker.cpp \
+    src/views/voicetotextedit.cpp
 
 HEADERS += \
     src/app/consts.h \
@@ -129,7 +130,8 @@ HEADERS += \
     src/views/myrecodebuttons.h \
     src/views/searchnonepage.h \
     src/views/voicetonotepage.h \
-    src/util/worker.h
+    src/util/worker.h \
+    src/views/voicetotextedit.h
 
 INCLUDEPATH += \
     src/app \

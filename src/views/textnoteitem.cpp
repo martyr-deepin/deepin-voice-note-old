@@ -292,6 +292,7 @@ void TextNoteItem::changeToEditMode(int cursorpos)
         m_bakContent = m_textEdit->toPlainText();
         m_textEdit->setReadOnly(false);
         m_textEdit->setFocus();
+
         m_isEdited = true;
 
         //liuyang 3550 3547 3528

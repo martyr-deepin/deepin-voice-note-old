@@ -15,7 +15,8 @@
 #include "myrecodebuttons.h"
 #include <DFrame>
 #include <DLineEdit>    //Add 20191111
-#include "textnoteedit.h" //Add 20191111
+#include "voicetotextedit.h"
+#include "textnoteedit.h"
 #include "menubutton.h"  //ynbboy
 DWIDGET_USE_NAMESPACE
 //右侧语音记录Item
@@ -38,7 +39,7 @@ public:
     void setTextEditVal(QString txt); //Add 20191111
     void setTextEditAlignment(Qt::Alignment a);
 
-    void setLineEditDisplay(bool disp); //true: 显示 fasle:隐藏  Add 20191111
+    //void setLineEditDisplay(bool disp); //true: 显示 fasle:隐藏  Add 20191111
     void setTextEditDisplay(bool disp); //true: 显示 fasle:隐藏  Add 20191111
     //start add by yuanshuai 20191128 bug 3876
     void setDocmentAligment(QTextOption op);
@@ -82,8 +83,9 @@ public slots:
     void setPlayEnable();
     void changeTheme();
     void onToDetalVoicePage();
-    void onDetailButtonChanged(const bool isVisible);
-    //void handle
+    //void onDetailButtonChanged(const bool isVisible);
+    void onTextHeightChanged(int height);
+
 
     //3152 liuyang
 protected:
@@ -93,7 +95,8 @@ protected:
 private:
     NoteController *m_noteCtr;
     PlayingButton *m_playingButton;
-    TextNoteEdit *m_textEdit;  //Add 20191111
+    VoiceToTextEdit *m_textEdit;  //Add 20191111
+    //TextNoteEdit *m_textEdit;
     DLineEdit *m_LineEdit;  //Add 20191111
     void initUI();
     void initConnection();
