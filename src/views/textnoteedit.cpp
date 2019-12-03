@@ -6,6 +6,7 @@
 #include <uiutil.h>
 
 #include <DMenu>//3699
+#include <QTextBlock>
 
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
 {
@@ -53,6 +54,16 @@ QString TextNoteEdit::getText()
 {
     QString tmp = this->toPlainText();
     return tmp;
+}
+
+void TextNoteEdit::setText(const QString &text)
+{
+    qDebug() << "TextNoteEdit::setText()";
+    qDebug() << "text: " << text;
+
+    DTextEdit::setText(text);
+
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
 }
 
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
@@ -308,11 +319,13 @@ QString TextNoteEdit::onlyreadFromDatabase(QDateTime *time)//liuyang 3547
 
 void TextNoteEdit::setLineHeight(int value)
 {
-    QTextCursor textCursor = this->textCursor();
-    QTextBlockFormat textBlockFormat;
-    textBlockFormat.setLineHeight(value, QTextBlockFormat::FixedHeight);//设置固定行高
-    textCursor.setBlockFormat(textBlockFormat);
-    this->setTextCursor(textCursor);
+    QTextDocument *textDocument = this->document();
+    for (QTextBlock it = textDocument->begin(); it != textDocument->end(); it = it.next()) {
+        QTextCursor textCursor(it);
+        QTextBlockFormat textBlockFormat = it.blockFormat();
+        textBlockFormat.setLineHeight(value, QTextBlockFormat::FixedHeight);
+        textCursor.setBlockFormat(textBlockFormat);
+    }
 }
 
 int TextNoteEdit::getLineHeight()
