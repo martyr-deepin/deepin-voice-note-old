@@ -168,48 +168,40 @@ QString UiUtil::getHtmlPlainText(QString plainText)
     return plainText;
 }
 
-QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color)
-{
+QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color) {
+    src.replace("<", "&lt;");
 
-    //src.replace("<","&#60;");
-    src.replace("<","&lt;");
-    //QString richText = "<p  style=\"font-size:%1px\">%2</p>";
     QString searchStr = "<font color=#349ae8>%1</font>";
-    if(BLUE == color)
-    {
+    if (BLUE == color) {
         searchStr.clear();
         searchStr = "<font color=#349ae8>%1</font>";
     }
-    else if(WHITE == color)
-    {
+    else if (WHITE == color) {
         searchStr.clear();
         searchStr = "<font color=#ffffff>%1</font>";
     }
-    QString destSrc = src;
 
-    QString n = "\n";
-    QString br = "<br/>";
-    destSrc = destSrc.replace(n,br);
+    QString destSrc = src;
 
 
     QString space = " ";
     QString RichSpace = "&nbsp;";
     destSrc = destSrc.replace(space,RichSpace);
 
+    QString n = "\n";
+    // It should be "<br />" instead of "<br/>". The latter would lead to losing the last "<br/>".
+    QString br = "<br />";
+    destSrc = destSrc.replace(n, br);
+
     QString tab = "\t";
     QString Richtab = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     destSrc = destSrc.replace(tab,Richtab);
 
-    if (!searchKey.isEmpty())
-    {
+    if (!searchKey.isEmpty()) {
         destSrc = destSrc.replace(searchKey, searchStr.arg(searchKey));
     }
 
     return destSrc;
-//    QString tmpText = richText.arg(fontSize).arg(destSrc);
-
-//    return tmpText;
-
 }
 
 bool UiUtil::saveTxt(QString path, QString content)
