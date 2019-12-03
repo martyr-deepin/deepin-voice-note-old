@@ -145,22 +145,22 @@ void VoiceNoteItem::onTextHeightChanged(int height)
     int newHeight = 0;
     if(VOICE_TO_TEXT_MAX_HEIGHT < height)
     {
-        newHeight = VOICE_TO_TEXT_MAX_HEIGHT;
+        newHeight = VOICE_TO_TEXT_MAX_HEIGHT + 5;
         m_detailBtn->setVisible(true);
     }
     else
     {
-        newHeight = height;
+        newHeight = height + 5;
         m_detailBtn->setVisible(false);
     }
     //m_bgWidgetBydetailBtn->show();
     m_bgWidgetBytext->setFixedHeight(newHeight);
     m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
-    m_detailBtn->move(10,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 17);
+    m_detailBtn->move(10,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 19);
     qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
 
 
-    emit sigTextHeightChanged(height);
+    emit sigTextHeightChanged(newHeight);
 }
 //Add s 20191111
 void VoiceNoteItem::setTextEditVal(QString txt)
@@ -314,7 +314,7 @@ void VoiceNoteItem::initUI()
 
 
     QPalette pl = m_textEdit->palette();
-    pl.setBrush(QPalette::Base,QBrush(QColor(255,255,0,255)));
+    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
     m_textEdit->setPalette(pl);
     //zhangya 3846
     //m_textEdit->setTextColor(pb.color(DPalette::LightLively));

@@ -969,9 +969,9 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
         m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
         m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
-        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight)); //ynbboy
-        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight); //ynbboy
-        m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
+        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight + 5)); //ynbboy
+        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight + 5); //ynbboy
+        //m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
 //        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
         //Edit start 3878
