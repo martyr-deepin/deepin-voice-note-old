@@ -12,8 +12,9 @@ class VoiceNotebookApp
 {
 public:
     //VoiceNotebookApp(DApplication &a);
-    VoiceNotebookApp(MyApplication &a);
+    VoiceNotebookApp(MyApplication &a, MyMainWindow *mainWindow); //Edit createVoiceMemo 新建语音备忘录对应
     ~VoiceNotebookApp();
+    MyMainWindow *getMainWindowObject();  //Add createVoiceMemo 新建语音备忘录对应
     //int exec();
 
 

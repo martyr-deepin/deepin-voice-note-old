@@ -66,6 +66,7 @@ void MainPage::initConnection()
     QObject::connect(m_rightView, SIGNAL(asrEnd()), m_leftView, SLOT(onEndAsr()));   //Add 20191111 Edit 3884
     QObject::connect(m_rightView, SIGNAL(asrStart()), this, SIGNAL(asrStart()));    //Add 20191111
     QObject::connect(m_rightView, SIGNAL(asrEnd()), this, SIGNAL(asrEnd()));   //Add 20191111
+    QObject::connect(m_rightView, SIGNAL(sigRecordVoiceCouldUse()), this, SIGNAL(sigRecordVoiceCouldUse())); //Add createVoiceMemo 新建语音备忘录对应
     QObject::connect(m_rightView, SIGNAL(sigShowVoiceDeviceError()), this, SIGNAL(sigShowVoiceDeviceError()));
 
 
@@ -202,6 +203,16 @@ void MainPage::onAddFolder()
     emit clearSearch();
     m_rightView->OnAddAFolder();
 }
+//Add start createVoiceMemo 新建语音备忘录对应
+void MainPage::startRecording()
+{
+    m_rightView->handleStartRecord();
+}
+bool MainPage::isAddVoiceBtnEnabled()
+{
+    return m_rightView->isAddVoiceBtnEnabled();
+}
+//Add end createVoiceMemo 新建语音备忘录对应
 
 //void MainPage::addItemTest()
 //{

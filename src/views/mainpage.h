@@ -42,6 +42,8 @@ public:
     void VoicePlayOrPause();
     bool shortcutsDeleteByRightlist();
     //Add end bug 2587
+    void startRecording();  //Add createVoiceMemo 新建语音备忘录对应
+    bool isAddVoiceBtnEnabled(); //Add createVoiceMemo 新建语音备忘录对应
 signals:
     void textEditClicked(NOTE textNote);
     void clearSearch();
@@ -56,6 +58,7 @@ signals:
     void asrEnd();  //转写结束   //Add 20191111
     void sigToDetalVoicePage(QString contant);
     void sigShowVoiceDeviceError();
+    void sigRecordVoiceCouldUse(); //Add createVoiceMemo 新建语音备忘录对应
 public slots:
     void onAddFolder();
 

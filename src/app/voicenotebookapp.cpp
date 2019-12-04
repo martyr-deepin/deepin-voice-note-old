@@ -13,9 +13,10 @@ DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 
 
-VoiceNotebookApp::VoiceNotebookApp(MyApplication &a)
+VoiceNotebookApp::VoiceNotebookApp(MyApplication &a,MyMainWindow *mainWindow)  //Edit createVoiceMemo 新建语音备忘录对应
 {
     m_app = &a;
+    m_mainWindow = mainWindow;  //Add createVoiceMemo 新建语音备忘录对应
     Intancer::get_Intancer()->setApp(m_app);
     initApp();
 }
@@ -81,7 +82,7 @@ void VoiceNotebookApp::initApp()
 
 void VoiceNotebookApp::initMainWindow()
 {
-    m_mainWindow = new MyMainWindow();
+//    m_mainWindow = new MyMainWindow(); //Del createVoiceMemo 新建语音备忘录对应
     //mainWindow->setMinimumSize(500, 500);
     m_mainWindow->show();
 

@@ -762,6 +762,7 @@ void RightView::onCheckRecordCouldUse(bool coulduse)
         {
             m_addVoiceBtn->EnAbleBtn();
             m_addVoiceBtn->setToolTip(QString(""));
+            emit sigRecordVoiceCouldUse();  //Add createVoiceMemo 新建语音备忘录对应
         }
         else
         {
@@ -903,3 +904,10 @@ void RightView::resizeEvent(QResizeEvent * event)
     }
 
 }
+//Add start createVoiceMemo 新建语音备忘录对应
+bool RightView::isAddVoiceBtnEnabled()
+{
+    bool a = m_addVoiceBtn->isEnabled();
+    return m_addVoiceBtn->isEnabled();
+}
+//Add end createVoiceMemo 新建语音备忘录对应

@@ -36,12 +36,12 @@ class MyMainWindow : public DMainWindow
     Q_OBJECT
 public:
     MyMainWindow();
-
+    void CreateVoiceMemo(); //Add createVoiceMemo 新建语音备忘录对应
 public slots:
     void showNoteDetail(NOTE note);
     void showListPage();
     void handleSearchKey();
-    void tryToSearch();
+    void tryToSearch(QString search);
     void handleSearchDialogClicked(int index, const QString &text);
     void handleCloseSearchDialog();
     void clearSearchLine();
@@ -71,6 +71,7 @@ public slots:
     void OnToDetalVoicePage(QString contant);
     void onShowRecordDialog();
     void onShowVoiceToTextDialog();
+    void OnRecordVoiceCouldUse(); //Add createVoiceMemo 新建语音备忘录对应
 protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
@@ -123,6 +124,7 @@ private:
     void initTheRest();
     QJsonObject creatShorcutJson();
     //Add end bug 2587
+    bool m_VoiceMemoAction;  //true: 创建语音备忘录指令有 false 创建语音备忘录指令无  Add createVoiceMemo 新建语音备忘录对应
 };
 
 #endif // MAINWINDOW_H

@@ -22,7 +22,7 @@ MyMainWindow::MyMainWindow()
     Intancer::get_Intancer()->setVoiceToTextFlag(false);
     //asrStateFlg = 0; //Add 20191111
     m_quit = false; //Add bug3470
-
+    m_VoiceMemoAction = false; //Add createVoiceMemo 新建语音备忘录对应
     initUI();
     setTitlebarShadowEnabled(false);//liuyang 3799
 }
@@ -82,7 +82,7 @@ void MyMainWindow::initConnection()
 
     connect(m_mainPage,SIGNAL(sigToDetalVoicePage(QString)),this,SLOT(OnToDetalVoicePage(QString)));
     connect(m_mainPage,SIGNAL(sigShowVoiceDeviceError()),this,SLOT(showNoVoiceDeviceDialog()));
-
+    connect(m_mainPage, SIGNAL(sigRecordVoiceCouldUse()), this, SLOT(OnRecordVoiceCouldUse())); //Add createVoiceMemo 新建语音备忘录对应
 }
 
 void MyMainWindow::initTitleFrame()
@@ -526,7 +526,7 @@ void MyMainWindow::handleSearchKey()
 {
     QString searchKey = m_searchEdit->text();
 
-   if(!searchKey.isEmpty())
+    if(!searchKey.isEmpty())
     {
         Intancer::get_Intancer()->setSearchingFlag(true);
     }
@@ -553,13 +553,6 @@ void MyMainWindow::handleSearchKey()
             m_stackedWidget->setCurrentIndex(0);
             m_searchEdit->setEnabled(true); //Add  bug3136
         }
-//        else
-//        {
-////            if(hasNoFolder)
-////            {
-//                m_stackedWidget->setCurrentIndex(2);
-////            }
-//        }
     }
     else
     {
@@ -569,20 +562,19 @@ void MyMainWindow::handleSearchKey()
 
 }
 
-void MyMainWindow::tryToSearch()
+void MyMainWindow::tryToSearch(QString search)
 {
-//    if(0 < m_mainPage->getAllFolderListNumFromDatabase())
-//    {
-        if(Intancer::get_Intancer()->getRecodingFlag())
-        {
-            m_SearchDialog->show();
-            Intancer::get_Intancer()->setSearchingFlag(false);
-        }
-        else
-        {
-            handleSearchKey();
-        }
-//    }
+    qDebug()<<"search:"<<search;
+
+    if(Intancer::get_Intancer()->getRecodingFlag())
+    {
+        m_SearchDialog->show();
+        Intancer::get_Intancer()->setSearchingFlag(false);
+    }
+    else
+    {
+        handleSearchKey();
+    }
 }
 
 void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
@@ -659,6 +651,7 @@ void MyMainWindow::changeTheme()
 void MyMainWindow::OnNoSearchResult()
 {
     m_stackedWidget->setCurrentIndex(3);
+    //m_stackedWidget->setCurrentIndex(0);
 }
 
 //Add start bug3470
@@ -866,4 +859,38 @@ void MyMainWindow::closeEvent(QCloseEvent* event)
     //DMainWindow::closeEvent(event);
 }
 
+//Add start createVoiceMemo 新建语音备忘录对应
+void MyMainWindow::CreateVoiceMemo()
+{
+    m_VoiceMemoAction = true;
+    if (Intancer::get_Intancer()->getRecodingFlag() == false)
+    {
+        if(0 >= m_mainPage->getFolderCount())
+        {
+            onAddFolderByInitPage();
+        }
 
+        if (m_mainPage->isAddVoiceBtnEnabled())
+        {
+            this->setDisabled(false);
+            m_mainPage->startRecording();
+            m_VoiceMemoAction =false;
+        }
+        else
+        {
+            this->setDisabled(true);
+        }
+    }
+
+}
+void MyMainWindow::OnRecordVoiceCouldUse()
+{
+    if (m_VoiceMemoAction)
+    {
+        this->setDisabled(false);
+        m_mainPage->startRecording();
+        m_VoiceMemoAction = false;
+    }
+
+}
+//Add end createVoiceMemo 新建语音备忘录对应

@@ -24,6 +24,7 @@
 
 #include "voicenotebookapp.h"
 #include "intancer.h"   //Add 20191111
+#include "exportedinterface.h"  //Add createVoiceMemo 新建语音备忘录对应
 #include <DApplication>
 //#include <DApplicationSettings>
 //#include <DMainWindow>
@@ -43,6 +44,15 @@ int main(int argc, char *argv[])
     //DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     //DApplication a(argc, argv);
     MyApplication a(argc, argv);
+
+    //Add start createVoiceMemo 新建语音备忘录对应
+//    MyMainWindow * mainWindowObject = app.getMainWindowObject();
+    ExportedInterface einterface(&a);
+    einterface.registerAction("CREATEVOICEMEMO","create a new VoiceMemo");
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerService("com.deepin.VoiceNote");
+    dbus.registerObject("com.deepin.VoiceNote",&a);
+    //Add end createVoiceMemo 新建语音备忘录对应
 
     //Add start 20191111
     QString str = argv[0];
@@ -64,5 +74,7 @@ int main(int argc, char *argv[])
         return  0;
     }
 
-    VoiceNotebookApp app(a);
+    MyMainWindow  *mainWindowObject = new MyMainWindow();  //Add  createVoiceMemo 新建语音备忘录对应
+    einterface.setMainWindowObj(mainWindowObject); //Add  createVoiceMemo 新建语音备忘录对应
+    VoiceNotebookApp app(a, mainWindowObject); //Edit  createVoiceMemo 新建语音备忘录对应
 }
