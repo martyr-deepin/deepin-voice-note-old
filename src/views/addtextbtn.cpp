@@ -59,7 +59,6 @@ void AddTextBtn::init()
         DFontSizeManager::instance()->bind(m_addBtn,DFontSizeManager::T5);
         //m_addBtn->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T5));
         m_addBtn->setText(tr("Click to Add TextNote"));
-        //m_addBtn->setText(tr("点击添加文字记事项"));
 
 //        DPalette pb = DApplicationHelper::instance()->palette(m_addBtn);
 //        pb.setBrush(DPalette::ButtonText, pb.color(DPalette::TextTips));

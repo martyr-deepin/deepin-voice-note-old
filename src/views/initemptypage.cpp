@@ -62,7 +62,6 @@ void InitEmptyPage::init()
     //m_Text->setFixedSize(QSize(240,18));
     m_Text->setFixedSize(QSize(500, 18));
     m_Text->setText(QString(tr("After create a folder, you can start your note")));
-    //m_Text->setText(QString(tr("新建一个记事本后，可以开始记录语音及文字")));
     m_Text->setAlignment(Qt::AlignCenter);
     //m_Text->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T8));
     DFontSizeManager::instance()->bind(m_Text, DFontSizeManager::T8);

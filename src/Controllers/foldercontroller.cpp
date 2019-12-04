@@ -54,10 +54,8 @@ QString FolderController::getNextFolderName()
 {
     QStringList folderNameList = FolderOper::getFolderNameList();
     QString folderName = QString(QObject::tr("NewFolder"));
-    //QString folderName = QString(QObject::tr("新记事"));
     QString DefaultName = QString(QObject::tr("NewFolder"));
 
-    //QString folderName = DEFAULT_FOLDER_NAME;
     int i = 1;
     bool findFlag = false;
     while (!findFlag)
@@ -65,7 +63,6 @@ QString FolderController::getNextFolderName()
         if (folderNameList.contains(folderName))
         {
             folderName = DefaultName + QString::number(i);
-            //folderName = DEFAULT_FOLDER_NAME + QString::number(i);
             i++;
         }
         else {

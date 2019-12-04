@@ -35,9 +35,7 @@ void LeftFolderList::initUI()
     //this->move(-10,this->y());
     m_contextMenu = new DMenu;
     m_renameAction = new QAction(tr("Rename"),this);
-    //m_renameAction = new QAction(tr(FOLDER_MENU_RENAME),this);
     m_delAction = new QAction(tr("Delete"),this);
-//    m_delAction = new QAction(tr(FOLDER_MENU_DELETE),this);
     m_contextMenu->addAction(m_renameAction);
     m_contextMenu->addAction(m_delAction);
 

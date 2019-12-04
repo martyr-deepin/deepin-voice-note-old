@@ -38,12 +38,7 @@ static QStringList default_folder_imgpath=
     DEFAULT_FOLDER_IMG_PATH_9,
     DEFAULT_FOLDER_IMG_PATH_10
 };
-static const char * DEFAULT_FOLDER_NAME = "新记事";
-static const char * FOLDER_MENU_RENAME = "重命名";
-static const char * FOLDER_MENU_DELETE = "删除";
-static const char * NOTE_MENU_SAVE_AS_TXT = "保存为TXT";
-static const char * NOTE_MENU_SAVE_AS_MP3 = "保存为MP3";
-static const char * NOTE_MENU_ARS_AS_MP3 = "语音转文字"; //Add 20191111
+
 enum NOTE_TYPE {VOICE=0, TEXT=1};
 enum RICH_TEXT_COLOR {BLUE=0, WHITE=1};
 

@@ -57,7 +57,6 @@ void RightView::initUI()
 
     m_NoSearchResault = new DLabel(this);
     m_NoSearchResault->setText(QString(tr("No Result")));
-    //m_NoSearchResault->setText(QString(tr("无结果")));
 //    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T4);
 //    m_NoSearchResault->setFont(labelFont);
     DFontSizeManager::instance()->bind(m_NoSearchResault,DFontSizeManager::T4);
