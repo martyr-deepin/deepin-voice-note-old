@@ -469,6 +469,10 @@ void MyMainWindow::initStackedWidget()
 
 void MyMainWindow::showNoteDetail(NOTE note)
 {
+    //start add by yuanshuai 20191204 bug 4121
+    m_bakForSearchStr = m_searchEdit->text();
+    //end
+
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
     m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
@@ -502,6 +506,14 @@ void MyMainWindow::showListPage()
     m_mainPage->setFocus();
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
+
+    //start add by yuanshuai 20191204 bug 4121
+    int ret = QString::compare(m_bakForSearchStr, m_searchEdit->text());
+    if(ret != 0)
+    {
+        handleSearchKey();
+    }
+    //end
 
     if(m_DetalTextBak != m_textNoteEdit->getText())
     {

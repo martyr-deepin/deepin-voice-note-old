@@ -212,27 +212,25 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
     if(themeType == DGuiApplicationHelper::LightType)
     {
-        m_detailBtn = new MenuButton(
+        m_detailBtn = new MyRecodeButtons(
                     ":/image/icon/normal/detail-normal.svg",
                     ":/image/icon/press/detail-press.svg",
                     ":/image/icon/hover/detail-hover.svg",
                     "",
                     "",
-                    QSize(36,36),
-                    QSize(15,14),
+                    QSize(44,44),
                     m_MenuBtnBackground
                 );
     }
     else if(themeType == DGuiApplicationHelper::DarkType)
     {
-        m_detailBtn = new MenuButton(
+        m_detailBtn = new MyRecodeButtons(
                     ":/image/icon_dark/normal/detail-normal.svg",
                     ":/image/icon_dark/press/detail-press.svg",
                     ":/image/icon_dark/hover/detail-hover.svg",
                     "",
                     "",
-                    QSize(36,36),
-                    QSize(15,14),
+                    QSize(44,44),
                     m_MenuBtnBackground
                 );
     }
@@ -240,8 +238,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_detailBtn->setVisible(false);
 
     //chengjinwei 2019 11 29 bug3790
-    //m_detailBtn->move(4,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
-    m_detailBtn->move(10,m_MenuBtnBackground->height() - m_detailBtn->height() - 17);
+    m_detailBtn->move(6,m_MenuBtnBackground->height() - m_detailBtn->height() - 16);
     //chengjinwei 2019 11 29 bug3790
 
     //onTextHeightChanged(m_textEdit->getLineHeight());

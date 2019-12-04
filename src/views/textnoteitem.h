@@ -45,7 +45,8 @@ public:
     QPlainTextEdit *m_plainTextEdit;
     //DImageButton *m_menuBtn;
     MyRecodeButtons *m_menuBtn;
-    MenuButton *m_detailBtn;
+    //MenuButton *m_detailBtn;
+    MyRecodeButtons *m_detailBtn;
     QStackedWidget *m_stackedWidget;
     QWidget *m_page1Widget;
     QWidget *m_page2Widget;

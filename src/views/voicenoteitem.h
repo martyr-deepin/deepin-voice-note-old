@@ -63,7 +63,7 @@ public:
     DLabel *m_voiceTimeLabel;
     //QWidget *m_voiceShape;
     Waveform *m_waveform;
-    MenuButton *m_detailBtn;  //ynbboy
+    MyRecodeButtons *m_detailBtn;  //ynbboy
 signals:
     void menuBtnClicked(QPoint menuArrowPointGlobal, QPoint menuArrowPointToItem, QWidget *textNoteItem, NOTE note);
     void resumePlayingSignal(VoiceNoteItem * voiceNoteItem, QString filePath, QRect waveformRect, NOTE note); //Edit  bug 2587

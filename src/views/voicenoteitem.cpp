@@ -156,7 +156,7 @@ void VoiceNoteItem::onTextHeightChanged(int height)
     //m_bgWidgetBydetailBtn->show();
     m_bgWidgetBytext->setFixedHeight(newHeight);
     m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
-    m_detailBtn->move(10,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 19);
+    m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
     qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
 
 
@@ -335,33 +335,31 @@ void VoiceNoteItem::initUI()
     //m_bgWidgetBydetailBtn->setFixedSize(QSize(48,m_bgWidgetBytext->height()));
     if(themeType == DGuiApplicationHelper::LightType)
     {
-        m_detailBtn = new MenuButton(
+        m_detailBtn = new MyRecodeButtons(
                     ":/image/icon/normal/detail-normal.svg",
                     ":/image/icon/press/detail-press.svg",
                     ":/image/icon/hover/detail-hover.svg",
                     "",
                     "",
-                    QSize(36,36),
-                    QSize(15,14),
+                    QSize(44,44),
                     m_bgWidgetBydetailBtn
                 );
     }
     else if(themeType == DGuiApplicationHelper::DarkType)
     {
-        m_detailBtn = new MenuButton(
+        m_detailBtn = new MyRecodeButtons(
                     ":/image/icon_dark/normal/detail-normal.svg",
                     ":/image/icon_dark/press/detail-press.svg",
                     ":/image/icon_dark/hover/detail-hover.svg",
                     "",
                     "",
-                    QSize(36,36),
-                    QSize(15,14),
+                    QSize(44,44),
                     m_bgWidgetBydetailBtn
                 );
     }
 
     m_detailBtn->setVisible(false);
-    m_detailBtn->move(10,m_bgWidgetBydetailBtn->height());
+    m_detailBtn->move(6,m_bgWidgetBydetailBtn->height());
 
 
     m_hBoxLayoutBytext->addSpacing(3);
