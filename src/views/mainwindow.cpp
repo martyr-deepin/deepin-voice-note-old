@@ -99,7 +99,7 @@ void MyMainWindow::initTitleFrame()
 
 
     //m_returnBtn = new DIconButton(this);
-     m_returnBtn = new DIconButton(DStyle::SP_ArrowPrev,this);
+     m_returnBtn = new DIconButton(DStyle::SP_ArrowLeave,this);
     m_returnBtn->setFixedSize(QSize(36,36));
 
 //    m_returnBtn->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/back_normal.svg", QSize(27,27),qApp)));
