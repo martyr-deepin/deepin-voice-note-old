@@ -327,6 +327,7 @@ void RightView::addTextNote()
     note.noteType = NOTE_TYPE::TEXT;
     note.createTime = QDateTime::currentDateTime();
     note.contentText = "";
+    onDisableAddBtn(); //Add 4133
 
     m_noteController->addNote(note);
     //==== start add 20191105  bug2162
