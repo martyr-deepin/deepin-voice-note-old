@@ -300,4 +300,5 @@ void MySlider::OnSliderMoved(int newTime)
     }
 
     m_sliderHandler->setTime(curTimeStr);
+    this->repaint();
 }

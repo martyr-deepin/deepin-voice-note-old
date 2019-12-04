@@ -38,8 +38,6 @@
         <file>image/icon/normal/play_normal.svg</file>
         <file>image/icon/normal/back_normal.svg</file>
         <file>image/icon/press/back_press.svg</file>
-        <file>image/slider.svg</file>
-        <file>image/voice-note-32px 2.svg</file>
         <file>image/icon/normal/circlebutton_add .svg</file>
         <file>image/icon/disabled/circlebutton_voice_disabled.svg</file>
         <file>image/icon/normal/slider.svg</file>
@@ -120,5 +118,6 @@
         <file>image/icon/DefaultAvatar/6.svg</file>
         <file>image/icon/focus/circlebutton_add_focus.svg</file>
         <file>image/icon/normal/warning .svg</file>
+        <file>icons/deepin/builtin/voice_note_32px.svg</file>
     </qresource>
 </RCC>
