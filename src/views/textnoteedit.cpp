@@ -250,8 +250,13 @@ void TextNoteEdit::keyReleaseEvent(QKeyEvent *e)
 
     DTextEdit::keyReleaseEvent(e);
 }
-
-
+//Add start 4166
+void TextNoteEdit::insertFromMimeData(const QMimeData *source)
+{
+    DTextEdit::insertFromMimeData(source);
+    this->updateNote();
+}
+//Add end 4166
 void TextNoteEdit::initConnection()
 {
     connect(this->document(), &QTextDocument::modificationChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
