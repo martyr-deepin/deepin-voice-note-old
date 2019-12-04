@@ -521,7 +521,12 @@ void MyMainWindow::handleSearchKey()
     else
     {
         Intancer::get_Intancer()->setSearchingFlag(false);
-        m_stackedWidget->setCurrentIndex(0);
+        //start add by yuanshuai 20191203 bug 4114 bug 4121 bug 4130
+        if(!(1 == m_stackedWidget->currentIndex() || 4 == m_stackedWidget->currentIndex()))
+        {
+            m_stackedWidget->setCurrentIndex(0);
+        }
+        //end
         m_searchEdit->setEnabled(true); //Add  bug3136
     }
 
