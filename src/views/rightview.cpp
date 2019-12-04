@@ -193,7 +193,7 @@ void RightView::initNoteList()
     //m_AddButtonLocked->setFixedWidth(548);
     m_AddButtonLocked->move(6,this->height() - 78);
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
-    connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
+    connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
     m_AddButtonLocked->setVisible(false);
     //m_AddButtonLocked->setFocusPolicy(Qt::NoFocus);
 
