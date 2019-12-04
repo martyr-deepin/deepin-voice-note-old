@@ -10,6 +10,8 @@
 
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
 {
+    qDebug() << "TextNoteEdit::TextNoteEdit()";
+
     if (nullptr == noteCtr)
     {
         m_noteCtr = new NoteController();
@@ -19,14 +21,17 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
         m_noteCtr = noteCtr;
     }
     m_textNote = textNote;
-    this->setText(m_textNote.contentText);//liuyang 3550 3547 3528
+
+    qDebug() << "this->m_textNote.contentText: " << this->m_textNote.contentText;
+
+    this->setPlainText(m_textNote.contentText);//liuyang 3550 3547 3528
+    this->setLineHeight(24);
+
     initConnection();
 
 //    QTextEdit *tmp = new QTextEdit(this);
 //    tmp->setFixedSize(QSize(200,200));
 //    tmp->move(200,0);
-
-    setLineHeight(24);
 }
 
 TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
@@ -41,9 +46,9 @@ TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit
     }
 
     initConnection();
-    setLineHeight(24);
-}
 
+    this->setLineHeight(24);
+}
 
 TextNoteEdit::~TextNoteEdit()
 {
@@ -54,6 +59,42 @@ QString TextNoteEdit::getText()
 {
     QString tmp = this->toPlainText();
     return tmp;
+}
+
+void TextNoteEdit::setHtml(const QString &text)
+{
+    qDebug() << "TextNoteEdit::setHtml()";
+    qDebug() << "text: " << text;
+
+    int lastTextCursorPosition = this->textCursor().position();
+    qDebug() << "lastTextCursorPosition: " << lastTextCursorPosition;
+
+    DTextEdit::setHtml(text);
+
+    QTextCursor textCursor = this->textCursor();
+    textCursor.setPosition(lastTextCursorPosition);
+    this->setTextCursor(textCursor);
+
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
+    qDebug() << "this->textCursor().position(): " << this->textCursor().position();
+}
+
+void TextNoteEdit::setPlainText(const QString &text)
+{
+    qDebug() << "TextNoteEdit::setPlainText()";
+    qDebug() << "text: " << text;
+
+    int lastTextCursorPosition = this->textCursor().position();
+    qDebug() << "lastTextCursorPosition: " << lastTextCursorPosition;
+
+    DTextEdit::setPlainText(text);
+
+    QTextCursor textCursor = this->textCursor();
+    textCursor.setPosition(lastTextCursorPosition);
+    this->setTextCursor(textCursor);
+
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
+    qDebug() << "this->textCursor().position(): " << this->textCursor().position();
 }
 
 void TextNoteEdit::setText(const QString &text)
@@ -76,11 +117,16 @@ void TextNoteEdit::setText(const QString &text)
 
 void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
 {
+    qDebug() << "TextNoteEdit::setTextNote()";
+
     m_searchKey = searchKey;
     m_textNote = textNote;
-    this->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
-    //this->setHtml(UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE));
-    setLineHeight(24);
+
+    QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, searchKey, BLUE);
+    qDebug() << "html: " << html;
+
+    this->setHtml(html);
+    this->setLineHeight(24);
 }
 
 int TextNoteEdit::getID()
@@ -117,8 +163,12 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
     qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
-    this->setText(this->toPlainText());
-    qDebug() << "this->textCursor().position() after setText: " << this->textCursor().position();
+
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
+
+    qDebug() << "this->textCursor().position() before setPlainText: " << this->textCursor().position();
+    this->setPlainText(this->toPlainText());
+    qDebug() << "this->textCursor().position() after setPlainText: " << this->textCursor().position();
 
     this->setLineHeight(24);
 
@@ -156,9 +206,9 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
     qDebug() << "html: " << html;
 
-    qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
-    this->setText(html);
-    qDebug() << "this->textCursor().position() after setText: " << this->textCursor().position();
+    qDebug() << "this->textCursor().position() before setHtml: " << this->textCursor().position();
+    this->setHtml(html);
+    qDebug() << "this->textCursor().position() after setHtml: " << this->textCursor().position();
 
     qDebug() << "this->setHtml() done";
     qDebug() << "this->toPlainText(): " << this->toPlainText();
@@ -266,6 +316,9 @@ void TextNoteEdit::updateNote()
 //Add s 20191111
 void TextNoteEdit::textAreaChanged()
 {
+    qDebug() << "TextNoteEdit::textAreaChanged()";
+    qDebug() << "this->toPlainText(): " << this->toPlainText();
+
     QTextDocument *document=qobject_cast<QTextDocument*>(sender());
     //document->adjustSize();
     if(document){
@@ -312,16 +365,22 @@ void TextNoteEdit::onTextChanged()
 void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
-    this->setText(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
-    //this->setHtml(UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE));
-    setLineHeight(24);
+
+    QString html = UiUtil::getHtmlText(this->toPlainText(), 12, searchKey, BLUE);
+    qDebug() << "html: " << html;
+
+    this->setHtml(html);
+    this->setLineHeight(24);
 }
 
 void TextNoteEdit::readFromDatabase()
 {
     m_textNote.contentText = m_noteCtr->getConttextByNoteID(m_textNote.folderId,m_textNote.id);
+
+    qDebug() << "this->m_textNote.contentText: " << this->m_textNote.contentText;
+
     this->setText(m_textNote.contentText);
-    setLineHeight(24);
+    this->setLineHeight(24);
 }
 
 //QString TextNoteEdit::onlyreadFromDatabase()

@@ -18,6 +18,8 @@ public:
     ~TextNoteEdit();
 
     QString getText();
+    void setHtml(const QString &text);
+    void setPlainText(const QString &text);
     void setText(const QString &text);
     void setTextNote(NOTE textNote, QString searchKey);
     int getID();

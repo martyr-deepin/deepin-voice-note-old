@@ -320,7 +320,10 @@ void TextNoteItem::readFromDatabase()
     QDateTime time;
     m_bakContent = m_textEdit->onlyreadFromDatabase(&time);
     //liuyang 3547
-    m_textEdit->setText(m_bakContent);
+
+    qDebug() << "m_bakContent: " << m_bakContent;
+
+    m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
 
     //liuyang 3547
@@ -337,19 +340,6 @@ void TextNoteItem::readFromDatabase()
 
 void TextNoteItem::updateNote()
 {
-//    NOTE note = m_textNote;
-//    note.contentText = m_plainTextEdit->toPlainText();
-//    if(!m_noteCtr->updateNote(note))
-//    {
-//        //todo：弹出popup，保存失败
-//        qDebug()<< "error: update text note fail!";
-//    }
-//    else
-//    {
-//        m_textNote.contentText = m_plainTextEdit->toPlainText();
-//        m_textLabel->setText(m_plainTextEdit->toPlainText());
-//    }
-
     NOTE note = m_textNote;
     note.contentText = m_textEdit->toPlainText();
     if(!m_noteCtr->updateNote(note))
@@ -439,7 +429,9 @@ void TextNoteItem::handleTextEditFocusOut()
 //    }
     //liuyang 3550 3547 3528
 
-    m_textEdit->setText(m_bakContent);
+    qDebug() << "m_bakContent: " << m_bakContent;
+
+    m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
 
     m_textNote.contentText = m_textEdit->toPlainText();
@@ -477,8 +469,10 @@ void TextNoteItem::handleTextEditFocusOut()
             m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
-        QString txt = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
-        m_textEdit->setText(txt);
+        QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
+        qDebug() << "html: " << html;
+
+        m_textEdit->setHtml(html);
         m_textEdit->setLineHeight(24);
 
         m_bakContent = m_textEdit->toPlainText();
@@ -663,7 +657,10 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         //if(elidedText != m_textEdit->getText())
         //2719 fix liuyang
         {
-            m_textEdit->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE));
+            QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
+            qDebug() << "html: " << html;
+
+            m_textEdit->setHtml(html);
             m_textEdit->setLineHeight(24);
         }
 
