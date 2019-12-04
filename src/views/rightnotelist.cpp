@@ -1224,7 +1224,8 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             //删除成功并且处于搜索状态下的话，再次出发搜索
             if(Intancer::get_Intancer()->getSearchingFlag())
             {
-                if(this->count() == 0)//3133
+                int count = this->count();
+                if(count <= 1)//3133
                 {
                     emit sig_research();
                 }
