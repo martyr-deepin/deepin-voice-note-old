@@ -930,6 +930,9 @@ void RightNoteList::handleAsrAsItem()
 
             m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
             m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+            Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
+            m_tmpHeightForVoiceToText = VOICENOTE_HEIGHT + m_textEditNewHeight;
+            Intancer::get_Intancer()->addHeightForRightList(m_tmpHeightForVoiceToText);
            // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
             //通知mainPage转写开始  mainPage里设置leftView不可用
@@ -969,6 +972,8 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
         m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight + 5)); //ynbboy
         m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight + 5); //ynbboy
+        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
+        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT + m_textEditNewHeight + 5);
         //m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
 //        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
@@ -991,6 +996,8 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItem->setTextEditVal("");
         m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));
         m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT);
+        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
+        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
         if (clsResult.code == "900003")
         {
             //网络异常

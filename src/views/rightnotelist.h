@@ -178,6 +178,7 @@ private:
     bool m_actionHoverd;
     bool m_asrStatusFlg;    //转写状态Flg true:开始 false:结束   Add 20191111
     int m_textEditNewHeight; // Add 20191111
+    int m_tmpHeightForVoiceToText;
     int curWaveformPosWidth;
     bool m_Recodefinised;  //ynb 20191109
     bool m_IsSliderBarReleased; //ynb 20191109
