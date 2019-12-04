@@ -86,7 +86,6 @@ public slots:
     void textEditChanged(const QString &str);//liuyang 3547
     //void textEditChanged(QString str);
     void changeTheme();
-    void onTextHeightChanged(int newheight);
     void OnToDetalPage();
     void OnTextEditGetFocus(); //Add bug 2587
     void OnTextEditOutFocus(); //Add bug 2587

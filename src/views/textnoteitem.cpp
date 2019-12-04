@@ -241,8 +241,6 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_detailBtn->move(6,m_MenuBtnBackground->height() - m_detailBtn->height() - 16);
     //chengjinwei 2019 11 29 bug3790
 
-    //onTextHeightChanged(m_textEdit->getLineHeight());
-
     m_hBoxLayout->addWidget(m_MenuBtnBackground);
     m_hBoxLayout->addSpacing(8);
 
@@ -259,14 +257,12 @@ void TextNoteItem::initConnection()
     //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit, &TextNoteEdit::sigDelMyself, this, &TextNoteItem::tryToFouceout);
-    connect(m_textEdit, &TextNoteEdit::sigTextHeightChanged, this, &TextNoteItem::onTextHeightChanged);
     connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus, this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
     connect(m_textEdit, &TextNoteEdit::SigTextEditOutFocus, this, &TextNoteItem::OnTextEditOutFocus); //Add bug 2587
     connect(m_textEdit, &TextNoteEdit::sigDetailButtonChanged, this, &TextNoteItem::onDetailButtonChanged);
 
     //connect(m_textEdit, &TextNoteEdit::focusOutSignal, this, &TextNoteItem::handleTextEditFocusOutNotReadOly);
     //liuyang 3547
-    //connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
     connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
@@ -282,7 +278,6 @@ void TextNoteItem::initConnection()
 
 //    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
 //    connect(m_menuBtn, &DImageButton::clicked, this, &TextNoteItem::handleMenuBtnClicked);
-//    connect(m_textEdit->document(), &QTextDocument::contentsChanged, this, &TextNoteItem::textAreaChanged);
 //    connect(m_menuBtn, &DImageButton::stateChanged, this, &TextNoteItem::handleMenuBtnStateChanged);
 }
 
@@ -336,7 +331,7 @@ void TextNoteItem::readFromDatabase()
         emit sig_TextEditNotEmpty(true);
     }
     //liuyang 3547
-    //onTextHeightChanged(m_textEdit->getLineHeight());
+
     handleTextEditFocusOut();
 }
 
@@ -446,7 +441,7 @@ void TextNoteItem::handleTextEditFocusOut()
 
     m_textEdit->setText(m_bakContent);
     m_textEdit->setLineHeight(24);
-    //onTextHeightChanged(m_textEdit->getLineHeight());
+
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;
 //    if(m_bakContent != m_textNote.contentText)
@@ -485,7 +480,7 @@ void TextNoteItem::handleTextEditFocusOut()
         QString txt = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
         m_textEdit->setText(txt);
         m_textEdit->setLineHeight(24);
-        //onTextHeightChanged(m_textEdit->getLineHeight());
+
         m_bakContent = m_textEdit->toPlainText();
         m_isEdited = false;
         //m_textEdit->setHtml(txt);
@@ -608,19 +603,6 @@ void TextNoteItem::changeTheme()
     }
 }
 
-void TextNoteItem::onTextHeightChanged(int newheight)
-{
-//    qDebug()<<"newheight:"<<newheight;
-//    if(m_textEdit->height() <= newheight)
-//    {
-//        m_isTextConverted = true;
-//    }
-//    else
-//    {
-//        m_isTextConverted = false;
-//    }
-}
-
 void TextNoteItem::OnToDetalPage()
 {
     emit textEditClicked(m_textNote);
@@ -683,7 +665,6 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         {
             m_textEdit->setText(UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE));
             m_textEdit->setLineHeight(24);
-            //onTextHeightChanged(m_textEdit->getLineHeight());
         }
 
         //m_textEdit->setReadOnly(true);

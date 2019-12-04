@@ -142,6 +142,8 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 void VoiceNoteItem::onTextHeightChanged(int height)
 {
+    qDebug() << "VoiceNoteItem::onTextHeightChanged()";
+
     int newHeight = 0;
     if(VOICE_TO_TEXT_MAX_HEIGHT < height)
     {
@@ -158,7 +160,6 @@ void VoiceNoteItem::onTextHeightChanged(int height)
     m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
     m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
     qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
-
 
     emit sigTextHeightChanged(newHeight);
 }
