@@ -27,23 +27,6 @@
 DWIDGET_USE_NAMESPACE
 
 #define SLIDER_PAGE_STEP 4
-class RightNoteList;
-
-class RightNoteListWorker : public QObject
-{
-    Q_OBJECT
-public:
-    explicit RightNoteListWorker(RightNoteList* parent);
-
-public slots:
-    void startLoading();
-
-signals:
-    void sigLoaded();
-
-private:
-    RightNoteList* m_parent;
-};
 
 class MMenu : public DMenu
 {

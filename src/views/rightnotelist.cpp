@@ -18,17 +18,7 @@
 #include <QShortcut>  //Add bug 2587
 #include <workercontroller.h>
 
-RightNoteListWorker::RightNoteListWorker(RightNoteList* parent)
-{
-    m_parent = parent;
-}
 
-void RightNoteListWorker::startLoading()
-{
-    m_parent->audioPlayer = new QMediaPlayer(this);
-    m_parent->audioPlayer->setNotifyInterval(200);
-    emit sigLoaded();
-}
 
 MMenu::MMenu(QWidget *parent)
 {
