@@ -1,5 +1,6 @@
 #include "voicetotextedit.h"
 #include "uiutil.h"
+#include "intancer.h"
 
 #include <QDebug>
 VoiceToTextEdit::VoiceToTextEdit(QWidget *parent) : DTextEdit(parent)
@@ -32,6 +33,18 @@ void VoiceToTextEdit::textAreaChanged()
                 emit sigTextHeightChanged(newheight);
         }
     }
+}
+
+void VoiceToTextEdit::focusInEvent(QFocusEvent *e)
+{
+    Intancer::get_Intancer()->setWantScrollRightListFlag(false);
+    DTextEdit::focusInEvent(e);
+}
+
+void VoiceToTextEdit::focusOutEvent(QFocusEvent *e)
+{
+    Intancer::get_Intancer()->setWantScrollRightListFlag(true);
+    DTextEdit::focusOutEvent(e);
 }
 
 //void VoiceToTextEdit::onTextChanged()

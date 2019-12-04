@@ -18,6 +18,10 @@ signals:
 public slots:
     void textAreaChanged(); //Add 20191111
 
+protected:
+    void focusInEvent(QFocusEvent *e)override;
+    void focusOutEvent(QFocusEvent *e)override;
+
 private:
     void initConnection();
     void setLineHeight(int value);
