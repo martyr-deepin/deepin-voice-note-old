@@ -74,8 +74,8 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    //dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
-    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
+
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/icons/deepin/builtin/voice_note_32px.svg", QSize(32,32),qApp)));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
     dialog->addButton(okStr, false, DDialog::ButtonWarning);
 
@@ -346,8 +346,8 @@ DDialog *UiUtil::createConfirmDialog(const QString &title, const QString &conten
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    //dialog->setIcon(QIcon(":/image/voice-note-32px 2.svg"));
-    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
+
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/icons/deepin/builtin/voice_note_32px.svg", QSize(32,32),qApp)));
     dialog->addButton(QString(QObject::tr("OK")), false, DDialog::ButtonNormal);
     //dialog->addButton(QString(QObject::tr("确认")), false, DDialog::ButtonNormal);
     return dialog;
@@ -358,7 +358,7 @@ DDialog *UiUtil::createAsrConfirmDialog(const QString &title, const QString &con
 {
     DDialog *dialog = new DDialog(title, content, parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
-    dialog->setIcon(QIcon(UiUtil::renderSVG(":/image/voice-note-32px 2.svg", QSize(32,32),qApp)));
+    dialog->setIcon(QIcon(UiUtil::renderSVG(":/icons/deepin/builtin/voice_note_32px.svg", QSize(32,32),qApp)));
     dialog->addButton(QString(QObject::tr("OK")), false, DDialog::ButtonNormal);
     //dialog->addButton(QString(QObject::tr("确定")), false, DDialog::ButtonNormal);
     return dialog;
