@@ -23,6 +23,7 @@ MyMainWindow::MyMainWindow()
     //asrStateFlg = 0; //Add 20191111
     m_quit = false; //Add bug3470
     m_VoiceMemoAction = false; //Add createVoiceMemo 新建语音备忘录对应
+    m_showPageID = MAIN_PAGE;
     initUI();
     setTitlebarShadowEnabled(false);//liuyang 3799
 }
@@ -146,7 +147,13 @@ void MyMainWindow::initCentralWidget()
     m_centralWidget = new QFrame(this);
     m_centralWidget->setObjectName("CentralWidget");
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(m_stackedWidget);
+    mainLayout->addWidget(m_mainPage);
+    mainLayout->addWidget(m_detailPage);
+    mainLayout->addWidget(m_InitEmptyPage);
+    mainLayout->addWidget(m_SearchNonePage);
+    mainLayout->addWidget(m_VoiceToNotePage);
+    this->switchPage(m_showPageID);
+    //mainLayout->addWidget(m_stackedWidget);
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     m_centralWidget->setLayout(mainLayout);
@@ -194,6 +201,35 @@ void MyMainWindow::initTheRest()
     initConnection();
 }
 
+void MyMainWindow::switchPage(STATIC_PAGE pageID)
+{
+    m_mainPage->setVisible(false);
+    m_detailPage->setVisible(false);
+    m_InitEmptyPage->setVisible(false);
+    m_SearchNonePage->setVisible(false);
+    m_VoiceToNotePage->setVisible(false);
+    m_showPageID = pageID;
+    switch (pageID)
+    {
+    case MAIN_PAGE:
+        m_mainPage->setVisible(true);
+        break;
+    case DETAL_PAGE:
+        m_detailPage->setVisible(true);
+        break;
+    case INIT_PAGE:
+        m_InitEmptyPage->setVisible(true);
+        break;
+    case NOSEARCH_PAGE:
+        m_SearchNonePage->setVisible(true);
+        break;
+    case VOICE_PAGE:
+        m_VoiceToNotePage->setVisible(true);
+        break;
+    default:
+        break;
+    }
+}
 //QJsonObject MyMainWindow::creatShorcutJson()
 //{
 //    //start notify by yuanshuai bug shortcut
@@ -415,16 +451,12 @@ void MyMainWindow::initTitleBar()
 
 void MyMainWindow::initStackedWidget()
 {
-//    m_stackedWidgetLayout = new QVBoxLayout();
-//    this->setLayout(m_stackedWidgetLayout);
-    m_stackedWidget = new QStackedWidget();
-    //m_stackedWidgetLayout->addWidget(m_stackedWidget);
-    //m_stackedWidget->setGeometry(QRect(10, 10, this->width(), this->height()));
-    m_stackedWidget->setObjectName("stackedWidget");
+
+//    m_stackedWidget = new QStackedWidget();
+//    m_stackedWidget->setObjectName("stackedWidget");
 
     m_mainPage = new MainPage();
-    m_stackedWidget->addWidget(m_mainPage);
-    //m_stackedWidget->setCurrentIndex(0);
+//    m_stackedWidget->addWidget(m_mainPage);
 
 
     m_detailPage = new DWidget(this);
@@ -433,8 +465,7 @@ void MyMainWindow::initStackedWidget()
     m_textNoteEdit = new TextNoteEdit();
     m_textNoteEdit->document()->setDocumentMargin(10.0);
     m_detailPageLayout->addWidget(m_textNoteEdit);
-    m_stackedWidget->addWidget(m_detailPage);
-    //m_stackedWidget->addWidget(m_textNoteEdit);
+//    m_stackedWidget->addWidget(m_detailPage);
     m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
     m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
     QPalette pl = m_textNoteEdit->palette();
@@ -447,24 +478,26 @@ void MyMainWindow::initStackedWidget()
 
 
     m_InitEmptyPage = new  InitEmptyPage();
-    m_stackedWidget->addWidget(m_InitEmptyPage);
+//    m_stackedWidget->addWidget(m_InitEmptyPage);
 
     if(0 < m_mainPage->getFolderCount())
     {
-        m_stackedWidget->setCurrentIndex(0);
+//        m_stackedWidget->setCurrentIndex(0);
+        m_showPageID = MAIN_PAGE;
         m_searchEdit->setEnabled(true); //Add  bug3136
     }
     else
     {
-        m_stackedWidget->setCurrentIndex(2);
+//        m_stackedWidget->setCurrentIndex(2);
+        m_showPageID = INIT_PAGE;
         m_searchEdit->setEnabled(false); //Add  bug3136
     }
 
     m_SearchNonePage = new SearchNonePage(this);
-    m_stackedWidget->addWidget(m_SearchNonePage);
+    //m_stackedWidget->addWidget(m_SearchNonePage);
 
     m_VoiceToNotePage = new VoiceToNotePage(this);
-    m_stackedWidget->addWidget(m_VoiceToNotePage);
+    //m_stackedWidget->addWidget(m_VoiceToNotePage);
 }
 
 void MyMainWindow::showNoteDetail(NOTE note)
@@ -478,7 +511,8 @@ void MyMainWindow::showNoteDetail(NOTE note)
     //m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
     m_DetalTextBak = m_textNoteEdit->getText();
-    m_stackedWidget->setCurrentIndex(1);
+    switchPage(DETAL_PAGE);
+    //m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     //m_replaceForReturn->setVisible(false);
     //start add by yuanshuai 20191128 bug 3731
@@ -495,14 +529,11 @@ void MyMainWindow::showListPage()
     {
         bool hasNoFolder = false;
         m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
-//        if(ret)
-//        {
-//            m_stackedWidget->setCurrentIndex(0);
-//        }
     }
     //end
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
-    m_stackedWidget->setCurrentIndex(0);
+    this->switchPage(MAIN_PAGE);
+    //m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
     m_mainPage->setFocus();
     m_returnBtn->setVisible(false);
@@ -535,23 +566,27 @@ void MyMainWindow::handleSearchKey()
     {
         Intancer::get_Intancer()->setSearchingFlag(false);
         //start add by yuanshuai 20191203 bug 4114 bug 4121 bug 4130
-        if(!(1 == m_stackedWidget->currentIndex() || 4 == m_stackedWidget->currentIndex()))
+        if(!(DETAL_PAGE == m_showPageID || VOICE_PAGE == m_showPageID))
+        //if(!(1 == m_stackedWidget->currentIndex() || 4 == m_stackedWidget->currentIndex()))
         {
-            m_stackedWidget->setCurrentIndex(0);
+            //m_stackedWidget->setCurrentIndex(0);
+            switchPage(MAIN_PAGE);
         }
         //end
         m_searchEdit->setEnabled(true); //Add  bug3136
     }
 
     bool ret = false;
-    if (0 == m_stackedWidget->currentIndex() || 3 == m_stackedWidget->currentIndex())
+    if(MAIN_PAGE == m_showPageID || NOSEARCH_PAGE == m_showPageID)
+//    if (0 == m_stackedWidget->currentIndex() || 3 == m_stackedWidget->currentIndex())
     {
         Intancer::get_Intancer()->setRenameRepeatFlag(false);
         bool hasNoFolder = false;
         ret = m_mainPage->searchFolder(searchKey,hasNoFolder);
         if(ret)
         {
-            m_stackedWidget->setCurrentIndex(0);
+            switchPage(MAIN_PAGE);
+            //m_stackedWidget->setCurrentIndex(0);
             m_searchEdit->setEnabled(true); //Add  bug3136
         }
     }
@@ -613,14 +648,16 @@ void MyMainWindow::clearSearchLine()
 
 void MyMainWindow::onAddFolderByInitPage()
 {
-    m_stackedWidget->setCurrentIndex(0);
+    this->switchPage(MAIN_PAGE);
+    //m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
     m_mainPage->trueAddFolder();
 }
 
 void MyMainWindow::onAllFolderDeleted()
 {
-    m_stackedWidget->setCurrentIndex(2);
+    this->switchPage(INIT_PAGE);
+    //m_stackedWidget->setCurrentIndex(2);
     //m_searchEdit->clear(); //Add  bug3136
     m_searchEdit->setEnabled(false); //Add  bug3136
 }
@@ -655,8 +692,8 @@ void MyMainWindow::changeTheme()
 
 void MyMainWindow::OnNoSearchResult()
 {
-    m_stackedWidget->setCurrentIndex(3);
-    //m_stackedWidget->setCurrentIndex(0);
+    this->switchPage(NOSEARCH_PAGE);
+    //m_stackedWidget->setCurrentIndex(3);
 }
 
 //Add start bug3470
@@ -751,7 +788,8 @@ void MyMainWindow::newNoteShortcut()
     if(!Intancer::get_Intancer()->getRecodingFlag())
     {
         //2587
-        if(2 == m_stackedWidget->currentIndex())
+        if(INIT_PAGE == m_showPageID)
+        //if(2 == m_stackedWidget->currentIndex())
         {
             m_InitEmptyPage->sigAddFolderByInitPage();
         }
@@ -814,7 +852,8 @@ void MyMainWindow::asrDialogClicked(int index, const QString &text)
 void MyMainWindow::OnToDetalVoicePage(QString contant)
 {
     m_VoiceToNotePage->ToDetalVoicePage(contant);
-    m_stackedWidget->setCurrentIndex(VOICE_PAGE);
+    this->switchPage(VOICE_PAGE);
+    //m_stackedWidget->setCurrentIndex(VOICE_PAGE);
     m_returnBtn->setVisible(true);
 }
 

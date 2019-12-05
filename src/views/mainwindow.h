@@ -123,9 +123,11 @@ private:
     //Add start bug 2587
     void initShortcutkeys();
     void initTheRest();
+    void switchPage(STATIC_PAGE pageID);
     QJsonObject creatShorcutJson();
     //Add end bug 2587
     bool m_VoiceMemoAction;  //true: 创建语音备忘录指令有 false 创建语音备忘录指令无  Add createVoiceMemo 新建语音备忘录对应
+    STATIC_PAGE m_showPageID;
 };
 
 #endif // MAINWINDOW_H
