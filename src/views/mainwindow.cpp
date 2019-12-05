@@ -474,7 +474,8 @@ void MyMainWindow::showNoteDetail(NOTE note)
     //end
 
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
-    m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
+    m_detailPage->setFocus();
+    //m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
     m_DetalTextBak = m_textNoteEdit->getText();
     m_stackedWidget->setCurrentIndex(1);
