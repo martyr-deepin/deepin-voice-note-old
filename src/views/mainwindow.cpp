@@ -749,7 +749,7 @@ void MyMainWindow::restoreminwindow()
 //start add by yuanshuai 20191120 2841
 void MyMainWindow::checkFileExist()
 {
-    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::ResidentType,this);
+    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::TransientType,this);
     pDFloatingMessage->setMessage(QString(tr("The voice memo has been deleted")));
     //pDFloatingMessage->setMessage(QString(tr("该语音记事项已删除")));
     pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
@@ -758,7 +758,7 @@ void MyMainWindow::checkFileExist()
 //end
 void MyMainWindow::showNoVoiceDeviceDialog()
 {
-    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::ResidentType,this);
+    DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::TransientType,this);
     pDFloatingMessage->setMessage(QString(tr("Your audio recording device does not work.")));
     //pDFloatingMessage->setMessage(QString(tr("您的录音设备异常，无法录制语音。")));
     pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));

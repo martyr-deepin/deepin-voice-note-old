@@ -881,6 +881,8 @@ void RightNoteList::TextHeightChanged(int newHeight)
 }
 void RightNoteList::asrOtherErrBtnClick()
 {
+    m_asrNetWorkErrDialog->hide();
+    m_asrOtherErrDMessage->hide();
     handleAsrAsItem();
 }
 void RightNoteList::handleAsrAsItem()
