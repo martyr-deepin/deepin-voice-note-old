@@ -69,6 +69,7 @@ RightNoteList::RightNoteList(NoteController *noteController) : m_currPlayingItem
     m_voiceNoteItemByasr = nullptr;    //Add 20191111
     m_asrNetWorkErrDialog = nullptr; //Add 20191111
     m_asrlimitErrDialog = nullptr;  //Add 20191111
+    m_spaceItem = nullptr;
     m_defaultTxtPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     this->workController = WorkerController::getInstance();
 
@@ -222,10 +223,6 @@ void RightNoteList::initUI()
     m_asrNetWorkErrDialog = UiUtil::createAsrNetWorkErrDialog(this,button2);  //Add 20191111
     connect(button2, SIGNAL(clicked()), this, SLOT(asrOtherErrBtnClick()));  //Add 20191111
 
-//    m_addTextBtn->setNormalPic(":/image/add_text_btn.png");
-//    m_addTextBtn->setHoverPic(":/image/add_text_btn.png");
-//    m_addTextBtn->setPressPic(":/image/add_text_btn_press.png");
-
     this->verticalScrollBar()->setSingleStep(10);//2260
     qApp->installEventFilter(this);
 
@@ -353,77 +350,78 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
     }
 }
 
-void RightNoteList::addAddTextBtn()
+void RightNoteList::addSpaceItem()
 {
-    if(nullptr == m_addTextBtn)
+    if(nullptr == m_spaceItem)
     {
-        m_addTextBtn = new AddTextBtn(this);
-        m_addTextBtn->init();
-        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
-        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
+        m_spaceItem = new DWidget();
+        m_spaceItem->setFixedSize(QSize(10,30));
         QListWidgetItem *item=new QListWidgetItem();
-        item->setSizeHint(QSize(this->width(),m_addTextBtn->height()));
+        item->setSizeHint(QSize(m_spaceItem->size()));
         this->addItem(item);
-        this->setItemWidget(item, m_addTextBtn);
+        this->setItemWidget(item, m_spaceItem);
     }
 }
 
-void RightNoteList::delAddTextBtn()
+void RightNoteList::delSpaceItem()
 {
-    if(nullptr != m_addTextBtn)
+    if(nullptr != m_spaceItem)
     {
         QListWidgetItem *item = takeItem(count() - 1);
         if(nullptr != item)
         {
-            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
-            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
-            m_addTextBtn = (AddTextBtn*)itemWidget(item);
-            delete m_addTextBtn;
-            m_addTextBtn = nullptr;
+            m_spaceItem = (DWidget*)itemWidget(item);
+            delete m_spaceItem;
+            m_spaceItem = nullptr;
         }
     }
 }
 
+void RightNoteList::addAddTextBtn()
+{
+//    if(nullptr == m_addTextBtn)
+//    {
+//        m_addTextBtn = new AddTextBtn(this);
+//        m_addTextBtn->init();
+//        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+//        connect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
+//        QListWidgetItem *item=new QListWidgetItem();
+//        item->setSizeHint(QSize(this->width(),m_addTextBtn->height()));
+//        this->addItem(item);
+//        this->setItemWidget(item, m_addTextBtn);
+//    }
+}
+
+void RightNoteList::delAddTextBtn()
+{
+//    if(nullptr != m_addTextBtn)
+//    {
+//        QListWidgetItem *item = takeItem(count() - 1);
+//        if(nullptr != item)
+//        {
+//            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SIGNAL(addTextItem()));
+//            disconnect(m_addTextBtn, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
+//            m_addTextBtn = (AddTextBtn*)itemWidget(item);
+//            delete m_addTextBtn;
+//            m_addTextBtn = nullptr;
+//        }
+//    }
+}
+
 void RightNoteList::listAddTextShow()
 {
-    if(nullptr != m_addTextBtn)
-    {
-        //addAddTextBtn();
-        m_addTextBtn->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
-//        if(this->count() > 0)
-//        {
-//            QListWidgetItem* pItem = item(this->count());
-//            if(nullptr != pItem)
-//            {
-//                pItem->setHidden(false);
-//                update();
-//            }
-//        }
-        //m_addTextBtn->show();
-        //m_addTextBtn->setVisible(true);
-    }
+//    if(nullptr != m_addTextBtn)
+//    {
+//        m_addTextBtn->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
+//    }
 }
 
 void RightNoteList::listAddTextHide()
 {
-    if(nullptr != m_addTextBtn)
-    {
-        //delAddTextBtn();
-
-        m_addTextBtn->setFixedHeight(0);
-
-//        if(this->count() > 0)
-//        {
-//            QListWidgetItem* pItem = item(this->count());
-//            if(nullptr != pItem)
-//            {
-//                pItem->setHidden(true);
-//                update();
-//            }
-//        }
-        //m_addTextBtn->hide();
-        //m_addTextBtn->setVisible(false);
-    }
+//    if(nullptr != m_addTextBtn)
+//    {
+//        m_addTextBtn->setFixedHeight(0);
+//    }
 }
 
 void RightNoteList::fouceOutAllTextItem()
@@ -647,19 +645,19 @@ void RightNoteList::handleVScrollBarChanged(int value)
 
 void RightNoteList::onDisableAddBtn()
 {
-    if(nullptr != m_addTextBtn)
-    {
-        m_addTextBtn->setDisableBtn(true);
-    }
+//    if(nullptr != m_addTextBtn)
+//    {
+//        m_addTextBtn->setDisableBtn(true);
+//    }
 }
 
 void RightNoteList::onAbleAddBtn(bool changed)
 {
-    if(nullptr != m_addTextBtn)
-    {
-        qDebug()<<"m_addTextBtn->setDisableBtn(false);";
-        m_addTextBtn->setDisableBtn(false);
-    }
+//    if(nullptr != m_addTextBtn)
+//    {
+//        qDebug()<<"m_addTextBtn->setDisableBtn(false);";
+//        m_addTextBtn->setDisableBtn(false);
+//    }
 }
 
 void RightNoteList::onTextChangedFlagChange(bool changed)
@@ -1194,7 +1192,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             delete m_currSelItem;
             m_currSelItem = nullptr;
 
-            m_addTextBtn->setDisableBtn(false);
+            //m_addTextBtn->setDisableBtn(false);
             emit sig_TextEditNotEmpty(false);
 
             if(move)
@@ -1386,7 +1384,7 @@ bool RightNoteList::getRowByID(int id, NOTE_TYPE type,  int &row)
     bool ret = false;
 
     int count = this->count();
-    for(int i = 0; i < count; i++)
+    for(int i = 0; i < count - 1; i++)
     {
         QListWidgetItem* ptmp = this->item(i);
 
@@ -1625,7 +1623,7 @@ void RightNoteList::handleMenuBtnReleased()
 void RightNoteList::adjustWidgetItemWidth()
 {
     QListWidgetItem *ptmp = nullptr;
-    for(int i = 0; i < this->count(); i++)
+    for(int i = 0; i < this->count() - 1; i++)
     {
         ptmp = this->item(i);
 

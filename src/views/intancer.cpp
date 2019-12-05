@@ -1,4 +1,6 @@
 #include "intancer.h"
+#include "consts.h"
+
 #include <QDebug>
 Intancer * Intancer::instance_ = nullptr;
 
@@ -8,7 +10,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     tryToDelEmptyTextNote = false;
     recording = false;
     isRenameRepeat = false;
-    isViewAddTextButtonShow = false;
+    isListOverOnePage = false;
     isSearching = false;
     isMoveFolder_count = 0;
     wantScrollRightList = true;
@@ -38,46 +40,58 @@ DApplication * Intancer::getApp()
 
 void Intancer::initHeightForRight()
 {
+    qDebug()<<"initHeightForRight()";
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
 }
 
 void Intancer::clearHeightForRightList()
 {
+    qDebug()<<"clearHeightForRightList()";
     m_RightListHeight = 0;
+    emit sigLockAddTextBtnToTop();
 }
 
 void Intancer::addHeightForRightList(int addheight)
 {
+    qDebug()<<"addheight:"<<addheight;
+    qDebug()<<"m_RightListHeight1:"<<m_RightListHeight;
     m_RightListHeight += addheight;
+    qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
     if(m_RightListHeight > m_RightViewHeight)
     {
-        emit sigShowViewAddTextButton();
-        isViewAddTextButtonShow = true;
+        emit sigLockAddTextBtnToBottom();
+        isListOverOnePage = true;
     }
-    else
+    else if(m_RightListHeight > SPACEITEM_HEIGHT_HEIGHT)
     {
-        emit sigHideViewAddTextButton();
-        isViewAddTextButtonShow = false;
+        emit sigunLockAddTextBtnPos(m_RightListHeight);
+        isListOverOnePage = false;
     }
+
     qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-    qDebug()<<"m_RightListHeight:"<<m_RightListHeight;
+
 }
 
 void Intancer::delHeightForRightList(int delheight)
 {
+    qDebug()<<"delheight:"<<delheight;
+    qDebug()<<"m_RightViewHeight1:"<<m_RightListHeight;
     m_RightListHeight -= delheight;
-    if(m_RightListHeight < 0)
+    qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
+    if(m_RightListHeight <= SPACEITEM_HEIGHT_HEIGHT)
     {
-        m_RightListHeight = 0;
+//        m_RightListHeight = 0;
+        emit sigLockAddTextBtnToTop();
     }
-    if(m_RightListHeight <= m_RightViewHeight)
+    else if(m_RightListHeight < m_RightViewHeight)
     {
-        emit sigHideViewAddTextButton();
-        isViewAddTextButtonShow = false;
+        emit sigunLockAddTextBtnPos(m_RightListHeight);
+        isListOverOnePage = false;
     }
+
     qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-    qDebug()<<"m_RightListHeight:"<<m_RightListHeight;
+
 }
 
 void Intancer::setViewHeightForRightList(int viewHeight)
@@ -85,18 +99,18 @@ void Intancer::setViewHeightForRightList(int viewHeight)
     m_RightViewHeight = viewHeight;
     if(m_RightListHeight <= m_RightViewHeight)
     {
-        if(isViewAddTextButtonShow)
+        if(isListOverOnePage)
         {
-            emit sigHideViewAddTextButton();
-            isViewAddTextButtonShow = false;
+            isListOverOnePage = false;
+            emit sigunLockAddTextBtnPos(m_RightListHeight);
         }
     }
     else
     {
-        if(!isViewAddTextButtonShow)
+        if(!isListOverOnePage)
         {
-            emit sigShowViewAddTextButton();
-            isViewAddTextButtonShow = true;
+            emit sigLockAddTextBtnToBottom();
+            isListOverOnePage = true;
         }
     }
     qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
@@ -141,15 +155,15 @@ bool Intancer::getRenameRepeatFlag()
     return isRenameRepeat;
 }
 
-bool Intancer::setViewAddTextButtonShowFlag(bool value)
-{
-    isViewAddTextButtonShow = value;
-}
+//bool Intancer::setViewAddTextButtonShowFlag(bool value)
+//{
+//    isViewAddTextButtonShow = value;
+//}
 
-bool Intancer::getViewAddTextButtonShowFlag()
-{
-    return isViewAddTextButtonShow;
-}
+//bool Intancer::getViewAddTextButtonShowFlag()
+//{
+//    return isViewAddTextButtonShow;
+//}
 
 void Intancer::setSearchingFlag(bool value)
 {

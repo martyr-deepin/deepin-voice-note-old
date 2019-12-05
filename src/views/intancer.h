@@ -41,8 +41,8 @@ public:
     bool getRecodingFlag();
     void setRenameRepeatFlag(bool value);
     bool getRenameRepeatFlag();
-    bool setViewAddTextButtonShowFlag(bool value);
-    bool getViewAddTextButtonShowFlag();
+//    bool setViewAddTextButtonShowFlag(bool value);
+//    bool getViewAddTextButtonShowFlag();
 
     void setSearchingFlag(bool value);
     bool getSearchingFlag();
@@ -73,8 +73,11 @@ public:
     QString getSearchKeywords();
 
 signals:
-    void sigShowViewAddTextButton();
-    void sigHideViewAddTextButton();
+    void sigLockAddTextBtnToTop();
+    void sigunLockAddTextBtnPos(int listtrueheight);
+    void sigLockAddTextBtnToBottom();
+//    void sigShowViewAddTextButton();
+//    void sigHideViewAddTextButton();
     void sigDisAbleReplay();
     void sigEnAbleReplay();
 
@@ -83,7 +86,8 @@ private:
      bool tryToDelEmptyTextNote;
      bool recording;
      bool isRenameRepeat;
-     bool isViewAddTextButtonShow;
+     bool isListOverOnePage;
+     //bool isViewAddTextButtonShow;
      bool isSearching;
      bool wantScrollRightList;
      bool isVoiceToText;

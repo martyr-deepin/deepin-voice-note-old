@@ -16,7 +16,7 @@
 RightView::RightView()
 {
     this->workController = WorkerController::getInstance();
-
+    m_AddTextBtnState = TOP;
     m_initing = true;
     //m_pVoiceAudioDeviceWatcher = new VoiceAudioDeviceWatcher(this);
     m_currFolderId = -1;
@@ -107,8 +107,11 @@ void RightView::initConnection()
     connect(m_recordPage, &RecordPage::cancelRecord, this, &RightView::handlecancelRecord);
     connect(m_recordPage, &RecordPage::buttonClicled, this, &RightView::TryToDisEditAllText);
 
-    connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
-    connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
+    connect(Intancer::get_Intancer(), SIGNAL(sigLockAddTextBtnToTop()), this, SLOT(onMoveAddTextBtnToTop()));
+    connect(Intancer::get_Intancer(), SIGNAL(sigunLockAddTextBtnPos(int)), this, SLOT(onMoveAddTextBtnToMiddle(int)));
+    connect(Intancer::get_Intancer(), SIGNAL(sigLockAddTextBtnToBottom()), this, SLOT(onMoveAddTextBtnToBottom()));
+//    connect(Intancer::get_Intancer(), SIGNAL(sigShowViewAddTextButton()), this, SLOT(onViewAddTextShow()));
+//    connect(Intancer::get_Intancer(), SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &RightView::changeTheme);
     connect(m_noteListWidget, &RightNoteList::positionByfinishRecord, this, &RightView::handleStopRecord2); //ynb 20191109
 
@@ -165,8 +168,8 @@ void RightView::initNoteList()
     m_BottomBoard->setAutoFillBackground(true);
     //pa.setBrush(DPalette::Base, QColor(0,0,0,0));
 
-    //m_BottomBoard->setFixedHeight(150);
-    m_BottomBoard->setFixedHeight(76);
+    m_BottomBoard->setFixedHeight(150);
+    //m_BottomBoard->setFixedHeight(76);
     m_BottomBoard->setFixedWidth(this->width());
     m_BottomBoard->setPalette(pa);
     rightViewLayout->setSpacing(0);
@@ -175,25 +178,25 @@ void RightView::initNoteList()
 
     initRecordStackedWidget();
 
-    m_AddBtnBoard = new DWidget(this);
-    m_AddBtnBoard->setFocusPolicy(Qt::ClickFocus);
-    DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
-    //pc.setBrush(DPalette::Base, pc.color(DPalette::Base));
-    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
-    m_AddBtnBoard->setAutoFillBackground(true);
+//    m_AddBtnBoard = new DWidget(this);
+//    m_AddBtnBoard->setFocusPolicy(Qt::ClickFocus);
+//    DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
+//    //pc.setBrush(DPalette::Base, pc.color(DPalette::Base));
+//    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
+//    m_AddBtnBoard->setAutoFillBackground(true);
 
-    m_AddBtnBoard->setFixedHeight(75);
-    m_AddBtnBoard->setFixedWidth(this->width() - 10);
-    m_AddBtnBoard->setPalette(pc);
-    m_AddBtnBoard->move(0,this->height());
+//    m_AddBtnBoard->setFixedHeight(75);
+//    m_AddBtnBoard->setFixedWidth(this->width() - 10);
+//    m_AddBtnBoard->setPalette(pc);
+//    m_AddBtnBoard->move(0,this->height());
 
     m_AddButtonLocked = new AddTextBtn(this);
     m_AddButtonLocked->init();
     //m_AddButtonLocked->setFixedWidth(548);
-    m_AddButtonLocked->move(6,this->height() - 78);
+    //m_AddButtonLocked->move(6,this->height() - 78);
     connect(m_AddButtonLocked, SIGNAL(addTextItem()), this, SLOT(addTextNote()));
     connect(m_noteListWidget, SIGNAL(addTextItem()), this, SLOT(onDisableAddBtn()));
-    m_AddButtonLocked->setVisible(false);
+    m_AddButtonLocked->setVisible(true);
     //m_AddButtonLocked->setFocusPolicy(Qt::NoFocus);
 
 }
@@ -272,7 +275,7 @@ void RightView::onShowNoResult()
 {
     m_NoSearchResault->setVisible(true);
     m_AddButtonLocked->setVisible(false);
-    m_AddBtnBoard->setVisible(false);
+    //m_AddBtnBoard->setVisible(false);
 }
 
 void RightView::handleSelFolderChg(int folderId)
@@ -388,13 +391,13 @@ void RightView::updateNoteList()
     //qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
     //onViewAddTextHide();
     Intancer::get_Intancer()->clearHeightForRightList();
-    m_noteListWidget->delAddTextBtn();
+    m_noteListWidget->delSpaceItem();
     m_noteListWidget->clear();
     //qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
     if (m_currFolderId > 0)
     {
-        m_noteListWidget->addAddTextBtn();
-        Intancer::get_Intancer()->addHeightForRightList(ADDBUTTON_HEIGHT_HEIGHT);
+        m_noteListWidget->addSpaceItem();
+        Intancer::get_Intancer()->addHeightForRightList(SPACEITEM_HEIGHT_HEIGHT);
         m_noteController->checkCleanDataBaseForVoiceByForderId(m_currFolderId);
         QList<NOTE> noteList = m_noteController->getNoteListByFolderId(m_currFolderId);
         if(noteList.size() > 0)
@@ -421,9 +424,11 @@ void RightView::updateNoteList()
             }
         }
 
-        m_noteListWidget->setCurrentRow(noteList.size());
+        m_noteListWidget->setCurrentRow(noteList.size() - 1);
         //m_noteListWidget->scrollToBottom();
         m_noteListWidget->adjustWidgetItemWidth();//2289 liuyang
+        m_noteListWidget->scrollToBottom();
+
     }
 
 //    if(m_noteListWidget->verticalScrollBar()->isVisible())
@@ -439,7 +444,7 @@ void RightView::searchNoteList(QString searchKey)
 {
     //onViewAddTextHide();
     Intancer::get_Intancer()->clearHeightForRightList();
-    m_noteListWidget->delAddTextBtn();
+    m_noteListWidget->delSpaceItem();
     m_noteListWidget->clear();
     if (m_currFolderId > 0)
     {
@@ -453,7 +458,8 @@ void RightView::searchNoteList(QString searchKey)
             noteList = m_noteController->searchNote(m_currFolderId, searchKey);
         }
 
-        m_noteListWidget->addAddTextBtn();
+        m_noteListWidget->addSpaceItem();
+        Intancer::get_Intancer()->addHeightForRightList(SPACEITEM_HEIGHT_HEIGHT);
         if(0 == noteList.size())
         {
             onShowNoResult();
@@ -479,7 +485,7 @@ void RightView::searchNoteList(QString searchKey)
 
 void RightView::updateFromDetal(int ID)
 {
-    for(int i = 0; i < m_noteListWidget->count(); i++)
+    for(int i = 0; i < m_noteListWidget->count() - 1; i++)
     {
         QListWidgetItem* pitem = m_noteListWidget->item(i);
         TextNoteItem* pWidget = (TextNoteItem*)m_noteListWidget->itemWidget(pitem);
@@ -628,7 +634,7 @@ void RightView::handleClearNote()
 {
     //onViewAddTextHide();
     Intancer::get_Intancer()->clearHeightForRightList();
-    m_noteListWidget->delAddTextBtn();
+    m_noteListWidget->delSpaceItem();
     m_noteListWidget->clear();
     m_currFolderId = -1;
     m_addVoiceBtn->setVisible(false);
@@ -646,7 +652,7 @@ void RightView::OnAllFolderGone()
     handleClearNote();
     m_recordStackedWidget->setVisible(false);
     m_AddButtonLocked->setVisible(false);
-    m_AddBtnBoard->setVisible(false);
+    //m_AddBtnBoard->setVisible(false);
 }
 
 void RightView::OnAddAFolder()
@@ -673,23 +679,23 @@ void RightView::onAbleAddBtn(bool changed)
 
 void RightView::onViewAddTextShow()
 {
-    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
-    {
-        m_AddButtonLocked->setVisible(true);
-        m_AddBtnBoard->setVisible(true);
-        //m_AddButtonLocked->setVisible(false);
-        m_noteListWidget->listAddTextHide();
-    }
+//    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
+//    {
+//        m_AddButtonLocked->setVisible(true);
+//        m_AddBtnBoard->setVisible(true);
+//        //m_AddButtonLocked->setVisible(false);
+//        m_noteListWidget->listAddTextHide();
+//    }
 }
 
 void RightView::onViewAddTextHide()
 {
-    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
-    {
-        m_AddButtonLocked->setVisible(false);
-        m_AddBtnBoard->setVisible(false);
-        m_noteListWidget->listAddTextShow();
-    }
+//    if((nullptr != m_AddButtonLocked) && (nullptr != m_noteListWidget))
+//    {
+//        m_AddButtonLocked->setVisible(false);
+//        m_AddBtnBoard->setVisible(false);
+//        m_noteListWidget->listAddTextShow();
+//    }
 }
 
 void RightView::changeTheme()
@@ -704,9 +710,9 @@ void RightView::changeTheme()
     //palette.setColor(palette.Background, QColor(0, 0, 0));
     m_recordPage->setPalette(palette);
 
-    DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
-    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
-    m_AddBtnBoard->setPalette(pc);
+//    DPalette pc = DApplicationHelper::instance()->palette(m_AddBtnBoard);
+//    pc.setBrush(DPalette::Background, pc.color(DPalette::Base));
+//    m_AddBtnBoard->setPalette(pc);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
 
@@ -848,6 +854,25 @@ void RightView::OnTimeOut()
     m_initing = false;
 }
 
+void RightView::onMoveAddTextBtnToTop()
+{
+    m_AddTextBtnState = TOP;
+    m_AddButtonLocked->move(6,10);
+}
+
+void RightView::onMoveAddTextBtnToMiddle(int listheightContent)
+{
+    m_AddTextBtnState = MIDDLE;
+    m_AddButtonLocked->move(6,listheightContent);
+    qDebug()<<"listheightContent:"<<listheightContent;
+}
+
+void RightView::onMoveAddTextBtnToBottom()
+{
+    m_AddTextBtnState = BOTTOM;
+    m_AddButtonLocked->move(6,this->height() - 88 - m_AddButtonLocked->height());
+}
+
 void RightView::resizeEvent(QResizeEvent * event)
 {
     if(nullptr != m_recordStackedWidget)
@@ -858,15 +883,25 @@ void RightView::resizeEvent(QResizeEvent * event)
         qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
         m_recordStackedWidget->show();
 
-
-        m_AddButtonLocked->move(6,this->height() - 78 - m_AddButtonLocked->height());
+//        if(TOP == m_AddTextBtnState)
+//        {
+//            m_AddButtonLocked->move(6,10);
+//        }
+//        else if(MIDDLE == m_AddTextBtnState)
+//        {
+//            m_AddButtonLocked->move(6,listheightContent);
+//        }
+        if(BOTTOM == m_AddTextBtnState)
+        {
+            m_AddButtonLocked->move(6,this->height() - 88 - m_AddButtonLocked->height());
+        }
         //m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
 
         m_AddButtonLocked->resize(this->width() - 15,m_AddButtonLocked->height());
         qDebug()<<"m_AddButtonLocked width:"<<m_AddButtonLocked->width();
         qDebug()<<"rightView width:"<<this->width();
-        m_AddBtnBoard->setFixedWidth(this->width() - 10);
-        m_AddBtnBoard->move(0,m_AddButtonLocked->y() + 11);
+//        m_AddBtnBoard->setFixedWidth(this->width() - 10);
+//        m_AddBtnBoard->move(0,m_AddButtonLocked->y() + 11);
         m_BottomBoard->setFixedWidth(this->width());
 
         qDebug()<<"rightlistheight:"<<m_noteListWidget->height();

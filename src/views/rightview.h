@@ -21,6 +21,7 @@
 #include <DToolTip>
 
 DWIDGET_USE_NAMESPACE
+enum ADDTEXTBTN_STATE {TOP=0, MIDDLE=1, BOTTOM=2};
 //右侧文字语音记录View
 class RightView : public DWidget
 //class RightView : public DBlurEffectWidget
@@ -82,6 +83,9 @@ public slots:
     void ShowRecodeTip();
     void handleStopRecord2(qint64 position); //ynb  20191109
     void OnTimeOut();
+    void onMoveAddTextBtnToTop();
+    void onMoveAddTextBtnToMiddle(int listheightContent);
+    void onMoveAddTextBtnToBottom();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -94,6 +98,7 @@ private:
 
     int m_currFolderId;
     AddTextBtn *m_AddButtonLocked;
+    ADDTEXTBTN_STATE m_AddTextBtnState;
     DLabel *m_NoSearchResault;
     QStackedWidget *m_stackedWidget;
     QLayout *m_stackedWidgetLayout;

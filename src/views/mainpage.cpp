@@ -152,7 +152,7 @@ void MainPage::checkAndDeleteEmptyTextNoteFromDatabase()
 
 int MainPage::getFolderCount()
 {
-    return m_rightView->getFolderCount();
+    return m_leftView->getAllFolderListNum();
 }
 
 void MainPage::trueAddFolder()

@@ -51,6 +51,8 @@ public:
     RightNoteList(NoteController *noteController);
     ~RightNoteList();
     void addWidgetItem(bool isAddByButton, NOTE note, QString searchKey, int textEditCursorPos = -1); //3550-3547-3528
+    void addSpaceItem();
+    void delSpaceItem();
     void addAddTextBtn();
     void delAddTextBtn();
     void listAddTextShow();
@@ -142,6 +144,7 @@ private:
     DSlider *m_TestSlider;
     FileExistsDialog *m_fileExistsDialog;
     DDialog *m_saveFileEndDialog;
+    DWidget *m_spaceItem;
     AddTextBtn *m_addTextBtn;
     VoiceNoteItem * m_voiceNoteItem;            //Add 20191111
     AiServiceController m_AiServiceController; //Add 20191111
