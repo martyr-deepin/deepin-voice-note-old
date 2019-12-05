@@ -35,6 +35,15 @@ void VoiceToTextEdit::textAreaChanged()
     }
 }
 
+void VoiceToTextEdit::wheelEvent(QWheelEvent *e)
+{
+    qDebug() << "VoiceToTextEdit::wheelEvent()";
+
+    if(!Intancer::get_Intancer()->getWantScrollRightListFlag()) {
+        DTextEdit::wheelEvent(e);
+    }
+}
+
 void VoiceToTextEdit::focusInEvent(QFocusEvent *e)
 {
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
