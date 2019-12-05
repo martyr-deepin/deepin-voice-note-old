@@ -285,6 +285,11 @@ void RightView::handleSelFolderChg(int folderId)
         m_noteListWidget->stop();
     }
 
+    if(nullptr != m_AddButtonLocked)
+    {
+        m_AddButtonLocked->setVisible(true);
+    }
+
     m_noteListWidget->delAllEmptyText();
     m_currFolderId = folderId;
     updateNoteList();
@@ -319,6 +324,7 @@ void RightView::handleSearchNote(int folderId, QString searchKey)
     {
         m_NoSearchResault->setVisible(false);
     }
+    m_AddButtonLocked->setVisible(true);
     m_addVoiceBtn->setVisible(true);
 }
 

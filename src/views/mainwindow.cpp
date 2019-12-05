@@ -50,7 +50,7 @@ void MyMainWindow::initConnection()
     //QObject::connect(m_leftView, SIGNAL(selFolderIdChg(int)), m_rightView, SLOT(handleSelFolderChg(int)));
     QObject::connect(m_mainPage, SIGNAL(textEditClicked(NOTE)), this, SLOT(showNoteDetail(NOTE)));
     QObject::connect(m_mainPage, SIGNAL(clearSearch()), this, SLOT(clearSearchLine()));
-    QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(tryToSearch()));
+    QObject::connect(m_mainPage, SIGNAL(sig_research()), this, SLOT(On_RetryToSearch()));
     QObject::connect(m_mainPage, SIGNAL(sigNoSearchResult()), this, SLOT(OnNoSearchResult()));
 
     connect(m_mainPage,SIGNAL(sigAllFolderDeleted()),this,SLOT(onAllFolderDeleted()));
@@ -562,10 +562,14 @@ void MyMainWindow::handleSearchKey()
 
 
 }
+void MyMainWindow::On_RetryToSearch()
+{
+    tryToSearch(Intancer::get_Intancer()->getSearchKeywords());
+}
 
 void MyMainWindow::tryToSearch(QString search)
 {
-    qDebug()<<"search:"<<search;
+    //qDebug()<<"search:"<<search;
 
     if(Intancer::get_Intancer()->getRecodingFlag())
     {

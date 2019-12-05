@@ -41,6 +41,7 @@ public slots:
     void showNoteDetail(NOTE note);
     void showListPage();
     void handleSearchKey();
+    void On_RetryToSearch();
     void tryToSearch(QString search);
     void handleSearchDialogClicked(int index, const QString &text);
     void handleCloseSearchDialog();
