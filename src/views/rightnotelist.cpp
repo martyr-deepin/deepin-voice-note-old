@@ -1235,6 +1235,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
         }
     }
     Intancer::get_Intancer()->setTryToDelEmptyTextNote(false);
+    Intancer::get_Intancer()->setWantScrollRightListFlag(true);
     //handleVScrollBarChanged(-1);
 }
 
