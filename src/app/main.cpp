@@ -69,9 +69,11 @@ int main(int argc, char *argv[])
 //    a.setApplicationDisplayName(QObject::tr("语音记事本"));
     a.setApplicationDescription(QObject::tr("Voice Notepad is a lightweight voice tool that provides text notes and voice recordings."));
 //    a.setApplicationDescription(QObject::tr("语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。"));
-    if(!DApplicationHelper::instance()->setSingleInstance(a.applicationName(),DGuiApplicationHelper::UserScope))
+
+    if(!a.setSingleInstance(a.applicationName()))
+    //if(!DApplicationHelper::instance()->setSingleInstance(a.applicationName(),DGuiApplicationHelper::UserScope))
     {
-        return  0;
+        exit(-1);
     }
 
     MyMainWindow  *mainWindowObject = new MyMainWindow();  //Add  createVoiceMemo 新建语音备忘录对应

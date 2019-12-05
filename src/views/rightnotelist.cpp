@@ -926,6 +926,22 @@ void RightNoteList::handleAsrAsItem()
            // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
             //通知mainPage转写开始  mainPage里设置leftView不可用
+
+            if(nullptr != m_currPlayingItem)
+            {
+                int playRow = 0;
+                getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+
+                int voiceToTextRow = 0;
+                getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
+
+                if(voiceToTextRow < playRow)
+                {
+                    int movement = m_tmpHeightForVoiceToText - VOICENOTE_HEIGHT;
+                    changeSliderPosByHand(-movement);
+                }
+            }
+
             emit asrStart();
             //转写接口调用
             //Edit start 3878
@@ -971,6 +987,22 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
 //        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
         Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
         //Edit end 3878
+
+        if(nullptr != m_currPlayingItem)
+        {
+            int playRow = 0;
+            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+
+            int voiceToTextRow = 0;
+            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
+
+            if(voiceToTextRow < playRow)
+            {
+                int movement = VOICENOTE_HEIGHT + m_textEditNewHeight + 5 - m_tmpHeightForVoiceToText;
+                changeSliderPosByHand(-movement);
+            }
+        }
+
 
         int count = this->count();
         int transrow = row(m_currSelItemByasr);
