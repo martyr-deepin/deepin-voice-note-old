@@ -614,7 +614,7 @@ void RightNoteList::OnLeaveContentMenu()
 
 void RightNoteList::handleVScrollBarChanged(int value)
 {
-    qDebug()<<"handleVScrollBarChanged:"<<value;
+    //qDebug()<<"handleVScrollBarChanged:"<<value;
     if((nullptr != m_myslider)&&(nullptr != m_currPlayingItem))
     {
         if (!m_myslider->isHidden())

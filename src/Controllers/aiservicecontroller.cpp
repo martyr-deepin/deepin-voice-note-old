@@ -13,10 +13,11 @@ AiServiceController::AiServiceController()
 };
 AiServiceController::~AiServiceController()
 {
-    if (m_status == "3")
-    {
+    //4256
+//    if (m_status == "3")
+//    {
         this->stopAsr();
-    }
+//    }
     if(m_asrInterface) delete m_asrInterface;
     if(m_session) delete m_session;
 };
