@@ -53,7 +53,7 @@ void VoiceNotebookApp::initApp()
     m_app->setApplicationName("deepin-voice-note");
 
 
-    m_app->setApplicationVersion(DApplication::buildVersion("20191205"));
+    m_app->setApplicationVersion(DApplication::buildVersion("20191206"));
     //installEventFilter(new GlobalEventFilter());
     //app.setApplicationVersion(DApplication::buildVersion("0816"));
     //m_app->setProductIcon(QIcon(":/images/logo.svg"));

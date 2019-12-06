@@ -44,7 +44,11 @@ int main(int argc, char *argv[])
     //DApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     //DApplication a(argc, argv);
     MyApplication a(argc, argv);
-
+    if(!a.setSingleInstance(a.applicationName()))
+    //if(!DApplicationHelper::instance()->setSingleInstance(a.applicationName(),DGuiApplicationHelper::UserScope))
+    {
+        exit(-1);
+    }
     //Add start createVoiceMemo 新建语音备忘录对应
 //    MyMainWindow * mainWindowObject = app.getMainWindowObject();
     ExportedInterface einterface(&a);
@@ -70,11 +74,7 @@ int main(int argc, char *argv[])
     a.setApplicationDescription(QObject::tr("Voice Notepad is a lightweight voice tool that provides text notes and voice recordings."));
 //    a.setApplicationDescription(QObject::tr("语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。"));
 
-    if(!a.setSingleInstance(a.applicationName()))
-    //if(!DApplicationHelper::instance()->setSingleInstance(a.applicationName(),DGuiApplicationHelper::UserScope))
-    {
-        exit(-1);
-    }
+
 
     MyMainWindow  *mainWindowObject = new MyMainWindow();  //Add  createVoiceMemo 新建语音备忘录对应
     einterface.setMainWindowObj(mainWindowObject); //Add  createVoiceMemo 新建语音备忘录对应
