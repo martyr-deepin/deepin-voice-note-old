@@ -61,7 +61,6 @@ void MyMainWindow::initConnection()
     //connect(m_searchEdit, &DSearchEdit::returnPressed, this, &MyMainWindow::tryToSearch);
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
 
-    connect(m_searchEdit, &DSearchEdit::textChanged, Intancer::get_Intancer(), &Intancer::setSearchKeywords);
     //start add by yuanshuai 20191205 bug 4272
     connect(m_searchEdit, SIGNAL(focusChanged(bool)), this, SLOT(OnSearchEditClicked(bool)));
     //end
@@ -608,7 +607,7 @@ void MyMainWindow::On_RetryToSearch()
 
 void MyMainWindow::tryToSearch(QString search)
 {
-    //qDebug()<<"search:"<<search;
+    Intancer::get_Intancer()->setSearchKeywords(search);
 
     if(Intancer::get_Intancer()->getRecodingFlag())
     {

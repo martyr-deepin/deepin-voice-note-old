@@ -143,7 +143,6 @@ void LeftView::initConnection()
     //connect(m_leftFolderView, SIGNAL(currentItemChanged(QListWidgetItem *)), this, SLOT(handleSelFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(itemSelectedChanged(QListWidgetItem *, QListWidgetItem *)));
 
-    //connect(m_leftFolderView, SIGNAL(itemPressed(QListWidgetItem *)), this, SLOT(handlePressFolderChg(QListWidgetItem *)));
     connect(m_leftFolderView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
 
     connect(this, SIGNAL(sigBoardPress()), m_leftFolderView, SIGNAL(sigBoardPress()));
@@ -467,23 +466,6 @@ void LeftView::onNoResult()
     clearNoteList();
 }
 //Add end bug3136
-
-//void LeftView::handlePressFolderChg(QListWidgetItem *item)
-//{
-////    int count = m_leftFolderView->count();
-////    for(int i = 0; i < count; i++)
-////    {
-////        QListWidgetItem *tmpItem = m_leftFolderView->item(i);
-////        FolerWidgetItem *tmpfolderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(tmpItem));
-////        tmpfolderItem->changeToUnClickMode();
-////    }
-
-////    if (nullptr != item)
-////    {
-////        FolerWidgetItem *folderItem = (FolerWidgetItem*)(m_leftFolderView->itemWidget(item));
-////        folderItem->changeToClickMode();
-////    }
-//}
 
 void LeftView::clearNoteList()
 {

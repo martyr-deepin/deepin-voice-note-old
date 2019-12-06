@@ -93,9 +93,10 @@ void FolerWidgetItem::changeToClickMode()
 
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-        m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, WHITE));
-        //m_nameLabel->setText(folderNameElided);
+        this->setLabelText(folderNameElided);
+
         DFontSizeManager::instance()->bind(m_nameLabel, DFontSizeManager::T6);
         //m_BackGround->setVisible(false);
     }
@@ -130,8 +131,10 @@ void FolerWidgetItem::changeToUnClickMode()
 
         bool isConverted = false;
         QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+
         QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-        m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
+        this->setLabelText(folderNameElided);
+
         DFontSizeManager::instance()->bind(m_nameLabel, DFontSizeManager::T6);
     }
 }
@@ -180,11 +183,12 @@ void FolerWidgetItem::Init()
 //    m_nameLabel->setPalette(pe);
     m_nameLabel->setForegroundRole(DPalette::TextTitle);
 
-
     bool isConverted = false;
     QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+
     QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
-    m_nameLabel->setText(UiUtil::getHtmlText(folderNameElided, 14, m_searchKey, BLUE));
+    this->setLabelText(folderNameElided);
+
     m_nameLabel->setMouseTracking(false);
     m_nameLabel->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
@@ -254,9 +258,13 @@ void FolerWidgetItem::cancleRename()
 {
     m_folder.folderName = m_BakDefaultName;
     m_lineEdit->setText(m_BakDefaultName);
+
     bool isConverted = false;
-    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-    m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
+    QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+
+    QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+    this->setLabelText(folderNameElided);
+
     DFontSizeManager::instance()->bind(m_nameLabel, DFontSizeManager::T6);
     m_nameLabel->setVisible(true);
     m_lineEdit->setVisible(false);
@@ -293,11 +301,13 @@ void FolerWidgetItem::checkNameValid()
             m_lineEdit->showAlertMessage("修改目录名失败");
 
         }
+
         bool isConverted = false;
+        QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T6);
 
+        QString folderNameElided = UiUtil::getElidedText(labelFontForWidth, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted);
+        this->setLabelText(folderNameElided);
 
-        QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
-        m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
         DFontSizeManager::instance()->bind(m_nameLabel, DFontSizeManager::T6);
         m_nameLabel->setVisible(true);
         m_lineEdit->setVisible(false);
@@ -329,7 +339,6 @@ void FolerWidgetItem::checkNameValid()
 //            QFont labelFont;
 //            labelFont.setFamily("SourceHanSansSC");
 //            labelFont.setPointSize(11);
-//            m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_BakLineContent, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey));
 //            //m_lineEdit->setAlert(true);
 //            //m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
 //            m_stackedWidget->setCurrentIndex(0);
@@ -384,6 +393,33 @@ void FolerWidgetItem::updateTimeLable(const QDateTime &time)
     }
 }
 //liuyang 3550 3547 3528
+
+void FolerWidgetItem::setLabelText(const QString text)
+{
+    QString textToSet = "";
+    QString searchingKeywords = Intancer::get_Intancer()->getSearchKeywords();
+    qDebug() << "searchingKeywords: " << searchingKeywords;
+
+    if (!searchingKeywords.isEmpty()) {
+        RICH_TEXT_COLOR color = BLUE;
+        if (this->m_clicked) {
+            color = WHITE;
+        }
+        else {
+            color = BLUE;
+        }
+
+        textToSet = UiUtil::getHtmlText(text, 12, searchingKeywords, color);
+        this->m_nameLabel->setTextFormat(Qt::RichText);
+    }
+    else {
+        textToSet = text;
+        this->m_nameLabel->setTextFormat(Qt::PlainText);
+    }
+
+    qDebug() << "textToSet: " << textToSet;
+    this->m_nameLabel->setText(textToSet);
+}
 
 //liuyang 3794
 void FolerWidgetItem::leaveEvent(QEvent *event)

@@ -63,7 +63,6 @@ public slots:
     void changeTheme();
     void OnChangeCurFolderToTop(int folderID);
     void onNoResult(); //Add bug3136
-    //void handlePressFolderChg(QListWidgetItem *item);
 
 private:
     QVBoxLayout *m_leftViewLayout;

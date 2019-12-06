@@ -58,7 +58,7 @@ void LeftFolderList::initUI()
 
 void LeftFolderList::initConnection()
 {
-    connect(this, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)), this, SLOT(handleCurrentItemChanged(QListWidgetItem *, QListWidgetItem *)));
+    connect(this, &LeftFolderList::currentItemChanged, this, &LeftFolderList::handleCurrentItemChanged);
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &LeftFolderList::handleDelDialogClicked);
     connect(m_renameAction, SIGNAL(triggered(bool)), this, SLOT(handleRenameItem(bool)));
