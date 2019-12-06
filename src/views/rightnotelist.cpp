@@ -1320,6 +1320,8 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
             emit sig_checkCurPageVoiceForDelete();
             emit sig_CheckFileExist();
             //end
+
+            m_currPlayingItem = nullptr; //4303 yuanshuai
             return;
         }
         audioPlayer->setMedia(QUrl::fromLocalFile(filepath));
@@ -1334,6 +1336,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
             emit sig_CheckFileExist();
             //end
             m_myslider->hide();
+            m_currPlayingItem = nullptr; //4303 yuanshuai
             return;
         }
 
