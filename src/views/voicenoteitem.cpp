@@ -142,7 +142,7 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 void VoiceNoteItem::onTextHeightChanged(int height)
 {
-    qDebug() << "VoiceNoteItem::onTextHeightChanged()";
+    qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
 
     int newHeight = 0;
     if(VOICE_TO_TEXT_MAX_HEIGHT < height)

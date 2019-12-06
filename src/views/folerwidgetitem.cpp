@@ -30,6 +30,7 @@ FolerWidgetItem::~FolerWidgetItem()
 
 void FolerWidgetItem::initConnection()
 {
+    connect(m_lineEdit, &RenameEdit::sigCancelRename, this, &FolerWidgetItem::cancleRename);
     connect(m_lineEdit, &DLineEdit::editingFinished, this, &FolerWidgetItem::checkNameValid);
     connect(m_lineEdit, &DLineEdit::textChanged, this, &FolerWidgetItem::checkNameLenth);
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &FolerWidgetItem::changeTheme);
@@ -247,6 +248,22 @@ void FolerWidgetItem::copy(FolerWidgetItem *pSourceFolder)
 QString FolerWidgetItem::getSearchText()
 {
     return m_searchKey;
+}
+
+void FolerWidgetItem::cancleRename()
+{
+    m_folder.folderName = m_BakDefaultName;
+    m_lineEdit->setText(m_BakDefaultName);
+    bool isConverted = false;
+    QFont labelFont = DFontSizeManager::instance()->get(DFontSizeManager::T6);
+    m_nameLabel->setText(UiUtil::getHtmlText(UiUtil::getElidedText(labelFont, m_folder.folderName, FOLDER_MAX_WIDTH, isConverted), 14, m_searchKey, BLUE));
+    DFontSizeManager::instance()->bind(m_nameLabel, DFontSizeManager::T6);
+    m_nameLabel->setVisible(true);
+    m_lineEdit->setVisible(false);
+    m_createTimeLabel->setVisible(true);
+    m_BakLineContent.clear();
+    m_BakDefaultName.clear();
+    Intancer::get_Intancer()->setRenameRepeatFlag(false);
 }
 
 void FolerWidgetItem::checkNameValid()

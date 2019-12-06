@@ -257,6 +257,13 @@ void TextNoteEdit::insertFromMimeData(const QMimeData *source)
     this->updateNote();
 }
 //Add end 4166
+
+void TextNoteEdit::resizeEvent(QResizeEvent * event)
+{
+    DTextEdit::resizeEvent(event);
+    onTextChanged();
+}
+
 void TextNoteEdit::initConnection()
 {
     connect(this->document(), &QTextDocument::modificationChanged, this, &TextNoteEdit::textAreaChanged); //Add 20191111
@@ -355,8 +362,8 @@ void TextNoteEdit::onTextChanged()
         int documentHeight = static_cast<int>(this->document()->size().height());
 
 //        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
-//        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
-//        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
+        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
+        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
         if (textEditHeight < documentHeight - 3) {
             emit sigDetailButtonChanged(true);

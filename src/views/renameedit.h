@@ -14,6 +14,7 @@ public:
     void tryToFouceout();
 
 signals:
+    void sigCancelRename();
 
 public slots:
 

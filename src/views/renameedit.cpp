@@ -43,7 +43,7 @@ void RenameEdit::keyPressEvent(QKeyEvent *event)
     {
         case Qt::Key_Escape:
             m_isEdited = false;
-            emit editingFinished();
+            emit sigCancelRename();
         break;
     }
     return QWidget::keyPressEvent(event);

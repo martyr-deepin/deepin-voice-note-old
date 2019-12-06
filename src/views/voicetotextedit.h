@@ -19,9 +19,10 @@ public slots:
     void textAreaChanged(); //Add 20191111
 
 protected:
-    void wheelEvent(QWheelEvent *e);
+    void wheelEvent(QWheelEvent *e)override;
     void focusInEvent(QFocusEvent *e)override;
     void focusOutEvent(QFocusEvent *e)override;
+    void resizeEvent(QResizeEvent * event) override;
 
 private:
     void initConnection();

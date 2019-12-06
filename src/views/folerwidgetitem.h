@@ -53,6 +53,7 @@ public:
     void updateTimeLable(const QDateTime &time);//liuyang 3550 3547 3528
 
 public slots:
+    void cancleRename();
     void checkNameValid();
     void checkNameLenth();
     void tryToFouceout();

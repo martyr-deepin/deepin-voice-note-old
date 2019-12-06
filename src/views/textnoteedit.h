@@ -55,6 +55,7 @@ protected:
     void wheelEvent(QWheelEvent *e)override;
     void keyReleaseEvent(QKeyEvent *e) override;
     void insertFromMimeData(const QMimeData *source) override; //Add 4166
+    void resizeEvent(QResizeEvent * event) override;
 
 private:
     NOTE m_textNote;

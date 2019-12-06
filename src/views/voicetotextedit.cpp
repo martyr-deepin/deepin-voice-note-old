@@ -56,6 +56,15 @@ void VoiceToTextEdit::focusOutEvent(QFocusEvent *e)
     DTextEdit::focusOutEvent(e);
 }
 
+void VoiceToTextEdit::resizeEvent(QResizeEvent * event)
+{
+    DTextEdit::resizeEvent(event);
+    QTimer::singleShot(0, this, [=]{
+        int documentHeight = static_cast<int>(this->document()->size().height());
+        emit sigTextHeightChanged(documentHeight);
+    });
+}
+
 //void VoiceToTextEdit::onTextChanged()
 //{
 ////    qDebug() << "TextNoteEdit::onTextChanged()";
