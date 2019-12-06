@@ -62,7 +62,9 @@ void MyMainWindow::initConnection()
     connect(m_searchEdit, &DSearchEdit::textChanged, this, &MyMainWindow::tryToSearch);
 
     connect(m_searchEdit, &DSearchEdit::textChanged, Intancer::get_Intancer(), &Intancer::setSearchKeywords);
-
+    //start add by yuanshuai 20191205 bug 4272
+    connect(m_searchEdit, SIGNAL(focusChanged(bool)), this, SLOT(OnSearchEditClicked(bool)));
+    //end
     connect(m_SearchDialog, &DDialog::buttonClicked, this, &MyMainWindow::handleSearchDialogClicked);
     connect(m_SearchDialog, &DDialog::closed, this, &MyMainWindow::handleCloseSearchDialog);
     connect(m_InitEmptyPage,SIGNAL(sigAddFolderByInitPage()),this,SLOT(onAddFolderByInitPage()));
@@ -632,7 +634,10 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
         //start add by yuanshuai 20191128 bug 3731
         Intancer::get_Intancer()->setEndRecordFlag(false);
         //end
-        m_searchEdit->clear();
+        //start add by yuanshuai 20191128 bug 4272
+        //m_searchEdit->clear();
+        m_searchEdit->setFocus();
+        //end
         Intancer::get_Intancer()->setSearchingFlag(false);
     }
 }
@@ -939,3 +944,16 @@ void MyMainWindow::OnRecordVoiceCouldUse()
 
 }
 //Add end createVoiceMemo 新建语音备忘录对应
+//start add by yuanshuai 20191205 bug 4272
+void MyMainWindow::OnSearchEditClicked(bool focusstate)
+{
+    if(focusstate)
+    {
+        if(Intancer::get_Intancer()->getRecodingFlag())
+        {
+            m_SearchDialog->show();
+            Intancer::get_Intancer()->setSearchingFlag(false);
+        }
+    }
+}
+//end

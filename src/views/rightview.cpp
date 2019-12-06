@@ -562,6 +562,9 @@ void RightView::VoicePlayOrPause()
 void RightView::handleStartRecord()
 {
     //QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
+    //start add by yuanshuai 20191205 bug 4272
+    m_addVoiceBtn->setFocus();
+    //end
 
     QMultimedia::AvailabilityStatus audioinputs;
     m_recordPage->getAudioStates(audioinputs);

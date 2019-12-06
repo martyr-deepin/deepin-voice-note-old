@@ -73,6 +73,9 @@ public slots:
     void onShowRecordDialog();
     void onShowVoiceToTextDialog();
     void OnRecordVoiceCouldUse(); //Add createVoiceMemo 新建语音备忘录对应
+    //start add by yuanshuai 20191205 bug 4272
+    void OnSearchEditClicked(bool focusstate);
+    //end
 protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
