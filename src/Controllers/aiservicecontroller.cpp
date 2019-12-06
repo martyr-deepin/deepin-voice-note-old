@@ -14,10 +14,10 @@ AiServiceController::AiServiceController()
 AiServiceController::~AiServiceController()
 {
     //4256
-//    if (m_status == "3")
-//    {
+    if (m_status == "3" || m_status == "0")
+    {
         this->stopAsr();
-//    }
+    }
     if(m_asrInterface) delete m_asrInterface;
     if(m_session) delete m_session;
 };
@@ -65,6 +65,7 @@ QString AiServiceController::startAsr(QString filePath, int fileDuration, QStrin
 
     }
     QString ret = m_asrInterface->startAsr(param);
+    m_status = "0";  //4256
     //Add start 3858
     if (ret != "000000")
     {

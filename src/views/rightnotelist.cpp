@@ -883,12 +883,32 @@ void RightNoteList::asrOtherErrBtnClick()
 {
     m_asrNetWorkErrDialog->hide();
     m_asrOtherErrDMessage->hide();
-    handleAsrAsItem();
+    //    handleAsrAsItem(); //Del 4297
+        AsrStart(1); //Add 4297
 }
+//Add start 4297
 void RightNoteList::handleAsrAsItem()
+{
+    AsrStart(0);
+}
+void RightNoteList::setAsrErrDialogHide()
+{
+    m_asrNetWorkErrDialog->hide();
+    m_asrOtherErrDMessage->hide();
+}
+//Add end 4297
+//void RightNoteList::handleAsrAsItem() //Del 4297
+void RightNoteList::AsrStart(int type)  //Add 4297
 {
     if (&m_AiServiceController != nullptr)
     {
+        //Add start 4297
+        if (type == 1)
+        {
+            m_currSelItem = m_currSelItembyReasr;
+            m_currSelNote = m_currSelNoteByReasr;
+        }
+        //Add end 4297
         //转写限制
         if(m_currSelNote.voiceTime > ASR_LIMIT_MILLISECOND)
         {
@@ -1030,6 +1050,10 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
             //其他异常
             m_asrOtherErrDMessage->show();
         }
+        //Add start 4297
+        m_currSelItembyReasr = m_currSelItemByasr;
+        m_currSelNoteByReasr = m_currSelNoteByasr;
+        //Add end 4297
     }
 
 
@@ -1236,6 +1260,12 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 
             if(VOICE == m_currSelNote.noteType)
             {
+                //Add start 4297
+                if (m_currSelNote.id == m_currSelNoteByReasr.id)
+                {
+                    setAsrErrDialogHide();
+                }
+                //Add end 4297
                 Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
             }
             else if(TEXT == m_currSelNote.noteType)

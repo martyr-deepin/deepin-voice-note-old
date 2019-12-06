@@ -534,11 +534,11 @@ void MyMainWindow::showListPage()
         m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
     }
     //end
+    m_mainPage->setFocus();
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     this->switchPage(MAIN_PAGE);
     //m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
-    m_mainPage->setFocus();
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
 

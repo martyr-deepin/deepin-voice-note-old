@@ -280,6 +280,10 @@ void RightView::onShowNoResult()
 
 void RightView::handleSelFolderChg(int folderId)
 {
+    //Add start 4297
+    //转写error对话框隐藏
+    m_noteListWidget->setAsrErrDialogHide();
+    //Add end 4297
     //stopAllNeedStop
     if (this->m_noteListWidget->isLoadedAudioPlayer) {
         m_noteListWidget->stop();

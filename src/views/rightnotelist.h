@@ -67,6 +67,7 @@ public:
     bool isLoadedAudioPlayer = {false};
     void adjustWidgetItemWidth();
 
+    void setAsrErrDialogHide(); //Add 4297
 signals:
     void textEditClicked(NOTE textNote);
     void addTextItem();
@@ -175,6 +176,10 @@ private:
     bool m_textGetFocus; //Add bug 2587
     bool m_voiceOperation; //对录音回访的操作时设为true  Add bug 2587
 
+    //Add start 4297
+    QListWidgetItem *m_currSelItembyReasr;
+    NOTE m_currSelNoteByReasr;
+    //Add end 4297
     //MyCustomSlider *m_myslider;
     void createDArrowMenu();
     void destroyDArrowMenu();
@@ -190,7 +195,7 @@ private:
     void changeSliderPosByHand(int moveMovment);
     bool getRowByID(int id, NOTE_TYPE type, int &row);
     void DotheStopThePlayVoiceItem();
-
+    void AsrStart(int type); //  0:开始转写 1:重新转写   //Add 4297
     WorkerController* workController;
 };
 
