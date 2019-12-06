@@ -945,6 +945,7 @@ void RightNoteList::AsrStart(int type)  //Add 4297
             Intancer::get_Intancer()->addHeightForRightList(m_tmpHeightForVoiceToText);
            // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
+            m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
             //通知mainPage转写开始  mainPage里设置leftView不可用
 
             if(nullptr != m_currPlayingItem)
@@ -1003,6 +1004,7 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         //m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
 //        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
+        m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
         //Edit start 3878
 //        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
         Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
@@ -1034,6 +1036,7 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
     }
     else
     {
+        m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(false);
         m_voiceNoteItem->setTextEditDisplay(false);
         m_voiceNoteItem->setTextEditVal("");
         m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));

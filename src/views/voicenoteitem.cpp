@@ -372,7 +372,7 @@ void VoiceNoteItem::initUI()
     m_ayoutBybgWidget->addWidget(m_bgWidgetByplay);
     m_ayoutBybgWidget->addSpacing(0); //ynbboy
     m_ayoutBybgWidget->addWidget(m_bgWidgetBytext);
-    //m_bgWidgetBytext->setVisible(false);
+    m_bgWidgetBytext->setVisible(false);
     //m_bgWidgetBydetailBtn->hide();
     //Add end ynbboy
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
