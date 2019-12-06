@@ -535,8 +535,9 @@ void MyMainWindow::showListPage()
     }
     //end
     m_mainPage->setFocus();
-    m_mainPage->updateFromDetal(m_textNoteEdit->getID());
     this->switchPage(MAIN_PAGE);
+    m_mainPage->updateFromDetal(m_textNoteEdit->getID());
+
     //m_stackedWidget->setCurrentIndex(0);
     m_searchEdit->setEnabled(true); //Add  bug3136
     m_returnBtn->setVisible(false);

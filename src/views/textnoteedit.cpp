@@ -8,7 +8,8 @@
 #include <DMenu>//3699
 #include <QTextBlock>
 
-TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
+
+TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : DTextEdit(parent)
 {
     qDebug() << "TextNoteEdit::TextNoteEdit()";
 
@@ -34,7 +35,7 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
 //    tmp->move(200,0);
 }
 
-TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : QTextEdit(parent)
+TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : DTextEdit(parent)
 {
     if (nullptr == noteCtr)
     {
