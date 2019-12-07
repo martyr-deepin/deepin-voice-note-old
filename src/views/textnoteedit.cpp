@@ -267,7 +267,13 @@ void TextNoteEdit::keyReleaseEvent(QKeyEvent *e)
 //Add start 4166
 void TextNoteEdit::insertFromMimeData(const QMimeData *source)
 {
-    DTextEdit::insertFromMimeData(source);
+    QMimeData newMimeData;
+    newMimeData.setText(source->text());
+
+    DTextEdit::insertFromMimeData(&newMimeData);
+
+    this->setLineHeight(24);
+
     this->updateNote();
 }
 //Add end 4166
