@@ -937,9 +937,10 @@ void RightNoteList::AsrStart(int type)  //Add 4297
             m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignHCenter));
             //end
             //m_voiceNoteItem->setTextEditVal(tr("正在转为文字..."));  //ynbboy
-
+            int beforeheight = m_voiceNoteItemByasr->height();
             m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
             m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+            int afterheight = m_voiceNoteItemByasr->height();
             Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
             m_tmpHeightForVoiceToText = VOICENOTE_HEIGHT + m_textEditNewHeight;
             Intancer::get_Intancer()->addHeightForRightList(m_tmpHeightForVoiceToText);
@@ -958,7 +959,8 @@ void RightNoteList::AsrStart(int type)  //Add 4297
 
                 if(voiceToTextRow < playRow)
                 {
-                    int movement = m_tmpHeightForVoiceToText - VOICENOTE_HEIGHT;
+                    int movement = afterheight - beforeheight;
+                    qDebug()<<"-movement:"<<-movement;
                     changeSliderPosByHand(-movement);
                 }
             }
@@ -1027,6 +1029,7 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
             if(voiceToTextRow < playRow)
             {
                 int movement = VOICENOTE_HEIGHT + m_textEditNewHeight + 5 - m_tmpHeightForVoiceToText;
+                qDebug()<<"-movement:"<<-movement;
                 changeSliderPosByHand(-movement);
             }
         }
@@ -1446,11 +1449,12 @@ void RightNoteList::changeSliderPosByHand(int moveMovment)
             m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
             //qDebug()<<"after move slider y:"<<m_myslider->y();
             UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after move slider y:"), QString::number(m_myslider->y(),10));
-            if(this->verticalScrollBar()->isVisible())
-            {
-                int value = this->verticalScrollBar()->value();
-                this->verticalScrollBar()->setValue(value - 1);
-            }
+//            if(this->verticalScrollBar()->isVisible())
+//            {
+//                int value = this->verticalScrollBar()->value();
+//                this->verticalScrollBar()->setValue(value - 1);
+//            }
+
         }
     }
 }

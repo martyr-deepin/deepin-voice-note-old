@@ -616,7 +616,11 @@ void MyMainWindow::tryToSearch(QString search)
     }
     else
     {
-        handleSearchKey();
+        if(m_bakForSearchStr.compare(search) != 0)
+        {
+            handleSearchKey();
+            m_bakForSearchStr = search;
+        }
     }
 }
 
@@ -628,6 +632,7 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
         Intancer::get_Intancer()->setEndRecordFlag(true);
         //end
         handleSearchKey();
+        m_bakForSearchStr = m_searchEdit->text();
     }
     else
     {
@@ -636,6 +641,8 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
         //end
         //start add by yuanshuai 20191128 bug 4272
         //m_searchEdit->clear();
+
+        m_searchEdit->setText(m_bakForSearchStr);
         m_searchEdit->setFocus();
         //end
         Intancer::get_Intancer()->setSearchingFlag(false);
@@ -644,7 +651,8 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
 
 void MyMainWindow::handleCloseSearchDialog()
 {
-    m_searchEdit->clear();
+    //m_searchEdit->clear();
+    m_searchEdit->setFocus();
 }
 
 void MyMainWindow::clearSearchLine()
