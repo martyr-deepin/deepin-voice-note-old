@@ -167,17 +167,21 @@ QList<float> UiUtil::convertStringToFloatList(QString str)
 QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_TEXT_COLOR color) {
     src.replace("<", "&lt;");
 
-    QString searchStr = "<font color=#349ae8>%1</font>";
+    QString searchStr = "<fontcolor=#349ae8>%1</font>";
     if (BLUE == color) {
         searchStr.clear();
-        searchStr = "<font color=#349ae8>%1</font>";
+        searchStr = "<fontcolor=#349ae8>%1</font>";
     }
     else if (WHITE == color) {
         searchStr.clear();
-        searchStr = "<font color=#ffffff>%1</font>";
+        searchStr = "<fontcolor=#ffffff>%1</font>";
     }
 
     QString destSrc = src;
+
+    if (!searchKey.isEmpty()) {
+        destSrc = destSrc.replace(searchKey, searchStr.arg(searchKey));
+    }
 
     QString space = " ";
     QString RichSpace = "&nbsp;";
@@ -193,7 +197,7 @@ QString UiUtil::getHtmlText(QString src, int fontSize, QString searchKey, RICH_T
     destSrc = destSrc.replace(tab,Richtab);
 
     if (!searchKey.isEmpty()) {
-        destSrc = destSrc.replace(searchKey, searchStr.arg(searchKey));
+        destSrc = destSrc.replace("fontcolor", "font color");
     }
 
     return destSrc;
