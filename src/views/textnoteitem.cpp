@@ -161,7 +161,6 @@ void TextNoteItem::initUI(const bool isAddByButton)
     {
         m_textEdit->setReadOnly(true);
         m_isEdited = true;
-        m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
 
     m_textEdit->setFrameShape(QFrame::NoFrame);
@@ -463,15 +462,11 @@ void TextNoteItem::handleTextEditFocusOut()
 
         if (m_isTextConverted)
         {
-
             m_textEdit->setReadOnly(true);
-            m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
         }
         else
         {
-
             m_textEdit->setReadOnly(true);
-            m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
         QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
@@ -652,12 +647,10 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         if (m_isTextConverted)
         {
             m_textEdit->setReadOnly(true);
-            m_textEdit->setContextMenuPolicy(Qt::NoContextMenu);
         }
         else
         {
             m_textEdit->setReadOnly(false);
-            m_textEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
         }
 
 
