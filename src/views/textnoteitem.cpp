@@ -256,8 +256,6 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
 void TextNoteItem::initConnection()
 {
-    //connect(m_plainTextEdit, &QPlainTextEdit::textChanged, this, &TextNoteItem::updateNote);
-    //connect(m_textEdit, &TextNoteEdit::textChanged, this, &TextNoteItem::updateNote);
     connect(m_textEdit, &TextNoteEdit::clicked, this, &TextNoteItem::handleTextEditClicked);
     connect(m_textEdit, &TextNoteEdit::sigDelMyself, this, &TextNoteItem::tryToFouceout);
     connect(m_textEdit, &TextNoteEdit::SigTextEditGetFocus, this, &TextNoteItem::OnTextEditGetFocus); //Add bug 2587
@@ -438,8 +436,8 @@ void TextNoteItem::handleTextEditFocusOut()
     //qDebug() << "m_bakContent: " << m_bakContent;
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
-    m_textEdit->setPlainText(m_bakContent);
-    m_textEdit->setLineHeight(24);
+//    m_textEdit->setPlainText(m_bakContent);
+//    m_textEdit->setLineHeight(24);
 
     m_textNote.contentText = m_textEdit->toPlainText();
     bool timechanged = false;

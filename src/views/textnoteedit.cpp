@@ -8,6 +8,8 @@
 #include <DMenu>//3699
 #include <QTextBlock>
 
+bool TextNoteEdit::doesFocusInToChangePlainText = false;
+bool TextNoteEdit::doesFocusOutToChangeHtml = false;
 
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : DTextEdit(parent)
 {
@@ -170,15 +172,16 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
-    qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
+    if (this->doesFocusInToChangePlainText) {
+        qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
+        qDebug() << "this->toPlainText(): " << this->toPlainText();
 
-    qDebug() << "this->toPlainText(): " << this->toPlainText();
+        qDebug() << "this->textCursor().position() before setPlainText: " << this->textCursor().position();
+        this->setPlainText(this->toPlainText());
+        qDebug() << "this->textCursor().position() after setPlainText: " << this->textCursor().position();
 
-    qDebug() << "this->textCursor().position() before setPlainText: " << this->textCursor().position();
-    this->setPlainText(this->toPlainText());
-    qDebug() << "this->textCursor().position() after setPlainText: " << this->textCursor().position();
-
-    this->setLineHeight(24);
+        this->setLineHeight(24);
+    }
 
     DTextEdit::focusInEvent(e); //Add bug 2587
 
@@ -209,22 +212,23 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     }
     //emit focusOutSignal();
 
-    QString searchKeywords = Intancer::get_Intancer()->getSearchKeywords();
-    qDebug() << "searchKeywords: " << searchKeywords;
 
-    QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
-    //qDebug() << "html: " << html;
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
+   if (this->doesFocusOutToChangeHtml) {
+        QString searchKeywords = Intancer::get_Intancer()->getSearchKeywords();
+        qDebug() << "searchKeywords: " << searchKeywords;
 
-    qDebug() << "this->textCursor().position() before setHtml: " << this->textCursor().position();
-    this->setHtml(html);
-    qDebug() << "this->textCursor().position() after setHtml: " << this->textCursor().position();
+        QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
+        qDebug() << "html: " << html;
 
-    qDebug() << "this->setHtml() done";
-    //qDebug() << "this->toPlainText(): " << this->toPlainText();
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
+        qDebug() << "this->textCursor().position() before setHtml: " << this->textCursor().position();
+        this->setHtml(html);
+        qDebug() << "this->textCursor().position() after setHtml: " << this->textCursor().position();
 
-    this->setLineHeight(24);
+        qDebug() << "this->setHtml() done";
+        qDebug() << "this->toPlainText(): " << this->toPlainText();
+
+        this->setLineHeight(24);
+    }
 
     DTextEdit::focusOutEvent(e);
 
@@ -372,8 +376,9 @@ void TextNoteEdit::onTextChanged()
         int textEditHeight = this->height();
         int documentHeight = static_cast<int>(this->document()->size().height());
 
-        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
-        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
+//        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
+//        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
+//        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
         if (textEditHeight < documentHeight - 3) {
             emit sigDetailButtonChanged(true);

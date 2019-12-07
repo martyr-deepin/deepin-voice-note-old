@@ -476,7 +476,7 @@ void RightView::searchNoteList(QString searchKey)
         }
         for (int i = 0; i < noteList.size(); i++)
         {
-            m_noteListWidget->addWidgetItem(false, noteList.at(i), searchKey);
+            m_noteListWidget->addWidgetItem(false, noteList.at(i), Intancer::get_Intancer()->getSearchKeywords());
             if(VOICE == noteList.at(i).noteType)
             {
                 Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);

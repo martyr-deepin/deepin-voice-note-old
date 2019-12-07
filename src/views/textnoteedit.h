@@ -7,6 +7,8 @@
 #include <QTextEdit>
 DWIDGET_USE_NAMESPACE
 
+
+
 //文字编辑框(Detal和非Deltal都在使用)
 class TextNoteEdit : public DTextEdit
 //class TextNoteEdit : public QTextEdit
@@ -58,6 +60,8 @@ protected:
     void resizeEvent(QResizeEvent * event) override;
 
 private:
+    static bool doesFocusInToChangePlainText;
+    static bool doesFocusOutToChangeHtml;
     NOTE m_textNote;
     NoteController *m_noteCtr;
     QString m_searchKey;
