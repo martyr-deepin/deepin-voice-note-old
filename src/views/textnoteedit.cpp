@@ -67,7 +67,6 @@ QString TextNoteEdit::getText()
 void TextNoteEdit::setHtml(const QString &text)
 {
     qDebug() << "TextNoteEdit::setHtml()";
-    //qDebug() << "text: " << text;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
     int lastTextCursorPosition = this->textCursor().position();
@@ -79,7 +78,6 @@ void TextNoteEdit::setHtml(const QString &text)
     textCursor.setPosition(lastTextCursorPosition);
     this->setTextCursor(textCursor);
 
-    //qDebug() << "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     qDebug() << "this->textCursor().position(): " << this->textCursor().position();
 }
@@ -87,7 +85,6 @@ void TextNoteEdit::setHtml(const QString &text)
 void TextNoteEdit::setPlainText(const QString &text)
 {
     qDebug() << "TextNoteEdit::setPlainText()";
-    //qDebug() << "text: " << text;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
     int lastTextCursorPosition = this->textCursor().position();
@@ -99,7 +96,6 @@ void TextNoteEdit::setPlainText(const QString &text)
     textCursor.setPosition(lastTextCursorPosition);
     this->setTextCursor(textCursor);
 
-    //qDebug() << "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     qDebug() << "this->textCursor().position(): " << this->textCursor().position();
 }
@@ -107,7 +103,6 @@ void TextNoteEdit::setPlainText(const QString &text)
 void TextNoteEdit::setText(const QString &text)
 {
     qDebug() << "TextNoteEdit::setText()";
-    //qDebug() << "text: " << text;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
     int lastTextCursorPosition = this->textCursor().position();
@@ -119,7 +114,6 @@ void TextNoteEdit::setText(const QString &text)
     textCursor.setPosition(lastTextCursorPosition);
     this->setTextCursor(textCursor);
 
-    //qDebug() << "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     qDebug() << "this->textCursor().position(): " << this->textCursor().position();
 }
@@ -167,14 +161,13 @@ void TextNoteEdit::mousePressEvent(QMouseEvent *event)
 void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
     qDebug() << "TextNoteEdit::focusInEvent()";
-    //qDebug() << "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
     if (this->doesFocusInToChangePlainText) {
         qDebug() << "this->textCursor().position() before setText: " << this->textCursor().position();
-        qDebug() << "this->toPlainText(): " << this->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
         qDebug() << "this->textCursor().position() before setPlainText: " << this->textCursor().position();
         this->setPlainText(this->toPlainText());
@@ -191,7 +184,6 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
     qDebug()<< "TextNoteEdit::focusOutEvent()";
-    //qDebug()<< "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
     //3699
@@ -218,14 +210,14 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         qDebug() << "searchKeywords: " << searchKeywords;
 
         QString html = UiUtil::getHtmlText(this->toPlainText(),  12, searchKeywords, BLUE);
-        qDebug() << "html: " << html;
+//        qDebug() << "html: " << html;
 
         qDebug() << "this->textCursor().position() before setHtml: " << this->textCursor().position();
         this->setHtml(html);
         qDebug() << "this->textCursor().position() after setHtml: " << this->textCursor().position();
 
         qDebug() << "this->setHtml() done";
-        qDebug() << "this->toPlainText(): " << this->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
         this->setLineHeight(24);
     }
@@ -348,8 +340,6 @@ void TextNoteEdit::updateNote()
 //Add s 20191111
 void TextNoteEdit::textAreaChanged()
 {
-//    qDebug() << "TextNoteEdit::textAreaChanged()";
-//    qDebug() << "this->toPlainText(): " << this->toPlainText();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("TextNoteEdit::textAreaChanged()"), QString("TextNoteEdit::textAreaChanged()"));
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
@@ -382,7 +372,7 @@ void TextNoteEdit::onTextChanged()
         int textEditHeight = this->height();
         int documentHeight = static_cast<int>(this->document()->size().height());
 
-//        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 //        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
 //        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 

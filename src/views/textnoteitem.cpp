@@ -118,17 +118,14 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_hBoxLayout->setContentsMargins(14, 0, 0, 0);
     m_hBoxLayout->setObjectName("horizontalLayout");
 
-
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
 
-    //qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
     if (!isAddByButton) {
         m_textEdit->setTextNote(m_textNote, m_searchKey);
     }
 
-    //qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
 //    QFont labelFont;
@@ -362,7 +359,6 @@ void TextNoteItem::textAreaChanged()
         //非空
         //m_textNote.contentText = m_textEdit->toPlainText();
         m_menuBtn->setDisabled(false);
-        //qDebug()<<"text: "<<m_textEdit->toPlainText();
         UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), m_textEdit->toPlainText());
 
         bool changed = false;

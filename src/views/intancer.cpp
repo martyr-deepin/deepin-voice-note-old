@@ -267,8 +267,6 @@ bool Intancer::getEndRecordFlag()
 
 void Intancer::setSearchKeywords(const QString & text)
 {
-    //qDebug() << "Intancer::setSearchKeywords()";
-    //qDebug() << "text: " << text;
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("Intancer::setSearchKeywords():"), QString("Intancer::setSearchKeywords():"));
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
