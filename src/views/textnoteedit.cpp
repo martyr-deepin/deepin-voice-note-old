@@ -9,7 +9,7 @@
 #include <QTextBlock>
 
 bool TextNoteEdit::doesFocusInToChangePlainText = false;
-bool TextNoteEdit::doesFocusOutToChangeHtml = false;
+bool TextNoteEdit::doesFocusOutToChangeHtml = true;
 
 TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteCtr) : DTextEdit(parent)
 {
