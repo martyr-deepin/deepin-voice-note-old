@@ -13,7 +13,8 @@ QVariant ExportedInterface::invoke(const QString &action, const QString &paramet
     }
     else
     {
-       qDebug()<<"action error";
+       //qDebug()<<"action error";
+       UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: "), QString("action error"));
        return QVariant(false);
     }
     return QVariant(true);

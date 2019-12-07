@@ -74,13 +74,11 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 
 void Waveform::paintEvent(QPaintEvent *)
 {
-    //qDebug()<<"Waveform::paintEvent m_currWavePos:"<<m_currWavePos;
     if(m_wantEmpty)
     {
         return;
     }
 
-    //qDebug()<<"Waveform::paintEvent:";
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     if (WHOLE == m_currDisplayType)
@@ -104,7 +102,6 @@ void Waveform::paintEvent(QPaintEvent *)
         painter.setClipRect(QRect(rect().x(), rect().y(), rect().width(), rect().height()));
     }
 
-    //qDebug()<<"pointNum:"<<sampleList.size();
     if(PART_SAMPLE == m_currDisplayType)
     {
         m_Slider->move(rect().x() + rect().width(),m_Slider->y());
@@ -113,7 +110,6 @@ void Waveform::paintEvent(QPaintEvent *)
 
         
     int volume = 0;
-    //qDebug()<<"sampleList.size():"<<sampleList.size();
     //录音和回放波形的描画
     for (int i = 0; i < sampleList.size(); i++) {
         volume = sampleList[i] * rect().height() * 2;
@@ -125,8 +121,6 @@ void Waveform::paintEvent(QPaintEvent *)
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
-//            qDebug()<<"sampleRect.x:"<<sampleRect.x();
-//            qDebug()<<"rect.x:"<<rect().x();
             QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
             //QLinearGradient 不渐变色
 //            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
@@ -161,7 +155,6 @@ void Waveform::paintEvent(QPaintEvent *)
         }
     }
 
-    //qDebug()<<"sampleList.size():"<<sampleList.size();
     //录音时中间默认的黑线
 //    if (sampleList.size() < rect().width() / WAVE_DURATION) {
 //        QPainterPath path;
@@ -233,7 +226,8 @@ void Waveform::OnSetWavePos(int pos)
         renderWave();
     }
     //3558
-    qDebug()<<"m_currWavePos:"<<m_currWavePos;
+    //qDebug()<<"m_currWavePos:"<<m_currWavePos;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_currWavePos:"), QString::number(m_currWavePos,10));
 }
 
 void Waveform::setWholeSampleList(QList<float> wholeList)
@@ -241,13 +235,12 @@ void Waveform::setWholeSampleList(QList<float> wholeList)
     wholeSampleList.clear();
     //sampleList.clear();
     wholeSampleList = wholeList;
-    qDebug()<<"wholeSampleList.size:"<<wholeSampleList.size();
+    //qDebug()<<"wholeSampleList.size:"<<wholeSampleList.size();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("wholeSampleList.size:"), QString::number(wholeSampleList.size(),10));
 //    int pointNum = rect().width() / WAVE_DURATION;
 //    float sample = wholeList.size() * 1.0 / pointNum;
-////    qDebug() << "whole list";
 ////    for (int t = 0; t < wholeList.size(); t++)
 ////    {
-////        qDebug() << t << ":" << wholeList.at(t);
 ////    }
 //    for (int i = 0; i < pointNum; i++)
 //    {
@@ -273,10 +266,8 @@ void Waveform::setWholeSampleList(QList<float> wholeList)
 //        }
 //    }
 
-//    qDebug() << "sample list";
 //    for (int t = 0; t < sampleList.size(); t++)
 //    {
-//        qDebug() << t << ":" << sampleList.at(t);
 //    }
 
 }
@@ -418,11 +409,9 @@ void Waveform::genSampleListFromWhole()
     sampleList.clear();
     int pointNum = rect().width() / WAVE_DURATION;
     float sample = wholeSampleList.size() * 1.0 / pointNum;
-    //qDebug()<<"pointNum:"<<pointNum;
-//    qDebug() << "whole list";
+
 //    for (int t = 0; t < wholeList.size(); t++)
 //    {
-//        qDebug() << t << ":" << wholeList.at(t);
 //    }
 
 

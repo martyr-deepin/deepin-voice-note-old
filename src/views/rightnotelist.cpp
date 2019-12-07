@@ -155,7 +155,8 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
             if (m_asrStatusFlg)
             {
                 m_asrAction->setEnabled(false);
-                qDebug() << "srActionEnabled: false";
+                //qDebug() << "srActionEnabled: false";
+                UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("srActionEnabled: false"), QString("srActionEnabled: false"));
             }
             else
             {
@@ -251,7 +252,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
     {
         TextNoteItem *textItem = new TextNoteItem(isAddByButton, note, m_noteController, searchKey);
 
-        qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+        //qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
 
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(textEditTrueClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
@@ -274,16 +276,14 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(SigTextEditGetFocus(NOTE)), this, SLOT(onTextEditGetFocus(NOTE))); //Add bug 2587
         connect(textItem, SIGNAL(SigTextEditOutFocus(NOTE)), this, SLOT(onTextEditOutFocus(NOTE))); //Add bug 2587
 
-        qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+        //qDebug() << "textItem->m_textEdit->toPlainText(): " << textItem->m_textEdit->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
 
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);
-        //qDebug() << "text item height: " << textItem->height();
         //item->setSizeHint(QSize(this->width(),92));
-        //qDebug()<<"textItem width1:"<<textItem->width();
         //item->setSizeHint(QSize(this->width(),123));  //orig
         item->setSizeHint(QSize(this->width(),TEXTNOTE_HEIGHT));  //orig
-        //qDebug()<<"textItem width2:"<<textItem->width();
         int count = this->count();
         this->insertItem(count - 1,item);
         this->setItemWidget(item, textItem);
@@ -297,7 +297,6 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         }
 
         //textItem->changeToEditMode();
-        //qDebug()<<"textItem width3:"<<textItem->width();
     }
     else if(note.noteType == NOTE_TYPE::VOICE){
         VoiceNoteItem *voiceItem = new VoiceNoteItem(note, m_noteController);
@@ -477,12 +476,9 @@ void RightNoteList::getDurtimgByRecodefinised(QString filepath)
 //            {
 //                hideDArrowMenu();
 //                m_actionHoverd = false;
-//                qDebug()<<"RightNoteList MouseButtonRelease hide";
 //            }
-//            //qDebug()<<"click filter";
 //            break;
 //            case QEvent::MouseButtonPress:
-//                //qDebug()<<"RightNoteList::MouseButtonPress";
 //                emit sigBoardPress();
 //            break;
 //        }
@@ -493,7 +489,7 @@ void RightNoteList::getDurtimgByRecodefinised(QString filepath)
 
 void RightNoteList::paintEvent(QPaintEvent *event)
 {
-    //qDebug()<<"RightNoteList::paintEvent";
+
 }
 
 void RightNoteList::resizeEvent(QResizeEvent * event)
@@ -517,7 +513,8 @@ void RightNoteList::resizeEvent(QResizeEvent * event)
 
 void RightNoteList::wheelEvent(QWheelEvent *e)
 {
-    qDebug()<<"RightNoteList::wheelEvent";
+    //qDebug()<<"RightNoteList::wheelEvent";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("RightNoteList::wheelEvent"), QString("RightNoteList::wheelEvent"));
     if(Intancer::get_Intancer()->getWantScrollRightListFlag())
     {
         DListWidget::wheelEvent(e);
@@ -577,14 +574,16 @@ void RightNoteList::handleMenuBtnClicked(QPoint menuArrowPointGlobal, QPoint men
 //            }
             // Zhangya 2019.11.23 bug fix 3085
             showDArrowMenu(menuArrowPointGlobal.x(), menuArrowPointGlobal.y(),note.noteType);
-            qDebug()<<"handleMenuBtnClicked show";
+            //qDebug()<<"handleMenuBtnClicked show";
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("handleMenuBtnClicked show"), QString("handleMenuBtnClicked show"));
         }
         else {
             hideDArrowMenu();
     //        m_arrowMenu->setVisible(false);
     //        m_contextMenu->setVisible(false);
             m_actionHoverd = false;
-            qDebug()<<"handleMenuBtnClicked hide";
+            //qDebug()<<"handleMenuBtnClicked hide";
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("handleMenuBtnClicked hide"), QString("handleMenuBtnClicked hide"));
         }
     }
 
@@ -614,7 +613,6 @@ void RightNoteList::OnLeaveContentMenu()
 
 void RightNoteList::handleVScrollBarChanged(int value)
 {
-    //qDebug()<<"handleVScrollBarChanged:"<<value;
     if((nullptr != m_myslider)&&(nullptr != m_currPlayingItem))
     {
         if (!m_myslider->isHidden())
@@ -623,7 +621,8 @@ void RightNoteList::handleVScrollBarChanged(int value)
             if(m_currPlayingItem->getwaveformPoint(rect))
             {
                 QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
-                qDebug()<<"waveformPoint.y():"<<waveformPoint.y();
+                //qDebug()<<"waveformPoint.y():"<<waveformPoint.y();
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("waveformPoint.y():"), QString::number(waveformPoint.y(),10));
                 m_myslider->move(m_myslider->x(),waveformPoint.y() - 27);
             }
         }
@@ -655,16 +654,16 @@ void RightNoteList::onAbleAddBtn(bool changed)
 {
 //    if(nullptr != m_addTextBtn)
 //    {
-//        qDebug()<<"m_addTextBtn->setDisableBtn(false);";
 //        m_addTextBtn->setDisableBtn(false);
 //    }
 }
 
 void RightNoteList::onTextChangedFlagChange(bool changed)
 {
-    qDebug() << "RightNoteList::onTextChangedFlagChange()";
-    qDebug() << "changed: " << changed;
-    qDebug() << "this->count(): " << this->count();
+//    qDebug() << "changed: " << changed;
+//    qDebug() << "this->count(): " << this->count();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("changed:"), QString::number(changed));
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->count():"), QString::number(this->count(),10));
 
 //    if(m_textClicked)
 //    {
@@ -784,7 +783,8 @@ bool RightNoteList::shortcutsDelete()
     //             m_delConfirmDialog->show();
     //        }
     bool ret = false;
-    qDebug()<<"m_textGetFocus:"<< m_textGetFocus;
+    //qDebug()<<"m_textGetFocus:"<< m_textGetFocus;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textGetFocus:"), QString::number(m_textGetFocus));
     m_currSelItem = getListItemById(m_currSelNote.id);
     if (m_currSelNote.noteType == NOTE_TYPE::TEXT)
     {
@@ -796,7 +796,6 @@ bool RightNoteList::shortcutsDelete()
 //            if (txt!="")
 //            {
 //                m_textGetFocus = false;
-//                qDebug()<<"m_textGetFocus:"<< m_textGetFocus;
 //                m_delConfirmDialog->show();
 //            }
             //Del end 2587再对应 (文本编辑时，删除键快捷无效.另外【CTRL+D】=>【DEL】)
@@ -836,7 +835,8 @@ void RightNoteList::onTextEditOutFocus(NOTE note)
 
 void RightNoteList::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
 {
-    qDebug() << "RightNoteList::onMediaPlayerCreated()";
+    //qDebug() << "RightNoteList::onMediaPlayerCreated()";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("RightNoteList::onMediaPlayerCreated():"), QString("RightNoteList::onMediaPlayerCreated():"));
 
     this->audioPlayer = mediaPlayer;
 
@@ -974,12 +974,18 @@ void RightNoteList::AsrStart(int type)  //Add 4297
 }
 void RightNoteList::AsrResultResp(AsrResult clsResult)
 {
-    qDebug() << "code:" << clsResult.code;
-    qDebug() << "descInfo:" <<clsResult.descInfo;
-    qDebug() << "failType:" <<clsResult.failType;
-    qDebug() << "status:" <<clsResult.status;
-    qDebug() << "txt:" <<clsResult.txt;
-    qDebug() << "ErrorMsg:" <<clsResult.ErrorMsg;
+//    qDebug() << "code:" << clsResult.code;
+//    qDebug() << "descInfo:" <<clsResult.descInfo;
+//    qDebug() << "failType:" <<clsResult.failType;
+//    qDebug() << "status:" <<clsResult.status;
+//    qDebug() << "txt:" <<clsResult.txt;
+//    qDebug() << "ErrorMsg:" <<clsResult.ErrorMsg;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("code:"), clsResult.code);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("descInfo:"), clsResult.descInfo);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("failType:"), clsResult.failType);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("status:"), clsResult.status);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("txt:"), clsResult.txt);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("ErrorMsg:"), clsResult.ErrorMsg);
     //设定选中的菜单按钮可用
     m_voiceNoteItemByasr->setMenuBtnEnabled(true);
     //转写状态:设定为结束
@@ -1214,7 +1220,6 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 //        {
 //            if (!UiUtil::autoDeleteTxt(m_currSelNote))
 //            {
-//                qDebug() << "error: delete file error";
 //            }
 //        }
 
@@ -1244,7 +1249,8 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                 {
                     move = true;
                     moveMovment = this->itemWidget(m_currSelItem)->height();
-                    qDebug()<<"moveMovment: "<<moveMovment;
+                    //qDebug()<<"moveMovment: "<<moveMovment;
+                    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("moveMovment:"), QString::number(moveMovment,10));
                 }
 
             }
@@ -1290,7 +1296,8 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 
         }
         else {
-            qDebug() << "error: delete item error";
+            //qDebug() << "error: delete item error";
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete item error"), QString("error: delete item error"));
         }
     }
     else {
@@ -1385,10 +1392,7 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
     {
         QPoint waveformPoint = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
         //QPoint x = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
-//        qDebug() << "width: " << waveformPos.width() << "height: " << m_myslider->y();
 //        // - m_myslider->m_handleTextHeight
-//        qDebug()<<"play y:"<<waveformPoint.y() - 27;
-//        qDebug()<<"before m_currPlayingItem->pos().y():"<<m_currPlayingItem->pos().y();
         m_myslider->setTimeText(QString("00:00"));
         //m_myslider->setTimeText(QString(tr("00:00")));
         m_myslider->setGeometry( waveformPoint.x() - m_myslider->getHandlerWidth() / 2, waveformPoint.y() - 27, waveformPos.width() + m_myslider->getHandlerWidth(), m_myslider->m_defaultHeight);
@@ -1437,10 +1441,11 @@ void RightNoteList::changeSliderPosByHand(int moveMovment)
     {
         if (!m_myslider->isHidden())
         {
-            qDebug()<<"before move slider y:"<<m_myslider->y();
+            //qDebug()<<"before move slider y:"<<m_myslider->y();
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("before move slider y:"), QString::number(m_myslider->y(),10));
             m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
-            qDebug()<<"after move slider y:"<<m_myslider->y();
-
+            //qDebug()<<"after move slider y:"<<m_myslider->y();
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after move slider y:"), QString::number(m_myslider->y(),10));
             if(this->verticalScrollBar()->isVisible())
             {
                 int value = this->verticalScrollBar()->value();
@@ -1524,20 +1529,15 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
 //        //int audioLength = audioPlayer->duration();
 //        int audioLength = m_currPlayingItem->m_note.voiceTime;
 //        int sliderPos = 0;
-//        qDebug()<<"position:"<<position;
 //        if (audioLength > 0)
 //        {
 //            sliderPos = position * ( m_myslider->width()) / audioLength;
 //        }
-
-//        qDebug() << "handleAudioPositionChanged:" << position;
-//        qDebug() << "sliderPos:" <<sliderPos;
 //        m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
 //        //QTime curTime(0,0,0);
 //        QTime curTime(0, position / 60000, qRound((position % 60000) / 1000.0));
 //        //QTime curTime(0, position / 60000, (position % 60000) / 1000.0);
 //        QString curTimeStr = curTime.toString(tr("mm:ss"));
-//        qDebug()<<"curTime:"<<curTime;
 //        m_myslider->setTimeText(curTimeStr);
 //        //m_myslider->setTimeText(UiUtil::formatMillisecond(position));
 //        m_myslider->setSliderPostion(sliderPos);
@@ -1546,7 +1546,8 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
     //s ynbboy 20191109
     if(nullptr != m_currPlayingItem)
     {
-        qDebug()<<"position:"<<position;
+        //qDebug()<<"position:"<<position;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("position:"), QString::number(position,10));
         if (0 == position)
         {
             QTime curTime(0, 0, 0);
@@ -1565,9 +1566,12 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
 
        int audioLength = int(audioPlayer->duration());
        int maxTime = audioLength/1000;
-       qDebug()<<"s:"<<s;
-       qDebug()<<"audioLength:"<<audioLength;
-       qDebug()<<"maxTime:"<<maxTime;
+//       qDebug()<<"s:"<<s;
+//       qDebug()<<"audioLength:"<<audioLength;
+//       qDebug()<<"maxTime:"<<maxTime;
+       UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("s:"), QString::number(s,10));
+       UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("audioLength:"), QString::number(audioLength,10));
+       UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("maxTime:"), QString::number(maxTime,10));
        if ((s == seconds) || ((audioLength - position) < 1000 && position == audioLength))
        {
 //            int sliderPos = 0;
@@ -1598,10 +1602,12 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
 //            m_currPlayingItem->m_waveform->setWavePosition(sliderPos);
             //m_myslider->setSliderPostion(sliderPos);
 
-            qDebug() << "handleAudioPositionChanged:" << position;
-//            qDebug() << "sliderPos:" <<sliderPos;
-            qDebug()<<"seconds:"<<seconds;
-            qDebug()<<"curTime:"<<curTime;
+//            qDebug() << "handleAudioPositionChanged:" << position;
+//            qDebug()<<"seconds:"<<seconds;
+//            qDebug()<<"curTime:"<<curTime;
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("handleAudioPositionChanged:"), QString::number(position,10));
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("seconds:"), QString::number(seconds,10));
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("curTime:"), curTime.toString());
 
             seconds++;
        }
@@ -1624,15 +1630,12 @@ void RightNoteList::handleSliderReleased()
 //        int voiceTime = m_currPlayingItem->m_note.voiceTime;
 //        int lenth = m_myslider->width() - m_myslider->getHandlerWidth();
 //        int audioPos = sliderpos * voiceTime / lenth;
-//        qDebug() << "audioPos:" << audioPos;
-//        qDebug() << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() ;
-//        qDebug() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime ;
-//        qDebug() << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
         //audioPlayer->setPosition(sliderpos);
         qint64 audioPos = sliderpos * 1000;
         //audioPos = 3000000;
-        qDebug()<<"audioPos:"<<audioPos;
+        //qDebug()<<"audioPos:"<<audioPos;
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("audioPos:"), QString::number(audioPos,10));
         audioPlayer->setPosition(audioPos);
     }
 }
@@ -1640,7 +1643,6 @@ void RightNoteList::handleSliderReleased()
 void RightNoteList::handleSliderPressed()
 {
 //    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
-//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
 //    audioPlayer->setPosition(audioPos);
 }
@@ -1648,7 +1650,6 @@ void RightNoteList::handleSliderPressed()
 void RightNoteList::handleSliderMove(int value)
 {
 //    int audioPos = m_myslider->sliderPosition() * m_currPlayingItem->m_note.voiceTime / (m_myslider->width() - m_myslider->getHandlerWidth());
-//    qDebug() << "audioPos:" << audioPos << ",m_myslider->sliderPosition(): " << m_myslider->sliderPosition() << ",m_currPlayingItem->m_note.voiceTime: " << m_currPlayingItem->m_note.voiceTime << ",m_myslider->width(): " << m_myslider->width() - m_myslider->getHandlerWidth();
 
 //    audioPlayer->setPosition(audioPos);
 }

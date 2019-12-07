@@ -36,8 +36,8 @@ void voiceVolumeWatcher::run()
         if(!m_isRecoding && m_loopwatch)
         {
             bool couldUse = false;
-            couldUse = UiUtil::canMicrophoneInput();
-            //couldUse = true;
+            //couldUse = UiUtil::canMicrophoneInput();
+            couldUse = true;
             if(!couldUse)
             {
                 m_failedCount++;

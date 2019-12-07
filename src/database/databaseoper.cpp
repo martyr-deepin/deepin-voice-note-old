@@ -7,6 +7,8 @@
 
 #include "src/app/consts.h"
 
+#include "uiutil.h"
+
 
 DatabaseOper *DatabaseOper::m_instance = NULL;
 DatabaseOper::DatabaseOper()
@@ -76,7 +78,6 @@ void DatabaseOper::checkTableExist()
 //            sqlQuery.prepare(testSql);
 //            if(!sqlQuery.exec())
 //            {
-//                qDebug()<<"exec sql error: " << sqlQuery.lastError().text();
 //                //return false;
 //            }
 
@@ -91,11 +92,13 @@ void DatabaseOper::createTable(QString createSql)
     m_sqlQuery.prepare(createSql);
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"create table error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"create table error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("create table error:"), m_sqlQuery.lastError().text());
     }
     else
     {
-        qDebug()<<"table created: " << createSql;
+        //qDebug()<<"table created: " << createSql;
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("table created:"), createSql);
     }
 }
 
@@ -119,7 +122,8 @@ bool DatabaseOper::insertData(QString tableName, QStringList columnName, QList<Q
 
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"insertData error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"insertData error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("insertData error:"), m_sqlQuery.lastError().text());
         return false;
     }
     else
@@ -139,7 +143,8 @@ bool DatabaseOper::updateData(QString updateSql, QMap<QString, QVariant> valuesM
     }
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"updateData error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"updateData error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("updateData error:"), m_sqlQuery.lastError().text());
         return false;
     }
     else
@@ -153,7 +158,8 @@ bool DatabaseOper::queryData(QString queryStr, int resultItemSize, QList<QList<Q
     m_sqlQuery.prepare(queryStr);
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("queryData error:"), m_sqlQuery.lastError().text());
         return false;
     }
     else
@@ -177,7 +183,8 @@ bool DatabaseOper::queryLastData(QString queryStr, int resultItemSize, QList<QVa
     m_sqlQuery.prepare(queryStr);
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"queryData error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("queryData error:"), m_sqlQuery.lastError().text());
         return false;
     }
     else
@@ -205,7 +212,8 @@ bool DatabaseOper::deleteDataById(QString tableName, QString id, int idValue)
     m_sqlQuery.addBindValue(QVariant(idValue));
     if(!m_sqlQuery.exec())
     {
-        qDebug()<<"deleteDataById error: " << m_sqlQuery.lastError().text();
+        //qDebug()<<"deleteDataById error: " << m_sqlQuery.lastError().text();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("deleteDataById error:"), m_sqlQuery.lastError().text());
         return false;
     }
     else

@@ -1,5 +1,7 @@
 #include "voiceaudiodevicewatcher.h"
 
+#include "uiutil.h"
+
 VoiceAudioDeviceWatcher::VoiceAudioDeviceWatcher(QObject *parent) : QObject(parent)
 {
 
@@ -44,14 +46,15 @@ VoiceAudioDeviceWatcher::VoiceAudioDeviceWatcher(QObject *parent) : QObject(pare
 
 
     QDBusObjectPath defaultSource = m_audioInterface->defaultSource();
-    qDebug()<<"defaultSource:"<<defaultSource.path();
+    //qDebug()<<"defaultSource:"<<defaultSource.path();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("defaultSource:"), defaultSource.path());
 
     QList<QDBusObjectPath> sourceslist = m_audioInterface->sources();
     QString namedefault = m_defaultSourceInterface->activePort().name;
-    qDebug()<<"Volume:"<<m_defaultSourceInterface->volume();
+    //qDebug()<<"Volume:"<<m_defaultSourceInterface->volume();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("ObjectPath:"), QString::number(m_defaultSourceInterface->volume(),10,4));
 //    for(int i = 0 ; i < sourceslist.count(); i++)
 //    {
-//        qDebug()<<"sources:"<<sourceslist.at(i).path();
 //        if(!sourceslist.at(i).path().isEmpty())
 //        {
 //            com::deepin::daemon::audio::Source *pInterface = new com::deepin::daemon::audio::Source (
@@ -63,7 +66,6 @@ VoiceAudioDeviceWatcher::VoiceAudioDeviceWatcher(QObject *parent) : QObject(pare
 //            {
 //                m_SourcesInterfaceList.append(pInterface);
 //                QString name = pInterface->activePort().name;
-//                qDebug()<<"name:"<<name;
 //                AudioPort AudioPort = pInterface->activePort();
 //                m_AudioPortList.append(AudioPort);
 //                connect(pInterface,SIGNAL(ActivePortChanged(AudioPort)),this,SLOT(OnActivePortChanged(AudioPort)));
@@ -79,109 +81,134 @@ VoiceAudioDeviceWatcher::~VoiceAudioDeviceWatcher()
 
 void VoiceAudioDeviceWatcher::OnCardsChanged(const QString & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnCardsChanged:"<<value;
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnCardsChanged:"<<value;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnCardsChanged:"), value);
 }
 
 void VoiceAudioDeviceWatcher::OnDefaultSinkChanged(const QDBusObjectPath & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnDefaultSinkChanged:"<<value.path();
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnDefaultSinkChanged:"<<value.path();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnDefaultSinkChanged:"), value.path());
 }
 
 void VoiceAudioDeviceWatcher::OnDefaultSourceChanged(const QDBusObjectPath & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnDefaultSourceChanged:"<<value.path();
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnDefaultSourceChanged:"<<value.path();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnDefaultSourceChanged:"), value.path());
 }
 
 void VoiceAudioDeviceWatcher::OnMaxUIVolumeChanged(double  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnMaxUIVolumeChanged:"<<value;
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnMaxUIVolumeChanged:"<<value;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnMaxUIVolumeChanged:"), QString::number(value,10,4));
 }
 
 
 void VoiceAudioDeviceWatcher::OnSinkInputsChanged(const QList<QDBusObjectPath> &value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnSinkInputsChanged:"<<value.count();
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnSinkInputsChanged:"<<value.count();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnSinkInputsChanged:"), QString::number(value.count(),10));
     for(int i = 0; i < value.count(); i++)
     {
-        qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        //qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("row:"), QString::number(i,10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("path:"), value.at(i).path());
     }
 }
 
 void VoiceAudioDeviceWatcher::OnSinksChanged(const QList<QDBusObjectPath> & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnSinksChanged:"<<value.count();
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnSinksChanged:"<<value.count();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnSinksChanged:"), QString::number(value.count(),10));
     for(int i = 0; i < value.count(); i++)
     {
-        qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        //qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("row:"), QString::number(i,10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("path:"), value.at(i).path());
     }
 }
 
 void VoiceAudioDeviceWatcher::OnSourcesChanged(const QList<QDBusObjectPath> & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnSourcesChanged:"<<value.count();
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnSourcesChanged:"<<value.count();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnSourcesChanged:"), QString::number(value.count(),10));
     for(int i = 0; i < value.count(); i++)
     {
-        qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        //qDebug()<<"row:"<<i<<"path:"<<value.at(i).path();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("row:"), QString::number(i,10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("path:"), value.at(i).path());
     }
 }
 
 void VoiceAudioDeviceWatcher::OnActivePortChanged(AudioPort  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnActivePortChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnActivePortChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnActivePortChanged:"), QString("VoiceAudioDeviceWatcher::OnActivePortChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnBalanceChanged(double  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnBalanceChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnBalanceChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnBalanceChanged:"), QString("VoiceAudioDeviceWatcher::OnBalanceChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnBaseVolumeChanged(double  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnBaseVolumeChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnBaseVolumeChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnBaseVolumeChanged:"), QString("VoiceAudioDeviceWatcher::OnBaseVolumeChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnCardChanged(uint  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnCardChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnCardChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnCardChanged:"), QString("VoiceAudioDeviceWatcher::OnCardChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnDescriptionChanged(const QString & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnDescriptionChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnDescriptionChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnDescriptionChanged:"), QString("VoiceAudioDeviceWatcher::OnDescriptionChanged:"));
 }
 void VoiceAudioDeviceWatcher::OnFadeChanged(double  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnFadeChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnFadeChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnFadeChanged:"), QString("VoiceAudioDeviceWatcher::OnFadeChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnMuteChanged(bool  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnMuteChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnMuteChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnMuteChanged:"), QString("VoiceAudioDeviceWatcher::OnMuteChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnNameChanged(const QString & value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnNameChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnNameChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnNameChanged:"), QString("VoiceAudioDeviceWatcher::OnNameChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnPortsChanged(AudioPortList  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnPortsChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnPortsChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnPortsChanged:"), QString("VoiceAudioDeviceWatcher::OnPortsChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnSupportBalanceChanged(bool  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnSupportBalanceChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnSupportBalanceChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnSupportBalanceChanged:"), QString("VoiceAudioDeviceWatcher::OnSupportBalanceChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnSupportFadeChanged(bool  value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnSupportFadeChanged:";
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnSupportFadeChanged:";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnSupportFadeChanged:"), QString("VoiceAudioDeviceWatcher::OnSupportFadeChanged:"));
 }
 
 void VoiceAudioDeviceWatcher::OnVolumeChanged(double value)
 {
-    qDebug()<<"VoiceAudioDeviceWatcher::OnVolumeChanged:"<<value;
+    //qDebug()<<"VoiceAudioDeviceWatcher::OnVolumeChanged:"<<value;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceAudioDeviceWatcher::OnVolumeChanged:"), QString("VoiceAudioDeviceWatcher::OnVolumeChanged:"));
 }
 
 //void VoiceAudioDeviceWatcher::OnActivePortChanged(AudioPort audioPort)

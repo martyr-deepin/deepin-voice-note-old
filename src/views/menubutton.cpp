@@ -73,7 +73,8 @@ void MenuButton::mousePressEvent(QMouseEvent *event)
 
     this->setIconSize(m_iconSize);
     repaint();
-    qDebug()<<"mousePressEvent m_isPressed:"<<m_isPressed;
+    //qDebug()<<"mousePressEvent m_isPressed:"<<m_isPressed;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("mousePressEvent m_isPressed:"), QString::number(m_isPressed));
 }
 
 void MenuButton::mouseReleaseEvent(QMouseEvent *event)
@@ -93,7 +94,8 @@ void MenuButton::mouseReleaseEvent(QMouseEvent *event)
         this->setIcon(m_normal);
     }
     this->setIconSize(m_iconSize);
-    qDebug()<<"mouseReleaseEvent m_isPressed:"<<m_isPressed;
+    //qDebug()<<"mouseReleaseEvent m_isPressed:"<<m_isPressed;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("mouseReleaseEvent m_isPressed:"), QString::number(m_isPressed));
 }
 
 void MenuButton::enterEvent(QEvent *event)
@@ -109,7 +111,8 @@ void MenuButton::enterEvent(QEvent *event)
         this->setIcon(m_hover);
     }
     this->setIconSize(m_iconSize);
-    qDebug()<<"enterEvent m_isIn:"<<m_isIn;
+    //qDebug()<<"enterEvent m_isIn:"<<m_isIn;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("enterEvent m_isIn:"), QString::number(m_isIn));
 }
 void MenuButton::leaveEvent(QEvent *event)
 {
@@ -126,7 +129,8 @@ void MenuButton::leaveEvent(QEvent *event)
         this->setIcon(m_normal);
     }
     this->setIconSize(m_iconSize);
-    qDebug()<<"leaveEvent m_isIn:"<<m_isIn;
+    //qDebug()<<"leaveEvent m_isIn:"<<m_isIn;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("leaveEvent m_isIn:"), QString::number(m_isIn));
 }
 
 void MenuButton::mouseMoveEvent(QMouseEvent *event)

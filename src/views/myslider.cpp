@@ -42,8 +42,6 @@ void MySlider::paintEvent(QPaintEvent *event)
     int curSliderPos = (m_mySliderBar->sliderPosition() * (m_mySliderBar->width())) / (m_mySliderBar->maximum());
     //int curSliderPos = (m_replaySliderBar->slider()->sliderPosition() * (m_replaySliderBar->width())) / (m_replaySliderBar->maximum());
     //int sliderPos = this->sliderPosition() - (m_sliderhandler->width() / 2);
-//    qDebug() << "slider pos:" << sliderPos;
-//    qDebug() << "maximum:" << this->maximum() << ", minimum:" << this->minimum() << ", value:" << this->value() << ", sliderPosition:" << this->sliderPosition();
 
     if(!m_withMouse)
     {
@@ -81,17 +79,20 @@ void MySlider::paintEvent(QPaintEvent *event)
             curSliderPos = m_mouseX - m_sliderHandler->width()/2;
         }
 
-        qDebug()<<"MySlider::paintEvent curSliderPos:"<<curSliderPos;
+        //qDebug()<<"MySlider::paintEvent curSliderPos:"<<curSliderPos;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("MySlider::paintEvent curSliderPos:"), QString::number(curSliderPos,10));
         emit sigSliderPos(curSliderPos);
     }
 }
 
 void MySlider::mousePressEvent(QMouseEvent *event)
 {
-    qDebug()<<"slider press x:"<<event->x();
+    //qDebug()<<"slider press x:"<<event->x();
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("slider press x:"), QString::number(event->x(),10));
     //if((116 > event->y()) && (event->x() > 13)) //ynb 20191109
     //{
-        qDebug()<<"mousePressEvent";
+        //qDebug()<<"mousePressEvent";
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("mousePressEvent"), QString("mousePressEvent:"));
         m_mySliderBar->mousePressEvent(event);
         m_isPressed = true;
         m_withMouse = true;
@@ -103,7 +104,8 @@ void MySlider::mouseReleaseEvent(QMouseEvent *event)
 {
     //if((116 > event->y()) && (event->x() > 13)) //ynb 20191109
     {
-        qDebug()<<"mouseReleaseEvent";
+        //qDebug()<<"mouseReleaseEvent";
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("mouseReleaseEvent"), QString("mouseReleaseEvent:"));
         m_isPressed = false;
         m_mouseX = event->x();
         m_mySliderBar->mouseReleaseEvent(event);
@@ -119,7 +121,8 @@ void MySlider::mouseMoveEvent(QMouseEvent *event)
         {
             int curSliderPos = m_mouseX - m_sliderHandler->width()/2;
             emit sigSliderPos(curSliderPos);
-            qDebug()<<"curSliderPos:"<<curSliderPos;
+            //qDebug()<<"curSliderPos:"<<curSliderPos;
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("curSliderPos:"), QString::number(curSliderPos,10));
             this->update();
         }
     }
@@ -127,7 +130,8 @@ void MySlider::mouseMoveEvent(QMouseEvent *event)
 
 void MySlider::wheelEvent(QWheelEvent *e)
 {
-    qDebug()<<"MySlider::wheelEvent";
+    //qDebug()<<"MySlider::wheelEvent";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("MySlider::wheelEvent"), QString("MySlider::wheelEvent"));
 }
 
 int MySlider::getHandlerWidth()
@@ -191,7 +195,6 @@ void MySlider::initConnection()
 
 void MySlider::setSliderPostion(int sliderPos)
 {
-    //qDebug() << "setSliderPostion: " << sliderPos << ", max:" << m_mySliderBar->maximum();
     if(!m_isPressed)
     {
         m_withMouse = false;
@@ -275,7 +278,8 @@ void MySlider::changeTheme()
 
 void MySlider::OnSliderMoved(int newTime)
 {
-    qDebug()<<"newTime:"<<newTime;
+    //qDebug()<<"newTime:"<<newTime;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newTime:"), QString::number(newTime,10));
     //start add by yuanshuai 20191119 bug 3360
     if(newTime < 0)
     {

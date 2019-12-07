@@ -190,7 +190,8 @@ bool NoteOper::deleteNote(NOTE noteInfo)
     {
         if (!UiUtil::autoDeleteTxt(noteInfo))
         {
-            qDebug() << "error: delete file error";
+            //qDebug() << "error: delete file error";
+            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete file error"), QString("error: delete file error"));
         }
     }
     //====add end 20191105  bug2162  bug2963

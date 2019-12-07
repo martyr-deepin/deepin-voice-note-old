@@ -1,5 +1,6 @@
 #include "aiservicecontroller.h"
 #include "intancer.h"
+#include "uiutil.h"
 #include <QDebug>
 #include <QDBusConnection>
 #include <QDBusError>
@@ -30,7 +31,9 @@ QString AiServiceController::createSession(QString ability)
         int errorcode = -1;
         QString a = Intancer::get_Intancer()->getApplicationName();
         QDBusObjectPath qdPath = m_session->createSession(Intancer::get_Intancer()->getApplicationName(),ability,errorcode);
-        qDebug() << "ObjectPath : " << qdPath.path() << " errorcode: " << errorcode;
+        //qDebug() << "ObjectPath : " << qdPath.path() << " errorcode: " << errorcode;
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("ObjectPath : "), qdPath.path());
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString(" errorcode: "), QString::number(errorcode,10));
         return qdPath.path();
     }
     return "";
@@ -38,7 +41,8 @@ QString AiServiceController::createSession(QString ability)
 
 void AiServiceController::freeSession(QString ability)
 {
-    qDebug() << "freeSession ret :" << m_session->freeSession(Intancer::get_Intancer()->getApplicationName(),ability);
+    //qDebug() << "freeSession ret :" << m_session->freeSession(Intancer::get_Intancer()->getApplicationName(),ability);
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("freeSession ret :"), QString::number(m_session->freeSession(Intancer::get_Intancer()->getApplicationName(),ability),10));
 }
 
 QString AiServiceController::startAsr(QString filePath, int fileDuration, QString srcLanguage, QString targetLanguage)
@@ -75,11 +79,13 @@ QString AiServiceController::startAsr(QString filePath, int fileDuration, QStrin
         if(m_session) delete m_session;
         m_session = nullptr;
         m_asrInterface = nullptr;
-        qDebug()<< "clsResult.code:"<<clsResult.code;
+        //qDebug()<< "clsResult.code:"<<clsResult.code;
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("clsResult.code:"), clsResult.code);
         emit AsrResultReq(clsResult);
     }
     //Add end 3858
-    qDebug()<< "start:"<<ret;
+    //qDebug()<< "start:"<<ret;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("start:"), ret);
     return ret;
 }
 void AiServiceController::stopAsr()
@@ -90,7 +96,8 @@ void AiServiceController::stopAsr()
 
 void AiServiceController::notifySlot(const QString &msg)
 {
-    qDebug() << msg;
+    //qDebug() << msg;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("msg: "), msg);
     class AsrResult clsResult;
     asrJsonParse(msg,clsResult);
     m_status = clsResult.status;

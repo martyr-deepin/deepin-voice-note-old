@@ -56,6 +56,8 @@ public:
     static bool autoAddEditTxt(const NOTE &noteInfo);
     static bool autoDeleteTxt(const NOTE &noteInfo);
     //====end add 20191105  bug2162
+
+    static void writeLog(int type, QString file, int line, QString func, QString context, QString msg);
 };
 
 #endif // UIUTIL_H

@@ -121,13 +121,15 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
 
-    qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+    //qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
     if (!isAddByButton) {
         m_textEdit->setTextNote(m_textNote, m_searchKey);
     }
 
-    qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+    //qDebug() << "m_textEdit->toPlainText(): " << m_textEdit->toPlainText();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
@@ -153,7 +155,8 @@ void TextNoteItem::initUI(const bool isAddByButton)
     QFont labelFontForWidth = DFontSizeManager::instance()->get(DFontSizeManager::T8);
     //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (m_textEdit->width() + 26) * 5, m_isTextConverted);
     //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 536 * 5, m_isTextConverted);
-    qDebug() << "m_isTextConverted: " << m_isTextConverted;
+    //qDebug() << "m_isTextConverted: " << m_isTextConverted;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_isTextConverted:"), QString::number(m_isTextConverted));
     if (m_isTextConverted)
     {
         m_textEdit->setReadOnly(true);
@@ -321,7 +324,8 @@ void TextNoteItem::readFromDatabase()
     m_bakContent = m_textEdit->onlyreadFromDatabase(&time);
     //liuyang 3547
 
-    qDebug() << "m_bakContent: " << m_bakContent;
+    //qDebug() << "m_bakContent: " << m_bakContent;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
@@ -345,7 +349,8 @@ void TextNoteItem::updateNote()
     if(!m_noteCtr->updateNote(note))
     {
         //todo：弹出popup，保存失败
-        qDebug()<< "error: update text note fail!";
+        //qDebug()<< "error: update text note fail!";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: update text note fail!"), QString("error: update text note fail!"));
     }
     else
     {
@@ -360,7 +365,9 @@ void TextNoteItem::textAreaChanged()
         //非空
         //m_textNote.contentText = m_textEdit->toPlainText();
         m_menuBtn->setDisabled(false);
-        qDebug()<<"text: "<<m_textEdit->toPlainText();
+        //qDebug()<<"text: "<<m_textEdit->toPlainText();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), m_textEdit->toPlainText());
+
         bool changed = false;
         QString tmp = m_textEdit->toPlainText();
         if(m_bakContent != tmp)
@@ -424,12 +431,12 @@ void TextNoteItem::handleTextEditFocusOut()
 //    if(m_bakContent == m_textEdit->getText())
 //    //if(0 == m_bakContent.compare(m_textEdit->getText()))
 //    {
-//        qDebug() << "text is same";
 //        return;
 //    }
     //liuyang 3550 3547 3528
 
-    qDebug() << "m_bakContent: " << m_bakContent;
+    //qDebug() << "m_bakContent: " << m_bakContent;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
@@ -470,7 +477,8 @@ void TextNoteItem::handleTextEditFocusOut()
         }
 
         QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
-        qDebug() << "html: " << html;
+        //qDebug() << "html: " << html;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
         m_textEdit->setHtml(html);
         m_textEdit->setLineHeight(24);
@@ -490,18 +498,21 @@ void TextNoteItem::handleMenuBtnStateChanged()
 {
     int preState = m_menuBtnState;
     //m_menuBtnState = m_menuBtn->getState();
-    qDebug()<<"handleMenuBtnCheckeChanged m_menuBtnState:"<<m_menuBtnState;
+    //qDebug()<<"handleMenuBtnCheckeChanged m_menuBtnState:"<<m_menuBtnState;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("handleMenuBtnCheckeChanged m_menuBtnState:"), QString::number(m_menuBtnState,10));
 
     if((preState == 1) && (m_menuBtnState == 2))
     {
         //press
-        qDebug()<<"press";
+        //qDebug()<<"press";
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("press"), QString("press"));
         emit sig_menuBtnPressed();
     }
     else if((preState == 2) && (m_menuBtnState == 1))
     {
         //release
-        qDebug()<<"release";
+        //qDebug()<<"release";
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("release"), QString("press"));
         emit sig_menuBtnReleased();
     }
 }
@@ -510,7 +521,8 @@ void TextNoteItem::tryToFouceout()
 {
 //    if(m_isEdited && !m_mouseIsIn)
 //    {
-        qDebug()<<"tryToFouceout";
+        //qDebug()<<"tryToFouceout";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("tryToFouceout"), QString("tryToFouceout"));
         //m_textEdit->focusOutSignal();
         handleTextEditFocusOut();
 //    }
@@ -614,8 +626,6 @@ void TextNoteItem::OnTextEditOutFocus()
 //Add end bug 2587
 
 void TextNoteItem::onDetailButtonChanged(const bool isVisible) {
-//    qDebug() << "TextNoteItem::onDetailButtonChanged()";
-//    qDebug() << "isVisible: " << isVisible;
     if(isVisible)
     {
         m_isTextConverted = true;
@@ -629,7 +639,8 @@ void TextNoteItem::onDetailButtonChanged(const bool isVisible) {
 void TextNoteItem::resizeEvent(QResizeEvent * event)
 {
     int maxwidth = event->size().width();
-    qDebug()<<"TextNoteItem width:"<<maxwidth;
+    //qDebug()<<"TextNoteItem width:"<<maxwidth;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("TextNoteItem width:"), QString::number(maxwidth,10));
     if(nullptr != m_textEdit)
     {
 //        QFont labelFontForWidth;
@@ -639,6 +650,7 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, (maxwidth - 21) * 5, m_isTextConverted);
         //QString elidedText = UiUtil::getElidedText(labelFontForWidth, m_textNote.contentText, 614 * 5, m_isTextConverted);
         qDebug() << "m_isTextConverted: " << m_isTextConverted;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_isTextConverted:"), QString::number(m_isTextConverted));
         if (m_isTextConverted)
         {
             m_textEdit->setReadOnly(true);
@@ -658,7 +670,8 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         //2719 fix liuyang
         {
             QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
-            qDebug() << "html: " << html;
+            //qDebug() << "html: " << html;
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
             m_textEdit->setHtml(html);
             m_textEdit->setLineHeight(24);

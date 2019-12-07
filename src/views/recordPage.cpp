@@ -181,7 +181,6 @@ void RecordPage::renderRecordingTime()
         QString time = UiUtil::formatMillisecond(m_recordingTime);
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
-        //qDebug()<<"recode time:"<<time;
         if(0 == time.compare("01:00:00"))
         {
             if(nullptr != m_finishButton)
@@ -244,11 +243,14 @@ void RecordPage::changeTheme()
 
 void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 {
-    qDebug() << "RecordPage::onAudioRecorderCreated()";
+    //qDebug() << "RecordPage::onAudioRecorderCreated()";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("RecordPage::onAudioRecorderCreated():"), QString("RecordPage::onAudioRecorderCreated():"));
 
     this->m_audioRecorder = audioRecorder;
-    qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
-    qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
+    //qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
+    //UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_audioRecorder->supportedAudioCodecs():"), qdPath.path());
+    //qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();
+    //UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_audioRecorder->supportedContainers():"), qdPath.path());
 
     QAudioEncoderSettings audioSettings;
     audioSettings.setQuality(QMultimedia::HighQuality);

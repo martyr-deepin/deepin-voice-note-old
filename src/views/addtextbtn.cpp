@@ -5,6 +5,8 @@
 
 #include <QDebug>
 
+#include "uiutil.h"
+
 AddTextBtn::AddTextBtn(QWidget *parent) : DWidget(parent)
 {
     this->setFixedHeight(ADDBUTTON_HEIGHT_HEIGHT);
@@ -97,6 +99,8 @@ void AddTextBtn::resizeEvent(QResizeEvent * event)
     DWidget::resizeEvent(event);
     //m_addBtn->setFixedWidth(this->width() - 2);
 
-    qDebug()<<"addBtnWidth:"<<this->width();
-    qDebug()<<"btnwidth:"<<m_addBtn->width();
+    //qDebug()<<"addBtnWidth:"<<this->width();
+    //qDebug()<<"btnwidth:"<<m_addBtn->width();
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("addBtnWidth:"), QString::number(this->width(),10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("btnwidth:"), QString::number(m_addBtn->width(),10));
 }

@@ -148,9 +148,7 @@ void RightView::initNoteList()
     sp.setVerticalStretch(1);
     //sp.setVerticalPolicy(QSizePolicy::Expanding);
     m_noteListWidget->setSizePolicy(sp);
-    //qDebug()<<"m_noteListWidget width1:"<<m_noteListWidget->width();
     //m_noteListPage->setLayout(m_noteListLayout);
-    //qDebug()<<"m_noteListWidget width2:"<<m_noteListWidget->width();
     QVBoxLayout *rightViewLayout = new QVBoxLayout();
     rightViewLayout->setContentsMargins(0, 0, 0, 0);
     //rightViewLayout->addWidget(m_noteListPage);
@@ -262,10 +260,8 @@ void RightView::initRecordStackedWidget()
     m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
     m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,m_recordStackedWidget->y());
     //m_recordStackedWidget->setFixedWidth(m_addVoiceBtn->width());
-    //qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
     //m_recordStackedWidget->move(0,0);
 
-//    qDebug()<<"RightView width:"<<this->width();
 //    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
 //    m_recordStackedWidget->show();
     m_addVoiceBtn->setVisible(false);
@@ -346,7 +342,8 @@ void RightView::addTextNote()
     //==== start add 20191105  bug2162
     if (!UiUtil::autoAddEditTxt(note))
     {
-        qDebug() << "error: add file error";
+        //qDebug() << "error: add file error";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: add file error"), QString("error: add file error"));
     }
     //==== end add 20191105  bug2162
 
@@ -381,8 +378,10 @@ void RightView::addNoteToNoteList(NOTE note)
         Intancer::get_Intancer()->addHeightForRightList(TEXTNOTE_HEIGHT);
 
     }
-    qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
-    qDebug()<<"rightViewheight:"<<this->height();
+//    qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
+//    qDebug()<<"rightViewheight:"<<this->height();
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightlistheight:"), QString::number(m_noteListWidget->height(),10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightViewheight:"), QString::number(this->height(),10));
     m_noteListWidget->scrollToBottom();
 //    if(m_noteListWidget->verticalScrollBar()->isVisible())
 //    {
@@ -398,12 +397,10 @@ void RightView::addNoteToNoteList(NOTE note)
 void RightView::updateNoteList()
 {
     QMap <int,QMap<int,QString>> asrTxtByFolder; //Add 20191111
-    //qDebug()<<"before clear m_noteListWidget width:"<<m_noteListWidget->width();
     //onViewAddTextHide();
     Intancer::get_Intancer()->clearHeightForRightList();
     m_noteListWidget->delSpaceItem();
     m_noteListWidget->clear();
-    //qDebug()<<"after clear m_noteListWidget width:"<<m_noteListWidget->width();
     if (m_currFolderId > 0)
     {
         m_noteListWidget->addSpaceItem();
@@ -621,7 +618,6 @@ void RightView::handleStopRecord(VOICE_INFO voiceInfo)
 //    voiceNote.createTime = QDateTime::currentDateTime();
 //    if (!m_noteController->addNote(voiceNote))
 //    {
-//        qDebug() << "handleStopRecord： add voice note error！";
 //    }
 //    m_recordStackedWidget->setCurrentIndex(0);
 //    m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
@@ -655,7 +651,8 @@ void RightView::handleClearNote()
 
 void RightView::OnCurrentRowChanged(int curRow)
 {
-    qDebug()<<"curRow:"<<curRow;
+    //qDebug()<<"curRow:"<<curRow;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("curRow:"), QString::number(curRow,10));
     m_noteListWidget->setCurrentRow(1);
 }
 
@@ -767,8 +764,6 @@ void RightView::oncheckCurPageVoiceForDelete()
 
 void RightView::onCheckRecordCouldUse(bool coulduse)
 {
-//    qDebug() << "RightView::on_CheckRecodeCouldUse()";
-//    qDebug() << "coulduse: " << coulduse;
 
     if (!this->m_noteListWidget->isLoadedAudioPlayer) {
         coulduse = false;
@@ -847,7 +842,8 @@ void RightView::handleStopRecord2(qint64 position)
     voiceNote.createTime = QDateTime::currentDateTime();
     if (!m_noteController->addNote(voiceNote))
     {
-        qDebug() << "handleStopRecord： add voice note error！";
+        //qDebug() << "handleStopRecord： add voice note error！";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("handleStopRecord： add voice note error！"), QString("handleStopRecord： add voice note error！"));
     }
     m_recordStackedWidget->setCurrentIndex(0);
     m_recordStackedWidget->setFixedSize(QSize(m_addVoiceBtn->width(),m_recordStackedWidget->height()));
@@ -877,7 +873,8 @@ void RightView::onMoveAddTextBtnToMiddle(int listheightContent)
 {
     m_AddTextBtnState = MIDDLE;
     m_AddButtonLocked->move(6,listheightContent);
-    qDebug()<<"listheightContent:"<<listheightContent;
+    //qDebug()<<"listheightContent:"<<listheightContent;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("listheightContent:"), QString::number(listheightContent,10));
 }
 
 void RightView::onMoveAddTextBtnToBottom()
@@ -890,10 +887,14 @@ void RightView::resizeEvent(QResizeEvent * event)
 {
     if(nullptr != m_recordStackedWidget)
     {
-        qDebug()<<"RightView width:"<<this->width();
-        qDebug()<<"m_recordStackedWidget width:"<<m_recordStackedWidget->width();
+        //qDebug()<<"RightView width:"<<this->width();
+        //qDebug()<<"m_recordStackedWidget width:"<<m_recordStackedWidget->width();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("RightView width:"), QString::number(this->width(),10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_recordStackedWidget width:"), QString::number(m_recordStackedWidget->width(),10));
         m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - m_recordStackedWidget->height() - 5);
-        qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
+        //qDebug()<<"m_recordStackedWidget x y:"<<m_recordStackedWidget->x()<<" "<<m_recordStackedWidget->y();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_recordStackedWidget x y:"), QString::number(m_recordStackedWidget->x(),10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString(" "), QString::number(m_recordStackedWidget->y(),10));
         m_recordStackedWidget->show();
 
 //        if(TOP == m_AddTextBtnState)
@@ -911,15 +912,18 @@ void RightView::resizeEvent(QResizeEvent * event)
         //m_AddButtonLocked->move((this->width() - m_AddButtonLocked->width())/2,this->height() - 78 - m_AddButtonLocked->height());
 
         m_AddButtonLocked->resize(this->width() - 15,m_AddButtonLocked->height());
-        qDebug()<<"m_AddButtonLocked width:"<<m_AddButtonLocked->width();
-        qDebug()<<"rightView width:"<<this->width();
+        //qDebug()<<"m_AddButtonLocked width:"<<m_AddButtonLocked->width();
+        //qDebug()<<"rightView width:"<<this->width();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_AddButtonLocked width:"), QString::number(m_AddButtonLocked->width(),10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightView width:"), QString::number(this->width(),10));
 //        m_AddBtnBoard->setFixedWidth(this->width() - 10);
 //        m_AddBtnBoard->move(0,m_AddButtonLocked->y() + 11);
         m_BottomBoard->setFixedWidth(this->width());
 
         qDebug()<<"rightlistheight:"<<m_noteListWidget->height();
         qDebug()<<"rightViewheight:"<<this->height();
-
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightlistheight:"), QString::number(m_noteListWidget->height(),10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightViewheight:"), QString::number(this->height(),10));
         //Intancer::get_Intancer()->setViewHeightForRightList(m_noteListPage->height());
         Intancer::get_Intancer()->setViewHeightForRightList(m_noteListWidget->height());
 
@@ -947,8 +951,10 @@ void RightView::resizeEvent(QResizeEvent * event)
     if(nullptr != m_noteListWidget)
     {
         m_noteListWidget->resize(this->width(),m_noteListWidget->height());
-        qDebug()<<"RightView width:"<<this->width();
-        qDebug()<<"m_noteListWidget width:"<<this->m_noteListWidget->width();
+        //qDebug()<<"RightView width:"<<this->width();
+        //qDebug()<<"m_noteListWidget width:"<<this->m_noteListWidget->width();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("RightView width:"), QString::number(this->width(),10));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_noteListWidget width:"), QString::number(this->m_noteListWidget->width(),10));
     }
 
 }

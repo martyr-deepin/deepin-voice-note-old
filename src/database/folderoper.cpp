@@ -23,7 +23,6 @@ bool FolderOper::addFolder(FOLDER folderInfo)
 //    sqlQuery.prepare(testSql);
 //    if(!sqlQuery.exec())
 //    {
-//        qDebug()<<"exec sql error: " << sqlQuery.lastError().text();
 //        return false;
 //    }
 //    return true;

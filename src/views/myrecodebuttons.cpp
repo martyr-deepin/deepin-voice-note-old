@@ -56,25 +56,21 @@ void MyRecodeButtons::paintEvent(QPaintEvent *event)
     {
         //disable
         painter.drawPixmap(rect(), m_disable);
-        //qDebug()<<"disable disable disable disable disable disable";
     }
     else if(!m_isIn && !m_isDisabled)
     {
         //Normal
         painter.drawPixmap(rect(), m_normal);
-        //qDebug()<<"Normal Normal Normal Normal Normal Normal";
     }
     else if(!m_isPressed && m_isIn)
     {
         //hover
         painter.drawPixmap(rect(), m_hover);
-        //qDebug()<<"hover hover hover hover hover hover";
     }
     else if(m_isPressed && m_isIn)
     {
         //press
         painter.drawPixmap(rect(), m_press);
-        //qDebug()<<"press press press press press press";
     }
 
 }
@@ -84,14 +80,12 @@ void MyRecodeButtons::mousePressEvent(QMouseEvent *event)
     DPushButton::mousePressEvent(event);
     m_isPressed = true;
     repaint();
-    //qDebug()<<"mousePressEvent m_isPressed:"<<m_isPressed;
 }
 void MyRecodeButtons::mouseReleaseEvent(QMouseEvent *event)
 {
     m_isPressed = false;
     DPushButton::mouseReleaseEvent(event);
     repaint();
-    //qDebug()<<"mouseReleaseEvent m_isPressed:"<<m_isPressed;
 }
 
 void MyRecodeButtons::enterEvent(QEvent *event)
@@ -102,7 +96,6 @@ void MyRecodeButtons::enterEvent(QEvent *event)
     {
         emit sigHoverd();
     }
-    //qDebug()<<"enterEvent m_isIn:"<<m_isIn;
 }
 void MyRecodeButtons::leaveEvent(QEvent *event)
 {
@@ -110,7 +103,6 @@ void MyRecodeButtons::leaveEvent(QEvent *event)
     m_isIn = false;
     m_isPressed = false;
     //emit sigLeave();
-    //qDebug()<<"leaveEvent m_isIn:"<<m_isIn;
 }
 
 void MyRecodeButtons::mouseMoveEvent(QMouseEvent *event)

@@ -51,7 +51,6 @@ void WaveFormReplay::paintEvent(QPaintEvent *)
         return;
     }
 
-    //qDebug()<<"WaveFormReplay::paintEvent:";
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     if (WHOLE == m_currDisplayType)
@@ -75,7 +74,6 @@ void WaveFormReplay::paintEvent(QPaintEvent *)
         painter.setClipRect(QRect(rect().x(), rect().y(), rect().width(), rect().height()));
     }
 
-    //qDebug()<<"pointNum:"<<sampleList.size();
     if(PART_SAMPLE == m_currDisplayType)
     {
         m_Slider->move(rect().x() + rect().width(),m_Slider->y());
@@ -83,7 +81,6 @@ void WaveFormReplay::paintEvent(QPaintEvent *)
 
 
     int volume = 0;
-    //qDebug()<<"sampleList.size():"<<sampleList.size();
     for (int i = 0; i < sampleList.size(); i++) {
         volume = sampleList[i] * rect().height() * 2;
 
@@ -94,8 +91,6 @@ void WaveFormReplay::paintEvent(QPaintEvent *)
         } else {
             QRect sampleRect(rect().x() + i * WAVE_DURATION, rect().y() + (rect().height() - volume) / 2, WAVE_WIDTH , volume);
 
-//            qDebug()<<"sampleRect.x:"<<sampleRect.x();
-//            qDebug()<<"rect.x:"<<rect().x();
             //QLinearGradient 不渐变色
 //           QLinearGradient gradient(sampleRect.topLeft(), sampleRect.bottomLeft());
 //            gradient.setColorAt(0, QColor(getColor(rect().x() + i * WAVE_DURATION)));
@@ -115,7 +110,6 @@ void WaveFormReplay::paintEvent(QPaintEvent *)
         }
     }
 
-    //qDebug()<<"sampleList.size():"<<sampleList.size();
     if (sampleList.size() < rect().width() / WAVE_DURATION) {
         QPainterPath path;
         path.addRect(QRectF(rect().x() + sampleList.size() * WAVE_DURATION,
@@ -175,13 +169,12 @@ void WaveFormReplay::setWholeSampleList(QList<float> wholeList)
     wholeSampleList.clear();
     //sampleList.clear();
     wholeSampleList = wholeList;
-    qDebug()<<"wholeSampleList.size:"<<wholeSampleList.size();
+    //qDebug()<<"wholeSampleList.size:"<<wholeSampleList.size();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("wholeSampleList.size:"), QString::number(wholeSampleList.size(),10));
 //    int pointNum = rect().width() / WAVE_DURATION;
 //    float sample = wholeList.size() * 1.0 / pointNum;
-////    qDebug() << "whole list";
 ////    for (int t = 0; t < wholeList.size(); t++)
 ////    {
-////        qDebug() << t << ":" << wholeList.at(t);
 ////    }
 //    for (int i = 0; i < pointNum; i++)
 //    {
@@ -207,10 +200,8 @@ void WaveFormReplay::setWholeSampleList(QList<float> wholeList)
 //        }
 //    }
 
-//    qDebug() << "sample list";
 //    for (int t = 0; t < sampleList.size(); t++)
 //    {
-//        qDebug() << t << ":" << sampleList.at(t);
 //    }
 
 }
@@ -350,11 +341,8 @@ void WaveFormReplay::genSampleListFromWhole()
     sampleList.clear();
     int pointNum = rect().width() / WAVE_DURATION;
     float sample = wholeSampleList.size() * 1.0 / pointNum;
-    //qDebug()<<"pointNum:"<<pointNum;
-//    qDebug() << "whole list";
 //    for (int t = 0; t < wholeList.size(); t++)
 //    {
-//        qDebug() << t << ":" << wholeList.at(t);
 //    }
     for (int i = 0; i < pointNum; i++)
     {

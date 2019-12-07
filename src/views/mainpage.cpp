@@ -84,7 +84,9 @@ void MainPage::initSplitter(){
     m_splitter->addWidget(m_rightView);
     m_splitter->setChildrenCollapsible(false);
 
-    qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
+    //qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("main page, leftview width:"), QString::number(m_leftView->width(),10));
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("rightview width:"), QString::number(m_rightView->width(),10));
 }
 
 void MainPage::initLeftView(){

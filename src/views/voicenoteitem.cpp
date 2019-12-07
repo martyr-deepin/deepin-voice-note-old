@@ -134,16 +134,14 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 //void VoiceNoteItem::onDetailButtonChanged(const bool isVisible)
 //{
-////    qDebug() << "VoiceNoteItem::onDetailButtonChanged()";
-////    qDebug() << "isVisible: " << isVisible;
 
 //    this->m_detailBtn->setVisible(isVisible);
 //}
 
 void VoiceNoteItem::onTextHeightChanged(int height)
 {
-    qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
-
+    //qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceNoteItem::onTextHeightChanged():"), QString::number(height,10));
     int newHeight = 0;
     if(VOICE_TO_TEXT_MAX_HEIGHT < height)
     {
@@ -159,8 +157,8 @@ void VoiceNoteItem::onTextHeightChanged(int height)
     m_bgWidgetBytext->setFixedHeight(newHeight);
     m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
     m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
-    qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
-
+    //qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bgWidgetBydetailBtn->height:"), QString::number(m_bgWidgetBydetailBtn->height(),10));
     emit sigTextHeightChanged(newHeight);
 }
 //Add s 20191111

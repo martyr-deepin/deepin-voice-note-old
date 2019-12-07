@@ -8,6 +8,8 @@
 #include "mysliderbar.h"
 #include "dthememanager.h"
 
+#include "uiutil.h"
+
 DWIDGET_BEGIN_NAMESPACE
 
 static const int CustomDrawingLeftPadding = 10;
@@ -215,16 +217,23 @@ void MySliderBar::mousePressEvent(QMouseEvent *event)
 //                int value = this->sliderPosition();
 //                setValue(value) ;
                 //setValue(minimum() + ((maximum() - minimum()) * (event->x() - 10)) / (width() - 10 - 10)) ;
-                qDebug()<<"width:"<<width();
-                qDebug()<<"minimum:"<<minimum();
-                qDebug()<<"maximum - minimum:"<<maximum() - minimum();
-                qDebug()<<"event->x():"<<event->x();
+                //qDebug()<<"width:"<<width();
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("width:"), QString::number(width(),10));
+                //qDebug()<<"minimum:"<<minimum();
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("minimum:"), QString::number(minimum(),10));
+                //qDebug()<<"maximum - minimum:"<<maximum() - minimum();
+                //qDebug()<<"event->x():"<<event->x();
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("maximum - minimum:"), QString::number(maximum() - minimum(),10));
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("event->x():"), QString::number(event->x(),10));
                 int fixPosX = event->x() - 25;
-                qDebug()<<"fixPosX:"<<fixPosX;
+                //qDebug()<<"fixPosX:"<<fixPosX;
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("fixPosX:"), QString::number(fixPosX,10));
                 int value = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
-                qDebug()<<"value:"<<value;
+                //qDebug()<<"value:"<<value;
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("value:"), QString::number(value,10));
                 //value = value - 1;
-                qDebug()<<"value1:"<<value;
+                //qDebug()<<"value1:"<<value;
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("value1:"), QString::number(value,10));
                 setValue(value) ;
             }
 
@@ -260,11 +269,13 @@ void MySliderBar::mouseReleaseEvent(QMouseEvent *event)
 //            eventPoint.setX(event->pos().y());
 //            int newPosition = d->pixelPosToRangeValue(d->pick(eventPoint) - d->clickOffset);
             int fixPosX = event->x() - 25;
-            qDebug()<<"fixPosX:"<<fixPosX;
+            //qDebug()<<"fixPosX:"<<fixPosX;
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("fixPosX:"), QString::number(fixPosX,10));
             int newPosition = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
             setValue(newPosition) ;
             //int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
-            qDebug()<<"newPosition:"<<newPosition;
+            //qDebug()<<"newPosition:"<<newPosition;
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newPosition:"), QString::number(newPosition,10));
             setSliderPosition(newPosition);
 
             emit sigRelease(newPosition);
@@ -279,8 +290,6 @@ void MySliderBar::paintEvent(QPaintEvent *event)
 
 //    int sliderPos = (this->sliderPosition() * (this->width())) / (this->maximum()) - (m_sliderhandler->width() / 2);
 //    //int sliderPos = this->sliderPosition() - (m_sliderhandler->width() / 2);
-//    qDebug() << "slider pos:" << sliderPos;
-//    qDebug() << "maximum:" << this->maximum() << ", minimum:" << this->minimum() << ", value:" << this->value() << ", sliderPosition:" << this->sliderPosition();
 
     //m_sliderhandler->setGeometry(sliderPos, 0, m_sliderhandler->width(), m_sliderhandler->height());
 
@@ -338,11 +347,13 @@ void MySliderBar::mouseMoveEvent(QMouseEvent *event)
 //        eventPoint.setX(event->pos().y());
 //        int newPosition = d->pixelPosToRangeValue(d->pick(eventPoint) - d->clickOffset);
         int fixPosX = event->x() - 25;
-        qDebug()<<"fixPosX:"<<fixPosX;
+        //qDebug()<<"fixPosX:"<<fixPosX;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("fixPosX:"), QString::number(fixPosX,10));
         int newPosition = minimum() + ((maximum() - minimum()) * (fixPosX) / (width()));
         setValue(newPosition) ;
         //int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
-        qDebug()<<"newPosition:"<<newPosition;
+        //qDebug()<<"newPosition:"<<newPosition;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newPosition:"), QString::number(newPosition,10));
         //setSliderPosition(newPosition);
 
         emit sigMove(newPosition);
@@ -372,7 +383,8 @@ void MySliderBar::mouseMoveEvent(QMouseEvent *event)
 
 void MySliderBar::wheelEvent(QWheelEvent *e)
 {
-    qDebug()<<"MySliderBar::wheelEvent";
+    //qDebug()<<"MySliderBar::wheelEvent";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("MySliderBar::wheelEvent:"), QString("MySliderBar::wheelEvent:"));
 }
 
 void MySliderBar::hoverTimout()

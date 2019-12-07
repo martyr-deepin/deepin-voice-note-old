@@ -29,7 +29,8 @@ void VoiceToTextEdit::textAreaChanged()
         QTextEdit *editor=qobject_cast<QTextEdit*>(document->parent()->parent());
         if (editor){
             int newheight = document->size().rheight();
-                qDebug()<<"newheight:"<<newheight;
+                //qDebug()<<"newheight:"<<newheight;
+                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newheight:"), QString::number(newheight,10));
                 emit sigTextHeightChanged(newheight);
         }
     }
@@ -37,8 +38,8 @@ void VoiceToTextEdit::textAreaChanged()
 
 void VoiceToTextEdit::wheelEvent(QWheelEvent *e)
 {
-    qDebug() << "VoiceToTextEdit::wheelEvent()";
-
+    //qDebug() << "VoiceToTextEdit::wheelEvent()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceToTextEdit::wheelEvent():"), QString("VoiceToTextEdit::wheelEvent():"));
     if(!Intancer::get_Intancer()->getWantScrollRightListFlag()) {
         DTextEdit::wheelEvent(e);
     }
@@ -67,17 +68,11 @@ void VoiceToTextEdit::resizeEvent(QResizeEvent * event)
 
 //void VoiceToTextEdit::onTextChanged()
 //{
-////    qDebug() << "TextNoteEdit::onTextChanged()";
 
 //    QTimer::singleShot(0, this, [=]{
-////        qDebug() << "QTimer::singleShot()";
 
 //        int textEditHeight = this->height();
 //        int documentHeight = static_cast<int>(this->document()->size().height());
-
-////        qDebug() << "QTimer::singleShot() this->toPlainText(): " << this->toPlainText();
-////        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
-////        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
 //        if (textEditHeight < documentHeight - 3) {
 //            emit sigDetailButtonChanged(true);

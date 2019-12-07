@@ -1,13 +1,16 @@
 #include "workercontroller.h"
 #include "worker.h"
 
+#include "uiutil.h"
+
 
 
 Q_GLOBAL_STATIC(WorkerController, workerController)
 
 WorkerController::WorkerController()
 {
-    qDebug() << "WorkerController::WorkerController()";
+    //qDebug() << "WorkerController::WorkerController()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::WorkerController():"), QString("WorkerController::WorkerController():"));
 
     worker = new Worker();
     worker->moveToThread(&workerThread);
@@ -23,23 +26,23 @@ WorkerController::WorkerController()
 
 WorkerController::~WorkerController()
 {
-    qDebug() << "WorkerController::~WorkerController()";
-
+    //qDebug() << "WorkerController::~WorkerController()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::~WorkerController():"), QString("WorkerController::~WorkerController():"));
     this->workerThread.quit();
     this->workerThread.wait();
 }
 
 WorkerController* WorkerController::getInstance()
 {
-    qDebug() << "WorkerController::instance()";
-
+    //qDebug() << "WorkerController::instance()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::instance():"), QString("WorkerController::instance():"));
     return workerController();
 }
 
 void WorkerController::createMediaPlayer()
 {
-    qDebug() << "WorkerController::createMediaPlayer()";
-
+    //qDebug() << "WorkerController::createMediaPlayer()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::createMediaPlayer():"), QString("WorkerController::createMediaPlayer():"));
     if (this->mediaPlayer) {
         emit this->mediaPlayerCreated(this->mediaPlayer);
 
@@ -51,8 +54,8 @@ void WorkerController::createMediaPlayer()
 
 void WorkerController::createAudioRecorder()
 {
-    qDebug() << "WorkerController::createAudioRecorder()";
-
+    //qDebug() << "WorkerController::createAudioRecorder()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::createAudioRecorder():"), QString("WorkerController::createAudioRecorder():"));
     if (this->audioRecorder) {
         emit this->audioRecorderCreated(this->audioRecorder);
 
@@ -64,8 +67,8 @@ void WorkerController::createAudioRecorder()
 
 void WorkerController::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
 {
-    qDebug() << "WorkerController::onMediaPlayerCreated()";
-
+    //qDebug() << "WorkerController::onMediaPlayerCreated()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::onMediaPlayerCreated():"), QString("WorkerController::onMediaPlayerCreated():"));
     if (!this->mediaPlayer) {
         this->mediaPlayer = mediaPlayer;
     }
@@ -79,8 +82,8 @@ void WorkerController::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
 
 void WorkerController::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 {
-    qDebug() << "WorkerController::onAudioRecorderCreated()";
-
+    //qDebug() << "WorkerController::onAudioRecorderCreated()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::onAudioRecorderCreated():"), QString("WorkerController::onAudioRecorderCreated():"));
     if (!this->audioRecorder) {
         this->audioRecorder = audioRecorder;
     }
@@ -94,15 +97,15 @@ void WorkerController::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 
 void WorkerController::updateRecordAvailability()
 {
-    qDebug() << "WorkerController::updateRecordAvailability()";
-
+    //qDebug() << "WorkerController::updateRecordAvailability()";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::updateRecordAvailability():"), QString("WorkerController::updateRecordAvailability():"));
     bool isAvailable = false;
 
     if (this->mediaPlayer && this->audioRecorder) {
         isAvailable = true;
     }
 
-    qDebug() << "isAvailable: " << isAvailable;
-
+    //qDebug() << "isAvailable: " << isAvailable;
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("isAvailable:"), QString::number(isAvailable));
     emit recordAvailability(isAvailable);
 }

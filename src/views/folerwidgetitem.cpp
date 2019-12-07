@@ -279,7 +279,8 @@ void FolerWidgetItem::checkNameValid()
     //if ((m_lineEdit->text().length() > 0) && (m_lineEdit->text().length() < 64)) {
     if ((m_lineEdit->text().length() >= 0) && (m_lineEdit->text().length() <= 64)) {
         //todo:更新数据库
-        qDebug() << "m_lineEdit->text().length():" << m_lineEdit->text().length();
+        //qDebug() << "m_lineEdit->text().length():" << m_lineEdit->text().length();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_lineEdit->text().length():"), QString::number(m_lineEdit->text().length(),10));
         if (m_lineEdit->text().length() == 0) {
             m_folder.folderName = m_BakDefaultName;
             m_lineEdit->setText(m_BakDefaultName);
@@ -356,7 +357,8 @@ void FolerWidgetItem::checkNameLenth()
     }
 
     if (m_lineEdit->text().length() > 64) {
-        qDebug() << "m_lineEdit->text().length():" << m_lineEdit->text().length();
+        //qDebug() << "m_lineEdit->text().length():" << m_lineEdit->text().length();
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_lineEdit->text().length():"), QString::number(m_lineEdit->text().length(),10));
         //m_lineEdit->setAlert(true);
         m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
         m_lineEdit->setText(m_BakLineContent);
@@ -398,7 +400,8 @@ void FolerWidgetItem::setLabelText(const QString text)
 {
     QString textToSet = "";
     QString searchingKeywords = Intancer::get_Intancer()->getSearchKeywords();
-    qDebug() << "searchingKeywords: " << searchingKeywords;
+    //qDebug() << "searchingKeywords: " << searchingKeywords;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("searchingKeywords:"), QString("searchingKeywords:"));
 
     if (!searchingKeywords.isEmpty()) {
         RICH_TEXT_COLOR color = BLUE;
@@ -417,7 +420,8 @@ void FolerWidgetItem::setLabelText(const QString text)
         this->m_nameLabel->setTextFormat(Qt::PlainText);
     }
 
-    qDebug() << "textToSet: " << textToSet;
+    //qDebug() << "textToSet: " << textToSet;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("textToSet:"), textToSet);
     this->m_nameLabel->setText(textToSet);
 }
 

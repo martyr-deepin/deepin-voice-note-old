@@ -120,7 +120,8 @@ bool LeftFolderList::eventFilter(QObject *o, QEvent *e)
     {
         case QEvent::MouseButtonPress:
             emit sigBoardPress();
-            qDebug()<<"LeftFolderList::MouseButtonPress";
+            //qDebug()<<"LeftFolderList::MouseButtonPress";
+            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("LeftFolderList::MouseButtonPress:"), QString("LeftFolderList::MouseButtonPress:"));
         break;
     }
     return DListWidget::eventFilter(o,e);
@@ -160,14 +161,16 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
                 {
                      if (!NoteOper::deleteNote(listNote.at(i)))
                      {
-                         qDebug() << "error: delete note error";
+                         //qDebug() << "error: delete note error";
+                         UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete note error"), QString("error: delete note error"));
                      }
                 }
                 //Add end bug2963
                 //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
             }
             else {
-                qDebug() << "error: delete item error";
+                //qDebug() << "error: delete item error";
+                UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete item error"), QString("error: delete item error"));
             }
         }
         else
@@ -193,7 +196,6 @@ void LeftFolderList::handleDelItem(bool checked)
 //        //FolerWidgetItem *currItem = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 //    }
 //    else {
-//        qDebug() << "error: delete item error";
 //    }
 //    return;
 }
@@ -201,9 +203,8 @@ void LeftFolderList::handleDelItem(bool checked)
 void LeftFolderList::handleRenameItem(bool checked)
 {
     FolerWidgetItem *item = (FolerWidgetItem*)this->itemWidget(this->currentItem());
-    qDebug()<<"curItemRow:"<<this->currentRow();
+    //qDebug()<<"curItemRow:"<<this->currentRow();
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("curItemRow:"), QString::number(this->currentRow(),10));
     emit itemClicked(this->currentItem());
     item->changeToEditMode();
 }
-
-

@@ -2,6 +2,9 @@
 #include "consts.h"
 
 #include <QDebug>
+
+#include "uiutil.h"
+
 Intancer * Intancer::instance_ = nullptr;
 
 Intancer::Intancer(QObject *parent) : QObject(parent)
@@ -40,24 +43,29 @@ DApplication * Intancer::getApp()
 
 void Intancer::initHeightForRight()
 {
-    qDebug()<<"initHeightForRight()";
+    //qDebug()<<"initHeightForRight()";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("initHeightForRight():"), QString("initHeightForRight():"));
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
 }
 
 void Intancer::clearHeightForRightList()
 {
-    qDebug()<<"clearHeightForRightList()";
+    //qDebug()<<"clearHeightForRightList()";
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("clearHeightForRightList():"), QString("clearHeightForRightList():"));
     m_RightListHeight = 0;
     emit sigLockAddTextBtnToTop();
 }
 
 void Intancer::addHeightForRightList(int addheight)
 {
-    qDebug()<<"addheight:"<<addheight;
-    qDebug()<<"m_RightListHeight1:"<<m_RightListHeight;
+    //qDebug()<<"addheight:"<<addheight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("addheight:"), QString::number(addheight,10));
+    //qDebug()<<"m_RightListHeight1:"<<m_RightListHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight1:"), QString::number(m_RightListHeight,10));
     m_RightListHeight += addheight;
-    qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
+    //qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight2:"), QString::number(m_RightListHeight,10));
     if(m_RightListHeight > m_RightViewHeight)
     {
         emit sigLockAddTextBtnToBottom();
@@ -69,16 +77,19 @@ void Intancer::addHeightForRightList(int addheight)
         isListOverOnePage = false;
     }
 
-    qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-
+    //qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight:"), QString::number(m_RightViewHeight,10));
 }
 
 void Intancer::delHeightForRightList(int delheight)
 {
-    qDebug()<<"delheight:"<<delheight;
-    qDebug()<<"m_RightViewHeight1:"<<m_RightListHeight;
+    //qDebug()<<"delheight:"<<delheight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("delheight:"), QString::number(delheight,10));
+    //qDebug()<<"m_RightViewHeight1:"<<m_RightListHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight1:"), QString::number(m_RightListHeight,10));
     m_RightListHeight -= delheight;
-    qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
+    //qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight2:"), QString::number(m_RightListHeight,10));
     if(m_RightListHeight <= SPACEITEM_HEIGHT_HEIGHT)
     {
 //        m_RightListHeight = 0;
@@ -90,8 +101,8 @@ void Intancer::delHeightForRightList(int delheight)
         isListOverOnePage = false;
     }
 
-    qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-
+    //qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight:"), QString::number(m_RightViewHeight,10));
 }
 
 void Intancer::setViewHeightForRightList(int viewHeight)
@@ -113,8 +124,10 @@ void Intancer::setViewHeightForRightList(int viewHeight)
             isListOverOnePage = true;
         }
     }
-    qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-    qDebug()<<"m_RightListHeight:"<<m_RightListHeight;
+    //qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
+    //qDebug()<<"m_RightListHeight:"<<m_RightListHeight;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight:"), QString::number(m_RightViewHeight,10));
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight:"), QString::number(m_RightListHeight,10));
 }
 
 void Intancer::setTryToDelEmptyTextNote(bool value)
@@ -254,8 +267,10 @@ bool Intancer::getEndRecordFlag()
 
 void Intancer::setSearchKeywords(const QString & text)
 {
-    qDebug() << "Intancer::setSearchKeywords()";
-    qDebug() << "text: " << text;
+    //qDebug() << "Intancer::setSearchKeywords()";
+    //qDebug() << "text: " << text;
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("Intancer::setSearchKeywords():"), QString("Intancer::setSearchKeywords():"));
+    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
     this->searchKeywords = text;
 }

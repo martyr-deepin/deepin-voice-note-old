@@ -9,6 +9,9 @@
 #include <QDBusObjectPath>
 #include <QDBusInterface>
 #include <QDBusReply>
+//log change
+#include <QMessageLogger>
+//end
 
 //extern "C"
 //{
@@ -203,7 +206,8 @@ bool UiUtil::saveTxt(QString path, QString content)
     //QFile file(sFilePath);
     if(!file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
-        qDebug()<<"saveTxt failed";
+        //qDebug()<<"saveTxt failed";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("saveTxt failed"), QString("saveTxt failed"));
         return false;
     }
     QTextStream textStream(&file);
@@ -217,7 +221,8 @@ bool UiUtil::saveMP3(QString src, QString target)
     bool result = QFile::copy(src, target);
     if(!result)
     {
-        qDebug()<<"saveMP3 failed";
+        //qDebug()<<"saveMP3 failed";
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("saveMP3 failed"), QString("saveMP3 failed"));
     }
     return result;
 }
@@ -407,7 +412,8 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
                               QDBusConnection::sessionBus());
     if (!ainterface.isValid())
     {
-        qDebug() << qPrintable(QDBusConnection::sessionBus().lastError().message());
+        //qDebug() << qPrintable(QDBusConnection::sessionBus().lastError().message());
+        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("message:"), qPrintable(QDBusConnection::sessionBus().lastError().message()));
         QVariant v(0) ;
         return  v;
     }
@@ -422,7 +428,6 @@ bool UiUtil::canMicrophoneInput()
                                             "com.deepin.daemon.Audio", "DefaultSource");
     if (v.isValid()) {
         QDBusObjectPath path = v.value<QDBusObjectPath>();
-        //qDebug() <<"path: "<<path.path();
         QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
                                   "com.deepin.daemon.Audio.Source",
                                   QDBusConnection::sessionBus());
@@ -434,12 +439,10 @@ bool UiUtil::canMicrophoneInput()
         QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
         if (reply.isValid()){
             path = reply.value();
-            //qDebug()<<"path1" << path.path();
             QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
                                                     "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-                //qDebug()<<"volume:" <<volume;
                 if(0.0001 < volume)
                 {
                     return true;
@@ -473,7 +476,6 @@ bool UiUtil::canMicrophoneInput()
 //                                            "com.deepin.daemon.Audio", "DefaultSource");
 //    if (v.isValid()) {
 //        QDBusObjectPath path = v.value<QDBusObjectPath>();
-//        qDebug() <<"path: "<<path.path();
 //        QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
 //                                  "com.deepin.daemon.Audio.Source",
 //                                  QDBusConnection::sessionBus());
@@ -485,7 +487,6 @@ bool UiUtil::canMicrophoneInput()
 //        QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
 //        if (reply.isValid()){
 //            path = reply.value();
-//            qDebug()<<"path1" << path.path();
 //            QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
 //                                     //    "com.deepin.daemon.Audio.Meter", "ActivePort");
 //                                         "com.deepin.daemon.Audio.Meter", "Volume");
@@ -493,9 +494,6 @@ bool UiUtil::canMicrophoneInput()
 //                double volume = v.toDouble();
 
 ////                MyStruct stru = v.value<MyStruct>();
-////                qDebug()<<"s1:" <<s.s1;
-////                qDebug()<<"s2:" <<s.s2;
-////                qDebug()<<"b:" <<s.b;
 ////                return stru.b != 0;
 //                return volume != 0.0;
 //            }
@@ -590,3 +588,31 @@ bool UiUtil::autoDeleteTxt(const NOTE &noteInfo)
     return true;
 }
 //====end add 20191105  bug2162
+
+//log change
+void UiUtil::writeLog(int type, QString file, int line, QString func, QString context, QString msg)
+{
+    QByteArray midfile = file.toLatin1();
+    QByteArray midfunc = func.toLatin1();
+    QMessageLogger *m_message = new QMessageLogger(midfile.data(), line, midfunc.data());
+    if (type == 0)  //release
+    {
+#ifdef QT_NO_DEBUG
+    m_message->debug() << context << msg;
+#else
+#endif
+    }
+    else if (type == 1)  //debug
+    {
+#ifdef QT_NO_DEBUG
+
+#else
+    m_message->debug() << context << msg;
+#endif
+    }
+    else          //all
+    {
+    m_message->debug() << context << msg;
+    }
+
+}
