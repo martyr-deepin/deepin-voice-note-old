@@ -60,12 +60,12 @@ void Intancer::clearHeightForRightList()
 void Intancer::addHeightForRightList(int addheight)
 {
     //qDebug()<<"addheight:"<<addheight;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("addheight:"), QString::number(addheight,10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("addheight:"), QString::number(addheight,10));
     //qDebug()<<"m_RightListHeight1:"<<m_RightListHeight;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight1:"), QString::number(m_RightListHeight,10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight1:"), QString::number(m_RightListHeight,10));
     m_RightListHeight += addheight;
     //qDebug()<<"m_RightListHeight2:"<<m_RightListHeight;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight2:"), QString::number(m_RightListHeight,10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightListHeight2:"), QString::number(m_RightListHeight,10));
     if(m_RightListHeight > m_RightViewHeight)
     {
         emit sigLockAddTextBtnToBottom();
@@ -78,7 +78,7 @@ void Intancer::addHeightForRightList(int addheight)
     }
 
     //qDebug()<<"m_RightViewHeight:"<<m_RightViewHeight;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight:"), QString::number(m_RightViewHeight,10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_RightViewHeight:"), QString::number(m_RightViewHeight,10));
 }
 
 void Intancer::delHeightForRightList(int delheight)

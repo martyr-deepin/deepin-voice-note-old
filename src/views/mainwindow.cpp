@@ -139,7 +139,6 @@ void MyMainWindow::initTitleFrame()
 
     this->titlebar()->addWidget(m_searchEdit,Qt::AlignCenter);
     //this->titlebar()->setCustomWidget(m_titleFrame, false);
-
 }
 
 void MyMainWindow::initCentralWidget()
@@ -602,7 +601,10 @@ void MyMainWindow::handleSearchKey()
 }
 void MyMainWindow::On_RetryToSearch()
 {
-    tryToSearch(Intancer::get_Intancer()->getSearchKeywords());
+    //start add by yuanshuai 20191209 bug 2356
+    //tryToSearch(Intancer::get_Intancer()->getSearchKeywords());
+    handleSearchKey();
+    //end
 }
 
 void MyMainWindow::tryToSearch(QString search)

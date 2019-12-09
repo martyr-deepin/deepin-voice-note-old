@@ -660,8 +660,8 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
 {
 //    qDebug() << "changed: " << changed;
 //    qDebug() << "this->count(): " << this->count();
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("changed:"), QString::number(changed));
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->count():"), QString::number(this->count(),10));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("changed:"), QString::number(changed));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->count():"), QString::number(this->count(),10));
 
 //    if(m_textClicked)
 //    {
