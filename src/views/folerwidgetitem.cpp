@@ -401,7 +401,7 @@ void FolerWidgetItem::setLabelText(const QString text)
     QString textToSet = "";
     QString searchingKeywords = Intancer::get_Intancer()->getSearchKeywords();
     //qDebug() << "searchingKeywords: " << searchingKeywords;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("searchingKeywords:"), QString("searchingKeywords:"));
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("searchingKeywords:"), QString("searchingKeywords:"));
 
     if (!searchingKeywords.isEmpty()) {
         RICH_TEXT_COLOR color = BLUE;
@@ -421,7 +421,7 @@ void FolerWidgetItem::setLabelText(const QString text)
     }
 
     //qDebug() << "textToSet: " << textToSet;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("textToSet:"), textToSet);
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textToSet:"), textToSet);
     this->m_nameLabel->setText(textToSet);
 }
 

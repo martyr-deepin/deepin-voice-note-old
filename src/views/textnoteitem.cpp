@@ -120,13 +120,13 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
 
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
     if (!isAddByButton) {
         m_textEdit->setTextNote(m_textNote, m_searchKey);
     }
 
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
@@ -319,7 +319,7 @@ void TextNoteItem::readFromDatabase()
     //liuyang 3547
 
     //qDebug() << "m_bakContent: " << m_bakContent;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
@@ -429,7 +429,7 @@ void TextNoteItem::handleTextEditFocusOut()
     //liuyang 3550 3547 3528
 
     //qDebug() << "m_bakContent: " << m_bakContent;
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
 //    m_textEdit->setPlainText(m_bakContent);
 //    m_textEdit->setLineHeight(24);
@@ -511,7 +511,7 @@ void TextNoteItem::tryToFouceout()
 //    if(m_isEdited && !m_mouseIsIn)
 //    {
         //qDebug()<<"tryToFouceout";
-        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("tryToFouceout"), QString("tryToFouceout"));
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("tryToFouceout"), QString("tryToFouceout"));
         //m_textEdit->focusOutSignal();
         handleTextEditFocusOut();
 //    }
