@@ -81,6 +81,9 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
     dialog->setIcon(QIcon(UiUtil::renderSVG(":/icons/deepin/builtin/voice_note_32px.svg", QSize(32,32),qApp)));
     dialog->addButton(cancelStr, false, DDialog::ButtonNormal);
     dialog->addButton(okStr, false, DDialog::ButtonWarning);
+    //start add by yuanshuai 20191209 bug 3989
+    dialog->setContentLayoutContentsMargins(QMargins(0,0,0,16));
+    //end
 
     return dialog;
 }
