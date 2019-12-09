@@ -24,11 +24,13 @@ void MainPage::initUI() {
     setMinimumSize(650, 420);
     initSplitter();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(m_splitter);
-    mainLayout->setSpacing(0);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    this->setLayout(mainLayout);
+    //del start 4260
+//    QVBoxLayout *mainLayout = new QVBoxLayout;
+//    mainLayout->addWidget(m_splitter);
+//    mainLayout->setSpacing(0);
+//    mainLayout->setContentsMargins(0, 0, 0, 0);
+//    this->setLayout(mainLayout);
+    //del end 4260
 
 }
 
@@ -76,13 +78,25 @@ void MainPage::initSplitter(){
     initLeftView();
     initRightView();
 
-    m_splitter = new DFMSplitter(Qt::Horizontal,this);
-    m_splitter->addWidget(m_leftView);
-    DWidget *pLine = new DWidget(this);
-    pLine->setFixedWidth(2);
-    m_splitter->addWidget(pLine);
-    m_splitter->addWidget(m_rightView);
-    m_splitter->setChildrenCollapsible(false);
+    //edit start 4260
+    //    m_splitter = new DFMSplitter(Qt::Horizontal,this);
+    //    m_splitter->addWidget(m_leftView);
+    //    DWidget *pLine = new DWidget(this);
+    //    pLine->setFixedWidth(2);
+    //    m_splitter->addWidget(pLine);
+    //    m_splitter->addWidget(m_rightView);
+    //    m_splitter->setChildrenCollapsible(false);
+
+
+        m_leftView->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);
+        m_rightView->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+        QHBoxLayout *pg=new QHBoxLayout;
+        pg->setContentsMargins(0, 0, 0, 0);
+        pg->addWidget(m_leftView);
+        pg->setSpacing(2);
+        pg->addWidget(m_rightView);
+        this->setLayout(pg);
+    //edit end 4260
 
     //qDebug() << "main page, leftview width:" << m_leftView->width() << ", right view width: " << m_rightView->width();
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("main page, leftview width:"), QString::number(m_leftView->width(),10));
@@ -98,13 +112,15 @@ void MainPage::initLeftView(){
 
 void MainPage::initRightView(){
     m_rightView = new RightView();
-    QSizePolicy sp = m_rightView->sizePolicy();
+//del start 4260
+//    QSizePolicy sp = m_rightView->sizePolicy();
 
-    //NOTE(zccrs): 保证窗口宽度改变时只会调整right view的宽度，侧边栏保持不变
-    //             QSplitter是使用QLayout的策略对widgets进行布局，所以此处
-    //             设置size policy可以生效
-    sp.setHorizontalStretch(1);
-    m_rightView->setSizePolicy(sp);
+//    //NOTE(zccrs): 保证窗口宽度改变时只会调整right view的宽度，侧边栏保持不变
+//    //             QSplitter是使用QLayout的策略对widgets进行布局，所以此处
+//    //             设置size policy可以生效
+//    sp.setHorizontalStretch(1);
+//    m_rightView->setSizePolicy(sp);
+//del end 4260
     m_rightView->setObjectName("rightView");
     m_rightView->initTxtFilesForDir();
     m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());

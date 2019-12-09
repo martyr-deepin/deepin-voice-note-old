@@ -31,7 +31,8 @@ void LeftFolderList::initUI()
     //this->setFocusPolicy(Qt::NoFocus);
     //this->setFocus(Qt::NoFocusReason);
     //this->setAttribute(Qt::WA_MacShowFocusRect, 0);
-    this->setFixedWidth(248);
+    //this->setFixedWidth(248);
+    this->setFixedWidth(242); //Edit 4260
     //this->move(-10,this->y());
     m_contextMenu = new DMenu;
     m_renameAction = new QAction(tr("Rename"),this);

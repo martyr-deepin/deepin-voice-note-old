@@ -37,7 +37,7 @@ void LeftView::deleteFolder()
 
 void LeftView::initUI()
 {
-    this->setFixedWidth(250);
+    //    this->setFixedWidth(250);  //del 4260
     m_leftViewLayout = new QVBoxLayout;
     m_leftViewLayout->setContentsMargins(4, 0, 0, 0);
 
@@ -68,11 +68,13 @@ void LeftView::initUI()
     //m_leftViewLayout->addWidget(m_addFolderBtn);
     //m_leftViewLayout->addSpacing(9);
 
-    QSizePolicy sp = m_leftFolderView->sizePolicy();
-    sp.setVerticalPolicy(QSizePolicy::Expanding);
-    m_leftFolderView->setSizePolicy(sp);
+    //del start 4260
+//    QSizePolicy sp = m_leftFolderView->sizePolicy();
+//    sp.setVerticalPolicy(QSizePolicy::Expanding);
+//    m_leftFolderView->setSizePolicy(sp);
+    //del end 4260
     this->setLayout(m_leftViewLayout);
-    this->setFixedWidth(LEFTVIEW_MAX_WIDTH);
+//    this->setFixedWidth(LEFTVIEW_MAX_WIDTH);     //del 4260
 
     if (m_leftFolderView->count() > 0)
     {
