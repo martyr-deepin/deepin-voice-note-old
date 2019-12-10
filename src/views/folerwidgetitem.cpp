@@ -360,7 +360,8 @@ void FolerWidgetItem::checkNameLenth()
         //qDebug() << "m_lineEdit->text().length():" << m_lineEdit->text().length();
         UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_lineEdit->text().length():"), QString::number(m_lineEdit->text().length(),10));
         //m_lineEdit->setAlert(true);
-        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间");
+
+        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间",this);
         m_lineEdit->setText(m_BakLineContent);
     }
 }
