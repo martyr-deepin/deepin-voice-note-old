@@ -6,11 +6,11 @@
 #include <QStandardPaths>
 
 #include "src/app/consts.h"
-
 #include "uiutil.h"
 
 
-DatabaseOper *DatabaseOper::m_instance = NULL;
+
+DatabaseOper *DatabaseOper::m_instance = nullptr;
 DatabaseOper::DatabaseOper()
 {
     initDatabase();
@@ -23,10 +23,10 @@ DatabaseOper::~DatabaseOper()
 
 DatabaseOper *DatabaseOper::getInstance()
 {
-    if (NULL == m_instance)
-    {
+    if (nullptr == m_instance) {
         m_instance = new DatabaseOper();
     }
+
     return m_instance;
 }
 
@@ -35,22 +35,29 @@ void DatabaseOper::initDatabase()
 {
     m_createSqlMap[TABLE_FOLDER] = "create table folder (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, image_path TEXT, create_time DATE)";
     m_createSqlMap[TABLE_NOTE] = "create table note (id INTEGER PRIMARY KEY AUTOINCREMENT, note_type INTEGER, content_text TEXT, content_path TEXT, voice_time INTEGER, voice_sample_data TEXT, folder_id INTEGER, create_time DATE)";
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    //设置数据库的名称
-    const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-     db.setDatabaseName(DATABASE_PATH);
-    //打开数据库
-     if (!db.open()){
-        //return false;
-         m_initFlag = false;
-     }
-     else {
-         m_initFlag = true;
-         n_sqlDatabase = QSqlDatabase::database();
-         m_sqlQuery = QSqlQuery(db);
-     }
-     checkTableExist();
 
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    // 设置数据库的名称
+    const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir dir;
+    if (!dir.exists(DATABASE_PATH)) {
+        dir.mkpath(DATABASE_PATH);
+    }
+
+    const QString databaseName = DATABASE_PATH + QDir::separator() + QCoreApplication::applicationName() + ".db";
+    qDebug() << "databaseName: " << databaseName;
+    db.setDatabaseName(databaseName);
+
+    // 打开数据库
+    if (!db.open()) {
+        qCritical() << "db.open() failed";
+    }
+    else {
+        n_sqlDatabase = QSqlDatabase::database();
+        m_sqlQuery = QSqlQuery(db);
+    }
+
+    checkTableExist();
 }
 
 void DatabaseOper::checkTableExist()

@@ -22,21 +22,16 @@ public:
     bool queryLastData(QString queryStr, int resultItemSize, QList<QVariant> & result);
     bool deleteDataById(QString tableName, QString id, int idValue);
 
-
 private:
     static DatabaseOper *m_instance;
     QSqlDatabase n_sqlDatabase;
     QSqlQuery m_sqlQuery;
-    bool m_initFlag = false;
     const QStringList TABLE_NAME = {TABLE_FOLDER, TABLE_NOTE};
     QMap<QString, QString> m_createSqlMap;
 
     void initDatabase();
     void checkTableExist();
     void createTable(QString createSql);
-
-
-
 };
 
 
