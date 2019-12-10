@@ -136,6 +136,7 @@ void RightNoteList::destroyDArrowMenu()
 
 void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
 {
+    //qDebug()<<"showDArrowMenu:";
     if(nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
     //if(nullptr != m_arrowMenu && nullptr != m_contextMenu && nullptr != m_saveAsAction && nullptr != m_delAction)
     {

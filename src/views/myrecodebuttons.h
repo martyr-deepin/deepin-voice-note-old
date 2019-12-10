@@ -20,6 +20,7 @@ public:
 
 signals:
     void sigHoverd();
+    void sigReleased();
     //void sigLeave();
 
 public slots:

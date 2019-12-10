@@ -92,6 +92,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
+    DStyle::setFocusRectVisible(m_bgWidget,false);
 
     //m_bgWidget->setFixedHeight(105);
     m_bgWidget->setFixedHeight(140);
@@ -266,9 +267,9 @@ void TextNoteItem::initConnection()
     //liuyang 3547
     connect(m_textEdit, &TextNoteEdit::sigTextChanged, this, &TextNoteItem::textEditChanged);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::sig_menuBtnPressed);
-    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &MyRecodeButtons::sigReleased, this, &TextNoteItem::handleMenuBtnClicked);
     //connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::handleMenuBtnClicked);
-    connect(m_menuBtn, &QAbstractButton::released, this, &TextNoteItem::sig_menuBtnReleased);
+    connect(m_menuBtn, &MyRecodeButtons::sigReleased, this, &TextNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, &QAbstractButton::pressed, this, &TextNoteItem::buttonClicled);
 
     //connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
@@ -617,6 +618,7 @@ void TextNoteItem::OnTextEditGetFocus()
 void TextNoteItem::OnTextEditOutFocus()
 {
     //DStyle::setFocusRectVisible(m_bgWidget,false);
+    //m_bgWidget->clearFocus();
     emit SigTextEditOutFocus(m_textNote);
 }
 //Add end bug 2587

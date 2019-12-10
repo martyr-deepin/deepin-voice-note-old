@@ -86,6 +86,8 @@ void MyRecodeButtons::mouseReleaseEvent(QMouseEvent *event)
     m_isPressed = false;
     DPushButton::mouseReleaseEvent(event);
     repaint();
+
+    emit sigReleased();
 }
 
 void MyRecodeButtons::enterEvent(QEvent *event)

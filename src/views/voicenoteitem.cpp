@@ -381,8 +381,8 @@ void VoiceNoteItem::initUI()
 void VoiceNoteItem::initConnection()
 {
     connect(m_menuBtn, &QAbstractButton::pressed, this, &VoiceNoteItem::sig_menuBtnPressed);
-    connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::handleMenuBtnClicked);
-    connect(m_menuBtn, &QAbstractButton::released, this, &VoiceNoteItem::sig_menuBtnReleased);
+    connect(m_menuBtn, &MyRecodeButtons::sigReleased, this, &VoiceNoteItem::handleMenuBtnClicked);
+    connect(m_menuBtn, &MyRecodeButtons::sigReleased, this, &VoiceNoteItem::sig_menuBtnReleased);
     connect(m_menuBtn, SIGNAL(pressed()), this, SIGNAL(buttonClicled()));
 
     connect(m_detailBtn, SIGNAL(clicked()), this, SLOT(onToDetalVoicePage()));
