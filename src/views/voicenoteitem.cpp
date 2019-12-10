@@ -309,7 +309,7 @@ void VoiceNoteItem::initUI()
     //m_textEdit = new TextNoteEdit(m_bgWidgetBytext,m_noteCtr);
     m_textEdit = new VoiceToTextEdit(m_bgWidgetBytext);
     DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
-    m_textEdit->document()->setDocumentMargin(1);
+    m_textEdit->document()->setDocumentMargin(6);
 
 
     DStyle::setFocusRectVisible(m_textEdit,false);
