@@ -83,7 +83,8 @@ SOURCES += \
     src/util/worker.cpp \
     src/views/voicetotextedit.cpp \
     src/app/myapplication.cpp \
-    src/Controllers/exportedinterface.cpp
+    src/Controllers/exportedinterface.cpp \
+    src/views/bgtextedit.cpp
 
 HEADERS += \
     src/app/consts.h \
@@ -135,7 +136,8 @@ HEADERS += \
     src/util/worker.h \
     src/views/voicetotextedit.h \
     src/app/myapplication.h \
-    src/Controllers/exportedinterface.h
+    src/Controllers/exportedinterface.h \
+    src/views/bgtextedit.h
 
 INCLUDEPATH += \
     src/app \
@@ -159,6 +161,7 @@ desktop.files =  deepin-voice-note.desktop
 icon_files.path = /usr/share/icons/hicolor/scalable/apps
 icon_files.files = $$PWD/image/deepin-voice-note.svg
 
+
 INSTALLS += target desktop icon_files
 
 RESOURCES += \
@@ -174,5 +177,9 @@ CONFIG(release, debug|release) {
     #将qm文件添加到安装包
     dtk_translations.path = /usr/share/$$TARGET/translations
     dtk_translations.files = $$PWD/translations/*.qm
-    INSTALLS += dtk_translations
+    #将语音记事本服务添加到安装包
+    service_files.path = /usr/share/dbus-1/services
+    service_files.files = $$PWD/dbus/com.deepin.VoiceNote.service
+
+    INSTALLS += dtk_translations service_files
 }
