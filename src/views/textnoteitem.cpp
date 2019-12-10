@@ -142,8 +142,9 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_hBoxLayout->addWidget(m_textEdit);
     m_hBoxLayout->addSpacing(5);
 
-    QPalette pl = m_textEdit->palette();
-    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
+    DStyle::setFocusRectVisible(m_textEdit,false);
+    DPalette pl = DApplicationHelper::instance()->palette(m_textEdit);
+    pl.setBrush(DPalette::Button, QColor(0,0,0,0));
     m_textEdit->setPalette(pl);
 
 //    QFont labelFontForWidth;

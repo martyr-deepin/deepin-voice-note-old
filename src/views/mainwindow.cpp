@@ -509,6 +509,12 @@ void MyMainWindow::showNoteDetail(NOTE note)
 
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
     m_detailPage->setFocus();
+    DStyle::setFocusRectVisible(m_textNoteEdit,false);
+
+    DPalette pb = DApplicationHelper::instance()->palette(m_textNoteEdit);
+    pb.setBrush(DPalette::Button, QColor(0,0,0,0));
+    m_textNoteEdit->setPalette(pb);
+
     //m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
     m_DetalTextBak = m_textNoteEdit->getText();

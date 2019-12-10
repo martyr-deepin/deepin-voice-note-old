@@ -1442,10 +1442,10 @@ void RightNoteList::changeSliderPosByHand(int moveMovment)
     {
         if (!m_myslider->isHidden())
         {
-            //qDebug()<<"before move slider y:"<<m_myslider->y();
+            qDebug()<<"before move slider y:"<<m_myslider->y();
             UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("before move slider y:"), QString::number(m_myslider->y(),10));
             m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
-            //qDebug()<<"after move slider y:"<<m_myslider->y();
+            qDebug()<<"after move slider y:"<<m_myslider->y();
             UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after move slider y:"), QString::number(m_myslider->y(),10));
 //            if(this->verticalScrollBar()->isVisible())
 //            {
