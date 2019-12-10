@@ -21,8 +21,10 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
-    //start add by yuanshuai 20191128 bug 3731
-    isEndRecord = false;
+    //start notify by yuanshuai 20191210 bug 4435
+//    //start add by yuanshuai 20191128 bug 3731
+//    isEndRecord = false;
+//    //end
     //end
 }
 
@@ -253,16 +255,18 @@ QString Intancer::getApplicationName()
     return m_ApplicationName;
 }
 //Add e 20191111
-//start add by yuanshuai 20191128 bug 3731
-void Intancer::setEndRecordFlag(bool value)
-{
-    isEndRecord = value;
-}
+//start notify by yuanshuai 20191210 bug 4435
+////start add by yuanshuai 20191128 bug 3731
+//void Intancer::setEndRecordFlag(bool value)
+//{
+//    isEndRecord = value;
+//}
 
-bool Intancer::getEndRecordFlag()
-{
-    return isEndRecord;
-}
+//bool Intancer::getEndRecordFlag()
+//{
+//    return isEndRecord;
+//}
+////end
 //end
 
 void Intancer::setSearchKeywords(const QString & text)

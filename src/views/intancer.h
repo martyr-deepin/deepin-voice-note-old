@@ -64,9 +64,10 @@ public:
     void setApplicationName(QString appName);  //Add 20191111
     QString getApplicationName();       //Add 20191111
 
+    //start notify by yuanshuai 20191210 bug 4435
     //start add by yuanshuai 20191128 bug 3731
-    void setEndRecordFlag(bool value);
-    bool getEndRecordFlag();
+    //void setEndRecordFlag(bool value);
+    //bool getEndRecordFlag();
     //end
 
     void setSearchKeywords(const QString & text);
@@ -92,8 +93,10 @@ private:
      bool wantScrollRightList;
      bool isVoiceToText;
      int  isMoveFolder_count;
-     //start add by yuanshuai 20191128 bug 3731
-     bool isEndRecord;
+     //start notify by yuanshuai 20191210 bug 4435
+//     //start add by yuanshuai 20191128 bug 3731
+//     bool isEndRecord;
+//     //end
      //end
      int m_RightListHeight;
      int m_RightViewHeight;

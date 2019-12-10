@@ -503,8 +503,9 @@ void MyMainWindow::initStackedWidget()
 
 void MyMainWindow::showNoteDetail(NOTE note)
 {
+    //start notify by yuanshuai 20191210 bug 4435
     //start add by yuanshuai 20191204 bug 4121
-    m_bakForSearchStr = m_searchEdit->text();
+    m_bakForDetailSearchStr = m_searchEdit->text();
     //end
 
     m_textNoteEdit->setTextNote(note, m_searchEdit->text());
@@ -522,22 +523,25 @@ void MyMainWindow::showNoteDetail(NOTE note)
     //m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     //m_replaceForReturn->setVisible(false);
+
+    //start notify by yuanshuai 20191210 bug 4435
     //start add by yuanshuai 20191128 bug 3731
-    Intancer::get_Intancer()->setEndRecordFlag(false);
+    //Intancer::get_Intancer()->setEndRecordFlag(false);
     //end
 }
 
 void MyMainWindow::showListPage()
 {
 
+    //start notify by yuanshuai 20191210 bug 4435
     //start notify by yuanshuai 20191128 bug 3731
-    //if(!m_searchEdit->text().isEmpty())
-    if((!m_searchEdit->text().isEmpty())&&(Intancer::get_Intancer()->getEndRecordFlag()))
-    {
-        bool hasNoFolder = false;
-        m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
-    }
-    //end
+//    //if(!m_searchEdit->text().isEmpty())
+//    if((!m_searchEdit->text().isEmpty())&&(Intancer::get_Intancer()->getEndRecordFlag()))
+//    {
+//        bool hasNoFolder = false;
+//        m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
+//    }
+//    //end
     m_mainPage->setFocus();
     this->switchPage(MAIN_PAGE);
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
@@ -547,8 +551,9 @@ void MyMainWindow::showListPage()
     m_returnBtn->setVisible(false);
     //m_replaceForReturn->setVisible(true);
 
+    //start notify by yuanshuai 20191210 bug 4435
     //start add by yuanshuai 20191204 bug 4121
-    int ret = QString::compare(m_bakForSearchStr, m_searchEdit->text());
+    int ret = QString::compare(m_bakForDetailSearchStr, m_searchEdit->text());
     if(ret != 0)
     {
         handleSearchKey();
@@ -601,6 +606,10 @@ void MyMainWindow::handleSearchKey()
     else
     {
         m_textNoteEdit->searchText(searchKey);
+        //start add by yuanshuai 20191210 bug 4435
+        m_mainPage->cancleRecord();
+        Intancer::get_Intancer()->setRecodingFlag(false);
+        //end
     }
 
 
@@ -636,16 +645,18 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
+        //start notify by yuanshuai 20191210 bug 4435
         //start add by yuanshuai 20191128 bug 3731
-        Intancer::get_Intancer()->setEndRecordFlag(true);
+        //Intancer::get_Intancer()->setEndRecordFlag(true);
         //end
         handleSearchKey();
         m_bakForSearchStr = m_searchEdit->text();
     }
     else
     {
+        //start notify by yuanshuai 20191210 bug 4435
         //start add by yuanshuai 20191128 bug 3731
-        Intancer::get_Intancer()->setEndRecordFlag(false);
+        //Intancer::get_Intancer()->setEndRecordFlag(false);
         //end
         //start add by yuanshuai 20191128 bug 4272
         //m_searchEdit->clear();

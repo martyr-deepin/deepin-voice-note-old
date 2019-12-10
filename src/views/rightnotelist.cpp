@@ -1618,7 +1618,8 @@ void RightNoteList::handleAudioPositionChanged(qint64 position)
        if((audioLength <= position) && (audioLength != 0) && (position != 0))
        {
            //update UI to stop curplay UI.
-           DotheStopThePlayVoiceItem();
+           //DotheStopThePlayVoiceItem();
+           stop();
        }
     }
     //e ynbboy 20191109

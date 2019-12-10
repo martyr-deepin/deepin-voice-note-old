@@ -109,6 +109,9 @@ private:
     DDialog *m_asrCloseConfirmDialog;   //Add 20191111
     int asrStateFlg;  //0:未转写  1：转写中   Add 20191111
     QCloseEvent* m_eventSave;  //Add 20191111
+    //start add by yuanshuai 20191210 bug 4435
+    QString m_bakForDetailSearchStr;
+    //end
     void initUI();
     void initConnection();
 
