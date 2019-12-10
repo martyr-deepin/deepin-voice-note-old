@@ -5,6 +5,7 @@
 #include <notecontroller.h>
 #include <QObject>
 #include <QTextEdit>
+//#include "bgtextedit.h"
 DWIDGET_USE_NAMESPACE
 
 
@@ -19,6 +20,7 @@ public:
     TextNoteEdit(QWidget *parent = nullptr, NoteController *noteCtr = nullptr);
     ~TextNoteEdit();
 
+    //void setBgTextEdit(BgTextEdit *p);
     QString getText();
     void setHtml(const QString &text);
     void setPlainText(const QString &text);
@@ -66,6 +68,7 @@ private:
     NoteController *m_noteCtr;
     QString m_searchKey;
     bool menuOut = false;//3699
+    //BgTextEdit *m_BgTextEdit;
     void initConnection();
 
 };

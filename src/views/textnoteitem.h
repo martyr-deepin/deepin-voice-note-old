@@ -11,6 +11,7 @@
 #include <notecontroller.h>
 #include "consts.h"
 //#include "dtextedit.h"
+//#include "bgtextedit.h"
 #include <QTextEdit>
 #include <QObject>
 #include "textnoteedit.h"
@@ -23,6 +24,7 @@
 #include <DIconButton>
 #include <DFloatingButton>
 #include <DFrame>
+#include <DWidget>
 
 DWIDGET_USE_NAMESPACE
 //右侧文字记录Item
@@ -36,8 +38,9 @@ public:
     NOTE m_textNote;
     QString m_bakContent;
     DLabel *m_timeLabel;
-    DFrame *m_bgWidget;
-    DFrame *m_bgWidgethoverd;
+    //DFrame *m_bgWidget;
+    DTextEdit *m_bgWidget;
+    //DFrame *m_bgWidgethoverd;
     DWidget *m_MenuBtnBackground;
     QVBoxLayout *m_itemLayout;
     QHBoxLayout *m_hBoxLayout;

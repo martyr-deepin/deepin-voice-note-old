@@ -25,7 +25,7 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
         m_noteCtr = noteCtr;
     }
     m_textNote = textNote;
-
+    //m_BgTextEdit = nullptr;
     //qDebug() << "this->m_textNote.contentText: " << this->m_textNote.contentText;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->m_textNote.contentText:"), this->m_textNote.contentText);
 
@@ -60,6 +60,11 @@ TextNoteEdit::~TextNoteEdit()
 {
 
 }
+
+//void TextNoteEdit::setBgTextEdit(BgTextEdit *p)
+//{
+//    m_BgTextEdit = p;
+//}
 
 QString TextNoteEdit::getText()
 {
@@ -189,7 +194,6 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
     }
 
     DTextEdit::focusInEvent(e); //Add bug 2587
-
     emit SigTextEditGetFocus();
 }
 
@@ -236,6 +240,7 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 
         this->setLineHeight(24);
     }
+
 
     DTextEdit::focusOutEvent(e);
 

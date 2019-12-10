@@ -84,10 +84,12 @@ void TextNoteItem::initUI(const bool isAddByButton)
     DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
     m_timeLabel->setFixedHeight(16);
 
-    m_bgWidget = new DFrame(this);
+    m_bgWidget = new DTextEdit(this);
+    m_bgWidget->setReadOnly(true);
+    //m_bgWidget = new DFrame(this);
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
 
@@ -119,6 +121,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_hBoxLayout->setObjectName("horizontalLayout");
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
+    //m_textEdit->setBgTextEdit(m_bgWidget);
 
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
@@ -546,8 +549,8 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 void TextNoteItem::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
@@ -607,10 +610,13 @@ void TextNoteItem::OnToDetalPage()
 //Add start bug 2587
 void TextNoteItem::OnTextEditGetFocus()
 {
-     emit SigTextEditGetFocus(m_textNote);
+    //DStyle::setFocusRectVisible(m_bgWidget,true);
+    //m_bgWidget->setFocus();
+    emit SigTextEditGetFocus(m_textNote);
 }
 void TextNoteItem::OnTextEditOutFocus()
 {
+    //DStyle::setFocusRectVisible(m_bgWidget,false);
     emit SigTextEditOutFocus(m_textNote);
 }
 //Add end bug 2587
@@ -680,8 +686,8 @@ void TextNoteItem::leaveEvent(QEvent *event)
     m_mouseIsIn = false;
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::FrameBorder));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
     //3152 liuyang
     return QWidget::leaveEvent(event);
@@ -692,7 +698,8 @@ void TextNoteItem::enterEvent(QEvent *event)
     m_mouseIsIn = true;
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
+    //pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
     m_bgWidget->setPalette(pb);
     //3152 liuyang
     return QWidget::enterEvent(event);
