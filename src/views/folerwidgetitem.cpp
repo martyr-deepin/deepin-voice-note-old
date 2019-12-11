@@ -290,7 +290,7 @@ void FolerWidgetItem::checkNameValid()
 
         if (m_folderCtr->checkFolderNameExist(m_folder)) {
             m_lineEdit->setAlert(true);
-            m_lineEdit->showAlertMessage("目录名重复！");
+            m_lineEdit->showAlertMessage("目录名重复！",this);
             m_folder.folderName = m_BakDefaultName;
             m_lineEdit->setText(m_BakDefaultName);
             //Intancer::get_Intancer()->setRenameRepeatFlag(false);
@@ -299,7 +299,7 @@ void FolerWidgetItem::checkNameValid()
 //        {
         if (!m_folderCtr->updateFolderName(m_folder)) {
             m_lineEdit->setAlert(true);
-            m_lineEdit->showAlertMessage("修改目录名失败");
+            m_lineEdit->showAlertMessage("修改目录名失败",this);
 
         }
 
