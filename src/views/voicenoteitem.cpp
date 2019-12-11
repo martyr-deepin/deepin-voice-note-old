@@ -140,12 +140,12 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 void VoiceNoteItem::onTextHeightChanged(int height)
 {
-    //qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
+    qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceNoteItem::onTextHeightChanged():"), QString::number(height,10));
     int newHeight = 0;
     if(VOICE_TO_TEXT_MAX_HEIGHT < height)
     {
-        newHeight = VOICE_TO_TEXT_MAX_HEIGHT + 5;
+        newHeight = VOICE_TO_TEXT_MAX_HEIGHT - 7;
         m_detailBtn->setVisible(true);
     }
     else
@@ -159,7 +159,7 @@ void VoiceNoteItem::onTextHeightChanged(int height)
     m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
     //qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bgWidgetBydetailBtn->height:"), QString::number(m_bgWidgetBydetailBtn->height(),10));
-    emit sigTextHeightChanged(newHeight);
+    emit sigTextHeightChanged(newHeight,m_note.id);
 }
 //Add s 20191111
 void VoiceNoteItem::setTextEditVal(QString txt)
@@ -308,9 +308,10 @@ void VoiceNoteItem::initUI()
 
     //m_textEdit = new TextNoteEdit(m_bgWidgetBytext,m_noteCtr);
     m_textEdit = new VoiceToTextEdit(m_bgWidgetBytext);
-    DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
-    m_textEdit->document()->setDocumentMargin(6);
 
+    DFontSizeManager::instance()->bind(m_textEdit,DFontSizeManager::T8);
+    //m_textEdit->document()->setDocumentMargin(6);
+    m_textEdit->document()->setDocumentMargin(2);
 
     DStyle::setFocusRectVisible(m_textEdit,false);
     DPalette pl = DApplicationHelper::instance()->palette(m_textEdit);
@@ -369,7 +370,8 @@ void VoiceNoteItem::initUI()
     m_hBoxLayoutBytext->addSpacing(8);
 
     m_ayoutBybgWidget->addWidget(m_bgWidgetByplay);
-    m_ayoutBybgWidget->addSpacing(0); //ynbboy
+    m_ayoutBybgWidget->setSpacing(0);
+    //m_ayoutBybgWidget->addSpacing(0); //ynbboy
     m_ayoutBybgWidget->addWidget(m_bgWidgetBytext);
     m_bgWidgetBytext->setVisible(false);
     //m_bgWidgetBydetailBtn->hide();
@@ -463,3 +465,11 @@ void VoiceNoteItem::setDocmentAligment(QTextOption op)
     m_textEdit->document()->setDefaultTextOption(op);
 }
 //end
+
+int VoiceNoteItem::getLineHeight()
+{
+    if(nullptr != m_textEdit)
+    {
+        m_textEdit->getLineHeight();
+    }
+}

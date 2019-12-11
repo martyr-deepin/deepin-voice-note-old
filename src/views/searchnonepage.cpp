@@ -12,6 +12,7 @@ SearchNonePage::SearchNonePage(QWidget *parent) : DFrame(parent)
     DFontSizeManager::instance()->bind(m_Text,DFontSizeManager::T4);
     m_Text->setFixedSize(QSize(200,29));
     m_Text->setAlignment(Qt::AlignCenter);
+    m_Text->setForegroundRole(DPalette::TextTitle);
     m_Text->move((this->width() - m_Text->width())/2,(this->height() - m_Text->height())/2);
 
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &SearchNonePage::onChangeColor);

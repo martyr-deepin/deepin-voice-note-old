@@ -124,7 +124,7 @@ public slots:
     void onTextEditGetFocus(NOTE note); //Add bug 2587
     void onTextEditOutFocus(NOTE note); //Add bug 2587
     void AsrResultResp(AsrResult clsResult); //add 20191111
-    void TextHeightChanged(int newHeight); //Add 20191111
+    void TextHeightChanged(int newHeight, int id); //Add 20191111
     void asrOtherErrBtnClick(); //Add 20191111
     void onMediaPlayerCreated(QMediaPlayer* mediaPlayer);
 

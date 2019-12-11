@@ -12,6 +12,7 @@ public:
     explicit VoiceToTextEdit(QWidget *parent = nullptr);
     QString getText();
     void setTextAndLineheight(QString str);
+    int getLineHeight();
 signals:
     void sigTextHeightChanged(int newHeight);
 

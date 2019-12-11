@@ -44,6 +44,7 @@ public:
     //start add by yuanshuai 20191128 bug 3876
     void setDocmentAligment(QTextOption op);
     //end
+    int getLineHeight();
     NOTE m_note;
 
     DLabel *m_timeLabel;
@@ -72,7 +73,7 @@ signals:
     void sig_menuBtnPressed();
     void sig_menuBtnReleased();
     void buttonClicled();
-    void sigTextHeightChanged(int newHeight); //Add 20191111
+    void sigTextHeightChanged(int newHeight,int id); //Add 20191111
     void sigToDetalVoicePage(QString contant);
 
 public slots:

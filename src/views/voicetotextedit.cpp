@@ -21,19 +21,38 @@ void VoiceToTextEdit::setTextAndLineheight(QString str)
     this->setLineHeight(24);
 }
 
+int VoiceToTextEdit::getLineHeight()
+{
+    int documentHeight = 0;
+//    QTimer::singleShot(0, this, [=]{
+
+//        documentHeight = static_cast<int>(this->document()->size().height());
+//        qDebug()<<"documentHeight:"<<documentHeight;
+//    });
+
+//    documentHeight = static_cast<int>(this->document()->size().height());
+//    qDebug()<<"documentHeight_2:"<<documentHeight;
+    return documentHeight;
+}
 
 void VoiceToTextEdit::textAreaChanged()
 {
-    QTextDocument *document=qobject_cast<QTextDocument*>(sender());
-    if(document){
-        QTextEdit *editor=qobject_cast<QTextEdit*>(document->parent()->parent());
-        if (editor){
-            int newheight = document->size().rheight();
-                //qDebug()<<"newheight:"<<newheight;
-                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newheight:"), QString::number(newheight,10));
-                emit sigTextHeightChanged(newheight);
-        }
-    }
+        QTimer::singleShot(0, this, [=]{
+
+            int documentHeight = static_cast<int>(this->document()->size().height());
+            emit sigTextHeightChanged(documentHeight);
+            qDebug()<<"documentHeight:"<<documentHeight;
+        });
+//    QTextDocument *document=qobject_cast<QTextDocument*>(sender());
+//    if(document){
+//        QTextEdit *editor=qobject_cast<QTextEdit*>(document->parent()->parent());
+//        if (editor){
+//            int newheight = document->size().rheight();
+//                //qDebug()<<"newheight:"<<newheight;
+//                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("newheight:"), QString::number(newheight,10));
+//                emit sigTextHeightChanged(newheight);
+//        }
+//    }
 }
 
 void VoiceToTextEdit::wheelEvent(QWheelEvent *e)

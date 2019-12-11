@@ -874,10 +874,85 @@ void RightNoteList::handleSaveAsItem(bool)
 
 }
 // Add s 20191111
-void RightNoteList::TextHeightChanged(int newHeight)
+void RightNoteList::TextHeightChanged(int newHeight,int id)
 {
     m_textEditNewHeight = newHeight;
+
+    QListWidgetItem *pVoiceToText = getListItemById(id);
+    if(nullptr != pVoiceToText)
+    {
+        VoiceNoteItem* pVoiceToTextWidget = (VoiceNoteItem*)itemWidget(pVoiceToText);
+        if(nullptr != pVoiceToTextWidget)
+        {
+            int beforeheight = pVoiceToTextWidget->height();
+            pVoiceToText->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
+            pVoiceToTextWidget->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+            int afterheight = pVoiceToTextWidget->height();
+            Intancer::get_Intancer()->delHeightForRightList(beforeheight);
+            Intancer::get_Intancer()->addHeightForRightList(afterheight);
+
+            if(nullptr != m_currPlayingItem)
+            {
+                int playRow = 0;
+                getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+
+                int voiceToTextRow = 0;
+                getRowByID(pVoiceToTextWidget->getNoteID(),VOICE,voiceToTextRow);
+
+                if(voiceToTextRow < playRow)
+                {
+                    int movement = afterheight - beforeheight;
+                    qDebug()<<"-movement:"<<-movement;
+                    changeSliderPosByHand(-movement);
+                }
+            }
+
+            int count = this->count();
+            int transrow = row(pVoiceToText);
+            if(transrow == count - 2)
+            {
+                this->scrollToBottom();
+            }
+        }
+    }
+
+    //if((nullptr != m_voiceNoteItemByasr) && (nullptr != m_currSelItem) && (nullptr != m_voiceNoteItem) &&(nullptr != m_currSelItemByasr))
+//    {
+//        int beforeheight = m_voiceNoteItemByasr->height();
+//        m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
+//        m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+//        int afterheight = m_voiceNoteItemByasr->height();
+//        Intancer::get_Intancer()->delHeightForRightList(beforeheight);
+//        m_tmpHeightForVoiceToText = afterheight;
+//        Intancer::get_Intancer()->addHeightForRightList(afterheight);
+
+//        if(nullptr != m_currPlayingItem)
+//        {
+//            int playRow = 0;
+//            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+
+//            int voiceToTextRow = 0;
+//            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
+
+//            if(voiceToTextRow < playRow)
+//            {
+//                int movement = afterheight - beforeheight;
+//                qDebug()<<"-movement:"<<-movement;
+//                changeSliderPosByHand(-movement);
+//            }
+//        }
+
+//        int count = this->count();
+//        int transrow = row(m_currSelItemByasr);
+//        if(transrow == count - 2)
+//        {
+//            this->scrollToBottom();
+//        }
+//    }
+
+
 }
+
 void RightNoteList::asrOtherErrBtnClick()
 {
     m_asrNetWorkErrDialog->hide();
@@ -922,7 +997,7 @@ void RightNoteList::AsrStart(int type)  //Add 4297
             m_currSelItemByasr =  m_currSelItem;
             m_voiceNoteItemByasr = m_voiceNoteItem;
             m_currSelNoteByasr  = m_currSelNote;  //Add 3878
-            connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int)),this,SLOT(TextHeightChanged(int))); //Add 20191111
+            connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int,int)),this,SLOT(TextHeightChanged(int,int))); //Add 20191111
 
             //设定选中的菜单按钮不可用
             m_voiceNoteItem->setMenuBtnEnabled(false);
@@ -936,33 +1011,34 @@ void RightNoteList::AsrStart(int type)  //Add 4297
             m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignHCenter));
             //end
             //m_voiceNoteItem->setTextEditVal(tr("正在转为文字..."));  //ynbboy
-            int beforeheight = m_voiceNoteItemByasr->height();
-            m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
-            m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
-            int afterheight = m_voiceNoteItemByasr->height();
-            Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
-            m_tmpHeightForVoiceToText = VOICENOTE_HEIGHT + m_textEditNewHeight;
-            Intancer::get_Intancer()->addHeightForRightList(m_tmpHeightForVoiceToText);
-           // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
+
+//            int beforeheight = m_voiceNoteItemByasr->height();
+//            m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
+//            m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
+//            int afterheight = m_voiceNoteItemByasr->height();
+//            Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
+//            m_tmpHeightForVoiceToText = VOICENOTE_HEIGHT + m_textEditNewHeight;
+//            Intancer::get_Intancer()->addHeightForRightList(m_tmpHeightForVoiceToText);
+//           // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
-            //通知mainPage转写开始  mainPage里设置leftView不可用
+//            //通知mainPage转写开始  mainPage里设置leftView不可用
 
-            if(nullptr != m_currPlayingItem)
-            {
-                int playRow = 0;
-                getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+//            if(nullptr != m_currPlayingItem)
+//            {
+//                int playRow = 0;
+//                getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
 
-                int voiceToTextRow = 0;
-                getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
+//                int voiceToTextRow = 0;
+//                getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
 
-                if(voiceToTextRow < playRow)
-                {
-                    int movement = afterheight - beforeheight;
-                    qDebug()<<"-movement:"<<-movement;
-                    changeSliderPosByHand(-movement);
-                }
-            }
+//                if(voiceToTextRow < playRow)
+//                {
+//                    int movement = afterheight - beforeheight;
+//                    qDebug()<<"-movement:"<<-movement;
+//                    changeSliderPosByHand(-movement);
+//                }
+//            }
 
             emit asrStart();
             //转写接口调用
@@ -1004,12 +1080,13 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
         m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
         m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
-        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight + 5)); //ynbboy
-        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight + 5); //ynbboy
-        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
-        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT + m_textEditNewHeight + 5);
-        //m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
-//        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
+
+//        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight + 5)); //ynbboy
+//        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight + 5); //ynbboy
+//        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
+//        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT + m_textEditNewHeight + 5);
+//        //m_voiceNoteItemByasr->m_bgWidgetBytext->setFixedHeight(m_textEditNewHeight);
+////        m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->show(); //ynbboy
         m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
         //Edit start 3878
@@ -1017,29 +1094,29 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
         //Edit end 3878
 
-        if(nullptr != m_currPlayingItem)
-        {
-            int playRow = 0;
-            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
+//        if(nullptr != m_currPlayingItem)
+//        {
+//            int playRow = 0;
+//            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
 
-            int voiceToTextRow = 0;
-            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
+//            int voiceToTextRow = 0;
+//            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
 
-            if(voiceToTextRow < playRow)
-            {
-                int movement = VOICENOTE_HEIGHT + m_textEditNewHeight + 5 - m_tmpHeightForVoiceToText;
-                qDebug()<<"-movement:"<<-movement;
-                changeSliderPosByHand(-movement);
-            }
-        }
+//            if(voiceToTextRow < playRow)
+//            {
+//                int movement = VOICENOTE_HEIGHT + m_textEditNewHeight + 5 - m_tmpHeightForVoiceToText;
+//                qDebug()<<"-movement:"<<-movement;
+//                changeSliderPosByHand(-movement);
+//            }
+//        }
 
 
-        int count = this->count();
-        int transrow = row(m_currSelItemByasr);
-        if(transrow == count - 2)
-        {
-            this->scrollToBottom();
-        }
+//        int count = this->count();
+//        int transrow = row(m_currSelItemByasr);
+//        if(transrow == count - 2)
+//        {
+//            this->scrollToBottom();
+//        }
 
     }
     else
@@ -1047,10 +1124,10 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(false);
         m_voiceNoteItem->setTextEditDisplay(false);
         m_voiceNoteItem->setTextEditVal("");
-        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));
-        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT);
-        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
-        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
+//        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));
+//        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT);
+//        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
+//        Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);
         if (clsResult.code == "900003")
         {
             //网络异常
@@ -1444,7 +1521,9 @@ void RightNoteList::changeSliderPosByHand(int moveMovment)
         if (!m_myslider->isHidden())
         {
             qDebug()<<"before move slider y:"<<m_myslider->y();
+            qDebug()<<"moveMovment:"<<moveMovment;
             UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("before move slider y:"), QString::number(m_myslider->y(),10));
+
             m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
             qDebug()<<"after move slider y:"<<m_myslider->y();
             UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after move slider y:"), QString::number(m_myslider->y(),10));

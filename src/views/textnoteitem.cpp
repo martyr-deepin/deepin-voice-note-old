@@ -122,6 +122,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_hBoxLayout->setObjectName("horizontalLayout");
 
     m_textEdit = new TextNoteEdit(m_textNote, m_bgWidget, m_noteCtr);
+
     //m_textEdit->setBgTextEdit(m_bgWidget);
 
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
