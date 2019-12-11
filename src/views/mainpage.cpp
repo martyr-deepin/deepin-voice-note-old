@@ -47,7 +47,6 @@ void MainPage::initConnection()
     QObject::connect(m_leftView, SIGNAL(sigAllFolderDeleted()), this, SIGNAL(sigAllFolderDeleted()));
     QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(onStartRecoding()));   //Edit 3884
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(onStopRecoding()));    //Edit 3884
-    QObject::connect(m_rightView, SIGNAL(startRecoding()), m_leftView, SLOT(viewDisabled()));
     //QObject::connect(m_rightView, SIGNAL(asrStart()), m_leftView, SLOT(viewDisabled()));
     //QObject::connect(m_rightView, SIGNAL(stopRecoiding()), m_leftView, SLOT(viewEnabled()));
     QObject::connect(m_rightView, SIGNAL(stopRecoiding()), this, SIGNAL(stopRecoiding()));  //Add bug3470
