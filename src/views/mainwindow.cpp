@@ -91,7 +91,7 @@ void MyMainWindow::initTitleFrame()
 {
     //chengjinwei 2019 11 29 bug3800    
      titlebar()->setIcon(QIcon::fromTheme("deepin-voice-note"));
-
+     titlebar()->setFocusPolicy(Qt::ClickFocus);
 //    QIcon icon = QIcon::fromTheme("deepin-voice-note");
 //    m_logo = new QLabel(this);
 //    m_logo->setObjectName("LogoButton");
