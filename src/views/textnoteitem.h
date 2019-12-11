@@ -75,6 +75,7 @@ signals:
     void sig_TextEditEmpty();
     void sig_TextEditNotEmpty(bool changed);
     void sig_ItemTimeChanged(NOTE noteID);
+    void sig_TextEditEmptyByDelKey();  //文本框内容主动清空后，记事项被删除(不应该被删除) add yangeb
     void buttonClicled();
     void SigTextEditGetFocus(NOTE m_textNote); //Add bug 2587
     void SigTextEditOutFocus(NOTE m_textNote); //Add bug 2587

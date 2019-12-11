@@ -268,6 +268,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(sig_TextEditNotEmpty(bool)), this, SIGNAL(sig_TextEditNotEmpty(bool)));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SLOT(onDisableAddBtn()));
         connect(textItem, SIGNAL(sig_TextEditEmpty()), this, SIGNAL(sig_TextEditEmpty()));
+        connect(textItem, SIGNAL(sig_TextEditEmptyByDelKey()), this, SLOT(onTextEditEmptyByDelKey()));  //文本框内容主动清空后，记事项被删除(不应该被删除) add yangeb
         connect(textItem, SIGNAL(sig_fouceOutAndEditEmpty(NOTE)), this, SLOT(onCallDelDialog(NOTE)));
         //connect(textItem, SIGNAL(sig_ItemTimeChanged(NOTE)), this, SLOT(onSortItemByTime(NOTE)));
         connect(textItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
@@ -670,6 +671,10 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
                NOTE note = senderWidget->getTextNote();
                int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
                QListWidgetItem *senderItem = getListItemById(note.id);
+//文本框内容主动清空后，记事项被删除(不应该被删除) add start yangeb
+              delete senderWidget;
+              senderWidget = nullptr;
+//文本框内容主动清空后，记事项被删除(不应该被删除) add end yangeb
                this->removeItemWidget(senderItem);
                delete senderItem;
                senderItem = nullptr;
@@ -1693,3 +1698,10 @@ void RightNoteList::adjustWidgetItemWidth()
         }
     }
 }
+//文本框内容主动清空后，记事项被删除(不应该被删除) add start yangeb
+void RightNoteList::onTextEditEmptyByDelKey()
+{
+    onTextChangedFlagChange(true);
+    emit sig_TextEditEmpty();
+}
+//文本框内容主动清空后，记事项被删除(不应该被删除) add end yangeb

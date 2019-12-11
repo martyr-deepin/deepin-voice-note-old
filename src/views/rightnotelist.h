@@ -127,6 +127,7 @@ public slots:
     void TextHeightChanged(int newHeight, int id); //Add 20191111
     void asrOtherErrBtnClick(); //Add 20191111
     void onMediaPlayerCreated(QMediaPlayer* mediaPlayer);
+    void onTextEditEmptyByDelKey();  //文本框内容主动清空后，记事项被删除(不应该被删除) add yangeb
 
 private:
     MMenu *m_contextMenu;

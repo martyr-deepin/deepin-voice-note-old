@@ -536,8 +536,11 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
     //liuyang 3547
     if(str.isEmpty())
     {
-        m_menuBtn->DisableBtn();
-        handleTextEditFocusOut();
+        //文本框内容主动清空后，记事项被删除(不应该被删除) edit start yangeb
+//        m_menuBtn->DisableBtn();
+//        handleTextEditFocusOut();
+        emit sig_TextEditEmptyByDelKey();
+        //文本框内容主动清空后，记事项被删除(不应该被删除) edit end yangeb
     }
     else
     {
