@@ -242,7 +242,7 @@ void RightNoteList::initConnection()
     //end
     connect(m_myslider, SIGNAL(sliderPressed()), this, SLOT(handleSliderPressed()));  //ynb 20191109
     connect(m_myslider, SIGNAL(sliderReleased()), this, SLOT(handleSliderReleased()));
-    connect(this->verticalScrollBar(),SIGNAL(valueChanged(int)),this,SLOT(handleVScrollBarChanged(int)));
+    connect(this->verticalScrollBar(), &QScrollBar::valueChanged, this, &RightNoteList::handleVScrollBarChanged);
     connect(&m_AiServiceController, SIGNAL(AsrResultReq(AsrResult)),this,SLOT(AsrResultResp(AsrResult))); //Add 20191111
 }
 
@@ -607,38 +607,26 @@ void RightNoteList::OnActionHoverd()
 void RightNoteList::OnLeaveContentMenu()
 {
     m_actionHoverd = false;
-    //handleVScrollBarChanged(-1);
 }
 
 void RightNoteList::handleVScrollBarChanged(int value)
 {
-    if((nullptr != m_myslider)&&(nullptr != m_currPlayingItem))
-    {
-        if (!m_myslider->isHidden())
-        {
-            QRect rect;
-            if(m_currPlayingItem->getwaveformPoint(rect))
-            {
-                QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
-                //qDebug()<<"waveformPoint.y():"<<waveformPoint.y();
-                UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("waveformPoint.y():"), QString::number(waveformPoint.y(),10));
-                m_myslider->move(m_myslider->x(),waveformPoint.y() - 27);
-            }
+    Q_UNUSED(value);
+
+    if ((nullptr != m_myslider) && (nullptr != m_currPlayingItem)) {
+        if (!m_myslider->isHidden()) {
+            QTimer::singleShot(0, this, [=] () {
+                QRect rect;
+                if (m_currPlayingItem->getwaveformPoint(rect)) {
+                    QPoint waveformPoint = m_currPlayingItem->mapTo(this, QPoint(rect.x(), rect.y()));
+
+                    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("waveformPoint.y():"), QString::number(waveformPoint.y(), 10));
+
+                    m_myslider->move(m_myslider->x(), waveformPoint.y() - 27);
+                }
+            });
         }
     }
-
-//    QWidget* ptmpWidget = this->itemWidget(this->item(this->count() -  1));
-//    if(ptmpWidget != nullptr)
-//    {
-//        if(value == 0)
-//        {
-//            adjustWidgetItemWidth();
-//        }
-//        else
-//        {
-//            ptmpWidget->setFixedSize(QSize(this->width() + 5,ptmpWidget->height()));
-//        }
-//    }
 }
 
 void RightNoteList::onDisableAddBtn()
@@ -915,42 +903,6 @@ void RightNoteList::TextHeightChanged(int newHeight,int id)
             }
         }
     }
-
-    //if((nullptr != m_voiceNoteItemByasr) && (nullptr != m_currSelItem) && (nullptr != m_voiceNoteItem) &&(nullptr != m_currSelItemByasr))
-//    {
-//        int beforeheight = m_voiceNoteItemByasr->height();
-//        m_currSelItem->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight));  //orig
-//        m_voiceNoteItem->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight);
-//        int afterheight = m_voiceNoteItemByasr->height();
-//        Intancer::get_Intancer()->delHeightForRightList(beforeheight);
-//        m_tmpHeightForVoiceToText = afterheight;
-//        Intancer::get_Intancer()->addHeightForRightList(afterheight);
-
-//        if(nullptr != m_currPlayingItem)
-//        {
-//            int playRow = 0;
-//            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
-
-//            int voiceToTextRow = 0;
-//            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
-
-//            if(voiceToTextRow < playRow)
-//            {
-//                int movement = afterheight - beforeheight;
-//                qDebug()<<"-movement:"<<-movement;
-//                changeSliderPosByHand(-movement);
-//            }
-//        }
-
-//        int count = this->count();
-//        int transrow = row(m_currSelItemByasr);
-//        if(transrow == count - 2)
-//        {
-//            this->scrollToBottom();
-//        }
-//    }
-
-
 }
 
 void RightNoteList::asrOtherErrBtnClick()
@@ -1022,23 +974,6 @@ void RightNoteList::AsrStart(int type)  //Add 4297
 //           // m_voiceNoteItemByasr->m_bgWidgetBytext->move(6,55); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBydetailBtn->hide(); //ynbboy
             m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
-//            //通知mainPage转写开始  mainPage里设置leftView不可用
-
-//            if(nullptr != m_currPlayingItem)
-//            {
-//                int playRow = 0;
-//                getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
-
-//                int voiceToTextRow = 0;
-//                getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
-
-//                if(voiceToTextRow < playRow)
-//                {
-//                    int movement = afterheight - beforeheight;
-//                    qDebug()<<"-movement:"<<-movement;
-//                    changeSliderPosByHand(-movement);
-//                }
-//            }
 
             emit asrStart();
             //转写接口调用
@@ -1093,34 +1028,8 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
 //        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
         Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
         //Edit end 3878
-
-//        if(nullptr != m_currPlayingItem)
-//        {
-//            int playRow = 0;
-//            getRowByID(m_currPlayingItem->getNoteID(),VOICE,playRow);
-
-//            int voiceToTextRow = 0;
-//            getRowByID(m_voiceNoteItemByasr->getNoteID(),VOICE,voiceToTextRow);
-
-//            if(voiceToTextRow < playRow)
-//            {
-//                int movement = VOICENOTE_HEIGHT + m_textEditNewHeight + 5 - m_tmpHeightForVoiceToText;
-//                qDebug()<<"-movement:"<<-movement;
-//                changeSliderPosByHand(-movement);
-//            }
-//        }
-
-
-//        int count = this->count();
-//        int transrow = row(m_currSelItemByasr);
-//        if(transrow == count - 2)
-//        {
-//            this->scrollToBottom();
-//        }
-
     }
-    else
-    {
+    else {
         m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(false);
         m_voiceNoteItem->setTextEditDisplay(false);
         m_voiceNoteItem->setTextEditVal("");
@@ -1341,8 +1250,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
             //m_addTextBtn->setDisableBtn(false);
             emit sig_TextEditNotEmpty(false);
 
-            if(move)
-            {
+            if (move) {
                 changeSliderPosByHand(moveMovment);
             }
 
@@ -1389,7 +1297,6 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
     }
     Intancer::get_Intancer()->setTryToDelEmptyTextNote(false);
     Intancer::get_Intancer()->setWantScrollRightListFlag(true);
-    //handleVScrollBarChanged(-1);
 }
 
 void RightNoteList::handleCloseDialogClicked()
@@ -1516,23 +1423,15 @@ QString RightNoteList::getPlayingFilepath()
 
 void RightNoteList::changeSliderPosByHand(int moveMovment)
 {
-    if(nullptr != m_myslider)
-    {
-        if (!m_myslider->isHidden())
-        {
-            qDebug()<<"before move slider y:"<<m_myslider->y();
-            qDebug()<<"moveMovment:"<<moveMovment;
-            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("before move slider y:"), QString::number(m_myslider->y(),10));
+    if (nullptr != m_myslider) {
+        if (!m_myslider->isHidden()) {
+            QTimer::singleShot(0, this, [=] () {
+                UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("before m_myslider->move() y: "), QString::number(m_myslider->y(), 10));
 
-            m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
-            qDebug()<<"after move slider y:"<<m_myslider->y();
-            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after move slider y:"), QString::number(m_myslider->y(),10));
-//            if(this->verticalScrollBar()->isVisible())
-//            {
-//                int value = this->verticalScrollBar()->value();
-//                this->verticalScrollBar()->setValue(value - 1);
-//            }
+                m_myslider->move(m_myslider->x(), m_myslider->y() - moveMovment);
 
+                UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("after m_myslider->move() y :"), QString::number(m_myslider->y(), 10));
+            });
         }
     }
 }
