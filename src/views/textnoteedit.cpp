@@ -341,12 +341,12 @@ void TextNoteEdit::updateNote()
     note.createTime = QDateTime::currentDateTime();
     //liuyang 3550 3547 3528
 
-    //==== start add 20191105  bug2162
-    if (!UiUtil::autoAddEditTxt(note)) {
-        //qDebug() << "error: edit file error";
-        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: edit file error"), QString("error: edit file error"));
-    }
-    //==== end add 20191105  bug2162
+//    //==== start add 20191105  bug2162
+//    if (!UiUtil::autoAddEditTxt(note)) {
+//        //qDebug() << "error: edit file error";
+//        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: edit file error"), QString("error: edit file error"));
+//    }
+//    //==== end add 20191105  bug2162
     if(!m_noteCtr->updateNote(note)) {
         //todo：弹出popup，保存失败
         //qDebug()<< "error: update text note fail!";

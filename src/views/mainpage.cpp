@@ -121,7 +121,7 @@ void MainPage::initRightView(){
 //    m_rightView->setSizePolicy(sp);
 //del end 4260
     m_rightView->setObjectName("rightView");
-    m_rightView->initTxtFilesForDir();
+    //m_rightView->initTxtFilesForDir();
     m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }

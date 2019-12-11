@@ -185,15 +185,15 @@ bool NoteOper::deleteNote(NOTE noteInfo)
             file.remove();
         }
     }
-    //====add start 20191105  bug2162  bug2963
-    else
-    {
-        if (!UiUtil::autoDeleteTxt(noteInfo))
-        {
-            //qDebug() << "error: delete file error";
-            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete file error"), QString("error: delete file error"));
-        }
-    }
-    //====add end 20191105  bug2162  bug2963
+//    //====add start 20191105  bug2162  bug2963
+//    else
+//    {
+//        if (!UiUtil::autoDeleteTxt(noteInfo))
+//        {
+//            //qDebug() << "error: delete file error";
+//            UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: delete file error"), QString("error: delete file error"));
+//        }
+//    }
+//    //====add end 20191105  bug2162  bug2963
     return DatabaseOper::getInstance()->deleteDataById(TABLE_NOTE, "id", noteInfo.id);
 }

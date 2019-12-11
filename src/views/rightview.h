@@ -39,7 +39,7 @@ public:
     void cancleRecord();
     void checkAndDeleteEmptyTextNoteFromDatabase();
     int getFolderCount();
-    void initTxtFilesForDir();
+    //void initTxtFilesForDir();
     void OnlySaveRecord();
     void VoicePlayOrPause(); //Add bug 2587
     bool shortcutsDelete(); //Add bug 2587

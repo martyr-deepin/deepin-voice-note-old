@@ -1207,16 +1207,6 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
 {
     if (index == 1)
     {
-        //==== start add 20191105  bug2162
-//        NOTE_TYPE delType2 = m_currSelNote.noteType;
-//        if(TEXT == delType2)
-//        {
-//            if (!UiUtil::autoDeleteTxt(m_currSelNote))
-//            {
-//            }
-//        }
-
-        //==== start add 20191105  bug2162
         if (m_noteController->deleteNote(m_currSelNote))
         {
             bool move = false;

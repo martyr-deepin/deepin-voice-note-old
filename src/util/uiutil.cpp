@@ -533,68 +533,68 @@ QPixmap UiUtil::renderSVG(const QString &filePath, const QSize &size,DApplicatio
     return pixmap;
 }
 
-//====start add 20191105  bug2162
-bool UiUtil::DeleteFileOrFolder( const QString& strPath )
-{
-    if( strPath.isEmpty() || !QDir().exists( strPath ) )
-        return false;
+////====start add 20191105  bug2162
+//bool UiUtil::DeleteFileOrFolder( const QString& strPath )
+//{
+//    if( strPath.isEmpty() || !QDir().exists( strPath ) )
+//        return false;
 
-    QFileInfo fileInfo( strPath );
+//    QFileInfo fileInfo( strPath );
 
-    if( fileInfo.isFile() )
-        QFile::remove( strPath );
-    else if( fileInfo.isDir() )
-    {
-        QDir qDir( strPath );
-        qDir.setFilter( QDir::AllEntries | QDir::NoDotAndDotDot );
-        QFileInfoList fileInfoLst = qDir.entryInfoList();
-        foreach( QFileInfo qFileInfo, fileInfoLst )
-        {
-            if( qFileInfo.isFile() )
-                qDir.remove( qFileInfo.absoluteFilePath() );
-            else
-            {
-                DeleteFileOrFolder( qFileInfo.absoluteFilePath() );
-                qDir.rmdir( qFileInfo.absoluteFilePath() );
-            }
-        }
-        qDir.rmdir( fileInfo.absoluteFilePath() );
-    }
+//    if( fileInfo.isFile() )
+//        QFile::remove( strPath );
+//    else if( fileInfo.isDir() )
+//    {
+//        QDir qDir( strPath );
+//        qDir.setFilter( QDir::AllEntries | QDir::NoDotAndDotDot );
+//        QFileInfoList fileInfoLst = qDir.entryInfoList();
+//        foreach( QFileInfo qFileInfo, fileInfoLst )
+//        {
+//            if( qFileInfo.isFile() )
+//                qDir.remove( qFileInfo.absoluteFilePath() );
+//            else
+//            {
+//                DeleteFileOrFolder( qFileInfo.absoluteFilePath() );
+//                qDir.rmdir( qFileInfo.absoluteFilePath() );
+//            }
+//        }
+//        qDir.rmdir( fileInfo.absoluteFilePath() );
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
-QString UiUtil::getRecordingTxtFullPath(QString fileName)
-{
-    return QDir(getRecordingSaveDirectory()).filePath(fileName);
-}
+//QString UiUtil::getRecordingTxtFullPath(QString fileName)
+//{
+//    return QDir(getRecordingSaveDirectory()).filePath(fileName);
+//}
 
-bool UiUtil::autoAddEditTxt(const NOTE &noteInfo)
-{
-   QString current_date = QString::number(noteInfo.id);
-   //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
-   QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
-   QString path = UiUtil::getRecordingTxtFullPath(fileName);
-   if (!UiUtil::saveTxt(path, noteInfo.contentText))
-   {
-       return false;
-   }
-   return true;
-}
+//bool UiUtil::autoAddEditTxt(const NOTE &noteInfo)
+//{
+//   QString current_date = QString::number(noteInfo.id);
+//   //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+//   QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
+//   QString path = UiUtil::getRecordingTxtFullPath(fileName);
+//   if (!UiUtil::saveTxt(path, noteInfo.contentText))
+//   {
+//       return false;
+//   }
+//   return true;
+//}
 
-bool UiUtil::autoDeleteTxt(const NOTE &noteInfo)
-{
-    QString current_date = QString::number(noteInfo.id);
-    //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
-    QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
-    QString path = UiUtil::getRecordingTxtFullPath(fileName);
-    if (!UiUtil::DeleteFileOrFolder(path))
-    {
-        return false;
-    }
-    return true;
-}
-//====end add 20191105  bug2162
+//bool UiUtil::autoDeleteTxt(const NOTE &noteInfo)
+//{
+//    QString current_date = QString::number(noteInfo.id);
+//    //QString current_date = noteInfo.createTime.toString("yyyyMMddhhmmsszzz");
+//    QString fileName = QString("%1 (%2).txt").arg(("New txt note")).arg(current_date);
+//    QString path = UiUtil::getRecordingTxtFullPath(fileName);
+//    if (!UiUtil::DeleteFileOrFolder(path))
+//    {
+//        return false;
+//    }
+//    return true;
+//}
+////====end add 20191105  bug2162
 
 //log change
 void UiUtil::writeLog(int type, QString file, int line, QString func, QString context, QString msg)

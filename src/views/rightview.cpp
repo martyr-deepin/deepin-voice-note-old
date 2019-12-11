@@ -339,13 +339,13 @@ void RightView::addTextNote()
     onDisableAddBtn(); //Add 4133
 
     m_noteController->addNote(note);
-    //==== start add 20191105  bug2162
-    if (!UiUtil::autoAddEditTxt(note))
-    {
-        //qDebug() << "error: add file error";
-        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: add file error"), QString("error: add file error"));
-    }
-    //==== end add 20191105  bug2162
+//    //==== start add 20191105  bug2162
+//    if (!UiUtil::autoAddEditTxt(note))
+//    {
+//        //qDebug() << "error: add file error";
+//        UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("error: add file error"), QString("error: add file error"));
+//    }
+//    //==== end add 20191105  bug2162
 
     addNoteToNoteList(note);
     //updateNoteList();
@@ -525,24 +525,24 @@ int RightView::getFolderCount()
     return m_noteListWidget->count();
 }
 
-void RightView::initTxtFilesForDir()
-{
-    if((nullptr != m_FolderController) && (nullptr != m_noteController))
-    {
-        QList<FOLDER> folderlist = m_FolderController->getFolderList();
-        for(int i = 0; i < folderlist.count(); i++)
-        {
-            QList<NOTE> noteList = m_noteController->getNoteListByFolderId(folderlist.at(i).id);
-            for(int j = 0; j < noteList.count(); j++)
-            {
-                if(noteList.at(j).noteType == TEXT)
-                {
-                    UiUtil::autoAddEditTxt(noteList.at(j));
-                }
-            }
-        }
-    }
-}
+//void RightView::initTxtFilesForDir()
+//{
+//    if((nullptr != m_FolderController) && (nullptr != m_noteController))
+//    {
+//        QList<FOLDER> folderlist = m_FolderController->getFolderList();
+//        for(int i = 0; i < folderlist.count(); i++)
+//        {
+//            QList<NOTE> noteList = m_noteController->getNoteListByFolderId(folderlist.at(i).id);
+//            for(int j = 0; j < noteList.count(); j++)
+//            {
+//                if(noteList.at(j).noteType == TEXT)
+//                {
+//                    UiUtil::autoAddEditTxt(noteList.at(j));
+//                }
+//            }
+//        }
+//    }
+//}
 
 void RightView::OnlySaveRecord()
 {

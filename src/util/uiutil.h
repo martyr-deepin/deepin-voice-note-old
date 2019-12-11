@@ -50,12 +50,12 @@ public:
     static QVariant redDBusProperty(const QString &service, const QString &path, const QString &interface, const char *propert);
     static QPixmap renderSVG(const QString &filePath, const QSize &size, DApplication *pApp);
 
-    //====start add 20191105  bug2162
-    static bool DeleteFileOrFolder( const QString& strPath);
-    static QString getRecordingTxtFullPath(QString fileName);
-    static bool autoAddEditTxt(const NOTE &noteInfo);
-    static bool autoDeleteTxt(const NOTE &noteInfo);
-    //====end add 20191105  bug2162
+//    //====start add 20191105  bug2162
+//    static bool DeleteFileOrFolder( const QString& strPath);
+//    static QString getRecordingTxtFullPath(QString fileName);
+//    static bool autoAddEditTxt(const NOTE &noteInfo);
+//    static bool autoDeleteTxt(const NOTE &noteInfo);
+//    //====end add 20191105  bug2162
 
     static void writeLog(int type, QString file, int line, QString func, QString context, QString msg = "");
 };
