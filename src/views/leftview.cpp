@@ -40,7 +40,7 @@ void LeftView::initUI()
     //    this->setFixedWidth(250);  //del 4260
     m_leftViewLayout = new QVBoxLayout;
     //m_leftViewLayout->setContentsMargins(4, 0, 0, 0);
-    m_leftViewLayout->setContentsMargins(4, 0, 4, 0);
+    m_leftViewLayout->setContentsMargins(4, 0, 0, 0);
 
 //    m_LeftListBoard = new DWidget(this);
 //    m_LeftListBoard->resize(this->width(),this->height() - 150);

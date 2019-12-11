@@ -32,7 +32,8 @@ void LeftFolderList::initUI()
     //this->setFocus(Qt::NoFocusReason);
     //this->setAttribute(Qt::WA_MacShowFocusRect, 0);
     //this->setFixedWidth(248);
-    this->setFixedWidth(242); //Edit 4260
+    //this->setFixedWidth(242); //Edit 4260
+    this->setFixedWidth(245); //Edit 4260
     //this->move(-10,this->y());
     m_contextMenu = new DMenu;
     m_renameAction = new QAction(tr("Rename"),this);
@@ -54,7 +55,7 @@ void LeftFolderList::initUI()
     m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("Delete Folder in Recoding are note allowed")), nullptr);
 //    m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("录音中禁止删除记事本")), nullptr);
 
-    this->setViewportMargins(0,0,0,4); //liuyang bug3780 按道理要加5px边距，可是>=5时会产生1px的长线（暂时无法解决，故加4px）
+    this->setViewportMargins(0,0,4,4); //liuyang bug3780 按道理要加5px边距，可是>=5时会产生1px的长线（暂时无法解决，故加4px）
 }
 
 void LeftFolderList::initConnection()
