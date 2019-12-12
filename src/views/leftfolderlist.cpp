@@ -93,6 +93,22 @@ void LeftFolderList::insertWidgetItemToTop(FOLDER folder, QString searchKey)
     this->setItemWidget(item, folderItem);
 }
 
+void LeftFolderList::setListDown(bool setdown)
+{
+    int count = this->count();
+    QListWidgetItem *pCur = this->currentItem();
+    int curRow = this->row(pCur);
+    for(int i = 0; i < count; i++)
+    {
+        if(curRow != i)
+        {
+            QListWidgetItem *pTmp = this->item(i);
+            FolerWidgetItem *pTmpFolder = (FolerWidgetItem*)this->itemWidget(pTmp);
+            pTmpFolder->setGray(setdown);
+        }
+    }
+}
+
 void LeftFolderList::handleCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     if (previous)

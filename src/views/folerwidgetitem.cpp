@@ -426,6 +426,12 @@ void FolerWidgetItem::setLabelText(const QString text)
     this->m_nameLabel->setText(textToSet);
 }
 
+void FolerWidgetItem::setGray(bool isgray)
+{
+    this->setDisabled(isgray);
+    m_FolderImage->setGray(isgray);
+}
+
 //liuyang 3794
 void FolerWidgetItem::leaveEvent(QEvent *event)
 {

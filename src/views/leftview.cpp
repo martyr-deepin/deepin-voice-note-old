@@ -133,6 +133,11 @@ void LeftView::initUI()
     pa.setBrush(DPalette::Background, pa.color(DPalette::Base));
     this->setAutoFillBackground(true);
     this->setPalette(pa);
+
+    m_greyboard = new DWidget(this);
+    m_greyboard->setFixedSize(this->size());
+    m_greyboard->move(0,0);
+    m_greyboard->hide();
 }
 
 void LeftView::initController()
@@ -326,8 +331,10 @@ void LeftView::viewDisabled()
     //Edit start 3884
     if (!(m_RecodingState && m_asrState))
     {
-        m_leftFolderView->setDisabled(true);
+        m_leftFolderView->setListDown(true);
+        //m_leftFolderView->setDisabled(true);
         m_addFolderBtn->DisableBtn();
+        m_greyboard->show();
     }
     //Edit end 3884
 }
@@ -337,8 +344,10 @@ void LeftView::viewEnabled()
     //Edit start 3884
     if (m_RecodingState && m_asrState)
     {
-        m_leftFolderView->setDisabled(false);
+        m_leftFolderView->setListDown(false);
+        //m_leftFolderView->setDisabled(false);
         m_addFolderBtn->EnAbleBtn();
+        m_greyboard->hide();
     }
     //Edit end 3884
 }
@@ -478,5 +487,5 @@ void LeftView::clearNoteList()
 void LeftView::resizeEvent(QResizeEvent * event)
 {
     m_addFolderBtn->move((this->width() - m_addFolderBtn->width())/2,this->height() - m_addFolderBtn->height() - 12);
-    //m_greyboard->setFixedSize(this->size());
+    m_greyboard->setFixedSize(this->size());
 }

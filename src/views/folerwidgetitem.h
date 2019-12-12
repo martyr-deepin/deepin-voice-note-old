@@ -52,6 +52,7 @@ public:
     QString getSearchText();
     void updateTimeLable(const QDateTime &time);//liuyang 3550 3547 3528
     void setLabelText(const QString text);
+    void setGray(bool isgray);
 
 public slots:
     void cancleRename();
