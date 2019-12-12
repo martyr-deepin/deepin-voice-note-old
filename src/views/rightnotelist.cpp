@@ -671,6 +671,23 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
                NOTE note = senderWidget->getTextNote();
                int cursorPos = senderWidget->getTextEditCursorPos();//3550-3547-3528
                QListWidgetItem *senderItem = getListItemById(note.id);
+
+               if(!m_myslider->isHidden())
+               {
+                   int movedRow = this->row(senderItem);
+                   int movement = senderWidget->height();
+                   int playRow = -1;
+                   NOTE_TYPE playType = VOICE;
+                   getRowByID(m_currPlayingItem->getNoteID(),playType,playRow);
+
+                   if(playRow > movedRow)
+                   {
+                        changeSliderPosByHand(movement);
+                   }
+
+               }
+
+
 //文本框内容主动清空后，记事项被删除(不应该被删除) add start yangeb
               delete senderWidget;
               senderWidget = nullptr;
