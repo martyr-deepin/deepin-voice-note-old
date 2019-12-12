@@ -35,6 +35,7 @@ public:
     void setLineHeight(int value);
     int getLineHeight();
     QDateTime getUpdateTime(); //liuyang 3550 3547 3528
+    void prepareTODelete();
 signals:
     void clicked();
     void focusOutSignal();
@@ -49,6 +50,7 @@ public slots:
     void updateNote();
     void textAreaChanged(); //Add 20191111
     void onTextChanged();
+    void changeTheme(); //add 3976
 
 
 protected:
@@ -68,8 +70,11 @@ private:
     NoteController *m_noteCtr;
     QString m_searchKey;
     bool menuOut = false;//3699
+    bool m_wantFlag;
+    QBrush m_brush; //add 3976
     //BgTextEdit *m_BgTextEdit;
     void initConnection();
+
 
 };
 

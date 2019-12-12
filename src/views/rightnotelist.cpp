@@ -689,8 +689,9 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
 
 
 //文本框内容主动清空后，记事项被删除(不应该被删除) add start yangeb
-              delete senderWidget;
-              senderWidget = nullptr;
+//              delete senderWidget;
+//              senderWidget = nullptr;
+               senderWidget->m_textEdit->prepareTODelete();
 //文本框内容主动清空后，记事项被删除(不应该被删除) add end yangeb
                this->removeItemWidget(senderItem);
                delete senderItem;

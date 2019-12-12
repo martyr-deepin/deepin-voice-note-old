@@ -7,6 +7,7 @@
 
 #include <DMenu>//3699
 #include <QTextBlock>
+#include <DApplicationHelper> //add 3976
 
 bool TextNoteEdit::doesFocusInToChangePlainText = false;
 bool TextNoteEdit::doesFocusOutToChangeHtml = true;
@@ -25,10 +26,13 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
         m_noteCtr = noteCtr;
     }
     m_textNote = textNote;
+    m_wantFlag = false;
     //m_BgTextEdit = nullptr;
     //qDebug() << "this->m_textNote.contentText: " << this->m_textNote.contentText;
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->m_textNote.contentText:"), this->m_textNote.contentText);
-
+    //add start 3976
+    m_brush = this->palette().text();
+    //add end 3976
 
     this->setPlainText(m_textNote.contentText);//liuyang 3550 3547 3528
     this->setLineHeight(24);
@@ -193,6 +197,27 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
         this->setLineHeight(24);
     }
 
+    //add start 3976
+    QTextDocument *document = this->document();
+    bool found = false;
+    QTextCursor highlight_cursor(document);
+    QTextCursor cursor(document);
+    //开始
+    cursor.beginEditBlock();
+    QTextCharFormat color_format(highlight_cursor.charFormat());
+    color_format.setForeground(m_brush);
+    while (!highlight_cursor.isNull() && !highlight_cursor.atEnd()) {
+        //查找指定的文本，匹配整个单词
+        highlight_cursor = document->find(this->getText(), highlight_cursor, QTextDocument::FindWholeWords);
+        if (!highlight_cursor.isNull()) {
+            if(!found)
+                found = true;
+            highlight_cursor.mergeCharFormat(color_format);
+        }
+    }
+    cursor.endEditBlock();
+    //add end 3976
+
     DTextEdit::focusInEvent(e); //Add bug 2587
     emit SigTextEditGetFocus();
 }
@@ -208,11 +233,17 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         return;
     }
     //3699
-    Intancer::get_Intancer()->setWantScrollRightListFlag(true);
-    if (this->isReadOnly())
+
+    if(m_wantFlag)
     {
         return;
     }
+
+    Intancer::get_Intancer()->setWantScrollRightListFlag(true);
+//    if (this->isReadOnly())
+//    {
+//        return;
+//    }
     //qDebug()<<"--------------------------------edit focusOutEvent";
     if(this->getText().isEmpty())
     {
@@ -411,6 +442,13 @@ void TextNoteEdit::onTextChanged()
     });
 }
 
+//add start 3976
+void TextNoteEdit::changeTheme()
+{
+    m_brush = this->palette().text();
+}
+//add end 3976
+
 void TextNoteEdit::searchText(QString searchKey)
 {
     m_searchKey = searchKey;
@@ -473,3 +511,8 @@ QDateTime TextNoteEdit::getUpdateTime()
     return m_textNote.createTime;
 }
 //liuyang 3550 3547 3528
+
+void TextNoteEdit::prepareTODelete()
+{
+    m_wantFlag = true;
+}
