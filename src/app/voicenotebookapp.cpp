@@ -84,9 +84,10 @@ void VoiceNotebookApp::initMainWindow()
 {
 //    m_mainWindow = new MyMainWindow(); //Del createVoiceMemo 新建语音备忘录对应
     //mainWindow->setMinimumSize(500, 500);
-    m_mainWindow->show();
 
     Dtk::Widget::moveToCenter(m_mainWindow);
+    m_mainWindow->show();
+
 }
 void VoiceNotebookApp::initController()
 {
