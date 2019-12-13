@@ -1,3 +1,4 @@
+
 /* -*- Mode: C++; indent-tabs-mode: nil; tab-width: 4 -*-
  * -*- coding: utf-8 -*-
  *
@@ -179,12 +180,16 @@ void RecordPage::renderRecordingTime()
 {
     if (m_audioRecorder->state() != QMediaRecorder::StoppedState) {
         QString time = UiUtil::formatMillisecond(m_recordingTime);
+        qDebug()<<"m_recordingTime:"<<m_recordingTime;
+        qDebug()<<"time:"<<time;
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
         if(0 == time.compare("01:00:00"))
         {
             if(nullptr != m_finishButton)
             {
+                qDebug()<<"m_recordingTimeLast:"<<m_recordingTime;
+                qDebug()<<"timeLast:"<<time;
                 m_finishButton->clicked();
             }
         }
@@ -258,9 +263,9 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_audioRecorder->setAudioSettings(audioSettings);
 
-//    m_audioRecorder->setContainerFormat("audio/x-wav");
+    m_audioRecorder->setContainerFormat("audio/x-wav");
 //    m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
-    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
+//    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
 //    m_audioRecorder->setContainerFormat("audio/mp3");
 #else
     audioSettings.setCodec("audio/PCM");
