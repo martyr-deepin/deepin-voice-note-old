@@ -110,6 +110,17 @@ void VoiceNoteItem::changeTheme()
                         ":/image/icon/focus/more_focus.svg");
         }
 
+        if(nullptr != m_detailBtn)
+        {
+            m_detailBtn->setPicChange(
+                        ":/image/icon/normal/detail-normal.svg",
+                        ":/image/icon/press/detail-press.svg",
+                        ":/image/icon/hover/detail-hover.svg",
+                        "",
+                        ""
+                        );
+        }
+
 
     }
     else if(themeType == DGuiApplicationHelper::DarkType)
@@ -122,6 +133,17 @@ void VoiceNoteItem::changeTheme()
                         ":/image/icon_dark/hover/more_hover_dark.svg",
                         ":/image/icon_dark/disabled/more_disabled_dark.svg",
                         ":/image/icon_dark/focus/more_focus_dark.svg");
+        }
+
+        if(nullptr != m_detailBtn)
+        {
+            m_detailBtn->setPicChange(
+                        ":/image/icon_dark/normal/detail-normal.svg",
+                        ":/image/icon_dark/press/detail-press.svg",
+                        ":/image/icon_dark/hover/detail-hover.svg",
+                        "",
+                        ""
+                        );
         }
     }
 }
