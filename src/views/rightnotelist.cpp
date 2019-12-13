@@ -1055,8 +1055,12 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
     }
     else {
         m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(false);
-        m_voiceNoteItem->setTextEditDisplay(false);
-        m_voiceNoteItem->setTextEditVal("");
+        m_voiceNoteItemByasr->setTextEditDisplay(false);
+        m_voiceNoteItemByasr->setTextEditVal("");
+
+        QTimer::singleShot(0, this, [=]{
+            TextHeightChanged(0,m_voiceNoteItemByasr->getNoteID());
+        });
 //        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT));
 //        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT);
 //        Intancer::get_Intancer()->delHeightForRightList(m_tmpHeightForVoiceToText);
