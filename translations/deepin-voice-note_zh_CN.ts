@@ -5,6 +5,10 @@
     <name>AddTextBtn</name>
     <message>
         <source>Click to Add TextNote</source>
+        <translation type="vanished">添加文字笔记</translation>
+    </message>
+    <message>
+        <source>Add Text Note</source>
         <translation>添加文字笔记</translation>
     </message>
 </context>
@@ -27,10 +31,18 @@
     <name>InitEmptyPage</name>
     <message>
         <source>Create Folder</source>
-        <translation>新建记事本</translation>
+        <translation type="vanished">新建记事本</translation>
     </message>
     <message>
         <source>After create a folder, you can start your note</source>
+        <translation type="vanished">新建一个记事本后，可以开始记录语音及文字</translation>
+    </message>
+    <message>
+        <source>Create Notebook</source>
+        <translation>新建记事本</translation>
+    </message>
+    <message>
+        <source>Create a notebook to start recording voice and making notes</source>
         <translation>新建一个记事本后，可以开始记录语音及文字</translation>
     </message>
 </context>
@@ -38,7 +50,7 @@
     <name>LeftFolderList</name>
     <message>
         <source>Are you sure want to delete Folder?</source>
-        <translation>您确定要删除此记事本吗？</translation>
+        <translation type="vanished">您确定要删除此记事本吗？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -55,6 +67,10 @@
     <message>
         <source>Rename</source>
         <translation>重命名</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this notebook？</source>
+        <translation>您确定要删除此记事本吗？</translation>
     </message>
 </context>
 <context>
@@ -73,7 +89,7 @@
     </message>
     <message>
         <source>Currently recording, is the recording terminated?</source>
-        <translation>当前录音中，是否停止录音？</translation>
+        <translation type="vanished">当前录音中，是否停止录音？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -81,11 +97,11 @@
     </message>
     <message>
         <source>Stop</source>
-        <translation>确定</translation>
+        <translation type="vanished">确定</translation>
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation>该语音笔记已被删除</translation>
+        <translation type="vanished">该语音笔记已被删除</translation>
     </message>
     <message>
         <source>Window size switching</source>
@@ -141,7 +157,7 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">删除</translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Display shortcuts</source>
@@ -181,7 +197,7 @@
     </message>
     <message>
         <source>TextDelete</source>
-        <translation>删除</translation>
+        <translation type="vanished">删除</translation>
     </message>
     <message>
         <source>Notebooks</source>
@@ -195,16 +211,24 @@
         <source>Settings</source>
         <translation>设置</translation>
     </message>
+    <message>
+        <source>Do you want to stop the current recording?</source>
+        <translation>当前录音中，是否停止录音？</translation>
+    </message>
+    <message>
+        <source>The voice note has been deleted</source>
+        <translation>该语音笔记已被删除</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Voice Note</source>
-        <translation>语音记事本</translation>
+        <translation type="vanished">语音记事本</translation>
     </message>
     <message>
         <source>Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.</source>
-        <translation>语音记事本是一款提供文本记事、语音录音记录的轻量级记事工具。</translation>
+        <translation type="vanished">语音记事本是一款提供文本记事、语音录音记录的轻量级记事工具。</translation>
     </message>
     <message>
         <source>OK</source>
@@ -216,14 +240,26 @@
     </message>
     <message>
         <source>NewFolder</source>
+        <translation type="vanished">记事本</translation>
+    </message>
+    <message>
+        <source>Notebook</source>
         <translation>记事本</translation>
+    </message>
+    <message>
+        <source>Voice Notes</source>
+        <translation>语音记事本</translation>
+    </message>
+    <message>
+        <source>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</source>
+        <translation>语音记事本是一款提供文本记事、语音录音记录的轻量级记事工具。</translation>
     </message>
 </context>
 <context>
     <name>RightNoteList</name>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation>您确定要删除此条笔记吗？</translation>
+        <translation type="vanished">您确定要删除此条笔记吗？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -263,15 +299,15 @@
     </message>
     <message>
         <source>Save As MP3</source>
-        <translation>保存为MP3</translation>
+        <translation type="vanished">保存为MP3</translation>
     </message>
     <message>
         <source>TextNote</source>
-        <translation>文本笔记</translation>
+        <translation type="vanished">文本笔记</translation>
     </message>
     <message>
         <source>VoiceNote</source>
-        <translation>语音笔记</translation>
+        <translation type="vanished">语音笔记</translation>
     </message>
     <message>
         <source>Voice to Text</source>
@@ -293,22 +329,42 @@
         <source>Try Again</source>
         <translation>重新转写</translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this note？</source>
+        <translation>您确定要删除这条笔记吗？</translation>
+    </message>
+    <message>
+        <source>Text note</source>
+        <translation>文本笔记</translation>
+    </message>
+    <message>
+        <source>Voice note</source>
+        <translation>语音笔记</translation>
+    </message>
 </context>
 <context>
     <name>RightView</name>
     <message>
         <source>No Result</source>
-        <translation>无搜索结果</translation>
+        <translation type="vanished">无搜索结果</translation>
     </message>
     <message>
         <source>No recording device detected</source>
         <translation>未检测到录音设备</translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translation>无搜索结果</translation>
     </message>
 </context>
 <context>
     <name>SearchNonePage</name>
     <message>
         <source>No Result</source>
+        <translation type="vanished">无搜索结果</translation>
+    </message>
+    <message>
+        <source>No search results</source>
         <translation>无搜索结果</translation>
     </message>
 </context>
@@ -316,11 +372,15 @@
     <name>UiUtil</name>
     <message>
         <source>The voice conversion failed. Do you want to try again?</source>
-        <translation>当前语音转写文字失败，是否重新转写？</translation>
+        <translation type="vanished">当前语音转写文字失败，是否重新转写？</translation>
     </message>
     <message>
         <source>The voice conversion failed due to the poor network connection. Do you want to try again?</source>
         <translation>当前网络状态差，语音转写失败，是否重新转写？</translation>
+    </message>
+    <message>
+        <source>The voice conversion failed. Do you want to try again? </source>
+        <translation>当前网络状态差，语音转写失败，是否重新转写?</translation>
     </message>
 </context>
 </TS>

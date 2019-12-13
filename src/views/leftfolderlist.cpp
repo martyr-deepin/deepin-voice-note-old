@@ -49,7 +49,7 @@ void LeftFolderList::initUI()
     m_boader->move(0,0);
     m_boader->setVisible(false);
 
-    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure want to delete Folder?")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this notebook？")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
 //    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除记事本吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
 
     m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("Delete Folder in Recoding are note allowed")), nullptr);

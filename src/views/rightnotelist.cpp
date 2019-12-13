@@ -164,7 +164,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
                 m_asrAction->setEnabled(true);
             }
             //Add e 20191111
-            m_saveAsAction->setText(QString(tr("Save As MP3")));
+            m_saveAsAction->setText(QString(tr("Save as MP3")));
             //m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);
@@ -193,7 +193,7 @@ void RightNoteList::initUI()
 
     createDArrowMenu();
 
-    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this note?")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this note？")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
     //m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
     //by yuanshuai 20191120 2841
@@ -1097,18 +1097,18 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
             fileDialog.setDefaultSuffix("txt");
             fileDialog.setNameFilter("TXT(*.txt)");
             //fileDialog.setNameFilter(tr("TXT(*.txt)"));
-            scanData(dir,".txt", files, tr("TextNote"));
+            scanData(dir,".txt", files, tr("Text note"));
             getNewName(newName,files);
-            fileDialog.selectFile(tr("TextNote") + newName);
+            fileDialog.selectFile(tr("Text note") + newName);
             //fileDialog.selectFile(tr("Note") + newName);
             //fileDialog.selectFile("记事本" + newName);
         }else {
             fileDialog.setDefaultSuffix("mp3");
             fileDialog.setNameFilter("MP3(*.mp3)");
             //fileDialog.setNameFilter(tr("MP3(*.mp3)"));
-            scanData(dir,".mp3", files, tr("VoiceNote"));
+            scanData(dir,".mp3", files, tr("Voice note"));
             getNewName(newName,files);
-            fileDialog.selectFile(tr("VoiceNote") + newName);
+            fileDialog.selectFile(tr("Voice note") + newName);
             //fileDialog.selectFile("记事本" + newName);
         }
 

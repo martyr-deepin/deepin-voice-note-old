@@ -53,8 +53,8 @@ bool FolderController::updateFolderCreateTime(FOLDER folderInfo)
 QString FolderController::getNextFolderName()
 {
     QStringList folderNameList = FolderOper::getFolderNameList();
-    QString folderName = QString(QObject::tr("NewFolder"));
-    QString DefaultName = QString(QObject::tr("NewFolder"));
+    QString folderName = QString(QObject::tr("Notebook"));
+    QString DefaultName = QString(QObject::tr("Notebook"));
 
     int i = 1;
     bool findFlag = false;

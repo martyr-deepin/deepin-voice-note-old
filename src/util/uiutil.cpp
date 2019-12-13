@@ -379,7 +379,7 @@ DFloatingMessage *UiUtil::createAsrErrorDF(QWidget *parent,DPushButton *button)
 {
     DFloatingMessage *df = new DFloatingMessage(DFloatingMessage::ResidentType,parent);
     df->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
-    df->setMessage(QString(tr("The voice conversion failed. Do you want to try again?")));
+    df->setMessage(QString(tr("The voice conversion failed. Do you want to try again? ")));
     //df->setMessage(QStringLiteral("当前语音转写文字失败，是否重新转写？"));
     df->setWidget(button);
     df->hide();
