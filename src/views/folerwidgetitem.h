@@ -53,6 +53,7 @@ public:
     void updateTimeLable(const QDateTime &time);//liuyang 3550 3547 3528
     void setLabelText(const QString text);
     void setGray(bool isgray);
+    void setFather(QWidget *father);
 
 public slots:
     void cancleRename();
@@ -77,7 +78,6 @@ private:
     void initConnection();
     //QPixmap getPixmap(QSize size, QString imgPath);
     QString getCreateTimeLabel(QDateTime createTime);
-
 
     void setItemBackground(QString imgPath);
     void setNormalBackground();

@@ -73,6 +73,9 @@ public:
     void setSearchKeywords(const QString & text);
     QString getSearchKeywords();
 
+    void setMainPageHandle(QWidget *p);
+    QWidget *getMainPageHandle();
+
 signals:
     void sigLockAddTextBtnToTop();
     void sigunLockAddTextBtnPos(int listtrueheight);
@@ -100,6 +103,7 @@ private:
      //end
      int m_RightListHeight;
      int m_RightViewHeight;
+     QWidget *m_MainPageHandle;
      DApplication *m_app;
 
     QMultiMap <int,QMap<int,QString>> m_mapArsTxtByFolder;  //Add 20191111

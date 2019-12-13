@@ -281,3 +281,13 @@ QString Intancer::getSearchKeywords()
 {
     return this->searchKeywords;
 }
+
+void Intancer::setMainPageHandle(QWidget *p)
+{
+    m_MainPageHandle = p;
+}
+
+QWidget *Intancer::getMainPageHandle()
+{
+    return m_MainPageHandle;
+}

@@ -290,7 +290,7 @@ void FolerWidgetItem::checkNameValid()
 
         if (m_folderCtr->checkFolderNameExist(m_folder)) {
             m_lineEdit->setAlert(true);
-            m_lineEdit->showAlertMessage("目录名重复！",this);
+            m_lineEdit->showAlertMessage("目录名重复！",Intancer::get_Intancer()->getMainPageHandle());
             m_folder.folderName = m_BakDefaultName;
             m_lineEdit->setText(m_BakDefaultName);
             //Intancer::get_Intancer()->setRenameRepeatFlag(false);
@@ -299,7 +299,7 @@ void FolerWidgetItem::checkNameValid()
 //        {
         if (!m_folderCtr->updateFolderName(m_folder)) {
             m_lineEdit->setAlert(true);
-            m_lineEdit->showAlertMessage("修改目录名失败",this);
+            m_lineEdit->showAlertMessage("修改目录名失败",Intancer::get_Intancer()->getMainPageHandle());
 
         }
 
@@ -361,7 +361,7 @@ void FolerWidgetItem::checkNameLenth()
         UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_lineEdit->text().length():"), QString::number(m_lineEdit->text().length(),10));
         //m_lineEdit->setAlert(true);
 
-        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间",this);
+        m_lineEdit->showAlertMessage("输入字符长度必须在0-64位之间",Intancer::get_Intancer()->getMainPageHandle());
         m_lineEdit->setText(m_BakLineContent);
     }
 }

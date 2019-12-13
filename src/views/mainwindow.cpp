@@ -457,6 +457,7 @@ void MyMainWindow::initStackedWidget()
 //    m_stackedWidget->setObjectName("stackedWidget");
 
     m_mainPage = new MainPage();
+    Intancer::get_Intancer()->setMainPageHandle(m_mainPage);
 //    m_stackedWidget->addWidget(m_mainPage);
 
 

@@ -72,6 +72,7 @@ void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {
     item->setData(Qt::UserRole, 10);
 
     FolerWidgetItem *folderItem = new FolerWidgetItem(folder, m_folderCtr, searchKey);
+
     connect(this, SIGNAL(sigBoardPress()), folderItem, SLOT(tryToFouceout()));
 
     this->addItem(item);
