@@ -206,9 +206,11 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
     cursor.beginEditBlock();
     QTextCharFormat color_format(highlight_cursor.charFormat());
     color_format.setForeground(m_brush);
+
     while (!highlight_cursor.isNull() && !highlight_cursor.atEnd()) {
         //查找指定的文本，匹配整个单词
-        highlight_cursor = document->find(this->getText(), highlight_cursor, QTextDocument::FindWholeWords);
+        highlight_cursor = document->find(Intancer::get_Intancer()->getSearchKeywords(), highlight_cursor, QTextDocument::FindCaseSensitively);
+        //highlight_cursor = document->find(this->getText(), highlight_cursor, QTextDocument::FindCaseSensitively);
         if (!highlight_cursor.isNull()) {
             if(!found)
                 found = true;
