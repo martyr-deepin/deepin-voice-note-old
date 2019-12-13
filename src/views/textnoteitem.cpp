@@ -84,15 +84,15 @@ void TextNoteItem::initUI(const bool isAddByButton)
     DFontSizeManager::instance()->bind(m_timeLabel,DFontSizeManager::T9);
     m_timeLabel->setFixedHeight(16);
 
-    m_bgWidget = new DTextEdit(this);
-    m_bgWidget->setReadOnly(true);
+    m_bgWidget = new DFrame(this);
+    //m_bgWidget->setReadOnly(true);
     //m_bgWidget = new DFrame(this);
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
-    DStyle::setFocusRectVisible(m_bgWidget,false);
+    //DStyle::setFocusRectVisible(m_bgWidget,false);
 
     //m_bgWidget->setFixedHeight(105);
     m_bgWidget->setFixedHeight(140);
@@ -557,8 +557,8 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 void TextNoteItem::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
@@ -695,8 +695,8 @@ void TextNoteItem::leaveEvent(QEvent *event)
     m_mouseIsIn = false;
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
+    //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
     m_bgWidget->setPalette(pb);
     //3152 liuyang
     return QWidget::leaveEvent(event);
@@ -707,8 +707,8 @@ void TextNoteItem::enterEvent(QEvent *event)
     m_mouseIsIn = true;
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
-    pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
-    //pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
+    //pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
     m_bgWidget->setPalette(pb);
     //3152 liuyang
     return QWidget::enterEvent(event);

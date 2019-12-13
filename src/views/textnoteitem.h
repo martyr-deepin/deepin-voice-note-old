@@ -38,8 +38,8 @@ public:
     NOTE m_textNote;
     QString m_bakContent;
     DLabel *m_timeLabel;
-    //DFrame *m_bgWidget;
-    DTextEdit *m_bgWidget;
+    DFrame *m_bgWidget;
+    //DTextEdit *m_bgWidget;
     //DFrame *m_bgWidgethoverd;
     DWidget *m_MenuBtnBackground;
     QVBoxLayout *m_itemLayout;
