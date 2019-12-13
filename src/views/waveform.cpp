@@ -285,6 +285,7 @@ void Waveform::renderWave()
 
 void Waveform::clearWave()
 {
+    wholeSampleList.clear();
     sampleList.clear();
 }
 
