@@ -263,7 +263,7 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_audioRecorder->setAudioSettings(audioSettings);
 
-    m_audioRecorder->setContainerFormat("audio/x-wav");
+//    m_audioRecorder->setContainerFormat("audio/x-wav");
 //    m_audioRecorder->setContainerFormat("audio/x-amr-nb-sh");
 //    m_audioRecorder->setContainerFormat("audio/mpeg, mpegversion=(int)1");
 //    m_audioRecorder->setContainerFormat("audio/mp3");
