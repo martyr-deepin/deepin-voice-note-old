@@ -213,7 +213,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     //m_menuBtn->setIconSize(QSize(20,20));
     //m_menuBtn->setIconSize(QSize(40,18));
     //m_menuBtn->setIconSize(QSize(10,18));
-    m_menuBtn->setDisabled(true);
+    //m_menuBtn->setDisabled(true);
 
     if(themeType == DGuiApplicationHelper::LightType)
     {
@@ -364,7 +364,8 @@ void TextNoteItem::textAreaChanged()
     {
         //非空
         //m_textNote.contentText = m_textEdit->toPlainText();
-        m_menuBtn->setDisabled(false);
+        //m_menuBtn->setDisabled(false);
+        m_menuBtn->EnAbleBtn();
         UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), m_textEdit->toPlainText());
 
         bool changed = false;
@@ -376,7 +377,8 @@ void TextNoteItem::textAreaChanged()
         emit sig_TextEditNotEmpty(changed);
     }
     else {
-        m_menuBtn->setDisabled(true);
+        //m_menuBtn->setDisabled(true);
+        m_menuBtn->DisableBtn();
         emit sig_TextEditEmpty();
     }
 }

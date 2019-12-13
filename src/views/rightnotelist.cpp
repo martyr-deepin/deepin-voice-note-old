@@ -293,6 +293,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         {
             //textItem->changeToEditMode();
             textItem->changeToEditMode(textEditCursorPos);//3550-3547-3528
+            textItem->m_menuBtn->DisableBtn();
             adjustWidgetItemWidth();
         }
 
