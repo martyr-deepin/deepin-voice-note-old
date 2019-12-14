@@ -543,6 +543,8 @@ void MyMainWindow::showListPage()
 //        m_mainPage->searchFolder(m_searchEdit->text(),hasNoFolder);
 //    }
 //    //end
+    Intancer::get_Intancer()->setTransFromDetalToMainPage(true);
+
     m_mainPage->setFocus();
     this->switchPage(MAIN_PAGE);
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());

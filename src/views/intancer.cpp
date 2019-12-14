@@ -18,6 +18,7 @@ Intancer::Intancer(QObject *parent) : QObject(parent)
     isMoveFolder_count = 0;
     wantScrollRightList = true;
     isVoiceToText = false;
+    m_TransFromDetalToMainPage = false;
 
     m_RightListHeight = 0;
     m_RightViewHeight = 0;
@@ -208,6 +209,16 @@ void Intancer::setVoiceToTextFlag(bool value)
 bool Intancer::getVoiceToTextFlag()
 {
     return isVoiceToText;
+}
+
+void Intancer::setTransFromDetalToMainPage(bool value)
+{
+    m_TransFromDetalToMainPage = value;
+}
+
+bool Intancer::getTransFromDetalToMainPage()
+{
+    return m_TransFromDetalToMainPage;
 }
 
 void Intancer::initMoveFolderCount()

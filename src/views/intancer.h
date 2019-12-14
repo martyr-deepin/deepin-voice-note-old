@@ -53,6 +53,8 @@ public:
     void setVoiceToTextFlag(bool value);
     bool getVoiceToTextFlag();
 
+    void setTransFromDetalToMainPage(bool value);
+    bool getTransFromDetalToMainPage();
 
     void initMoveFolderCount();
     void CountMoveFolderCount();
@@ -76,6 +78,8 @@ public:
     void setMainPageHandle(QWidget *p);
     QWidget *getMainPageHandle();
 
+
+
 signals:
     void sigLockAddTextBtnToTop();
     void sigunLockAddTextBtnPos(int listtrueheight);
@@ -96,6 +100,7 @@ private:
      bool wantScrollRightList;
      bool isVoiceToText;
      int  isMoveFolder_count;
+     bool m_TransFromDetalToMainPage;
      //start notify by yuanshuai 20191210 bug 4435
 //     //start add by yuanshuai 20191128 bug 3731
 //     bool isEndRecord;

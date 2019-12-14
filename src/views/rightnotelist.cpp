@@ -293,7 +293,6 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         {
             //textItem->changeToEditMode();
             textItem->changeToEditMode(textEditCursorPos);//3550-3547-3528
-            textItem->m_menuBtn->DisableBtn();
             adjustWidgetItemWidth();
         }
 
@@ -698,7 +697,9 @@ void RightNoteList::onTextChangedFlagChange(bool changed)
                delete senderItem;
                senderItem = nullptr;
 
-               addWidgetItem(true, note, Intancer::get_Intancer()->getSearchKeywords(), cursorPos); //3550-3547-3528
+               bool needEdit = !Intancer::get_Intancer()->getTransFromDetalToMainPage();
+               Intancer::get_Intancer()->setTransFromDetalToMainPage(false);
+               addWidgetItem(needEdit, note, Intancer::get_Intancer()->getSearchKeywords(), cursorPos); //3550-3547-3528
                this->scrollToBottom();
            }
        }
