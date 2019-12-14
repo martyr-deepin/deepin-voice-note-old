@@ -299,7 +299,7 @@
     </message>
     <message>
         <source>Save As MP3</source>
-        <translation type="vanished">保存为MP3</translation>
+        <translation>保存为MP3</translation>
     </message>
     <message>
         <source>TextNote</source>
@@ -380,7 +380,7 @@
     </message>
     <message>
         <source>The voice conversion failed. Do you want to try again? </source>
-        <translation>当前网络状态差，语音转写失败，是否重新转写?</translation>
+        <translation>当前语音转写文字失败，是否重新转写？</translation>
     </message>
 </context>
 </TS>

@@ -164,7 +164,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
                 m_asrAction->setEnabled(true);
             }
             //Add e 20191111
-            m_saveAsAction->setText(QString(tr("Save as MP3")));
+            m_saveAsAction->setText(QString(tr("Save As MP3")));
             //m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);

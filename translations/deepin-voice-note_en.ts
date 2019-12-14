@@ -5,6 +5,10 @@
     <name>AddTextBtn</name>
     <message>
         <source>Click to Add TextNote</source>
+        <translation type="vanished">Add Text Note</translation>
+    </message>
+    <message>
+        <source>Add Text Note</source>
         <translation>Add Text Note</translation>
     </message>
 </context>
@@ -27,10 +31,18 @@
     <name>InitEmptyPage</name>
     <message>
         <source>Create Folder</source>
-        <translation>Create Notebook</translation>
+        <translation type="vanished">Create Notebook</translation>
     </message>
     <message>
         <source>After create a folder, you can start your note</source>
+        <translation type="vanished">Create a notebook to start recording voice and making notes</translation>
+    </message>
+    <message>
+        <source>Create Notebook</source>
+        <translation>Create Notebook</translation>
+    </message>
+    <message>
+        <source>Create a notebook to start recording voice and making notes</source>
         <translation>Create a notebook to start recording voice and making notes</translation>
     </message>
 </context>
@@ -38,7 +50,7 @@
     <name>LeftFolderList</name>
     <message>
         <source>Are you sure want to delete Folder?</source>
-        <translation>Are you sure you want to delete this notebook？</translation>
+        <translation type="vanished">Are you sure you want to delete this notebook？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -55,6 +67,10 @@
     <message>
         <source>Rename</source>
         <translation>Rename</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this notebook？</source>
+        <translation>Are you sure you want to delete this notebook？</translation>
     </message>
 </context>
 <context>
@@ -73,7 +89,7 @@
     </message>
     <message>
         <source>Currently recording, is the recording terminated?</source>
-        <translation>Do you want to stop the current recording?</translation>
+        <translation type="vanished">Do you want to stop the current recording?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -81,11 +97,11 @@
     </message>
     <message>
         <source>Stop</source>
-        <translation>Confirm</translation>
+        <translation type="vanished">Confirm</translation>
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation>The voice note has been deleted</translation>
+        <translation type="vanished">The voice note has been deleted</translation>
     </message>
     <message>
         <source>Window size switching</source>
@@ -141,7 +157,7 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation type="obsolete">Delete</translation>
+        <translation>Delete</translation>
     </message>
     <message>
         <source>Display shortcuts</source>
@@ -181,7 +197,7 @@
     </message>
     <message>
         <source>TextDelete</source>
-        <translation>Delete</translation>
+        <translation type="vanished">Delete</translation>
     </message>
     <message>
         <source>Notebooks</source>
@@ -195,16 +211,24 @@
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
+    <message>
+        <source>Do you want to stop the current recording?</source>
+        <translation>Do you want to stop the current recording?</translation>
+    </message>
+    <message>
+        <source>The voice note has been deleted</source>
+        <translation>The voice note has been deleted</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Voice Note</source>
-        <translation>Voice Notes</translation>
+        <translation type="vanished">Voice Notes</translation>
     </message>
     <message>
         <source>Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.</source>
-        <translation>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</translation>
+        <translation type="vanished">Voice Notes is a lightweight memo tool to make text notes and voice recordings.</translation>
     </message>
     <message>
         <source>OK</source>
@@ -216,14 +240,26 @@
     </message>
     <message>
         <source>NewFolder</source>
+        <translation type="vanished">Notebook</translation>
+    </message>
+    <message>
+        <source>Notebook</source>
         <translation>Notebook</translation>
+    </message>
+    <message>
+        <source>Voice Notes</source>
+        <translation>Voice Notes</translation>
+    </message>
+    <message>
+        <source>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</source>
+        <translation>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</translation>
     </message>
 </context>
 <context>
     <name>RightNoteList</name>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation>Are you sure you want to delete this note？</translation>
+        <translation type="vanished">Are you sure you want to delete this note？</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -267,11 +303,11 @@
     </message>
     <message>
         <source>TextNote</source>
-        <translation>Text note</translation>
+        <translation type="vanished">Text note</translation>
     </message>
     <message>
         <source>VoiceNote</source>
-        <translation>Voice note</translation>
+        <translation type="vanished">Voice note</translation>
     </message>
     <message>
         <source>Voice to Text</source>
@@ -293,22 +329,42 @@
         <source>Try Again</source>
         <translation>Try Again</translation>
     </message>
+    <message>
+        <source>Are you sure you want to delete this note？</source>
+        <translation>Are you sure you want to delete this note？</translation>
+    </message>
+    <message>
+        <source>Text note</source>
+        <translation>Text note</translation>
+    </message>
+    <message>
+        <source>Voice note</source>
+        <translation>Voice note</translation>
+    </message>
 </context>
 <context>
     <name>RightView</name>
     <message>
         <source>No Result</source>
-        <translation>No search results</translation>
+        <translation type="vanished">No search results</translation>
     </message>
     <message>
         <source>No recording device detected</source>
         <translation>No recording device detected</translation>
+    </message>
+    <message>
+        <source>No search results</source>
+        <translation>No search results</translation>
     </message>
 </context>
 <context>
     <name>SearchNonePage</name>
     <message>
         <source>No Result</source>
+        <translation type="vanished">No search results</translation>
+    </message>
+    <message>
+        <source>No search results</source>
         <translation>No search results</translation>
     </message>
 </context>
@@ -316,11 +372,15 @@
     <name>UiUtil</name>
     <message>
         <source>The voice conversion failed. Do you want to try again?</source>
-        <translation>The voice conversion failed. Do you want to try again?</translation>
+        <translation type="vanished">The voice conversion failed. Do you want to try again?</translation>
     </message>
     <message>
         <source>The voice conversion failed due to the poor network connection. Do you want to try again?</source>
         <translation>The voice conversion failed due to the poor network connection. Do you want to try again?</translation>
+    </message>
+    <message>
+        <source>The voice conversion failed. Do you want to try again? </source>
+        <translation>The voice conversion failed. Do you want to try again? </translation>
     </message>
 </context>
 </TS>
