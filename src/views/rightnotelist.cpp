@@ -310,7 +310,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         //connect(voiceItem, SIGNAL(resumePlayingSignal(VoiceNoteItem *, QString, QRect)), this, SLOT(play(VoiceNoteItem *, QString, QRect)));
         connect(voiceItem, SIGNAL(buttonClicled()), this, SLOT(onfouceOutAllTextItem()));
         connect(voiceItem, SIGNAL(sigToDetalVoicePage(QString)), this, SIGNAL(sigToDetalVoicePage(QString)));
-
+        connect(voiceItem ,SIGNAL(sigTextHeightChanged(int,int)),this,SLOT(TextHeightChanged(int,int)));
         connect(Intancer::get_Intancer(), &Intancer::sigDisAbleReplay, voiceItem, &VoiceNoteItem::setPlayDisable);
         connect(Intancer::get_Intancer(), &Intancer::sigEnAbleReplay, voiceItem, &VoiceNoteItem::setPlayEnable);
 
@@ -974,7 +974,7 @@ void RightNoteList::AsrStart(int type)  //Add 4297
             m_currSelItemByasr =  m_currSelItem;
             m_voiceNoteItemByasr = m_voiceNoteItem;
             m_currSelNoteByasr  = m_currSelNote;  //Add 3878
-            connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int,int)),this,SLOT(TextHeightChanged(int,int))); //Add 20191111
+//            connect(m_voiceNoteItem ,SIGNAL(sigTextHeightChanged(int,int)),this,SLOT(TextHeightChanged(int,int))); //Add 20191111
 
             //设定选中的菜单按钮不可用
             m_voiceNoteItem->setMenuBtnEnabled(false);

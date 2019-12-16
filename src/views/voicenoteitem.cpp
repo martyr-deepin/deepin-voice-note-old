@@ -1,5 +1,6 @@
 #include "voicenoteitem.h"
 #include "uiutil.h"
+#include "intancer.h"
 #include <DLabel>
 #include <QGraphicsOpacityEffect>
 #include <DApplicationHelper>
@@ -162,27 +163,31 @@ void VoiceNoteItem::onToDetalVoicePage()
 
 void VoiceNoteItem::onTextHeightChanged(int height)
 {
-    qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceNoteItem::onTextHeightChanged():"), QString::number(height,10));
-    int newHeight = 0;
-    if(VOICE_TO_TEXT_MAX_HEIGHT < height)
+    if(!m_textEdit->toPlainText().isEmpty())
     {
-        newHeight = VOICE_TO_TEXT_MAX_HEIGHT - 7;
-        m_detailBtn->setVisible(true);
+        qDebug() << "VoiceNoteItem::onTextHeightChanged():"<<height;
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("VoiceNoteItem::onTextHeightChanged():"), QString::number(height,10));
+        int newHeight = 0;
+        if(VOICE_TO_TEXT_MAX_HEIGHT < height)
+        {
+            newHeight = VOICE_TO_TEXT_MAX_HEIGHT - 7;
+            m_detailBtn->setVisible(true);
+        }
+        else
+        {
+            newHeight = height + 5;
+            m_detailBtn->setVisible(false);
+        }
+        //m_bgWidgetBydetailBtn->show();
+        m_bgWidgetBytext->setFixedHeight(newHeight);
+        m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
+        m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
+        //qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
+        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bgWidgetBydetailBtn->height:"), QString::number(m_bgWidgetBydetailBtn->height(),10));
+        emit sigTextHeightChanged(newHeight,m_note.id);
     }
-    else
-    {
-        newHeight = height + 5;
-        m_detailBtn->setVisible(false);
-    }
-    //m_bgWidgetBydetailBtn->show();
-    m_bgWidgetBytext->setFixedHeight(newHeight);
-    m_bgWidgetBydetailBtn->setFixedHeight(newHeight);
-    m_detailBtn->move(6,m_bgWidgetBydetailBtn->height() - m_detailBtn->height() - 13);
-    //qDebug()<<"m_bgWidgetBydetailBtn->height:"<<m_bgWidgetBydetailBtn->height();
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bgWidgetBydetailBtn->height:"), QString::number(m_bgWidgetBydetailBtn->height(),10));
-    emit sigTextHeightChanged(newHeight,m_note.id);
 }
+
 //Add s 20191111
 void VoiceNoteItem::setTextEditVal(QString txt)
 {
@@ -400,6 +405,16 @@ void VoiceNoteItem::initUI()
     //Add end ynbboy
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
     //Add e 20191111
+
+    QString text = Intancer::get_Intancer()->getAsrTxt(m_note.folderId,m_note.id);
+    if(!text.isEmpty())
+    {
+        m_textEdit->setTextAndLineheight(text);
+        this->setTextEditAlignment(Qt::AlignLeft);
+        this->setDocmentAligment(QTextOption(Qt::AlignLeft));
+        this->m_bgWidgetBydetailBtn->show();
+        this->m_bgWidgetBytext->setVisible(true);
+    }
 }
 
 void VoiceNoteItem::initConnection()
