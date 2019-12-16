@@ -184,7 +184,8 @@ void RecordPage::renderRecordingTime()
         qDebug()<<"time:"<<time;
         //QString time1 = "00:01";
         m_recordTimeLabel->setText(time);
-        if(0 == time.compare("01:00:00"))
+        if(m_recordingTime > 3600000)
+        //if(0 == time.compare("01:00:00"))
         {
             if(nullptr != m_finishButton)
             {

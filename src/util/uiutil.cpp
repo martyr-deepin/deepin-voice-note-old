@@ -133,7 +133,9 @@ QString UiUtil::formatMillisecondToSecAndMil(int millisecond)
     QString time;
     if (millisecond / 1000 < 3600) {
         // At least need return 1 seconds.
-        time = QDateTime::fromTime_t(std::max(1, qRound(millisecond / 1000.0))).toUTC().toString("mm:ss"); //ynb 20191109
+        //时间向下取整，不使用四舍五入。
+        time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
+        //time = QDateTime::fromTime_t(std::max(1, qRound(millisecond / 1000.0))).toUTC().toString("mm:ss"); //ynb 20191109
         time = time.replace(":", "\'").append("\'\'");
         //time = QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
