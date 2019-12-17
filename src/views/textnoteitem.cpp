@@ -124,13 +124,13 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
     //m_textEdit->setBgTextEdit(m_bgWidget);
 
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
+    //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
     if (!isAddByButton) {
         m_textEdit->setTextNote(m_textNote, m_searchKey);
     }
 
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
+    //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_textEdit->toPlainText():"), m_textEdit->toPlainText());
 
 //    QFont labelFont;
 //    labelFont.setFamily("PingFangSC-Regular");
@@ -322,7 +322,7 @@ void TextNoteItem::readFromDatabase()
     //liuyang 3547
 
     //qDebug() << "m_bakContent: " << m_bakContent;
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
+    //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
     m_textEdit->setLineHeight(24);
@@ -363,7 +363,7 @@ void TextNoteItem::textAreaChanged()
         //m_textNote.contentText = m_textEdit->toPlainText();
         //m_menuBtn->setDisabled(false);
         m_menuBtn->EnAbleBtn();
-        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), m_textEdit->toPlainText());
+        //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), m_textEdit->toPlainText());
 
         bool changed = false;
         QString tmp = m_textEdit->toPlainText();
@@ -423,7 +423,7 @@ void TextNoteItem::handleTextEditFocusOut()
     //liuyang 3550 3547 3528
 
     //qDebug() << "m_bakContent: " << m_bakContent;
-    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
+    //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
 //    m_textEdit->setPlainText(m_bakContent);
 //    m_textEdit->setLineHeight(24);
@@ -461,10 +461,12 @@ void TextNoteItem::handleTextEditFocusOut()
 
         QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
         //qDebug() << "html: " << html;
-        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
+        //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
-        m_textEdit->setHtml(html);
-        m_textEdit->setLineHeight(24);
+        //useless settext
+//        m_textEdit->setHtml(html);
+//        m_textEdit->setLineHeight(24);
+        //useless settext
 
         m_bakContent = m_textEdit->toPlainText();
         //m_textEdit->setHtml(txt);
@@ -654,12 +656,14 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         //if(elidedText != m_textEdit->getText())
         //2719 fix liuyang
         {
-            QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
-            //qDebug() << "html: " << html;
-            UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
+            //useless settext
+//            QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
+//            //qDebug() << "html: " << html;
+//            //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
-            m_textEdit->setHtml(html);
-            m_textEdit->setLineHeight(24);
+//            m_textEdit->setHtml(html);
+//            m_textEdit->setLineHeight(24);
+            //useless settext
         }
 
         QTextCursor cursor = m_textEdit->textCursor();

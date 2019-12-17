@@ -253,7 +253,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
     {
         TextNoteItem *textItem = new TextNoteItem(isAddByButton, note, m_noteController, searchKey);
 
-        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
+        //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
 
         connect(textItem, SIGNAL(textEditClicked(NOTE)), this, SIGNAL(textEditClicked(NOTE)));
         connect(textItem, SIGNAL(textEditTrueClicked(NOTE)), this, SLOT(onCheckEditState(NOTE)));
@@ -277,7 +277,7 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         connect(textItem, SIGNAL(SigTextEditGetFocus(NOTE)), this, SLOT(onTextEditGetFocus(NOTE))); //Add bug 2587
         connect(textItem, SIGNAL(SigTextEditOutFocus(NOTE)), this, SLOT(onTextEditOutFocus(NOTE))); //Add bug 2587
 
-        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
+        //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("textItem->m_textEdit->toPlainText():"), textItem->m_textEdit->toPlainText());
 
         QListWidgetItem *item=new QListWidgetItem();
         //QListWidgetItem *item=new QListWidgetItem(this);

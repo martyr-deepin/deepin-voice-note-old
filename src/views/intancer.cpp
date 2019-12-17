@@ -283,7 +283,7 @@ QString Intancer::getApplicationName()
 void Intancer::setSearchKeywords(const QString & text)
 {
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("Intancer::setSearchKeywords():"), QString("Intancer::setSearchKeywords():"));
-    UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
+    //UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("text:"), text);
 
     this->searchKeywords = text;
 }
