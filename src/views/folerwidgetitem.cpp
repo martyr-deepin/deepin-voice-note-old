@@ -168,8 +168,8 @@ void FolerWidgetItem::Init()
     m_FolderImage->move(6, 12);
 
     m_nameLabel = new DLabel(this);
-    m_nameLabel->setFixedSize(QSize(110, 21));
-    m_nameLabel->move(53, 13);
+    m_nameLabel->setFixedSize(QSize(180, 28));
+    m_nameLabel->move(53, 6);
     m_nameLabel->setLineWidth(150);
     m_nameLabel->setObjectName("nameLabel");
 
