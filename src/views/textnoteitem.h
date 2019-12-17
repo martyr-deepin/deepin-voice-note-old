@@ -107,7 +107,6 @@ private:
 //    QAction *m_delAction;
     bool m_isTextConverted;
     int m_menuBtnState;
-    bool m_isEdited;
     bool m_mouseIsIn;
     void initUI(const bool isAddByButton);
     void initConnection();

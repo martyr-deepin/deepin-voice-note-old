@@ -15,7 +15,6 @@ TextNoteItem::TextNoteItem(const bool isAddByButton, NOTE textNote, NoteControll
     this->m_noteCtr = noteCtr;
     m_searchKey = searchKey;
     m_menuBtnState = 0;
-    m_isEdited = false;
     m_mouseIsIn = false;
 
     m_bakContent = textNote.contentText;//liuyang 3550 3547 3528
@@ -162,8 +161,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_isTextConverted:"), QString::number(m_isTextConverted));
     if (m_isTextConverted)
     {
-        m_textEdit->setReadOnly(true);
-        m_isEdited = true;
+        //m_textEdit->setReadOnly(true);
     }
 
     m_textEdit->setFrameShape(QFrame::NoFrame);
@@ -294,10 +292,9 @@ void TextNoteItem::changeToEditMode(int cursorpos)
     if(nullptr != m_textEdit)
     {
         m_bakContent = m_textEdit->toPlainText();
-        m_textEdit->setReadOnly(false);
+        //m_textEdit->setReadOnly(false);
         m_textEdit->setFocus();
 
-        m_isEdited = true;
 
         //liuyang 3550 3547 3528
 //        QTextCursor cursor = m_textEdit->textCursor();
@@ -390,23 +387,12 @@ void TextNoteItem::handleTextEditClicked()
     {
         if(m_isTextConverted)
         {
-            m_textEdit->setReadOnly(true);
+            //m_textEdit->setReadOnly(true);
         }
         else
         {
-            m_textEdit->setReadOnly(false);
+            //m_textEdit->setReadOnly(false);
         }
-//        m_bakContent = m_textEdit->toPlainText();
-//        if (m_isTextConverted)
-//        {
-//            emit textEditClicked(m_textNote);
-//        }
-//        else
-//        {
-//            m_textEdit->setReadOnly(false);
-//            m_isEdited = true;
-//            emit textEditTrueClicked(m_textNote);
-//        }
     }
 }
 
@@ -466,11 +452,11 @@ void TextNoteItem::handleTextEditFocusOut()
 
         if (m_isTextConverted)
         {
-            m_textEdit->setReadOnly(true);
+            //m_textEdit->setReadOnly(true);
         }
         else
         {
-            m_textEdit->setReadOnly(true);
+            //m_textEdit->setReadOnly(true);
         }
 
         QString html = UiUtil::getHtmlText(m_textNote.contentText, 12, m_searchKey, BLUE);
@@ -481,7 +467,6 @@ void TextNoteItem::handleTextEditFocusOut()
         m_textEdit->setLineHeight(24);
 
         m_bakContent = m_textEdit->toPlainText();
-        m_isEdited = false;
         //m_textEdit->setHtml(txt);
         if(timechanged)
         {
@@ -516,13 +501,10 @@ void TextNoteItem::handleMenuBtnStateChanged()
 
 void TextNoteItem::tryToFouceout()
 {
-//    if(m_isEdited && !m_mouseIsIn)
-//    {
-        //qDebug()<<"tryToFouceout";
-        UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("tryToFouceout"), QString("tryToFouceout"));
-        //m_textEdit->focusOutSignal();
-        handleTextEditFocusOut();
-//    }
+    //qDebug()<<"tryToFouceout";
+    UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("tryToFouceout"), QString("tryToFouceout"));
+    //m_textEdit->focusOutSignal();
+    handleTextEditFocusOut();
 }
 void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 //void TextNoteItem::textEditChanged(QString str)
@@ -658,11 +640,11 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
         UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_isTextConverted:"), QString::number(m_isTextConverted));
         if (m_isTextConverted)
         {
-            m_textEdit->setReadOnly(true);
+            //m_textEdit->setReadOnly(true);
         }
         else
         {
-            m_textEdit->setReadOnly(false);
+            //m_textEdit->setReadOnly(false);
         }
 
 
@@ -680,11 +662,9 @@ void TextNoteItem::resizeEvent(QResizeEvent * event)
             m_textEdit->setLineHeight(24);
         }
 
-        //m_textEdit->setReadOnly(true);
         QTextCursor cursor = m_textEdit->textCursor();
 //        cursor.movePosition(QTextCursor::End);
 //        m_textEdit->setTextCursor(cursor);
-        m_isEdited = false;
     }
 
     return QWidget::resizeEvent(event);
