@@ -28,6 +28,21 @@
     </message>
 </context>
 <context>
+    <name>FolerWidgetItem</name>
+    <message>
+        <source>Duplicated directory names!</source>
+        <translation>Duplicated directory names!</translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <translation>Failed to rename</translation>
+    </message>
+    <message>
+        <source>Input character length must be between 0-64</source>
+        <translation>Input character length must be between 0-64</translation>
+    </message>
+</context>
+<context>
     <name>InitEmptyPage</name>
     <message>
         <source>Create Folder</source>
