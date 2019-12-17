@@ -17,6 +17,11 @@ MainPage::~MainPage()
 
 }
 
+void MainPage::firstShowRightList()
+{
+    m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
+}
+
 
 void MainPage::initUI() {
     resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
@@ -122,7 +127,7 @@ void MainPage::initRightView(){
 //del end 4260
     m_rightView->setObjectName("rightView");
     //m_rightView->initTxtFilesForDir();
-    m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
+    //m_rightView->handleSelFolderChg(((LeftView*)m_leftView)->getCurrSelectFolderId());
     //leftFolderView->setFixedWidth(LEFTVIEW_MAX_WIDTH);
 }
 

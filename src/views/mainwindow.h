@@ -80,6 +80,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void changeEvent(QEvent * event);
     void closeEvent(QCloseEvent* event);
+    void timerEvent(QTimerEvent *e);
 private:
      QFrame *m_centralWidget;
 //     DFMSplitter *m_splitter;
@@ -131,9 +132,11 @@ private:
     void initTheRest();
     void switchPage(STATIC_PAGE pageID);
     QJsonObject creatShorcutJson();
+    void initRight();
     //Add end bug 2587
     bool m_VoiceMemoAction;  //true: 创建语音备忘录指令有 false 创建语音备忘录指令无  Add createVoiceMemo 新建语音备忘录对应
     STATIC_PAGE m_showPageID;
+    int timerID;
 };
 
 #endif // MAINWINDOW_H

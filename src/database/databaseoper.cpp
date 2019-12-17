@@ -8,7 +8,11 @@
 #include "src/app/consts.h"
 #include "uiutil.h"
 
+namespace {
 
+const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + "deepin" + QDir::separator() + "deepin-voice-note";
+
+}  // namespace
 
 DatabaseOper *DatabaseOper::m_instance = nullptr;
 DatabaseOper::DatabaseOper()
@@ -38,7 +42,7 @@ void DatabaseOper::initDatabase()
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     // 设置数据库的名称
-    const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    //const QString DATABASE_PATH = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     QDir dir;
     if (!dir.exists(DATABASE_PATH)) {
         dir.mkpath(DATABASE_PATH);

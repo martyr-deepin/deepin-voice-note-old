@@ -24,6 +24,7 @@ MyMainWindow::MyMainWindow()
     m_quit = false; //Add bug3470
     m_VoiceMemoAction = false; //Add createVoiceMemo 新建语音备忘录对应
     m_showPageID = MAIN_PAGE;
+    timerID = -1;
     initUI();
     setTitlebarShadowEnabled(false);//liuyang 3799
 }
@@ -42,7 +43,9 @@ void MyMainWindow::initUI() {
         //m_asrCloseConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前有语音笔记正在转写中，是否确定关闭？")), nullptr, QString(tr("取消")), QString(tr("确定")));   //Add 20191111
     initTitleBar();
 
-    QTimer::singleShot(0, this, &MyMainWindow::initTheRest);
+    initTheRest();
+    timerID = startTimer(200);
+    //QTimer::singleShot(0, this, &MyMainWindow::initTheRest);
 }
 
 
@@ -939,6 +942,16 @@ void MyMainWindow::closeEvent(QCloseEvent* event)
     //DMainWindow::closeEvent(event);
 }
 
+void MyMainWindow::timerEvent(QTimerEvent *e)
+{
+    if(e->timerId() == timerID)
+    {
+        killTimer(timerID);
+        timerID = 0;
+        initRight();
+    }
+}
+
 //Add start createVoiceMemo 新建语音备忘录对应
 void MyMainWindow::CreateVoiceMemo()
 {
@@ -987,3 +1000,8 @@ void MyMainWindow::OnSearchEditClicked(bool focusstate)
     }
 }
 //end
+
+void MyMainWindow::initRight()
+{
+    m_mainPage->firstShowRightList();
+}

@@ -22,6 +22,7 @@ class MainPage : public QWidget
 public:
     MainPage();
     ~MainPage();
+    void firstShowRightList();
 
 public:
     void updateNoteList();
