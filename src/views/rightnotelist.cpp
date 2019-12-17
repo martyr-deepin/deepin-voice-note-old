@@ -1119,7 +1119,35 @@ void RightNoteList::showFileDialog(SAVE_INFO saveInfo)
 
     //fileDialog->setFilter(QDir::filePath());
     if(fileDialog.exec() == QDialog::Accepted) {
-        QString path = fileDialog.selectedFiles()[0];
+        //QString path = fileDialog.selectedFiles()[0];
+
+        //start notify by yuanshuai 20191217 bug 4617
+        QString path;
+        if(TEXT == m_currSelNote.noteType)
+        {
+            if(fileDialog.selectedFiles()[0].lastIndexOf(".txt") == -1)
+            {
+                path = fileDialog.selectedFiles()[0].append(".txt");
+            }
+            else
+            {
+                path = fileDialog.selectedFiles()[0];
+            }
+        }
+        else
+        {
+            if(fileDialog.selectedFiles()[0].lastIndexOf(".mp3") == -1)
+            {
+                path = fileDialog.selectedFiles()[0].append(".mp3");
+            }
+            else
+            {
+                path = fileDialog.selectedFiles()[0];
+            }
+        }
+        //end
+
+
 //        QString fileName = fileDialog.getLineEditValue(tr("文件名"));
         QString fileName = QFileInfo(path).fileName();
 //        QString filePath = path + '/' + fileName;
