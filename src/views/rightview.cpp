@@ -426,7 +426,12 @@ void RightView::updateNoteList()
 
 
         int count = noteList.size();
-        int step = 100/count;
+        int step = 0;
+        if(count > 0)
+        {
+            step = 100/count;
+        }
+
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(false, noteList.at(i), Intancer::get_Intancer()->getSearchKeywords());

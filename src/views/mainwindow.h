@@ -92,7 +92,7 @@ private:
     QStackedWidget * m_stackedWidget;
     TextNoteEdit * m_textNoteEdit;
     QString m_DetalTextBak;
-    DWidget *m_detailPage;
+    QWidget *m_detailPage;
     QVBoxLayout *m_detailPageLayout;
     QLabel *m_logo;
     DIconButton *m_returnBtn;

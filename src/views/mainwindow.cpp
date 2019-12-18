@@ -161,6 +161,10 @@ void MyMainWindow::initCentralWidget()
     mainLayout->setSpacing(0);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     m_centralWidget->setLayout(mainLayout);
+//    DPalette pl = DApplicationHelper::instance()->palette(m_centralWidget);
+//    //pl.setBrush(DPalette::Base, pl.color(DPalette::Base));
+//    pl.setBrush(DPalette::Base, QColor(255,255,0,255));
+//    m_centralWidget->setPalette(pl);
     setCentralWidget(m_centralWidget);
 }
 
@@ -464,21 +468,23 @@ void MyMainWindow::initStackedWidget()
 //    m_stackedWidget->addWidget(m_mainPage);
 
 
-    m_detailPage = new DWidget(this);
+    m_detailPage = new QWidget();
     m_detailPageLayout = new QVBoxLayout();
     m_detailPage->setLayout(m_detailPageLayout);
     m_textNoteEdit = new TextNoteEdit();
     m_textNoteEdit->document()->setDocumentMargin(10.0);
+    m_detailPageLayout->setContentsMargins(0,0,0,0);
     m_detailPageLayout->addWidget(m_textNoteEdit);
-//    m_stackedWidget->addWidget(m_detailPage);
+    //m_stackedWidget->addWidget(m_detailPage);
     m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
     m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
-    QPalette pl = m_textNoteEdit->palette();
-    pl.setBrush(QPalette::Base,QBrush(QColor(0,0,0,0)));
+
+    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
+    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
     m_textNoteEdit->setPalette(pl);
 
     DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
-    pb.setBrush(DPalette::Background, pb.color(DPalette::Base));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
     m_detailPage->setPalette(pb);
 
 
@@ -516,8 +522,10 @@ void MyMainWindow::showNoteDetail(NOTE note)
     m_detailPage->setFocus();
     DStyle::setFocusRectVisible(m_textNoteEdit,false);
 
+
+
     DPalette pb = DApplicationHelper::instance()->palette(m_textNoteEdit);
-    pb.setBrush(DPalette::Button, QColor(0,0,0,0));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::Base));
     m_textNoteEdit->setPalette(pb);
 
     //m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
@@ -725,8 +733,12 @@ void MyMainWindow::handleCloseExitDialogClicked(int index, const QString &text)
 void MyMainWindow::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
-    pb.setBrush(DPalette::Background, pb.color(DPalette::Base));
+    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
     m_detailPage->setPalette(pb);
+
+    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
+    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
+    m_textNoteEdit->setPalette(pl);
 }
 
 void MyMainWindow::OnNoSearchResult()
