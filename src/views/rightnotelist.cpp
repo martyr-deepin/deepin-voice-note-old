@@ -293,8 +293,9 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
         {
             //textItem->changeToEditMode();
             textItem->changeToEditMode(textEditCursorPos);//3550-3547-3528
-            adjustWidgetItemWidth();
         }
+        adjustWidgetItemWidth();
+
 
         //textItem->changeToEditMode();
     }
@@ -342,10 +343,8 @@ void RightNoteList::addWidgetItem(bool isAddByButton, NOTE note, QString searchK
 //        }
 //        //Add e 20191111
         //DEl end ynbboy
-        if(isAddByButton)
-        {
-            adjustWidgetItemWidth();
-        }
+        adjustWidgetItemWidth();
+
     }
 }
 

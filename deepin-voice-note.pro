@@ -83,7 +83,8 @@ SOURCES += \
     src/util/worker.cpp \
     src/views/voicetotextedit.cpp \
     src/app/myapplication.cpp \
-    src/Controllers/exportedinterface.cpp
+    src/Controllers/exportedinterface.cpp \
+    src/views/loadwidget.cpp
 
 HEADERS += \
     src/app/consts.h \
@@ -135,7 +136,8 @@ HEADERS += \
     src/util/worker.h \
     src/views/voicetotextedit.h \
     src/app/myapplication.h \
-    src/Controllers/exportedinterface.h
+    src/Controllers/exportedinterface.h \
+    src/views/loadwidget.h
 
 INCLUDEPATH += \
     src/app \
