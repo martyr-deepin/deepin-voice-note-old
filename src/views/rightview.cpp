@@ -74,6 +74,11 @@ void RightView::initUI()
 
     //m_noticeNoAudioInputs = UiUtil::createConfirmDialog(QString(""), QString(tr("未检测到录音设备")), this);
 
+
+    m_LoadWidget = new LoadWidget(this);
+    m_LoadWidget->resize(124,120);
+    m_LoadWidget->move((width() - m_LoadWidget->width())/2,(height() - m_LoadWidget->height())/2);
+    m_LoadWidget->hideWidget();
 }
 
 
@@ -278,6 +283,8 @@ void RightView::handleSelFolderChg(int folderId)
 {
     //Add start 4297
     //转写error对话框隐藏
+    m_LoadWidget->showType(LOADING);
+
     m_noteListWidget->setAsrErrDialogHide();
     //Add end 4297
     //stopAllNeedStop
@@ -312,6 +319,7 @@ void RightView::handleSelFolderChg(int folderId)
     {
         m_addVoiceBtn->setVisible(false);
     }
+    //m_LoadWidget->hideWidget();
     //m_noteListWidget->setFocus();
 }
 
@@ -417,10 +425,25 @@ void RightView::updateNoteList()
         }
 
 
+        int count = noteList.size();
+        int step = 100/count;
         for (int i = 0; i < noteList.size(); i++)
         {
             m_noteListWidget->addWidgetItem(false, noteList.at(i), Intancer::get_Intancer()->getSearchKeywords());
-
+            if(!m_LoadWidget->isHidden())
+            {
+                int perValue = 0;
+                if(count - 1 <= i)
+                {
+                    perValue = 100;
+                }
+                else
+                {
+                    perValue = (i + 1) * step;
+                }
+                m_LoadWidget->setValue(perValue);
+                m_LoadWidget->update();
+            }
             if(VOICE == noteList.at(i).noteType)
             {
                 Intancer::get_Intancer()->addHeightForRightList(VOICENOTE_HEIGHT);

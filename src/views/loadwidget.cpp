@@ -16,7 +16,6 @@ LoadWidget::LoadWidget(QWidget *parent) :
     m_water = new DWaterProgress(this);
     m_water->setValue(1);
     m_water->setTextVisible(true);
-    m_water->start();
     m_water->setFixedSize(QSize(49,49));
 
     m_deleteText = QString(tr("Deleteing..."));
@@ -43,9 +42,12 @@ void LoadWidget::setValue(int value)
     m_water->setValue(value);
 }
 
-void LoadWidget::clearValue()
+void LoadWidget::hideWidget()
 {
-    m_water->setValue(1);
+    m_Text->clear();
+    m_water->setValue(0);
+    this->hide();
+    m_water->stop();
 }
 
 void LoadWidget::showType(LoadType type)
@@ -62,4 +64,6 @@ void LoadWidget::showType(LoadType type)
     {
         m_Text->clear();
     }
+    //this->show();
+    m_water->start();
 }

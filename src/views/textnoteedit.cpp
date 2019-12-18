@@ -94,6 +94,7 @@ void TextNoteEdit::setHtml(const QString &text)
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     //qDebug() << "this->textCursor().position(): " << this->textCursor().position();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("lastTextCursorPosition:"), QString::number(lastTextCursorPosition,10));
+    UiUtil::writeLog(0, __FILE__, __LINE__, Q_FUNC_INFO, QString("textNum:"), QString::number(this->toPlainText().length(),10));
 }
 
 void TextNoteEdit::setPlainText(const QString &text)

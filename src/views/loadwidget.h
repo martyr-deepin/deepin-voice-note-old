@@ -15,7 +15,7 @@ class LoadWidget : public DFrame
 public:
     explicit LoadWidget(QWidget *parent = Q_NULLPTR);
     void setValue(int value);
-    void clearValue();
+    void hideWidget();
     void showType(LoadType type);
 
 private:

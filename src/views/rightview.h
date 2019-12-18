@@ -7,6 +7,7 @@
 #include "myrecodebuttons.h"
 #include "voiceaudiodevicewatcher.h"
 #include "voicevolumewatcher.h"
+#include "loadwidget.h"
 #include <QListWidget>
 #include <QPlainTextEdit>
 #include <QStackedWidget>
@@ -125,6 +126,7 @@ private:
     VOICE_INFO m_voiceinfo; //ynb  20191109
     QTimer *m_InitlateTimerOut;
     bool m_initing;
+    LoadWidget *m_LoadWidget;
 
     WorkerController *workController;
 };
