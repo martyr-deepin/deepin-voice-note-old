@@ -90,8 +90,10 @@ QString AiServiceController::startAsr(QString filePath, int fileDuration, QStrin
 }
 void AiServiceController::stopAsr()
 {
-    m_asrInterface->stopAsr();
-    this->freeSession(ability);
+    if(m_asrInterface != nullptr){
+        m_asrInterface->stopAsr();
+        this->freeSession(ability);
+    }
 }
 
 void AiServiceController::notifySlot(const QString &msg)
