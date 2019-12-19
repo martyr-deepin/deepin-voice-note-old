@@ -271,11 +271,11 @@ void TextNoteItem::initUI(const bool isAddByButton)
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
     if (themeType == DGuiApplicationHelper::LightType) {
         m_menuBtn = new MyRecodeButtons(
-            ":/image/icon/normal/more_normal.svg", ":/images/icon/press/more_press.svg",
-            ":/image/icon/hover/more_hover.svg", ":/images/icon/disabled/more_disabled.svg",
+            ":/image/icon/normal/more_normal.svg", ":/image/icon/press/more_press.svg",
+            ":/image/icon/hover/more_hover.svg", ":/image/icon/disabled/more_disabled.svg",
             ":/image/icon/focus/more_focus.svg", QSize(44, 44), this);
         m_detailBtn = new MyRecodeButtons(
-            ":/image/icon/normal/detail-normal.svg", ":/images/icon/press/detail-press.svg",
+            ":/image/icon/normal/detail-normal.svg", ":/image/icon/press/detail-press.svg",
             ":/image/icon/hover/detail-hover.svg", "", "", QSize(44, 44), this);
     } else if (themeType == DGuiApplicationHelper::DarkType) {
         m_menuBtn = new MyRecodeButtons(":/image/icon_dark/normal/more_normal_dark.svg",
