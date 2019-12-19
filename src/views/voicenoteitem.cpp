@@ -11,6 +11,13 @@ VoiceNoteItem::VoiceNoteItem(NOTE note, NoteController *noteCtr):m_note(note), m
 {
     initUI();
     initConnection();
+    if(!note.contentText.isEmpty()){
+        m_textEdit->setTextAndLineheight(note.contentText);
+        this->setTextEditAlignment(Qt::AlignLeft);
+        this->setDocmentAligment(QTextOption(Qt::AlignLeft));
+        this->m_bgWidgetBydetailBtn->show();
+        this->m_bgWidgetBytext->setVisible(true);
+    }
 }
 
 VoiceNoteItem::~VoiceNoteItem()
@@ -406,15 +413,15 @@ void VoiceNoteItem::initUI()
     connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, this, &VoiceNoteItem::changeTheme);
     //Add e 20191111
 
-    QString text = Intancer::get_Intancer()->getAsrTxt(m_note.folderId,m_note.id);
-    if(!text.isEmpty())
-    {
-        m_textEdit->setTextAndLineheight(text);
-        this->setTextEditAlignment(Qt::AlignLeft);
-        this->setDocmentAligment(QTextOption(Qt::AlignLeft));
-        this->m_bgWidgetBydetailBtn->show();
-        this->m_bgWidgetBytext->setVisible(true);
-    }
+//   QString text = Intancer::get_Intancer()->getAsrTxt(m_note.folderId,m_note.id);
+//    if(!text.isEmpty())
+//    {
+//        m_textEdit->setTextAndLineheight(text);
+//        this->setTextEditAlignment(Qt::AlignLeft);
+//        this->setDocmentAligment(QTextOption(Qt::AlignLeft));
+//        this->m_bgWidgetBydetailBtn->show();
+//        this->m_bgWidgetBytext->setVisible(true);
+//    }
 }
 
 void VoiceNoteItem::initConnection()
@@ -509,4 +516,13 @@ int VoiceNoteItem::getLineHeight()
     {
         m_textEdit->getLineHeight();
     }
+}
+
+void VoiceNoteItem::setAsrResult(const QString & result)
+{
+    m_note.contentText = result;
+    this->setTextEditVal(result);
+    this->setTextEditAlignment(Qt::AlignLeft);
+    this->setDocmentAligment(QTextOption(Qt::AlignLeft));
+    m_noteCtr->updateNote(m_note);
 }

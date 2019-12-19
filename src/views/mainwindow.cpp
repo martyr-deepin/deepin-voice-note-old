@@ -535,7 +535,10 @@ void MyMainWindow::showNoteDetail(NOTE note)
     //m_stackedWidget->setCurrentIndex(1);
     m_returnBtn->setVisible(true);
     //m_replaceForReturn->setVisible(false);
-
+    m_textNoteEdit->setFocus();
+    QTextCursor cursor = m_textNoteEdit->textCursor();
+    cursor.movePosition(QTextCursor::End);
+    m_textNoteEdit->setTextCursor(cursor);
     //start notify by yuanshuai 20191210 bug 4435
     //start add by yuanshuai 20191128 bug 3731
     //Intancer::get_Intancer()->setEndRecordFlag(false);

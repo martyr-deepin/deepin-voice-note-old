@@ -36,6 +36,7 @@ public:
     int getLineHeight();
     QDateTime getUpdateTime(); //liuyang 3550 3547 3528
     void prepareTODelete();
+    void setDocRightMargin(int margin);
 signals:
     void clicked();
     void focusOutSignal();
@@ -74,8 +75,7 @@ private:
     QBrush m_brush; //add 3976
     //BgTextEdit *m_BgTextEdit;
     void initConnection();
-
-
+    int m_docRightMargin {0};
 };
 
 #endif // TEXTNOTEEDIT_H

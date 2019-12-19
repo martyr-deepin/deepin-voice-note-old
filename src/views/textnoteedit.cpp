@@ -95,6 +95,7 @@ void TextNoteEdit::setHtml(const QString &text)
     //qDebug() << "this->textCursor().position(): " << this->textCursor().position();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("lastTextCursorPosition:"), QString::number(lastTextCursorPosition,10));
     UiUtil::writeLog(0, __FILE__, __LINE__, Q_FUNC_INFO, QString("textNum:"), QString::number(this->toPlainText().length(),10));
+    setDocRightMargin(m_docRightMargin);
 }
 
 void TextNoteEdit::setPlainText(const QString &text)
@@ -115,6 +116,7 @@ void TextNoteEdit::setPlainText(const QString &text)
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     //qDebug() << "this->textCursor().position(): " << this->textCursor().position();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->textCursor().position():"), QString::number(this->textCursor().position(),10));
+    setDocRightMargin(m_docRightMargin);
 }
 
 void TextNoteEdit::setText(const QString &text)
@@ -131,7 +133,7 @@ void TextNoteEdit::setText(const QString &text)
     QTextCursor textCursor = this->textCursor();
     textCursor.setPosition(lastTextCursorPosition);
     this->setTextCursor(textCursor);
-
+    setDocRightMargin(m_docRightMargin);
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
     //qDebug() << "this->textCursor().position(): " << this->textCursor().position();
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->textCursor().position():"), QString::number(this->textCursor().position(),10));
@@ -182,7 +184,6 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
 {
     //qDebug() << "TextNoteEdit::focusInEvent()";
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
-
     Intancer::get_Intancer()->setWantScrollRightListFlag(false);
 
     if (this->doesFocusInToChangePlainText) {
@@ -274,8 +275,6 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 
         this->setLineHeight(24);
     }
-
-
     DTextEdit::focusOutEvent(e);
 
     emit SigTextEditOutFocus();  //Add bug 2587
@@ -518,4 +517,23 @@ QDateTime TextNoteEdit::getUpdateTime()
 void TextNoteEdit::prepareTODelete()
 {
     m_wantFlag = true;
+}
+
+void TextNoteEdit::setDocRightMargin(int margin)
+{
+    if(margin != 0)
+    {
+        m_docRightMargin = margin;
+        QTextDocument *document = this->document();
+        for (QTextBlock it = document->begin(); it != document->end(); it = it.next()) {
+            QTextCursor textCursor(it);
+            QTextBlockFormat textBlockFormat = it.blockFormat();
+            int right = static_cast<int>(textBlockFormat.rightMargin());
+            if(right != margin)
+            {
+                textBlockFormat.setRightMargin(margin);
+                textCursor.setBlockFormat(textBlockFormat);
+            }
+        }
+    }
 }

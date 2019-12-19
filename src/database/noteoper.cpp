@@ -158,7 +158,7 @@ bool NoteOper::addNote(NOTE &noteInfo)
     return ret;
 }
 
-bool NoteOper::updateNote(NOTE noteInfo)
+bool NoteOper::updateNote(const NOTE &noteInfo)
 {
     //QString updateSql = "update %1 set content_text = :content, content_path = :contentPath where id = :id";
     QString updateSql = "update %1 set content_text = :content, content_path = :contentPath, create_time = :createTime where id = :id";

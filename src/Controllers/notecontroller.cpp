@@ -35,7 +35,7 @@ bool NoteController::addNote(NOTE &noteInfo)
     return NoteOper::addNote(noteInfo);
 }
 
-bool NoteController::updateNote(NOTE noteInfo)
+bool NoteController::updateNote(const NOTE &noteInfo)
 {
     return NoteOper::updateNote(noteInfo);
 }

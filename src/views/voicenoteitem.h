@@ -45,6 +45,7 @@ public:
     void setDocmentAligment(QTextOption op);
     //end
     int getLineHeight();
+    void setAsrResult(const QString & result);
     NOTE m_note;
 
     DLabel *m_timeLabel;

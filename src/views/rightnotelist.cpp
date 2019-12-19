@@ -1036,9 +1036,10 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
 //        m_voiceNoteItem->setTextEditDisplay(true);
         //转写文字设定
         //clsResult.txt = "字edit显示转写结转写结束文字edit显示转写结结转写结束文字edit结转写结束文字edit结转写结束文字显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文显示转写结结转写结束文字edit结转写结束文edit";
-        m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
-        m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
-        m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
+//        m_voiceNoteItemByasr->setTextEditVal(clsResult.txt);
+//        m_voiceNoteItem->setTextEditAlignment(Qt::AlignLeft);
+//        m_voiceNoteItem->setDocmentAligment(QTextOption(Qt::AlignLeft));
+          m_voiceNoteItem->setAsrResult(clsResult.txt);
 
 //        m_currSelItemByasr->setSizeHint(QSize(this->width(),VOICENOTE_HEIGHT + m_textEditNewHeight + 5)); //ynbboy
 //        m_voiceNoteItemByasr->setFixedHeight(VOICENOTE_HEIGHT + m_textEditNewHeight + 5); //ynbboy
@@ -1050,7 +1051,7 @@ void RightNoteList::AsrResultResp(AsrResult clsResult)
         m_voiceNoteItemByasr->m_bgWidgetBytext->setVisible(true);
         //Edit start 3878
 //        Intancer::get_Intancer()->setAsrTxt(m_currSelNote.folderId,m_currSelNote.id,clsResult.txt);
-        Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
+        //Intancer::get_Intancer()->setAsrTxt(m_currSelNoteByasr.folderId,m_currSelNoteByasr.id,clsResult.txt);
         //Edit end 3878
     }
     else {
@@ -1288,7 +1289,7 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                 }
 
             }
-
+            QSize itemSize = m_currSelItem->sizeHint();
             this->removeItemWidget(m_currSelItem);
             delete m_currSelItem;
             m_currSelItem = nullptr;
@@ -1308,11 +1309,11 @@ void RightNoteList::handleDelDialogClicked(int index, const QString &text)
                     setAsrErrDialogHide();
                 }
                 //Add end 4297
-                Intancer::get_Intancer()->delHeightForRightList(VOICENOTE_HEIGHT);
+                Intancer::get_Intancer()->delHeightForRightList(itemSize.height());
             }
             else if(TEXT == m_currSelNote.noteType)
             {
-                Intancer::get_Intancer()->delHeightForRightList(TEXTNOTE_HEIGHT);
+                Intancer::get_Intancer()->delHeightForRightList(itemSize.height());
             }
 
             //删除成功并且处于搜索状态下的话，再次出发搜索

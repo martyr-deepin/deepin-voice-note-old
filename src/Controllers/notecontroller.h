@@ -14,7 +14,7 @@ public:
     //QString getConttextByNoteID(int folderId, int noteID);
     QString getConttextByNoteID(int folderId, int noteID,QDateTime *time = nullptr);
     bool addNote(NOTE &noteInfo);
-    bool updateNote(NOTE noteInfo);
+    bool updateNote(const NOTE &noteInfo);
     bool deleteNote(NOTE noteInfo);
 };
 

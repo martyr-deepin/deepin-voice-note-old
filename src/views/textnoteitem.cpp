@@ -68,10 +68,10 @@ QPoint TextNoteItem::remapToGlobalMenbtn(QPoint GlobalPoint)
 
 void TextNoteItem::initUI(const bool isAddByButton)
 {
-
     //this->setFixedHeight(150);
     //this->setFixedHeight(140);
     this->setFixedHeight(TEXTNOTE_HEIGHT);
+#if 0
     //this->resize(500, this->height());
     m_timeLabel = new DLabel(this);
 
@@ -246,7 +246,72 @@ void TextNoteItem::initUI(const bool isAddByButton)
 
     m_hBoxLayout->addWidget(m_MenuBtnBackground);
     m_hBoxLayout->addSpacing(8);
+#endif
+#if 1
+    m_timeLabel = new DLabel(this);
+    m_timeLabel->setFixedHeight(16);
+    m_timeLabel->setText("   " + UiUtil::convertDateTime(m_textNote.createTime));
+    DFontSizeManager::instance()->bind(m_timeLabel, DFontSizeManager::T9);
 
+    m_textEdit = new TextNoteEdit(m_textNote, this, m_noteCtr);
+    m_textEdit->setDocRightMargin(50);
+    if (!isAddByButton) {
+        m_textEdit->setTextNote(m_textNote, m_searchKey);
+    }
+    DFontSizeManager::instance()->bind(m_textEdit, DFontSizeManager::T8);
+    m_textEdit->setFixedHeight(140);
+    m_textEdit->setLineWidth(0);
+    DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    m_textEdit->setPalette(pb);
+    m_textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_textEdit->document()->setDocumentMargin(10);
+    m_textEdit->setFrameShape(QFrame::NoFrame);
+
+    DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
+    if (themeType == DGuiApplicationHelper::LightType) {
+        m_menuBtn = new MyRecodeButtons(
+            ":/image/icon/normal/more_normal.svg", ":/images/icon/press/more_press.svg",
+            ":/image/icon/hover/more_hover.svg", ":/images/icon/disabled/more_disabled.svg",
+            ":/image/icon/focus/more_focus.svg", QSize(44, 44), this);
+        m_detailBtn = new MyRecodeButtons(
+            ":/image/icon/normal/detail-normal.svg", ":/images/icon/press/detail-press.svg",
+            ":/image/icon/hover/detail-hover.svg", "", "", QSize(44, 44), this);
+    } else if (themeType == DGuiApplicationHelper::DarkType) {
+        m_menuBtn = new MyRecodeButtons(":/image/icon_dark/normal/more_normal_dark.svg",
+                                        ":/image/icon_dark/press/more_press_dark.svg",
+                                        ":/image/icon_dark/hover/more_hover_dark.svg",
+                                        ":/image/icon_dark/disabled/more_disabled_dark.svg",
+                                        ":/image/icon_dark/focus/more_focus_dark.svg",
+                                        QSize(44, 44), this);
+        m_detailBtn = new MyRecodeButtons(":/image/icon_dark/normal/detail-normal.svg",
+                                          ":/image/icon_dark/press/detail-press.svg",
+                                          ":/image/icon_dark/hover/detail-hover.svg", "", "",
+                                          QSize(44, 44), this);
+    }
+    m_detailBtn->setVisible(false);
+
+    QVBoxLayout *btnLayout = new QVBoxLayout;
+    btnLayout->setContentsMargins(0, 10, 10, 0);
+    btnLayout->setSizeConstraint(QLayout::SetNoConstraint);
+    btnLayout->addWidget(m_menuBtn);
+    btnLayout->addSpacing(30);
+    btnLayout->addWidget(m_detailBtn);
+
+    QGridLayout *bglayout = new QGridLayout;
+    bglayout->addWidget(m_timeLabel, 0, 0);
+    bglayout->addWidget(m_textEdit, 1, 0, 3, 3);
+    bglayout->addLayout(btnLayout, 1, 2, 1, 1);
+    bglayout->setRowStretch(0, 1);
+    bglayout->setRowStretch(1, 1);
+    bglayout->setRowStretch(2, 0);
+    bglayout->setColumnStretch(0, 1);
+    bglayout->setColumnStretch(1, 1);
+    bglayout->setColumnStretch(2, 0);
+    bglayout->setMargin(0);
+    bglayout->setSizeConstraint(QLayout::SetNoConstraint);
+    this->setLayout(bglayout);
+#endif
     textAreaChanged();
 
 //   QTextEdit *textEdit = new QTextEdit(this);
@@ -540,10 +605,10 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 
 void TextNoteItem::changeTheme()
 {
-    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
     //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    m_bgWidget->setPalette(pb);
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    m_textEdit->setPalette(pb);
 
     DGuiApplicationHelper::ColorType themeType = DGuiApplicationHelper::instance()->themeType();
 
@@ -678,10 +743,10 @@ void TextNoteItem::leaveEvent(QEvent *event)
 {
     m_mouseIsIn = false;
     //3152 liuyang
-    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
     //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::ItemBackground));
-    m_bgWidget->setPalette(pb);
+    pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    m_textEdit->setPalette(pb);
     //3152 liuyang
     return QWidget::leaveEvent(event);
 }
@@ -690,10 +755,10 @@ void TextNoteItem::enterEvent(QEvent *event)
 {
     m_mouseIsIn = true;
     //3152 liuyang
-    DPalette pb = DApplicationHelper::instance()->palette(m_bgWidget);
+    DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
     //pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Light));
-    m_bgWidget->setPalette(pb);
+    pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
+    m_textEdit->setPalette(pb);
     //3152 liuyang
     return QWidget::enterEvent(event);
 }

@@ -16,7 +16,7 @@ public:
     //static QString getConttextByNoteID(int folderID, int noteId);
     static QString getConttextByNoteID(int folderID, int noteId ,QDateTime *time = nullptr);//liuyang 3547
     static bool addNote(NOTE &noteInfo);
-    static bool updateNote(NOTE noteInfo);
+    static bool updateNote(const NOTE &noteInfo);
     static bool deleteNote(NOTE noteInfo);
 };
 
