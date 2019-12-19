@@ -479,13 +479,13 @@ void MyMainWindow::initStackedWidget()
     m_textNoteEdit->setFrameShape(QListWidget::NoFrame);
     m_textNoteEdit->setAttribute(Qt::WA_TranslucentBackground, true);
 
-    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
-    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
-    m_textNoteEdit->setPalette(pl);
+//    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
+//    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
+//    m_textNoteEdit->setPalette(pl);
 
-    DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
-    m_detailPage->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
+//    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+//    m_detailPage->setPalette(pb);
 
 
     m_InitEmptyPage = new  InitEmptyPage();
