@@ -581,7 +581,7 @@ void MyMainWindow::showListPage()
     {
         m_mainPage->ChangeCurFolderToTop(m_textNoteEdit->getFolderID());
     }
-
+    m_mainPage->setFocus();
 }
 
 void MyMainWindow::handleSearchKey()
