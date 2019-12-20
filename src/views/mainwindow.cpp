@@ -666,6 +666,9 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
         //start add by yuanshuai 20191128 bug 3731
         //Intancer::get_Intancer()->setEndRecordFlag(true);
         //end
+        if(Intancer::get_Intancer()->getRecodingFlag()){
+            m_mainPage->saveRecorde();
+        }
         handleSearchKey();
         m_bakForSearchStr = m_searchEdit->text();
     }
@@ -898,7 +901,12 @@ void MyMainWindow::asrDialogClicked(int index, const QString &text)
     {
 //        m_mainPage->checkAndDeleteEmptyTextNoteFromDatabase();
 //        DMainWindow::closeEvent(m_eventSave);
-        qApp->quit();
+        if(Intancer::get_Intancer()->getRecodingFlag()){
+            handleCloseExitDialogClicked(index,text);
+        }
+        else{
+            qApp->quit();
+        }
     }
 }
 //Add e 20191111
