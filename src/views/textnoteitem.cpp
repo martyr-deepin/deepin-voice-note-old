@@ -292,10 +292,11 @@ void TextNoteItem::initUI(const bool isAddByButton)
     m_detailBtn->setVisible(false);
 
     QVBoxLayout *btnLayout = new QVBoxLayout;
-    btnLayout->setContentsMargins(0, 10, 10, 0);
+    btnLayout->setContentsMargins(0, 15, 10, 0);
+    btnLayout->setSpacing(0);
     btnLayout->setSizeConstraint(QLayout::SetNoConstraint);
     btnLayout->addWidget(m_menuBtn);
-    btnLayout->addSpacing(30);
+    btnLayout->addSpacing(23);
     btnLayout->addWidget(m_detailBtn);
 
     QGridLayout *bglayout = new QGridLayout;
