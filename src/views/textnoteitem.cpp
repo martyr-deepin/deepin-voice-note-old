@@ -310,6 +310,7 @@ void TextNoteItem::initUI(const bool isAddByButton)
     bglayout->setColumnStretch(2, 0);
     bglayout->setMargin(0);
     bglayout->setSizeConstraint(QLayout::SetNoConstraint);
+    bglayout->setContentsMargins(0,6,0,0);
     this->setLayout(bglayout);
 #endif
     textAreaChanged();
@@ -390,7 +391,7 @@ void TextNoteItem::readFromDatabase()
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
-    m_textEdit->setLineHeight(24);
+    m_textEdit->setLineHeight(25);
 
     //liuyang 3547
     if(time != m_textNote.createTime)

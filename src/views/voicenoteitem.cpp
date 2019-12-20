@@ -243,7 +243,7 @@ void VoiceNoteItem::initUI()
     m_itemLayout = new QVBoxLayout();
     m_itemLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_itemLayout->addSpacing(6);
+    m_itemLayout->addSpacing(2);
     m_itemLayout->addWidget(m_timeLabel);
     m_itemLayout->addSpacing(2);
     m_itemLayout->addWidget(m_bgWidget);
