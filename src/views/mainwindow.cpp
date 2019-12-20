@@ -524,9 +524,9 @@ void MyMainWindow::showNoteDetail(NOTE note)
 
 
 
-    DPalette pb = DApplicationHelper::instance()->palette(m_textNoteEdit);
-    pb.setBrush(DPalette::Button, pb.color(DPalette::Base));
-    m_textNoteEdit->setPalette(pb);
+//    DPalette pb = DApplicationHelper::instance()->palette(m_textNoteEdit);
+//    pb.setBrush(DPalette::Button, pb.color(DPalette::Base));
+//    m_textNoteEdit->setPalette(pb);
 
     //m_textNoteEdit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
 
@@ -736,12 +736,12 @@ void MyMainWindow::handleCloseExitDialogClicked(int index, const QString &text)
 void MyMainWindow::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_detailPage);
-    pb.setBrush(DPalette::Base, pb.color(DPalette::Base));
+    pb.setBrush(DPalette::Button, pb.color(DPalette::Base));
     m_detailPage->setPalette(pb);
 
-    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
-    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
-    m_textNoteEdit->setPalette(pl);
+//    DPalette pl = DApplicationHelper::instance()->palette(m_textNoteEdit);
+//    pl.setBrush(DPalette::Button, pl.color(DPalette::Base));
+//    m_textNoteEdit->setPalette(pl);
 }
 
 void MyMainWindow::OnNoSearchResult()
