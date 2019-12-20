@@ -11,7 +11,7 @@ public:
     explicit voiceVolumeWatcher(QObject *parent = nullptr);
     ~voiceVolumeWatcher();
     void stopWatch();
-    void setIsRecoding(bool value);
+    //void setIsRecoding(bool value);
     void run();
     bool getCouldUse();
 
@@ -21,7 +21,7 @@ signals:
 
 private:
     bool m_loopwatch;
-    bool m_isRecoding;
+    //bool m_isRecoding;
     bool m_coulduse;
     int m_failedCount;
 };

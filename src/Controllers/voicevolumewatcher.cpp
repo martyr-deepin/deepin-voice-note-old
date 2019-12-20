@@ -5,7 +5,7 @@
 voiceVolumeWatcher::voiceVolumeWatcher(QObject *parent) : QThread(parent)
 {
     m_loopwatch = true;
-    m_isRecoding = false;
+    //m_isRecoding = false;
     m_coulduse = false;
     m_failedCount = 0;
 }
@@ -21,10 +21,10 @@ void voiceVolumeWatcher::stopWatch()
     m_loopwatch = false;
 }
 
-void voiceVolumeWatcher::setIsRecoding(bool value)
-{
-    m_isRecoding = value;
-}
+//void voiceVolumeWatcher::setIsRecoding(bool value)
+//{
+//    m_isRecoding = value;
+//}
 
 void voiceVolumeWatcher::run()
 {
@@ -33,8 +33,8 @@ void voiceVolumeWatcher::run()
     {
         QThread::currentThread()->msleep(200);
         //log缓存被更新并且仍进行loop循环
-        if(!m_isRecoding && m_loopwatch)
-        {
+        //if(!m_isRecoding && m_loopwatch)
+        //{
             bool couldUse = false;
             couldUse = UiUtil::canMicrophoneInput();
             //couldUse = true;
@@ -65,7 +65,7 @@ void voiceVolumeWatcher::run()
                     emit sigRecodeState(couldUse);
                 }
             }
-        }
+        //}
     }
 }
 
