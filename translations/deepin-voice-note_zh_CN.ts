@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>The voice memo has been deleted</source>
-        <translation type="vanished">该语音记事项已删除</translation>
+        <translation type="vanished">该语音笔记已被删除</translation>
     </message>
     <message>
         <source>Window size switching</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>The voice note has been deleted</source>
-        <translation>该语音记事项已删除</translation>
+        <translation>该语音笔记已被删除</translation>
     </message>
 </context>
 <context>
