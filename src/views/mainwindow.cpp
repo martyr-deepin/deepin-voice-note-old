@@ -559,13 +559,14 @@ void MyMainWindow::showListPage()
 //    //end
     Intancer::get_Intancer()->setTransFromDetalToMainPage(true);
 
-    m_mainPage->setFocus();
     this->switchPage(MAIN_PAGE);
     m_mainPage->updateFromDetal(m_textNoteEdit->getID());
 
     //m_stackedWidget->setCurrentIndex(0);
-    m_searchEdit->setEnabled(true); //Add  bug3136
-    m_returnBtn->setVisible(false);
+    if(!Intancer::get_Intancer()->getVoiceToTextFlag()){
+        m_searchEdit->setEnabled(true); //Add  bug3136
+        m_returnBtn->setVisible(false);
+    }
     //m_replaceForReturn->setVisible(true);
 
     //start notify by yuanshuai 20191210 bug 4435
