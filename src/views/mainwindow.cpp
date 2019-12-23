@@ -670,7 +670,9 @@ void MyMainWindow::handleSearchDialogClicked(int index, const QString &text)
         if(Intancer::get_Intancer()->getRecodingFlag()){
             m_mainPage->saveRecorde();
         }
-        handleSearchKey();
+        else {
+          handleSearchKey();
+        }
         m_bakForSearchStr = m_searchEdit->text();
     }
     else
