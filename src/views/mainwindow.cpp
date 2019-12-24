@@ -26,7 +26,7 @@ MyMainWindow::MyMainWindow()
     m_showPageID = MAIN_PAGE;
     timerID = -1;
     initUI();
-    setTitlebarShadowEnabled(false);//liuyang 3799
+    setTitlebarShadowEnabled(true);//liuyang 3799
 }
 
 void MyMainWindow::initUI() {
@@ -230,6 +230,10 @@ void MyMainWindow::switchPage(STATIC_PAGE pageID)
         break;
     case NOSEARCH_PAGE:
         m_SearchNonePage->setVisible(true);
+        if(!m_searchEdit->lineEdit()->hasFocus())
+        {
+            m_SearchNonePage->setFocus();
+        }
         break;
     case VOICE_PAGE:
         m_VoiceToNotePage->setVisible(true);

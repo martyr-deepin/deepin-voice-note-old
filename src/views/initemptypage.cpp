@@ -66,7 +66,7 @@ void InitEmptyPage::init()
     //m_Text->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T8));
     DFontSizeManager::instance()->bind(m_Text, DFontSizeManager::T8);
     m_Text->setForegroundRole(DPalette::TextTips);
-
+    this->setLineWidth(0);
     onChangeColor();
     checkPos();
 }
