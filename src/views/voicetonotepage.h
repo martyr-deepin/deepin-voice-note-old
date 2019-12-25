@@ -18,7 +18,7 @@ public:
 signals:
 
 public slots:
-
+    void changeTheme();
 
 private:
     QVBoxLayout *m_detailPageLayout;

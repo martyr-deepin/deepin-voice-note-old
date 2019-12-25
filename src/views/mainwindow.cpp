@@ -924,6 +924,7 @@ void MyMainWindow::OnToDetalVoicePage(QString contant)
     this->switchPage(VOICE_PAGE);
     //m_stackedWidget->setCurrentIndex(VOICE_PAGE);
     m_returnBtn->setVisible(true);
+    m_VoiceToNotePage->setFocus();
 }
 
 void MyMainWindow::onShowRecordDialog()
