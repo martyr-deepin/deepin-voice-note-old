@@ -27,11 +27,14 @@ MyMainWindow::MyMainWindow()
     timerID = -1;
     initUI();
     setTitlebarShadowEnabled(true);//liuyang 3799
+    loadWindowState();
 }
 
+MyMainWindow::~MyMainWindow()
+{
+    saveWindowState();
+}
 void MyMainWindow::initUI() {
-
-    resize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
     m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Searching in the recording interrupts the recording. Do you want to continue?")), nullptr, QString(tr("No")), QString(tr("Yes")));
@@ -1035,4 +1038,19 @@ void MyMainWindow::OnSearchEditClicked(bool focusstate)
 void MyMainWindow::initRight()
 {
     m_mainPage->firstShowRightList();
+}
+
+void MyMainWindow::saveWindowState()
+{
+    QSettings settings(objectName());
+    settings.setValue("geometry", saveGeometry());
+}
+
+void MyMainWindow::loadWindowState()
+{
+    QSettings settings(objectName());
+    const QByteArray geometry = settings.value("geometry").toByteArray();
+    if(!geometry.isEmpty()){
+        restoreGeometry(geometry);
+    }
 }

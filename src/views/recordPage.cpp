@@ -204,6 +204,7 @@ void RecordPage::startRecord()
     m_audioRecorder->setOutputLocation(recordPath);
     m_waveform->clearWave();
     m_recordingTime = 0;
+    m_recordTimeLabel->setText("00:00");
     m_tickerTimer->start(200);
 
     QDateTime currentTime = QDateTime::currentDateTime();
@@ -295,7 +296,7 @@ void RecordPage::stopRecord()
 {
     m_audioRecorder->stop();
     m_tickerTimer->stop();
-    m_recordTimeLabel->setText("00:00");
+    //m_recordTimeLabel->setText("00:00");
     voiceInfo.voiceLength = m_recordingTime;
     voiceInfo.voiceSampleData = UiUtil::convertFloatListToString(m_waveform->getWholeSampleList());
     recordPath.clear();

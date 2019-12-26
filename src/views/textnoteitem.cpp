@@ -608,7 +608,7 @@ void TextNoteItem::textEditChanged(const QString &str) //liuyang 3547
 void TextNoteItem::changeTheme()
 {
     DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
-    //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Text,pb.color(DPalette::Active,DPalette::WindowText));
     pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
     m_textEdit->setPalette(pb);
 
@@ -747,6 +747,7 @@ void TextNoteItem::leaveEvent(QEvent *event)
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
     //pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
+    pb.setBrush(DPalette::Text,pb.color(DPalette::Active,DPalette::WindowText));
     pb.setBrush(DPalette::Button, pb.color(DPalette::ItemBackground));
     m_textEdit->setPalette(pb);
     //3152 liuyang
@@ -759,6 +760,7 @@ void TextNoteItem::enterEvent(QEvent *event)
     //3152 liuyang
     DPalette pb = DApplicationHelper::instance()->palette(m_textEdit);
     //pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
+    pb.setBrush(DPalette::Text,pb.color(DPalette::Active,DPalette::WindowText));
     pb.setBrush(DPalette::Button, pb.color(DPalette::Light));
     m_textEdit->setPalette(pb);
     //3152 liuyang

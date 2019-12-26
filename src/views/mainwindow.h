@@ -36,6 +36,7 @@ class MyMainWindow : public DMainWindow
     Q_OBJECT
 public:
     MyMainWindow();
+    ~MyMainWindow();
     void CreateVoiceMemo(); //Add createVoiceMemo 新建语音备忘录对应
 public slots:
     void showNoteDetail(NOTE note);
@@ -133,6 +134,8 @@ private:
     void switchPage(STATIC_PAGE pageID);
     QJsonObject creatShorcutJson();
     void initRight();
+    void saveWindowState();
+    void loadWindowState();
     //Add end bug 2587
     bool m_VoiceMemoAction;  //true: 创建语音备忘录指令有 false 创建语音备忘录指令无  Add createVoiceMemo 新建语音备忘录对应
     STATIC_PAGE m_showPageID;

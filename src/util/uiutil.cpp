@@ -114,7 +114,8 @@ QString UiUtil::formatMillisecond(int millisecond)
         // At least need return 1 seconds.
         return QDateTime::fromTime_t(std::max(1, millisecond / 1000)).toUTC().toString("mm:ss");
     } else {
-        return QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("hh:mm:ss");
+        //return QDateTime::fromTime_t(millisecond / 1000).toUTC().toString("hh:mm:ss");
+        return QString("60'00\"");
     }
 }
 
