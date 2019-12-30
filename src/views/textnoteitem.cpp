@@ -392,7 +392,7 @@ void TextNoteItem::readFromDatabase()
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_bakContent:"), m_bakContent);
 
     m_textEdit->setPlainText(m_bakContent);
-    m_textEdit->setLineHeight(25);
+    m_textEdit->setLineHeight(26);
 
     //liuyang 3547
     if(time != m_textNote.createTime)

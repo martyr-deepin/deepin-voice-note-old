@@ -35,7 +35,7 @@ TextNoteEdit::TextNoteEdit(NOTE textNote, QWidget *parent, NoteController *noteC
     //add end 3976
 
     this->setPlainText(m_textNote.contentText);//liuyang 3550 3547 3528
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 
     initConnection();
 
@@ -57,7 +57,7 @@ TextNoteEdit::TextNoteEdit(QWidget *parent, NoteController *noteCtr) : DTextEdit
 
     initConnection();
 
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 }
 
 TextNoteEdit::~TextNoteEdit()
@@ -149,7 +149,7 @@ void TextNoteEdit::setTextNote(NOTE textNote, QString searchKey)
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
     this->setHtml(html);
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 }
 
 int TextNoteEdit::getID()
@@ -193,7 +193,7 @@ void TextNoteEdit::focusInEvent(QFocusEvent *e)
         //qDebug() << "this->textCursor().position() after setPlainText: " << this->textCursor().position();
         UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->textCursor().position() after setPlainText:"), QString::number(this->textCursor().position(),10));
 
-        this->setLineHeight(25);
+        this->setLineHeight(26);
     }
 
     //add start 3976
@@ -227,7 +227,7 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
     //qDebug()<< "TextNoteEdit::focusOutEvent()";
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
-
+    this->moveCursor(QTextCursor::Start);
     //3699
     if(menuOut)
     {
@@ -239,7 +239,6 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
     {
         return;
     }
-
     Intancer::get_Intancer()->setWantScrollRightListFlag(true);
 //    if (this->isReadOnly())
 //    {
@@ -270,7 +269,7 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
         //qDebug() << "this->setHtml() done";
         //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
 
-        this->setLineHeight(25);
+        this->setLineHeight(26);
     }
     DTextEdit::focusOutEvent(e);
 
@@ -315,7 +314,7 @@ void TextNoteEdit::insertFromMimeData(const QMimeData *source)
 
     DTextEdit::insertFromMimeData(&newMimeData);
 
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 
     this->updateNote();
 }
@@ -432,7 +431,7 @@ void TextNoteEdit::onTextChanged()
 //        qDebug() << "QTimer::singleShot() textEditHeight: " << textEditHeight;
 //        qDebug() << "QTimer::singleShot() documentHeight: " << documentHeight;
 
-        if (textEditHeight < documentHeight - 6) {
+        if (textEditHeight < documentHeight - 10) {
             emit sigDetailButtonChanged(true);
         }
         else {
@@ -458,7 +457,7 @@ void TextNoteEdit::searchText(QString searchKey)
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("html:"), html);
 
     this->setHtml(html);
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 }
 
 void TextNoteEdit::readFromDatabase()
@@ -469,7 +468,7 @@ void TextNoteEdit::readFromDatabase()
     //UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->m_textNote.contentText:"), this->m_textNote.contentText);
 
     this->setText(m_textNote.contentText);
-    this->setLineHeight(25);
+    this->setLineHeight(26);
 }
 
 //QString TextNoteEdit::onlyreadFromDatabase()

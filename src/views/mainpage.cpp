@@ -1,6 +1,5 @@
 #include "mainpage.h"
 #include "leftview.h"
-
 #include <QFrame>
 #include <QVBoxLayout>
 #include <DApplicationHelper>

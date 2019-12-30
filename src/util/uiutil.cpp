@@ -395,6 +395,7 @@ DFloatingMessage *UiUtil::createAsrNetWorkErrDialog(QWidget *parent,DPushButton 
     df->setMessage(QString(tr("The voice conversion failed due to the poor network connection. Do you want to try again?")));
     //df->setMessage(QString(tr("当前网络状态差，语音转写失败，是否重新转写？")));
     df->setWidget(button);
+    df->setFixedWidth(parent->width());
     df->hide();
     return df;
 }
