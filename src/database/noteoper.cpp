@@ -69,7 +69,7 @@ QList<NOTE> NoteOper::getNoteListByFolderId(int folderId)
 
 QList<NOTE> NoteOper::searchNote(int folderId, QString searchKey)
 {
-    QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where folder_id = %2 and content_text like \'\%%3\%\' order by create_time asc";
+    QString queryStr = "select id, note_type, content_text, content_path, voice_time, voice_sample_data, folder_id, create_time from %1 where note_type=1 and folder_id = %2 and content_text like \'\%%3\%\' order by create_time asc";
     QString queryStrFinal = QString(queryStr).arg(TABLE_NOTE).arg(folderId).arg(searchKey);
 
     QList<QList<QVariant>> result;
