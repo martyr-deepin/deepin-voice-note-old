@@ -227,7 +227,9 @@ void TextNoteEdit::focusOutEvent(QFocusEvent *e)
 {  
     //qDebug()<< "TextNoteEdit::focusOutEvent()";
     //UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("this->toPlainText():"), this->toPlainText());
-    this->moveCursor(QTextCursor::Start);
+    if(!this->geometry().contains(this->mapFromGlobal(QCursor::pos()))){
+        this->moveCursor(QTextCursor::Start);
+    }
     //3699
     if(menuOut)
     {
