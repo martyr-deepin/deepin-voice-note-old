@@ -151,6 +151,15 @@ void LeftFolderList::handleDelDialogClicked(int index, const QString &text)
     if (index == 1){
         FolerWidgetItem *itemDel = (FolerWidgetItem *)this->itemWidget(this->currentItem());
 
+        //Fix bug *******BEGIN************
+        //Bug id:(11187,11179) Delete crash
+        //TODO
+        //  Double check null Object here
+        if (nullptr == itemDel) {
+            return;
+        }
+        //Fix bug *******END   ************
+
         if(!Intancer::get_Intancer()->getRecodingFlag())
         {
             if (m_folderCtr->deleteFolder(itemDel->m_folder.id))

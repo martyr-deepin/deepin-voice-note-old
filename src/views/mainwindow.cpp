@@ -230,6 +230,8 @@ void MyMainWindow::switchPage(STATIC_PAGE pageID)
         break;
     case INIT_PAGE:
         m_InitEmptyPage->setVisible(true);
+        //Let the container get focus not the children
+        m_InitEmptyPage->setFocus();
         break;
     case NOSEARCH_PAGE:
         m_SearchNonePage->setVisible(true);
@@ -877,6 +879,19 @@ void MyMainWindow::reNameNoteShortcut()
 }
 void MyMainWindow::deleteNoteShortcut()
 {
+    //Fix bug *******BEGIN************
+    //Bug id:(11187,11179)
+    //TODO:
+    //    Use shortcut Delete on initPage will crash
+    //Fix:
+    //   Disable shortcut key on initPage and double
+    //check null Object
+    if (m_showPageID == INIT_PAGE) {
+        qDebug() << "Invalid delete on initPage";
+        return;
+    }
+    //Fix bug *******END   ************
+
     if (m_mainPage->shortcutsDeleteByRightlist())
     {
         return;
