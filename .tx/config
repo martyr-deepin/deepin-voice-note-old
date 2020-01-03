@@ -3,14 +3,14 @@ host = https://www.transifex.com
 minimum_perc = 80
 mode = developer
 
-[deepin-voice_note.deepin-voice_note]
-file_filter = deepin-voice_note/translations/deepin-voice_note_<lang>.ts
-source_file = deepin-voice_note/translations/deepin-voice_note.ts
+[deepin-voice-notes.deepin-voice-notes]
+file_filter = translations/deepin-voice_note_<lang>.ts
+source_file = translations/deepin-voice-note.ts
 source_lang = en
 type = QT
 
-[deepin-voice_note.desktop]
-file_filter = deepin-voice_note/translations/desktop/desktop_<lang>.ts
-source_file = deepin-voice_note/translations/desktop/desktop.ts
+[deepin-voice-notes.desktop]
+file_filter = translations/desktop/desktop_<lang>.ts
+source_file = translations/desktop/desktop.ts
 source_lang = en
 type = QT

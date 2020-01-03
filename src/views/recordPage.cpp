@@ -201,6 +201,41 @@ void RecordPage::startRecord()
 {
     QString fileName = generateRecordingFilename();
     recordPath = UiUtil::getRecordingVoiceFullPath(fileName);
+
+    //Patch for fixed record format ******BEGIN******
+    //Todo:
+    //    Find the mp3 codec and container if exist.
+    {
+        QStringList supportCodecList = m_audioRecorder->supportedAudioCodecs();
+        QStringList supportContainer = m_audioRecorder->supportedContainers();
+
+        QString codec;
+        QString audioContainer;
+        for (auto it : supportCodecList) {
+            if (it.contains("audio/mpeg")) {
+                codec = it;
+                break;
+            }
+        }
+
+        for (auto it: supportContainer) {
+            if(it.contains("audio/mpeg")) {
+                audioContainer = it;
+                break;
+            }
+        }
+
+        qDebug() << "startRecord: codec->" <<  codec << " container:" << audioContainer;
+
+        QAudioEncoderSettings audioSettings;
+        audioSettings.setCodec(codec);
+        audioSettings.setQuality(QMultimedia::HighQuality);
+        audioSettings.setEncodingMode(QMultimedia::ConstantQualityEncoding);
+
+        m_audioRecorder->setEncodingSettings(audioSettings, QVideoEncoderSettings(), audioContainer);
+    }
+    //Patch for fixed record format ******END  ******
+
     m_audioRecorder->setOutputLocation(recordPath);
     m_waveform->clearWave();
     m_recordingTime = 0;
