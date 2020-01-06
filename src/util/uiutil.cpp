@@ -12,7 +12,8 @@
 //log change
 #include <QMessageLogger>
 //end
-
+#include <DApplicationHelper>
+#include <DLabel>
 //extern "C"
 //{
 //#include "libavcodec/avcodec.h"
@@ -75,7 +76,7 @@ QPixmap UiUtil::PixmapToRound(QPixmap &src, int radius)
 
 DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content, QWidget *parent, QString cancelStr, QString okStr)
 {
-    DDialog *dialog = new DDialog(title, content, parent);
+    DDialog *dialog = new DDialog(title, "", parent);
     dialog->setWindowFlags(dialog->windowFlags() | Qt::WindowStaysOnTopHint);
 
     dialog->setIcon(QIcon(UiUtil::renderSVG(":/icons/deepin/builtin/voice_note_32px.svg", QSize(32,32),qApp)));
@@ -83,7 +84,12 @@ DDialog* UiUtil::createChooseDialog(const QString &title, const QString &content
     dialog->addButton(okStr, false, DDialog::ButtonWarning);
     //start add by yuanshuai 20191209 bug 3989
     dialog->setContentLayoutContentsMargins(QMargins(0,0,0,16));
-    //end
+    DLabel *lable = new DLabel(dialog);
+    DPalette pb = DApplicationHelper::instance()->palette(lable);
+    pb.setBrush(DPalette::WindowText, pb.color(DPalette::TextTips));
+    lable->setText(content);
+    dialog->addContent(lable,Qt::AlignCenter);
+    dialog->setPalette(pb);
 
     return dialog;
 }

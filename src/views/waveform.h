@@ -72,7 +72,7 @@ private:
     QDateTime lastSampleTime;
     QList<float> sampleList;
     QList<float> wholeSampleList;
-    QTimer *renderTimer;
+    //QTimer *renderTimer;
     DISPLAY_TYPE m_currDisplayType;
     int m_currWavePos;
     QLabel *m_Slider;

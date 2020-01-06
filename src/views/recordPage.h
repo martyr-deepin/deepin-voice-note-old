@@ -78,7 +78,6 @@ public slots:
 //    void handleShrankAnimationFinish();
     void pauseRecord();
     void renderLevel(const QAudioBuffer &buffer);
-    void renderRecordingTime();
     void resumeRecord();
     void startRecord();
     void stopRecord();
@@ -90,12 +89,10 @@ private:
     QHBoxLayout *m_hBoxLayout;
     QAudioProbe *audioProbe;
     QAudioRecorder *m_audioRecorder;
-    QDateTime lastUpdateTime;
     QHBoxLayout *buttonLayout;
     QLabel *m_recordTimeLabel;
     //QLabel *titleLabel;
     QString recordPath;
-    QTimer *m_tickerTimer;
     QVBoxLayout *expandAnimationButtonLayout;
     QVBoxLayout *shrankAnimationButtonLayout;
     QVBoxLayout *buttonAreaLayout;
@@ -103,7 +100,6 @@ private:
     QWidget *buttonWidget;
 //    ShrankAnimationButton *shrankAnimationButton;
 //    Waveform *waveform;
-    int m_recordingTime;
     //QWidget *m_voiceShape;
     VOICE_INFO voiceInfo;
     Waveform *m_waveform;

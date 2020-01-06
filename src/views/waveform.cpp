@@ -49,7 +49,7 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
     {
 
         m_Slider = new QLabel(this);
-        m_Slider->setFixedSize(5, 52);
+        m_Slider->setFixedSize(5, 50);
         QPalette pal;
         pal.setBrush(QPalette::Background, QBrush(UiUtil::renderSVG(":/image/icon/normal/cursor.svg", QSize(m_Slider->width(), m_Slider->height()),qApp)));
         m_Slider->setAutoFillBackground(true);
@@ -66,9 +66,9 @@ Waveform::Waveform(QWidget *parent) : QWidget(parent), m_currDisplayType(PART_SA
 
     lastSampleTime = QDateTime::currentDateTime();
 
-    renderTimer = new QTimer(this);
-    connect(renderTimer, SIGNAL(timeout()), this, SLOT(renderWave()));
-    renderTimer->start(SAMPLE_DURATION);
+//    renderTimer = new QTimer(this);
+//    connect(renderTimer, SIGNAL(timeout()), this, SLOT(renderWave()));
+//    renderTimer->start(SAMPLE_DURATION);
     //renderTimer->start(SAMPLE_DURATION);
 }
 
@@ -214,6 +214,7 @@ void Waveform::updateWave(float sample)
         lastSampleTime = currentTime;
     }
     wholeSampleList << sample;
+    renderWave();
 }
 
 void Waveform::OnSetWavePos(int pos)
@@ -401,7 +402,7 @@ void Waveform::setCurrDisplayType(DISPLAY_TYPE type)
     if(PART_SAMPLE != type)
     {
         m_Slider->hide();
-        renderTimer->stop();
+        //renderTimer->stop();
     }
 }
 

@@ -59,8 +59,6 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter
-
-    m_recordingTime = 0;
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
@@ -176,27 +174,6 @@ void RecordPage::handleClickFinishButton()
 //    shrankAnimationButton->startAnimation();
 }
 
-void RecordPage::renderRecordingTime()
-{
-    if (m_audioRecorder->state() != QMediaRecorder::StoppedState) {
-        QString time = UiUtil::formatMillisecond(m_recordingTime);
-        qDebug()<<"m_recordingTime:"<<m_recordingTime;
-        qDebug()<<"time:"<<time;
-        //QString time1 = "00:01";
-        m_recordTimeLabel->setText(time);
-        if(m_recordingTime > 3600000)
-        //if(0 == time.compare("01:00:00"))
-        {
-            if(nullptr != m_finishButton)
-            {
-                qDebug()<<"m_recordingTimeLast:"<<m_recordingTime;
-                qDebug()<<"timeLast:"<<time;
-                m_finishButton->clicked();
-            }
-        }
-    }
-}
-
 void RecordPage::startRecord()
 {
     QString fileName = generateRecordingFilename();
@@ -238,13 +215,14 @@ void RecordPage::startRecord()
 
     m_audioRecorder->setOutputLocation(recordPath);
     m_waveform->clearWave();
-    m_recordingTime = 0;
+    //m_recordingTime = 0;
     m_recordTimeLabel->setText("00:00");
-    m_tickerTimer->start(200);
+    //m_tickerTimer->start(200);
 
-    QDateTime currentTime = QDateTime::currentDateTime();
-    lastUpdateTime = currentTime;
+//    QDateTime currentTime = QDateTime::currentDateTime();
+//    lastUpdateTime = currentTime;
     voiceInfo.voicePath = recordPath;
+    voiceInfo.voiceLength = 0;
     m_audioRecorder->record();
 
     Intancer::get_Intancer()->setRecodingFlag(true);
@@ -315,10 +293,6 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
         connect(audioProbe, SIGNAL(audioBufferProbed(QAudioBuffer)), this, SLOT(renderLevel(QAudioBuffer)));
     }
 
-    m_tickerTimer = new QTimer(this);
-    m_tickerTimer->setInterval(200);
-    connect(m_tickerTimer, SIGNAL(timeout()), this, SLOT(renderRecordingTime()));
-
     connect(m_finishButton, SIGNAL(clicked()), this, SLOT(handleClickFinishButton()));
     connect(m_recordingButton, SIGNAL(pause()), this, SLOT(pauseRecord()));
     connect(m_recordingButton, SIGNAL(resume()), this, SLOT(resumeRecord()));
@@ -330,9 +304,6 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
 void RecordPage::stopRecord()
 {
     m_audioRecorder->stop();
-    m_tickerTimer->stop();
-    //m_recordTimeLabel->setText("00:00");
-    voiceInfo.voiceLength = m_recordingTime;
     voiceInfo.voiceSampleData = UiUtil::convertFloatListToString(m_waveform->getWholeSampleList());
     recordPath.clear();
     emit finishRecord(voiceInfo);
@@ -348,8 +319,6 @@ void RecordPage::exitRecord()
 
     m_recordingButton->onlyhandleResume();
     m_audioRecorder->stop();
-    m_tickerTimer->stop();
-    m_recordTimeLabel->setText("00:00");
     //start notify by yuanshuai 20191128 bug 3807
 //    recordPath.clear();
 //    QFile(getRecordingFilepath()).remove();
@@ -367,9 +336,6 @@ void RecordPage::pauseRecord()
 
 void RecordPage::resumeRecord()
 {
-    QDateTime currentTime = QDateTime::currentDateTime();
-    lastUpdateTime = currentTime;
-
     m_audioRecorder->record();
 }
 
@@ -388,12 +354,18 @@ QString RecordPage::getRecordingFilepath()
 
 void RecordPage::renderLevel(const QAudioBuffer &buffer)
 {
-    QDateTime currentTime = QDateTime::currentDateTime();
-    m_recordingTime += lastUpdateTime.msecsTo(currentTime);
-    lastUpdateTime = currentTime;
-
+    voiceInfo.voiceLength = static_cast<int>(buffer.startTime() / 1000);
+    QString strTime = UiUtil::formatMillisecond(voiceInfo.voiceLength);
+    if(m_recordTimeLabel->text() != strTime)
+    {
+        m_recordTimeLabel->setText(strTime);
+    }
     QVector<qreal> levels = Waveform::getBufferLevels(buffer);
     for (int i = 0; i < levels.count(); ++i) {
         m_waveform->updateWave(levels.at(i));
+    }
+    if(voiceInfo.voiceLength >= 3600000)
+    {
+        handleClickFinishButton();
     }
 }
