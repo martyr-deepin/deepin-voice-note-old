@@ -209,7 +209,13 @@ void RecordPage::startRecord()
         audioSettings.setQuality(QMultimedia::HighQuality);
         audioSettings.setEncodingMode(QMultimedia::ConstantQualityEncoding);
 
-        m_audioRecorder->setEncodingSettings(audioSettings, QVideoEncoderSettings(), audioContainer);
+        if (nullptr != m_audioRecorder) {
+            if (m_audioRecorder->state() == QMediaRecorder::StoppedState) {
+                m_audioRecorder->setEncodingSettings(audioSettings, QVideoEncoderSettings(), audioContainer);
+            } else {
+                qDebug() << "SetEncodingSetting invalid on state:" << m_audioRecorder->state();
+            }
+        }
     }
     //Patch for fixed record format ******END  ******
 
