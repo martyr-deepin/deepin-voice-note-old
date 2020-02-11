@@ -11,5 +11,5 @@ Homepage: <insert the upstream URL, if relevant>
 Package: deepin-voice-note
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Voice Notes
+ Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.
