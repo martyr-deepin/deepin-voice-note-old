@@ -12,4 +12,4 @@ Package: deepin-voice-note
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Voice Notes
- Voice Notepad is a lightweight voice tool that provides text notes and voice recordings.
+ Voice Notes is a lightweight memo tool to make text notes and voice recordings.
