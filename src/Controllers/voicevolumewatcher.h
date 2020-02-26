@@ -13,16 +13,16 @@ public:
     void stopWatch();
     //void setIsRecoding(bool value);
     void run();
-    bool getCouldUse();
+    int getCouldUse();
 
 signals:
-    void sigRecodeState(bool couldUse);
+    void sigRecodeState(int couldUse);
 
 
 private:
     bool m_loopwatch;
     //bool m_isRecoding;
-    bool m_coulduse;
+    int m_coulduse;
     int m_failedCount;
 };
 

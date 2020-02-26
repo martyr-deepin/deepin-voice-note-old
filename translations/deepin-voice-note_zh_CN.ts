@@ -371,6 +371,18 @@
         <source>No search results</source>
         <translation>无搜索结果</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <source>The low input volume may result in bad recordings. Do you want to continue?</source>
+        <translation>当前系统输入音量低，可能影响录音效果，是否继续录音？</translation>
+    </message>
 </context>
 <context>
     <name>SearchNonePage</name>

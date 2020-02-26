@@ -371,6 +371,18 @@
         <source>No search results</source>
         <translation>No search results</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>Confirm</translation>
+    </message>
+    <message>
+        <source>The low input volume may result in bad recordings. Do you want to continue?</source>
+        <translation>The low input volume may result in bad recordings. Do you want to continue?</translation>
+    </message>
 </context>
 <context>
     <name>SearchNonePage</name>

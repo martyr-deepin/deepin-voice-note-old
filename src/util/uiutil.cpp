@@ -439,10 +439,11 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
     return  v;
 }
 
-bool UiUtil::canMicrophoneInput()
+int UiUtil::canMicrophoneInput()
 {
     QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
                                             "com.deepin.daemon.Audio", "DefaultSource");
+    //com.deepin.daemon.Audio.Source
     if (v.isValid()) {
         QDBusObjectPath path = v.value<QDBusObjectPath>();
         QDBusInterface ainterface("com.deepin.daemon.Audio", path.path(),
@@ -450,8 +451,11 @@ bool UiUtil::canMicrophoneInput()
                                   QDBusConnection::sessionBus());
         if (!ainterface.isValid())
         {
-            return false;
+            return 0;
         }
+
+        QVariant iv = redDBusProperty("com.deepin.daemon.Audio", path.path(),
+                                                "com.deepin.daemon.Audio.Source", "Volume");
         //调用远程的value方法
         QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
         if (reply.isValid()){
@@ -460,21 +464,27 @@ bool UiUtil::canMicrophoneInput()
                                                     "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
-                if(0.0001 < volume)
+                if(0.000001 < volume)
                 {
-                    return true;
+                    if (iv.isValid()) {
+                        double inputVolume = iv.toDouble();
+                        if (inputVolume < 0.2) {
+                            return 2;
+                        }
+                    }
+                    return 1;
                 }
                 else
                 {
-                    return false;
+                    return 0;
                 }
                 //return volume != 0.0;
             }
         } else {
-           return  false;
+           return  0;
         }
     }
-    return false;
+    return 0;
 //    return true;
 }
 

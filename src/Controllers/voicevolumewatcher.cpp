@@ -6,7 +6,7 @@ voiceVolumeWatcher::voiceVolumeWatcher(QObject *parent) : QThread(parent)
 {
     m_loopwatch = true;
     //m_isRecoding = false;
-    m_coulduse = false;
+    m_coulduse = 0;
     m_failedCount = 0;
 }
 
@@ -35,10 +35,11 @@ void voiceVolumeWatcher::run()
         //log缓存被更新并且仍进行loop循环
         //if(!m_isRecoding && m_loopwatch)
         //{
-            bool couldUse = false;
+            int couldUse = 0;
+            //返回0：录音设备异常，返回1：录音设备正常，返回2：系统输入音量低于20%
             couldUse = UiUtil::canMicrophoneInput();
             //couldUse = true;
-            if(!couldUse)
+            if(couldUse == 0)
             {
                 m_failedCount++;
             }
@@ -49,7 +50,7 @@ void voiceVolumeWatcher::run()
 
             if(couldUse != m_coulduse)
             {
-                if(!couldUse)//failded
+                if(couldUse == 0)//failded
                 {
                     if(5 <= m_failedCount)//real failed
                     {
@@ -69,7 +70,7 @@ void voiceVolumeWatcher::run()
     }
 }
 
-bool voiceVolumeWatcher::getCouldUse()
+int voiceVolumeWatcher::getCouldUse()
 {
     return m_coulduse;
 }

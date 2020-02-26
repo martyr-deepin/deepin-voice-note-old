@@ -101,7 +101,7 @@ void RightView::initConnection()
 
     //connect(m_noteListWidget, SIGNAL(sigHideViewAddTextButton()), this, SLOT(onViewAddTextHide()));
 
-    connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::handleStartRecord);
+    connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::slotJudgeVolumeLow);
     connect(m_addVoiceBtn, &DFloatingButton::clicked, this, &RightView::TryToDisEditAllText);
     connect(m_addVoiceBtn, SIGNAL(sigHoverd()), this, SLOT(ShowRecodeTip()));
 
@@ -270,6 +270,17 @@ void RightView::initRecordStackedWidget()
 //    m_recordStackedWidget->move((this->width() - m_recordStackedWidget->width())/2,this->height() - 10 - m_recordStackedWidget->height());
 //    m_recordStackedWidget->show();
     m_addVoiceBtn->setVisible(false);
+}
+
+DDialog *RightView::creatDialog(const QString &title, const QString &content)
+{
+    DDialog *pDialog = new DDialog(title, content, this);
+    pDialog->setWindowFlags(pDialog->windowFlags() | Qt::WindowStaysOnTopHint);
+    pDialog->setIcon(QIcon::fromTheme("deepin-voice-note"));
+    pDialog->addButton(tr("Cancel"), false, DDialog::ButtonNormal);
+    pDialog->addButton(tr("Confirm"), false, DDialog::ButtonWarning);
+
+    return pDialog;
 }
 
 void RightView::onShowNoResult()
@@ -588,10 +599,30 @@ void RightView::VoicePlayOrPause()
 }
 //Add end bug 2587
 
+void RightView::slotJudgeVolumeLow()
+{
+    //录音按钮点击后，判断当前输入音量是否过低
+    if (m_isInputVolumeLow == true) {
+        DDialog *pDialog = creatDialog(tr(""), tr("The low input volume may result in bad recordings. Do you want to continue?"));
+        connect(pDialog, &DDialog::buttonClicked, this, [=](int index) {
+            if (index == 0) {
+                return;
+            } else if (index == 1) {
+                handleStartRecord();
+            }
+        });
+
+        pDialog->exec();
+    } else {
+        handleStartRecord();
+    }
+}
+
 void RightView::handleStartRecord()
 {
     //QList<QAudioDeviceInfo>  list = QAudioDeviceInfo::availableDevices(QAudio::Mode::AudioInput);
     //start add by yuanshuai 20191205 bug 4272
+
     m_addVoiceBtn->setFocus();
     //end
 
@@ -790,15 +821,42 @@ void RightView::oncheckCurPageVoiceForDelete()
     updateNoteList();
 }
 
-void RightView::onCheckRecordCouldUse(bool coulduse)
+void RightView::onCheckRecordCouldUse(int coulduse)
 {
 
     if (!this->m_noteListWidget->isLoadedAudioPlayer) {
-        coulduse = false;
+        coulduse = 0;
+    }
+
+    if (coulduse == 2) {
+        m_isInputVolumeLow = true;
+    } else {
+        m_isInputVolumeLow = false;
     }
 
     if(coulduse)
     {
+        if (coulduse == 2) {
+
+            if(Intancer::get_Intancer()->getRecodingFlag())
+            {
+                DDialog *dialog = creatDialog(tr(""), tr("The low input volume may result in bad recordings. Do you want to continue?"));
+                m_recordPage->pauseRecord();
+                m_recordPage->m_recordingButton->handlePause();
+                connect(dialog, &DDialog::buttonClicked, this, [=](int index) {
+                    if (index == 0)
+                    {
+                        m_recordPage->stopRecord();
+                    } else if (index == 1) {
+                        m_recordPage->resumeRecord();
+                        m_recordPage->m_recordingButton->handleResume();
+                    }
+                });
+
+                dialog->exec();
+            }
+        }
+
         //m_pVoiceVolumeWatcher->stopWatch();
         if(m_pVoiceVolumeWatcher->getCouldUse())
         {

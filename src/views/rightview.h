@@ -20,6 +20,7 @@
 #include <DBlurEffectWidget>
 #include <QAudioDeviceInfo>
 #include <DToolTip>
+#include <DDialog>
 
 DWIDGET_USE_NAMESPACE
 enum ADDTEXTBTN_STATE {TOP=0, MIDDLE=1, BOTTOM=2};
@@ -80,13 +81,14 @@ public slots:
     void onViewAddTextHide();
     void changeTheme();
     void oncheckCurPageVoiceForDelete();
-    void onCheckRecordCouldUse(bool coulduse);
+    void onCheckRecordCouldUse(int coulduse);
     void ShowRecodeTip();
     void handleStopRecord2(qint64 position); //ynb  20191109
     void OnTimeOut();
     void onMoveAddTextBtnToTop();
     void onMoveAddTextBtnToMiddle(int listheightContent);
     void onMoveAddTextBtnToBottom();
+    void slotJudgeVolumeLow();
 
 protected:
     void resizeEvent(QResizeEvent * event);
@@ -96,6 +98,7 @@ private:
     void initConnection();
     void initNoteList();
     void initRecordStackedWidget();
+    DDialog *creatDialog(const QString &title, const QString &content);
 
     int m_currFolderId;
     AddTextBtn *m_AddButtonLocked;
@@ -129,6 +132,8 @@ private:
     LoadWidget *m_LoadWidget;
 
     WorkerController *workController;
+    bool m_bVolumeWarning {false};
+    bool m_isInputVolumeLow {false};
 };
 
 #endif // RIGHTVIEW_H
