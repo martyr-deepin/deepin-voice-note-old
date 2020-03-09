@@ -138,11 +138,13 @@ bool LeftFolderList::eventFilter(QObject *o, QEvent *e)
     switch (e->type())
     {
         case QEvent::MouseButtonPress:
+            this->setFocus();
             emit sigBoardPress();
             //qDebug()<<"LeftFolderList::MouseButtonPress";
             UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("LeftFolderList::MouseButtonPress:"), QString("LeftFolderList::MouseButtonPress:"));
         break;
     }
+
     return DListWidget::eventFilter(o,e);
 }
 
