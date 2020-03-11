@@ -14,7 +14,6 @@
 #include <QWidget>
 #include <DWidget>
 #include <dimagebutton.h>
-//#include <DImageButton>
 #include <QObject>
 #include <DFloatingButton>
 #include <DBlurEffectWidget>
