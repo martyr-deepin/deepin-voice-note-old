@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QThread>
 
+#define INPUT_DEVICE_CONF "/etc/deepin-voice-note/deepin-voice-note.conf"
+
 class voiceVolumeWatcher : public QThread
 {
     Q_OBJECT
@@ -24,6 +26,9 @@ private:
     //bool m_isRecoding;
     int m_coulduse;
     int m_failedCount;
+    bool m_bCheckInputDevice {true};
+
+    bool checkInputDevice();
 };
 
 

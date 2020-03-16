@@ -8,6 +8,8 @@ voiceVolumeWatcher::voiceVolumeWatcher(QObject *parent) : QThread(parent)
     //m_isRecoding = false;
     m_coulduse = 0;
     m_failedCount = 0;
+
+    m_bCheckInputDevice = checkInputDevice();
 }
 
 voiceVolumeWatcher::~voiceVolumeWatcher()
@@ -37,7 +39,7 @@ void voiceVolumeWatcher::run()
         //{
             int couldUse = 0;
             //返回0：录音设备异常，返回1：录音设备正常，返回2：系统输入音量低于20%
-            couldUse = UiUtil::canMicrophoneInput();
+            couldUse = UiUtil::canMicrophoneInput(m_bCheckInputDevice);
             //couldUse = true;
             if(couldUse == 0)
             {
@@ -73,4 +75,23 @@ void voiceVolumeWatcher::run()
 int voiceVolumeWatcher::getCouldUse()
 {
     return m_coulduse;
+}
+
+bool voiceVolumeWatcher::checkInputDevice()
+{
+    QFile file(INPUT_DEVICE_CONF);
+    if (file.exists() == false) {
+        return true;
+    }
+
+    QSettings settings(INPUT_DEVICE_CONF, QSettings::IniFormat);
+    QString strCheInputDecValue;
+    strCheInputDecValue = settings.value("Audio/CheckInputDevice").toString();
+    if (strCheInputDecValue == "true") {
+        m_bCheckInputDevice = true;
+    } else {
+        m_bCheckInputDevice = false;
+    }
+
+    return m_bCheckInputDevice;
 }

@@ -33,6 +33,8 @@
 #include <QtDBus>
 #include <QDBusConnection>
 #include <QDBusError>
+#include <DLog>
+
 #include "myapplication.h"
 DWIDGET_USE_NAMESPACE
 using namespace Dtk::Core;
@@ -74,7 +76,8 @@ int main(int argc, char *argv[])
     a.setApplicationDescription(QObject::tr("Voice Notes is a lightweight memo tool to make text notes and voice recordings."));
 //    a.setApplicationDescription(QObject::tr("语音记事本是一款提供文本记事、语音录音记录的轻量级语音工具。"));
 
-
+    Dtk::Core::DLogManager::registerConsoleAppender();
+    Dtk::Core::DLogManager::registerFileAppender();
 
     MyMainWindow  *mainWindowObject = new MyMainWindow();  //Add  createVoiceMemo 新建语音备忘录对应
     einterface.setMainWindowObj(mainWindowObject); //Add  createVoiceMemo 新建语音备忘录对应

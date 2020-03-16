@@ -46,7 +46,7 @@ public:
     static QString getRecordingVoiceFullPath(QString fileName);
     static QPixmap PixmapToRound(QPixmap &src, int radius);
     static QString getDefaultAvatarByRand();
-    static int canMicrophoneInput();
+    static int canMicrophoneInput(bool bCheckInputDevice);
     static QVariant redDBusProperty(const QString &service, const QString &path, const QString &interface, const char *propert);
     static QPixmap renderSVG(const QString &filePath, const QSize &size, DApplication *pApp);
 

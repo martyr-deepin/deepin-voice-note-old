@@ -439,7 +439,7 @@ QVariant UiUtil::redDBusProperty(const QString &service, const QString &path, co
     return  v;
 }
 
-int UiUtil::canMicrophoneInput()
+int UiUtil::canMicrophoneInput(bool bCheckInputDevice)
 {
     QVariant v = redDBusProperty("com.deepin.daemon.Audio", "/com/deepin/daemon/Audio",
                                             "com.deepin.daemon.Audio", "DefaultSource");
@@ -458,12 +458,16 @@ int UiUtil::canMicrophoneInput()
                                                 "com.deepin.daemon.Audio.Source", "Volume");
         //调用远程的value方法
         QDBusReply<QDBusObjectPath> reply = ainterface.call("GetMeter");
-        if (reply.isValid()){
+        if (reply.isValid()) {
             path = reply.value();
             QVariant v = redDBusProperty("com.deepin.daemon.Audio", path.path(),
                                                     "com.deepin.daemon.Audio.Meter", "Volume");
             if (v.isValid()) {
                 double volume = v.toDouble();
+                if (bCheckInputDevice == false) {
+                    volume = 0.1;
+                }
+
                 if(0.000001 < volume)
                 {
                     if (iv.isValid()) {
