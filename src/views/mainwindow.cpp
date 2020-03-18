@@ -825,6 +825,7 @@ void MyMainWindow::checkFileExist()
     DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
 }
 //end
+
 void MyMainWindow::showNoVoiceDeviceDialog()
 {
     DFloatingMessage *pDFloatingMessage = new DFloatingMessage(DFloatingMessage::MessageType::TransientType,this);
@@ -833,6 +834,7 @@ void MyMainWindow::showNoVoiceDeviceDialog()
     pDFloatingMessage->setIcon(QIcon(UiUtil::renderSVG(":/image/icon/normal/warning .svg", QSize(32,32),qApp)));
     DMessageManager::instance()->sendMessage(this,pDFloatingMessage);
 }
+
 //Add start bug 2587
 void MyMainWindow::previewShortcut()
 {
@@ -851,10 +853,11 @@ void MyMainWindow::previewShortcut()
     connect(shortcutViewProcess, SIGNAL(finished(int)),
     shortcutViewProcess, SLOT(deleteLater()));
 }
+
 void MyMainWindow::newNoteShortcut()
 {
     //start add by yuanshuai 20191128 bug 3855
-    if(!Intancer::get_Intancer()->getRecodingFlag())
+    if(!Intancer::get_Intancer()->getRecodingFlag() && !Intancer::get_Intancer()->getVoiceToTextFlag())
     {
         //2587
         if(INIT_PAGE == m_showPageID)
@@ -869,14 +872,17 @@ void MyMainWindow::newNoteShortcut()
         //2587
     }
 }
+
 void MyMainWindow::searchShortcut()
 {
     m_searchEdit->lineEdit()->setFocus();
 }
+
 void MyMainWindow::reNameNoteShortcut()
 {
     m_mainPage->reNameFolder();
 }
+
 void MyMainWindow::deleteNoteShortcut()
 {
     //Fix bug *******BEGIN************
