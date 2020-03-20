@@ -44,7 +44,7 @@
 #include <DFloatingButton>
 #include <DBlurEffectWidget>
 
-#include "dbus/dbuslogin1manager.h"
+#include "../dbus/dbuslogin1manager.h"
 
 DWIDGET_USE_NAMESPACE
 
