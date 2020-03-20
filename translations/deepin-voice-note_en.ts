@@ -269,6 +269,10 @@
         <source>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</source>
         <translation>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</translation>
     </message>
+    <message>
+        <source>Recordings not saved</source>
+        <translation>Recordings not saved</translation>
+    </message>
 </context>
 <context>
     <name>RightNoteList</name>

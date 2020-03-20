@@ -59,6 +59,7 @@ RecordPage::RecordPage(DWidget *parent) : DFloatingWidget(parent)
     initUI();
     initConnection();
     installEventFilter(this);  // add event filter
+    initLogin1Manager();
 }
 
 void RecordPage::getAudioStates(QMultimedia::AvailabilityStatus &audiostatus)
@@ -149,6 +150,38 @@ void RecordPage::initConnection()
     this->workController->createAudioRecorder();
 }
 
+void RecordPage::initLogin1Manager()
+{
+    m_pLogin1Manager = new DBusLogin1Manager(
+                "org.freedesktop.login1",
+                "/org/freedesktop/login1",
+                QDBusConnection::systemBus(), this);
+
+    connect(m_pLogin1Manager, &DBusLogin1Manager::PrepareForSleep,
+            this, &RecordPage::onSystemDown);
+    connect(m_pLogin1Manager, &DBusLogin1Manager::PrepareForShutdown,
+            this, &RecordPage::onSystemDown);
+}
+
+void RecordPage::releaseHaltLock()
+{
+    QDBusPendingReply<QDBusUnixFileDescriptor> releaseLock = m_lockFd;
+    m_lockFd = QDBusPendingReply<QDBusUnixFileDescriptor>();
+}
+
+void RecordPage::holdHaltLock()
+{
+    m_lockFd = m_pLogin1Manager->Inhibit(
+                "shutdown:sleep",
+                QObject::tr("Voice Notes"),
+                QObject::tr("Recordings not saved"),
+                "block");
+
+    if (m_lockFd.isError()) {
+        qCritical() << "Init login manager error:" << m_lockFd.error();
+    }
+}
+
 //void RecordPage::handleExpandAnimationFinish()
 //{
 //    Utils::removeChildren(buttonAreaWidget);
@@ -176,6 +209,9 @@ void RecordPage::handleClickFinishButton()
 
 void RecordPage::startRecord()
 {
+    //Hold locker
+    holdHaltLock();
+
     QString fileName = generateRecordingFilename();
     recordPath = UiUtil::getRecordingVoiceFullPath(fileName);
 
@@ -307,6 +343,15 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
     connect(m_recordingButton, SIGNAL(resume()), this, SIGNAL(buttonClicled()));
 }
 
+void RecordPage::onSystemDown(bool active)
+{
+    if (active) {
+        if (Intancer::get_Intancer()->getRecodingFlag()) {
+            stopRecord();
+        }
+    }
+}
+
 void RecordPage::stopRecord()
 {
     m_audioRecorder->stop();
@@ -314,6 +359,9 @@ void RecordPage::stopRecord()
     recordPath.clear();
     emit finishRecord(voiceInfo);
     Intancer::get_Intancer()->setRecodingFlag(false);
+
+    //Release locker
+    releaseHaltLock();
 }
 
 void RecordPage::exitRecord()

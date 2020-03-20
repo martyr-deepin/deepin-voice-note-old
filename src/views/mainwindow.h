@@ -14,6 +14,7 @@
 #include <QPushButton>
 #include <DSearchEdit>
 #include <DIconButton>
+#include <QDBusPendingReply>
 
 #define DEFAULT_WINDOWS_WIDTH 820
 #define DEFAULT_WINDOWS_HEIGHT 634
@@ -131,6 +132,7 @@ private:
     //Add start bug 2587
     void initShortcutkeys();
     void initTheRest();
+
     void switchPage(STATIC_PAGE pageID);
     QJsonObject creatShorcutJson();
     void initRight();

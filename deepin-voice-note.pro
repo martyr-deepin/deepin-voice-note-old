@@ -84,7 +84,9 @@ SOURCES += \
     src/views/voicetotextedit.cpp \
     src/app/myapplication.cpp \
     src/Controllers/exportedinterface.cpp \
-    src/views/loadwidget.cpp
+    src/views/loadwidget.cpp \
+    src/dbus/dbuslogin1manager.cpp \
+    src/dbus/dbusvariant.cpp
 
 HEADERS += \
     src/app/consts.h \
@@ -137,7 +139,9 @@ HEADERS += \
     src/views/voicetotextedit.h \
     src/app/myapplication.h \
     src/Controllers/exportedinterface.h \
-    src/views/loadwidget.h
+    src/views/loadwidget.h \
+    src/dbus/dbuslogin1manager.h \
+    src/dbus/dbusvariant.h
 
 INCLUDEPATH += \
     src/app \

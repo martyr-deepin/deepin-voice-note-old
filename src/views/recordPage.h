@@ -44,6 +44,8 @@
 #include <DFloatingButton>
 #include <DBlurEffectWidget>
 
+#include "dbus/dbuslogin1manager.h"
+
 DWIDGET_USE_NAMESPACE
 
 //录音按钮Page
@@ -83,6 +85,8 @@ public slots:
     void stopRecord();
     void changeTheme();
     void onAudioRecorderCreated(QAudioRecorder* audioRecorder);
+    //System shutdon
+    void onSystemDown(bool active);
     
 private:
     //ExpandAnimationButton *expandAnimationButton;
@@ -107,9 +111,17 @@ private:
     QMultimedia::AvailabilityStatus m_audioStatus;
 
     WorkerController* workController;
+    //Login session manager
+    DBusLogin1Manager *m_pLogin1Manager {nullptr};
+    QDBusPendingReply<QDBusUnixFileDescriptor> m_lockFd;
 
     void initUI();
     void initConnection();
+    void initLogin1Manager();
+
+protected:
+    void releaseHaltLock();
+    void holdHaltLock();
 };
 
 #endif

@@ -902,7 +902,11 @@ void MyMainWindow::deleteNoteShortcut()
     {
         return;
     }
-    m_mainPage->deleteFolder();
+
+    if (!Intancer::get_Intancer()->getRecodingFlag()
+            && !Intancer::get_Intancer()->getVoiceToTextFlag()) {
+        m_mainPage->deleteFolder();
+    }
 }
 void MyMainWindow::VoiceNotesPlayShortcut()
 {

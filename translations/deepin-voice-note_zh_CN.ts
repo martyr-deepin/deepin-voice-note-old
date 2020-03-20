@@ -269,6 +269,10 @@
         <source>Voice Notes is a lightweight memo tool to make text notes and voice recordings.</source>
         <translation>语音记事本是一款提供文本记事、语音录音记录的轻量级记事工具。</translation>
     </message>
+    <message>
+        <source>Recordings not saved</source>
+        <translation>录音未保存</translation>
+    </message>
 </context>
 <context>
     <name>RightNoteList</name>
