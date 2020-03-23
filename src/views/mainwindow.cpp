@@ -898,15 +898,17 @@ void MyMainWindow::deleteNoteShortcut()
     }
     //Fix bug *******END   ************
 
+    if (Intancer::get_Intancer()->getRecodingFlag()
+        || Intancer::get_Intancer()->getVoiceToTextFlag()) {
+        return;
+    }
+
     if (m_mainPage->shortcutsDeleteByRightlist())
     {
         return;
     }
 
-    if (!Intancer::get_Intancer()->getRecodingFlag()
-            && !Intancer::get_Intancer()->getVoiceToTextFlag()) {
-        m_mainPage->deleteFolder();
-    }
+    m_mainPage->deleteFolder();
 }
 void MyMainWindow::VoiceNotesPlayShortcut()
 {
