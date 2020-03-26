@@ -18,7 +18,7 @@ LoadWidget::LoadWidget(QWidget *parent) :
     m_water->setTextVisible(true);
     m_water->setFixedSize(QSize(49,49));
 
-    m_deleteText = QString(tr("Deleteing..."));
+    m_deleteText = QString(tr("Deleting..."));
     m_switchText = QString(tr("Loading..."));
 
     m_Text = new DLabel(this);

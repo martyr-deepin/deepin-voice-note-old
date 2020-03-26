@@ -49,10 +49,10 @@ void LeftFolderList::initUI()
     m_boader->move(0,0);
     m_boader->setVisible(false);
 
-    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this notebook？")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this notebook?")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
 //    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除记事本吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
 
-    m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("Delete Folder in Recoding are note allowed")), nullptr);
+    m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("Do not delete the notebook while recording")), nullptr);
 //    m_delNoPromisDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("录音中禁止删除记事本")), nullptr);
 
     this->setViewportMargins(0,0,4,4); //liuyang bug3780 按道理要加5px边距，可是>=5时会产生1px的长线（暂时无法解决，故加4px）

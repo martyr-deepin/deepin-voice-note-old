@@ -13,7 +13,6 @@ TEMPLATE = app
 PKGCONFIG += dtkwidget dframeworkdbus
 QT += multimedia
 
-
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -165,11 +164,12 @@ desktop.files =  deepin-voice-note.desktop
 icon_files.path = /usr/share/icons/hicolor/scalable/apps
 icon_files.files = $$PWD/image/deepin-voice-note.svg
 
-
-INSTALLS += target desktop icon_files
-
+INSTALLS += target desktop translations icon_files
 RESOURCES += \
     images.qrc
+
+TRANSLATIONS += \
+    translations/deepin-voice-note.ts
 
 CONFIG(release, debug|release) {
     TRANSLATIONS = $$files($$PWD/translations/*.ts)

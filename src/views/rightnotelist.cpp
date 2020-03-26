@@ -92,7 +92,7 @@ void RightNoteList::createDArrowMenu()
     //if(nullptr == m_arrowMenu && nullptr == m_contextMenu && nullptr == m_saveAsAction && nullptr == m_delAction)
     {
         m_contextMenu = new MMenu;
-        m_saveAsAction = new QAction(tr("Save As TXT"),this);
+        m_saveAsAction = new QAction(tr("Save as TXT"),this);
         m_delAction = new QAction(tr("Delete"),this);
         m_asrAction = new QAction(tr("Voice to Text"),this);
         m_contextMenu->addAction(m_asrAction);  //Add 20191111
@@ -177,7 +177,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
         if (type == NOTE_TYPE::TEXT)
         {
             m_contextMenu->removeAction(m_asrAction);   //Add 20191111
-            m_saveAsAction->setText(QString(tr("Save As TXT")));
+            m_saveAsAction->setText(QString(tr("Save as TXT")));
         }
         else
         {
@@ -196,7 +196,7 @@ void RightNoteList::showDArrowMenu(int x, int y, NOTE_TYPE type)
                 m_asrAction->setEnabled(true);
             }
             //Add e 20191111
-            m_saveAsAction->setText(QString(tr("Save As MP3")));
+            m_saveAsAction->setText(QString(tr("Save as MP3")));
             //m_contextMenu->setFixedSize(QSize(162,109)); //Add 20191111
         }
         m_contextMenu->move(x - m_contextMenu->width()/2,y);
@@ -225,7 +225,7 @@ void RightNoteList::initUI()
 
     createDArrowMenu();
 
-    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this note？")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
+    m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Are you sure you want to delete this note?")), nullptr, QString(tr("Cancel")), QString(tr("Delete")));
     //m_delConfirmDialog = UiUtil::createChooseDialog(QString(""), QString(tr("您确定要删除这条记事项吗？")), nullptr, QString(tr("取消")), QString(tr("删除")));
     m_saveFileEndDialog = UiUtil::createConfirmDialog(QString(""), QString(tr("")), this);
     //by yuanshuai 20191120 2841
@@ -1721,12 +1721,12 @@ void RightNoteList::handleSaveFileEnd(bool result)
 
     if (result)
     {
-        title = tr("Save file successfully!");
+        //title = tr("Save file successfully!");
         //title = tr("保存文件成功!");
     }
     else
     {
-        title = tr("Saving file failed!");
+        //title = tr("Save failed");
         //title = tr("保存文件失败!");
     }
     m_saveFileEndDialog->setTitle(title);
