@@ -110,32 +110,38 @@ void RightNoteList::createDArrowMenu()
         connect(m_asrAction, SIGNAL(triggered(bool)), this, SLOT(handleAsrAsItem())); //Add 20191111
         connect(m_asrAction, SIGNAL(hovered()), this, SLOT(OnActionHoverd())); //Add 20191111
 
-        //Disable audio to text on community release ******BEGIN*************
-        if (DSysInfo::Deepin == DSysInfo::productType()) {
-            QScopedPointer<com::iflytek::aiservice::session> session(
-                        new com::iflytek::aiservice::session(
-                            "com.iflytek.aiservice","/",QDBusConnection::sessionBus(), nullptr)
-                        );
-
-            int error = 0;
-            QDBusReply<QDBusObjectPath> reply = session->createSession(QString("dectectAiService"), QString("asr"), error);
-            //Check if the aiservice exist
-            if (!reply.isValid()) {
-                //Service don't exist,hide the menu
-                if (reply.error().type() == QDBusError::ServiceUnknown) {
-                    qDebug() << "aiservice not available on:" << DSysInfo::operatingSystemName()
-                             << "version" << DSysInfo::productVersion();
-
-                    m_asrAction->setVisible(false);
-                } else {
-                    //Other error
-                    qDebug() << "session error:" << reply.error();
-                }
-            } else {
-                qDebug() << "aiservice exist.";
-                session->freeSession(QString("dectectAiService"), QString("asr"));
-            }
+		//Disable audio to text on community release ******BEGIN*************
+        if (DSysInfo::isCommunityEdition()) {
+            m_asrAction->setVisible(false);
         }
+		//Disable audio to text on community release ******END  *************
+
+        //Disable audio to text on community release ******BEGIN*************
+//        if (DSysInfo::Deepin == DSysInfo::productType()) {
+//            QScopedPointer<com::iflytek::aiservice::session> session(
+//                        new com::iflytek::aiservice::session(
+//                            "com.iflytek.aiservice","/",QDBusConnection::sessionBus(), nullptr)
+//                        );
+
+//            int error = 0;
+//            QDBusReply<QDBusObjectPath> reply = session->createSession(QString("dectectAiService"), QString("asr"), error);
+//            //Check if the aiservice exist
+//            if (!reply.isValid()) {
+//                //Service don't exist,hide the menu
+//                if (reply.error().type() == QDBusError::ServiceUnknown) {
+//                    qDebug() << "aiservice not available on:" << DSysInfo::operatingSystemName()
+//                             << "version" << DSysInfo::productVersion();
+
+//                    m_asrAction->setVisible(false);
+//                } else {
+//                    //Other error
+//                    qDebug() << "session error:" << reply.error();
+//                }
+//            } else {
+//                qDebug() << "aiservice exist.";
+//                session->freeSession(QString("dectectAiService"), QString("asr"));
+//            }
+//        }
         //Disable audio to text on community release ******END  *************
 
     }
