@@ -10,41 +10,41 @@
     <name>FileExistsDialog</name>
     <message>
         <source>The file name already exists. Do you want to replace the file?</source>
-        <translation type="unfinished"/>
+        <translation>파일 이름이 이미 존재합니다. 파일을 바꾸시겠습니까?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>확인</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>취소</translation>
     </message>
 </context>
 <context>
     <name>FolerWidgetItem</name>
     <message>
         <source>Duplicated notebook names</source>
-        <translation type="unfinished"/>
+        <translation>중복된 전자 필기장 이름</translation>
     </message>
     <message>
         <source>Failed to rename notebook</source>
-        <translation type="unfinished"/>
+        <translation>전자 필기장 이름을 바꾸지 못했습니다</translation>
     </message>
     <message>
         <source>The name must be between 1 and 64 characters</source>
-        <translation type="unfinished"/>
+        <translation>이름은 1 ~ 64 글자 사이여야 합니다</translation>
     </message>
 </context>
 <context>
     <name>InitEmptyPage</name>
     <message>
         <source>Create Notebook</source>
-        <translation>노트 만들기</translation>
+        <translation>전자 필기장 만들기</translation>
     </message>
     <message>
         <source>Create a notebook to start recording voice and making notes</source>
-        <translation>음성 녹음 및 메모를 시작하는 노트 만들기</translation>
+        <translation>음성 녹음 및 메모를 시작하는 전자 필기장 만들기</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this notebook?</source>
-        <translation type="unfinished"/>
+        <translation>이 전자 필기장을 삭제하시겠습니까?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -67,25 +67,25 @@
     </message>
     <message>
         <source>Do not delete the notebook while recording</source>
-        <translation type="unfinished"/>
+        <translation>녹음중에는 전자 필기장을 삭제하지 마십시오</translation>
     </message>
 </context>
 <context>
     <name>LoadWidget</name>
     <message>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>삭제중...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation>불러오는 중...</translation>
     </message>
 </context>
 <context>
     <name>MyMainWindow</name>
     <message>
         <source>The recording will stop if you go on searching. Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>검색을 계속하면 녹음이 중지됩니다. 계속하시겠습니까?</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>Do you want to stop the current recording?</source>
-        <translation>현재 녹화를 중지하시겠습니까?</translation>
+        <translation>현재 녹음를 중지하시겠습니까?</translation>
     </message>
     <message>
         <source>Converting a voice note now. Do you want to stop it?</source>
@@ -113,15 +113,15 @@
     </message>
     <message>
         <source>New notebook</source>
-        <translation>새 노트</translation>
+        <translation>새 전자 필기장</translation>
     </message>
     <message>
         <source>Delete notebook/note</source>
-        <translation>노트/메모 삭제</translation>
+        <translation>전자 필기장/메모 삭제</translation>
     </message>
     <message>
         <source>Rename notebook</source>
-        <translation>노트 이름변경</translation>
+        <translation>전자 필기장 이름변경</translation>
     </message>
     <message>
         <source>Play/Pause</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>Notebooks</source>
-        <translation>노트</translation>
+        <translation>전자 필기장</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -172,7 +172,7 @@
     <name>QObject</name>
     <message>
         <source>Notebook</source>
-        <translation>노트</translation>
+        <translation>전자 필기장</translation>
     </message>
     <message>
         <source>Voice Notes</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished"/>
+        <translation>이 메모를 삭제하시겠습니까?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -250,7 +250,7 @@
     </message>
     <message>
         <source>No recording device detected</source>
-        <translation>녹음 장치가 검색되지 않음</translation>
+        <translation>녹음 장치가 검색되지 않았습니다</translation>
     </message>
     <message>
         <source>Cancel</source>

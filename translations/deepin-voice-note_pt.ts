@@ -10,30 +10,30 @@
     <name>FileExistsDialog</name>
     <message>
         <source>The file name already exists. Do you want to replace the file?</source>
-        <translation type="unfinished"/>
+        <translation>O nome do ficheiro já existe. Deseja substituir o ficheiro?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>FolerWidgetItem</name>
     <message>
         <source>Duplicated notebook names</source>
-        <translation type="unfinished"/>
+        <translation>Nomes de blocos de notas duplicados</translation>
     </message>
     <message>
         <source>Failed to rename notebook</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao renomear o bloco de notas</translation>
     </message>
     <message>
         <source>The name must be between 1 and 64 characters</source>
-        <translation type="unfinished"/>
+        <translation>O nome deve ter entre 1 e 64 caracteres</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this notebook?</source>
-        <translation type="unfinished"/>
+        <translation>Tem a certeza que deseja eliminar este bloco de notas?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -67,25 +67,25 @@
     </message>
     <message>
         <source>Do not delete the notebook while recording</source>
-        <translation type="unfinished"/>
+        <translation>Não elimine o bloco de notas durante a gravação</translation>
     </message>
 </context>
 <context>
     <name>LoadWidget</name>
     <message>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>A eliminar...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation>A carregar...</translation>
     </message>
 </context>
 <context>
     <name>MyMainWindow</name>
     <message>
         <source>The recording will stop if you go on searching. Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>A gravação será interrompida se continuar a pesquisar. Deseja continuar?</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Do you want to stop the current recording?</source>
-        <translation>Quer parar a gravação atual?</translation>
+        <translation>Deseja parar a gravação atual?</translation>
     </message>
     <message>
         <source>Converting a voice note now. Do you want to stop it?</source>
-        <translation>A converter uma nota de voz agora. Quer parar?</translation>
+        <translation>A converter uma nota de voz agora. Deseja parar?</translation>
     </message>
     <message>
         <source>Help</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished"/>
+        <translation>Tem a certeza que deseja eliminar esta nota?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -239,7 +239,7 @@
     </message>
     <message>
         <source>File name cannot be empty</source>
-        <translation>O nome do ficheiro não pode ficar vazio</translation>
+        <translation>O nome do ficheiro não pode ficar em branco</translation>
     </message>
 </context>
 <context>
@@ -276,11 +276,11 @@
     <name>UiUtil</name>
     <message>
         <source>The voice conversion failed. Do you want to try again? </source>
-        <translation>A conversão de voz falhou. Quer tentar novamente?</translation>
+        <translation>A conversão de voz falhou. Deseja tentar novamente?</translation>
     </message>
     <message>
         <source>The voice conversion failed due to the poor network connection. Do you want to try again?</source>
-        <translation>A conversão de voz falhou devido à má ligação de rede. Quer tentar novamente?</translation>
+        <translation>A conversão de voz falhou devido à má ligação de rede. Deseja tentar novamente?</translation>
     </message>
 </context>
 </TS>

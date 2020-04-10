@@ -10,30 +10,30 @@
     <name>FileExistsDialog</name>
     <message>
         <source>The file name already exists. Do you want to replace the file?</source>
-        <translation type="unfinished"/>
+        <translation>Tiedostonimi on jo olemassa. Haluatko korvata tiedoston?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Vahvista</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Peru</translation>
     </message>
 </context>
 <context>
     <name>FolerWidgetItem</name>
     <message>
         <source>Duplicated notebook names</source>
-        <translation type="unfinished"/>
+        <translation>Muistikirjan kaksinkertaiset nimet</translation>
     </message>
     <message>
         <source>Failed to rename notebook</source>
-        <translation type="unfinished"/>
+        <translation>Muistikirjan nimeäminen epäonnistui</translation>
     </message>
     <message>
         <source>The name must be between 1 and 64 characters</source>
-        <translation type="unfinished"/>
+        <translation>Nimen on oltava 1-64 merkkiä pitkä</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this notebook?</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko varmasti poistaa tämän muistikirjan?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -67,25 +67,25 @@
     </message>
     <message>
         <source>Do not delete the notebook while recording</source>
-        <translation type="unfinished"/>
+        <translation>Älä poista muistikirjaa tallennuksen aikana</translation>
     </message>
 </context>
 <context>
     <name>LoadWidget</name>
     <message>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>Poistaminen...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation>Ladataan...</translation>
     </message>
 </context>
 <context>
     <name>MyMainWindow</name>
     <message>
         <source>The recording will stop if you go on searching. Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Tallennus keskeytyy, jos jatkat hakua. Haluatko jatkaa?</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko varmasti poistaa tämän merkinnän?</translation>
     </message>
     <message>
         <source>Cancel</source>

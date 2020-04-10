@@ -10,41 +10,41 @@
     <name>FileExistsDialog</name>
     <message>
         <source>The file name already exists. Do you want to replace the file?</source>
-        <translation type="unfinished"/>
+        <translation>El nom del fitxer ja existeix. Voleu reemplaçar el fitxer?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Confirmeu-ho</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Cancel·la</translation>
     </message>
 </context>
 <context>
     <name>FolerWidgetItem</name>
     <message>
         <source>Duplicated notebook names</source>
-        <translation type="unfinished"/>
+        <translation>Noms de quaderns duplicats</translation>
     </message>
     <message>
         <source>Failed to rename notebook</source>
-        <translation type="unfinished"/>
+        <translation>Ha fallat canviar el nom del quadern.</translation>
     </message>
     <message>
         <source>The name must be between 1 and 64 characters</source>
-        <translation type="unfinished"/>
+        <translation>El nom ha de tenir entre 1 i 64 caràcters.</translation>
     </message>
 </context>
 <context>
     <name>InitEmptyPage</name>
     <message>
         <source>Create Notebook</source>
-        <translation>Crea un bloc de notes</translation>
+        <translation>Crea un quadern</translation>
     </message>
     <message>
         <source>Create a notebook to start recording voice and making notes</source>
-        <translation>Creeu un bloc de notes per començar a gravar notes de text i de veu.</translation>
+        <translation>Creeu un quadern per començar a gravar notes de veu i de text.</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this notebook?</source>
-        <translation type="unfinished"/>
+        <translation>Segur que voleu eliminar aquest quadern?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -67,25 +67,25 @@
     </message>
     <message>
         <source>Do not delete the notebook while recording</source>
-        <translation type="unfinished"/>
+        <translation>No elimineu el quadern mentre es grava.</translation>
     </message>
 </context>
 <context>
     <name>LoadWidget</name>
     <message>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>S&apos;elimina...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation>Es carrega...</translation>
     </message>
 </context>
 <context>
     <name>MyMainWindow</name>
     <message>
         <source>The recording will stop if you go on searching. Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>La gravació s&apos;interromprà si continueu la cerca. Voleu continuar?</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -113,15 +113,15 @@
     </message>
     <message>
         <source>New notebook</source>
-        <translation>Llibreta de notes nova</translation>
+        <translation>Quadern nou</translation>
     </message>
     <message>
         <source>Delete notebook/note</source>
-        <translation>Elimina la llibreta o la nota</translation>
+        <translation>Elimina el quadern o la nota</translation>
     </message>
     <message>
         <source>Rename notebook</source>
-        <translation>Canvia el nom de la llibreta</translation>
+        <translation>Canvia el nom del quadern</translation>
     </message>
     <message>
         <source>Play/Pause</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>Notebooks</source>
-        <translation>Llibretes de notes</translation>
+        <translation>Quaderns</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -172,7 +172,7 @@
     <name>QObject</name>
     <message>
         <source>Notebook</source>
-        <translation>Llibreta de notes</translation>
+        <translation>Quadern</translation>
     </message>
     <message>
         <source>Voice Notes</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished"/>
+        <translation>Segur que voleu eliminar aquesta nota?</translation>
     </message>
     <message>
         <source>Cancel</source>

@@ -10,30 +10,30 @@
     <name>FileExistsDialog</name>
     <message>
         <source>The file name already exists. Do you want to replace the file?</source>
-        <translation type="unfinished"/>
+        <translation>Der Dateiname existiert bereits. Soll die Datei ersetzt werden?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"/>
+        <translation>Bestätigen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>FolerWidgetItem</name>
     <message>
         <source>Duplicated notebook names</source>
-        <translation type="unfinished"/>
+        <translation>Doppelte Notizbuchnamen</translation>
     </message>
     <message>
         <source>Failed to rename notebook</source>
-        <translation type="unfinished"/>
+        <translation>Konnte Notizbuch nicht umbenennen</translation>
     </message>
     <message>
         <source>The name must be between 1 and 64 characters</source>
-        <translation type="unfinished"/>
+        <translation>Der Name muss zwischen 1 und 64 Zeichen lang sein</translation>
     </message>
 </context>
 <context>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this notebook?</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass Sie dieses Notizbuch löschen möchten?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -67,25 +67,25 @@
     </message>
     <message>
         <source>Do not delete the notebook while recording</source>
-        <translation type="unfinished"/>
+        <translation>Löschen Sie das Notizbuch nicht während der Aufnahme</translation>
     </message>
 </context>
 <context>
     <name>LoadWidget</name>
     <message>
         <source>Deleting...</source>
-        <translation type="unfinished"/>
+        <translation>Lösche...</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation type="unfinished"/>
+        <translation>Lade...</translation>
     </message>
 </context>
 <context>
     <name>MyMainWindow</name>
     <message>
         <source>The recording will stop if you go on searching. Do you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Die Aufnahme wird gestoppt wenn Sie suchen. Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -211,7 +211,7 @@
     </message>
     <message>
         <source>Are you sure you want to delete this note?</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass Sie diese Notiz löschen möchten?</translation>
     </message>
     <message>
         <source>Cancel</source>
