@@ -37,7 +37,7 @@ MyMainWindow::~MyMainWindow()
 void MyMainWindow::initUI() {
     //setWindowRadius(20);
     setMinimumSize(DEFAULT_WINDOWS_WIDTH, DEFAULT_WINDOWS_HEIGHT);
-    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("The recording will stop if you go on searching. Do you want to continue?")), nullptr, QString(tr("Confirm")), QString(tr("Cancel")));
+    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("The recording will stop if you go on searching. Do you want to continue?")), nullptr, QString(tr("Cancel")), QString(tr("Confirm")));
 //    m_SearchDialog = UiUtil::createChooseDialog(QString(""), QString(tr("录音中进行搜索会中断录音，是否要继续？")), nullptr, QString(tr("否")), QString(tr("是")));
     m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("Do you want to stop the current recording?")), nullptr, QString(tr("Cancel")), QString(tr("Confirm")));
     //m_exitDialog = UiUtil::createChooseDialog(QString(""), QString(tr("当前正在录⾳中，是否终⽌录⾳？")), nullptr, QString(tr("取消")), QString(tr("终止")));
