@@ -309,6 +309,11 @@ void RecordPage::onAudioRecorderCreated(QAudioRecorder* audioRecorder)
     UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("RecordPage::onAudioRecorderCreated():"), QString("RecordPage::onAudioRecorderCreated():"));
 
     this->m_audioRecorder = audioRecorder;
+    connect(this->m_audioRecorder, QOverload<QMediaRecorder::Error>::of(&QMediaRecorder::error),
+            this,[this](QMediaRecorder::Error error) {
+        qCritical() << "Recording error happed:******" << error
+                    << "-->" << ((this->m_audioRecorder != nullptr) ? this->m_audioRecorder->errorString() : "");
+    });
     //qDebug() << "m_audioRecorder->supportedAudioCodecs(): " << m_audioRecorder->supportedAudioCodecs();
     //UiUtil::writeLog(2, __FILE__, __LINE__, Q_FUNC_INFO, QString("m_audioRecorder->supportedAudioCodecs():"), qdPath.path());
     //qDebug() << "m_audioRecorder->supportedContainers(): " << m_audioRecorder->supportedContainers();

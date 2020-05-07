@@ -11,16 +11,22 @@ WorkerController::WorkerController()
 {
     UiUtil::writeLog(1, __FILE__, __LINE__, Q_FUNC_INFO, QString("WorkerController::WorkerController()"));
 
-    worker = new Worker();
-    worker->moveToThread(&workerThread);
+//    worker = new Worker();
+//    worker->moveToThread(&workerThread);
 
-    connect(this, &WorkerController::toCreateMediaPlayer, worker, &Worker::createMediaPlayer);
-    connect(worker, &Worker::mediaPlayerCreated, this, &WorkerController::onMediaPlayerCreated);
+//    connect(this, &WorkerController::toCreateMediaPlayer, worker, &Worker::createMediaPlayer);
+//    connect(worker, &Worker::mediaPlayerCreated, this, &WorkerController::onMediaPlayerCreated);
 
-    connect(this, &WorkerController::toCreateAudioRecorder, worker, &Worker::createAudioRecorder);
-    connect(worker, &Worker::audioRecorderCreated, this, &WorkerController::onAudioRecorderCreated);
+//    connect(this, &WorkerController::toCreateAudioRecorder, worker, &Worker::createAudioRecorder);
+//    connect(worker, &Worker::audioRecorderCreated, this, &WorkerController::onAudioRecorderCreated);
 
-    workerThread.start();
+//    workerThread.start();
+
+    QMediaPlayer *mediaPlayer = new QMediaPlayer(this);
+    QAudioRecorder *audioRecorder = new QAudioRecorder(this);
+
+    onMediaPlayerCreated(mediaPlayer);
+    onAudioRecorderCreated(audioRecorder);
 }
 
 WorkerController::~WorkerController()

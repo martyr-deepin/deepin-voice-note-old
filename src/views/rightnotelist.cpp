@@ -895,6 +895,10 @@ void RightNoteList::onMediaPlayerCreated(QMediaPlayer* mediaPlayer)
     //connect(audioPlayer, &QMediaPlayer::stateChanged, this, &RightNoteList::handlePlayingStateChanged);
     connect(audioPlayer, &QMediaPlayer::positionChanged, this, &RightNoteList::handleAudioPositionChanged);
     connect(audioPlayer, &QMediaPlayer::durationChanged, this, &RightNoteList::getduration);
+    connect(audioPlayer, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [this](QMediaPlayer::Error error){
+        qCritical() << "Playing error happed:******" << error
+                    << "-->" << ((this->audioPlayer != nullptr) ? this->audioPlayer->errorString() : "");
+    });
 
     emit sig_EnablePlaybackButton();
 }
