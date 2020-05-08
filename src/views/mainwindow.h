@@ -83,6 +83,7 @@ protected:
     void changeEvent(QEvent * event);
     void closeEvent(QCloseEvent* event);
     void timerEvent(QTimerEvent *e);
+
 private:
      QFrame *m_centralWidget;
 //     DFMSplitter *m_splitter;
@@ -115,6 +116,7 @@ private:
     //start add by yuanshuai 20191210 bug 4435
     QString m_bakForDetailSearchStr;
     //end
+
     void initUI();
     void initConnection();
 

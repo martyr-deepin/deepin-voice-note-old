@@ -302,3 +302,14 @@ QWidget *Intancer::getMainPageHandle()
 {
     return m_MainPageHandle;
 }
+
+void Intancer::setAudioPlayStart()
+{
+    emit sigAudioPlayStart();
+}
+
+void Intancer::setAudioPlayStop()
+{
+    emit sigAudioPlayStop();
+}
+

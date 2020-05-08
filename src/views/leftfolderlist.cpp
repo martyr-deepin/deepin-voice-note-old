@@ -64,6 +64,12 @@ void LeftFolderList::initConnection()
     connect(m_delAction, SIGNAL(triggered(bool)), this, SLOT(handleDelItem(bool)));
     connect(m_delConfirmDialog, &DDialog::buttonClicked, this, &LeftFolderList::handleDelDialogClicked);
     connect(m_renameAction, SIGNAL(triggered(bool)), this, SLOT(handleRenameItem(bool)));
+    connect(Intancer::get_Intancer(), &Intancer::sigAudioPlayStart, this, [=]() {
+        m_delAction->setEnabled(false);
+    });
+    connect(Intancer::get_Intancer(), &Intancer::sigAudioPlayStop, this, [=]() {
+        m_delAction->setEnabled(true);
+    });
 }
 
 void LeftFolderList::addWidgetItem(FOLDER folder, QString searchKey) {

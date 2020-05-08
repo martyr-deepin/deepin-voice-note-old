@@ -77,8 +77,8 @@ public:
 
     void setMainPageHandle(QWidget *p);
     QWidget *getMainPageHandle();
-
-
+    void setAudioPlayStart();
+    void setAudioPlayStop();
 
 signals:
     void sigLockAddTextBtnToTop();
@@ -88,6 +88,8 @@ signals:
 //    void sigHideViewAddTextButton();
     void sigDisAbleReplay();
     void sigEnAbleReplay();
+    void sigAudioPlayStop();
+    void sigAudioPlayStart();
 
 private:
      static Intancer *instance_;

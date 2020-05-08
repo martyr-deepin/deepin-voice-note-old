@@ -1463,6 +1463,8 @@ void RightNoteList::play(VoiceNoteItem * voiceNoteItem, QString filepath, QRect 
 
 
     audioPlayer->play();
+    //开始播放录音，发信号通知FolerItem右击菜单的“删除”项置灰
+    Intancer::get_Intancer()->setAudioPlayStart();
     if (m_myslider->isHidden())
     {
         QPoint waveformPoint = voiceNoteItem->mapTo(this, QPoint(waveformPos.x(), waveformPos.y()));
@@ -1571,6 +1573,8 @@ void RightNoteList::DotheStopThePlayVoiceItem()
         m_currPlayingItem->m_waveform->setWavePosition(-1);
         m_currPlayingItem->onlySetResumeNoSig();
         m_currPlayingItem = nullptr;
+        //录音播放结束，发信号通知FolerItem右击菜单的“删除”项取消置灰
+        Intancer::get_Intancer()->setAudioPlayStop();
     }
     m_myslider->hide();
 }
