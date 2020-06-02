@@ -14,6 +14,7 @@ public:
     explicit AddTextBtn(QWidget *parent = nullptr);
     ~AddTextBtn();
     void init();
+
 signals:
     void addTextItem();
 
