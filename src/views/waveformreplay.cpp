@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <QApplication>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTime>
 #include <QTimer>
 #include <QWidget>

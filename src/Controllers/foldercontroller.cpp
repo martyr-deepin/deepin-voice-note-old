@@ -2,6 +2,8 @@
 
 #include <folderoper.h>
 
+#include <QObject>
+
 FolderController::FolderController()
 {
 
