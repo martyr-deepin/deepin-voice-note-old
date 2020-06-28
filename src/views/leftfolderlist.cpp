@@ -4,6 +4,7 @@
 
 #include <QFrame>
 #include <QDebug>
+#include <QMouseEvent>
 #include <DPalette>
 #include <DApplicationHelper>
 //#include <DStyledItemDelegate>
