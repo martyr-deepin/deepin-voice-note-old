@@ -225,7 +225,7 @@ void RecordPage::startRecord()
         QString codec;
         QString audioContainer;
         for (auto it : supportCodecList) {
-            if (it.contains("audio/mpeg")) {
+            if (it.contains("audio/mpeg, mpegversion=(int)1, layer=(int)3")) {
                 codec = it;
                 break;
             }
